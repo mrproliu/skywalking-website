@@ -19,27 +19,27 @@
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
 
-<title>Queue/mmap-queue | Apache SkyWalking</title><meta property="og:title" content="Queue/mmap-queue" />
-<meta property="og:description" content="Queue/mmap-queue Description This is a memory mapped queue to provide the persistent storage for the input event. Please note that this plugin does not support Windows platform.
-DefaultConfig # The size of each segment. Default value is 256K. The unit is Byte. segment_size: 262114 # The max num of segments in memory. Default value is 10. max_in_mem_segments: 10 # The capacity of Queue = segment_size * queue_capacity_segments. queue_capacity_segments: 2000 # The period flush time." />
+<title>Receiver/grpc-nativeprofile-receiver | Apache SkyWalking</title><meta property="og:title" content="Receiver/grpc-nativeprofile-receiver" />
+<meta property="og:description" content="Receiver/grpc-nativeprofile-receiver Description This is a receiver for SkyWalking native profile format, which is defined at https://github.com/apache/skywalking-data-collect-protocol/blob/master/profile/Profile.proto.
+DefaultConfig yaml" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/docs/skywalking-satellite/latest/en/setup/plugins/queue_mmap-queue/" />
+<meta property="og:url" content="/docs/skywalking-satellite/latest/en/setup/plugins/receiver_grpc-nativeprofile-receiver/" />
 <meta property="article:published_time" content="2021-06-28T09:53:38+00:00" />
 <meta property="article:modified_time" content="2021-06-28T09:53:38+00:00" />
-<meta itemprop="name" content="Queue/mmap-queue">
-<meta itemprop="description" content="Queue/mmap-queue Description This is a memory mapped queue to provide the persistent storage for the input event. Please note that this plugin does not support Windows platform.
-DefaultConfig # The size of each segment. Default value is 256K. The unit is Byte. segment_size: 262114 # The max num of segments in memory. Default value is 10. max_in_mem_segments: 10 # The capacity of Queue = segment_size * queue_capacity_segments. queue_capacity_segments: 2000 # The period flush time.">
+<meta itemprop="name" content="Receiver/grpc-nativeprofile-receiver">
+<meta itemprop="description" content="Receiver/grpc-nativeprofile-receiver Description This is a receiver for SkyWalking native profile format, which is defined at https://github.com/apache/skywalking-data-collect-protocol/blob/master/profile/Profile.proto.
+DefaultConfig yaml">
 <meta itemprop="datePublished" content="2021-06-28T09:53:38+00:00" />
 <meta itemprop="dateModified" content="2021-06-28T09:53:38+00:00" />
-<meta itemprop="wordCount" content="113">
+<meta itemprop="wordCount" content="18">
 
 
 
 <meta itemprop="keywords" content="" />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Queue/mmap-queue"/>
-<meta name="twitter:description" content="Queue/mmap-queue Description This is a memory mapped queue to provide the persistent storage for the input event. Please note that this plugin does not support Windows platform.
-DefaultConfig # The size of each segment. Default value is 256K. The unit is Byte. segment_size: 262114 # The max num of segments in memory. Default value is 10. max_in_mem_segments: 10 # The capacity of Queue = segment_size * queue_capacity_segments. queue_capacity_segments: 2000 # The period flush time."/>
+<meta name="twitter:title" content="Receiver/grpc-nativeprofile-receiver"/>
+<meta name="twitter:description" content="Receiver/grpc-nativeprofile-receiver Description This is a receiver for SkyWalking native profile format, which is defined at https://github.com/apache/skywalking-data-collect-protocol/blob/master/profile/Profile.proto.
+DefaultConfig yaml"/>
 
 <script type="application/javascript">
 var doNotTrack = false;
@@ -69,7 +69,7 @@ if (!doNotTrack) {
 
 
 
-    <title>Queue/mmap-queue | Apache SkyWalking</title>
+    <title>Receiver/grpc-nativeprofile-receiver | Apache SkyWalking</title>
   </head>
   <body class="td-page  project-doc">
     <header>
@@ -859,23 +859,12 @@ if (!doNotTrack) {
 
 
 
-	<h1 id="queuemmap-queue">Queue/mmap-queue</h1>
+	<h1 id="receivergrpc-nativeprofile-receiver">Receiver/grpc-nativeprofile-receiver</h1>
 <h2 id="description">Description</h2>
-<p>This is a memory mapped queue to provide the persistent storage for the input event. Please note that this plugin does not support Windows platform.</p>
+<p>This is a receiver for SkyWalking native profile format, which is defined at <a href="https://github.com/apache/skywalking-data-collect-protocol/blob/master/profile/Profile.proto">https://github.com/apache/skywalking-data-collect-protocol/blob/master/profile/Profile.proto</a>.</p>
 <h2 id="defaultconfig">DefaultConfig</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#75715e"># The size of each segment. Default value is 256K. The unit is Byte.</span>
-<span style="color:#f92672">segment_size</span>: <span style="color:#ae81ff">262114</span>
-<span style="color:#75715e"># The max num of segments in memory. Default value is 10.</span>
-<span style="color:#f92672">max_in_mem_segments</span>: <span style="color:#ae81ff">10</span>
-<span style="color:#75715e"># The capacity of Queue = segment_size * queue_capacity_segments.</span>
-<span style="color:#f92672">queue_capacity_segments</span>: <span style="color:#ae81ff">2000</span>
-<span style="color:#75715e"># The period flush time. The unit is ms. Default value is 1 second.</span>
-<span style="color:#f92672">flush_period</span>: <span style="color:#ae81ff">1000</span>
-<span style="color:#75715e"># The max number in one flush time.  Default value is 10000.</span>
-<span style="color:#f92672">flush_ceiling_num</span>: <span style="color:#ae81ff">10000</span>
-<span style="color:#75715e"># The max size of the input event. Default value is 20k.</span>
-<span style="color:#f92672">max_event_size</span>: <span style="color:#ae81ff">20480</span>
-</code></pre></div>
+<p><code>yaml</code></p>
+
 
 
 
@@ -910,7 +899,7 @@ if (!doNotTrack) {
 
 <nav id="TableOfContents">
   <ul>
-    <li><a href="#queuemmap-queue">Queue/mmap-queue</a>
+    <li><a href="#receivergrpc-nativeprofile-receiver">Receiver/grpc-nativeprofile-receiver</a>
       <ul>
         <li><a href="#description">Description</a></li>
         <li><a href="#defaultconfig">DefaultConfig</a></li>
