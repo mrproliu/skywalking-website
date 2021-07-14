@@ -19,27 +19,27 @@
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
 
-<title>Problem | Apache SkyWalking</title><meta property="og:title" content="Problem" />
-<meta property="og:description" content="Problem  There is no abnormal log in Agent log and Collector log. The traces can be seen, but no other information is available in UI.  Reason The operating system where the monitored system is located is not set as the current time zone, causing statistics collection time points to deviate.
-Resolution Make sure the time is synchronized between collector servers and monitored application servers." />
+<title>Elasticsearch exception `type=version_conflict_engine_exception` since 8.7.0 | Apache SkyWalking</title><meta property="og:title" content="Elasticsearch exception `type=version_conflict_engine_exception` since 8.7.0" />
+<meta property="og:description" content="Elasticsearch exception type=version_conflict_engine_exception since 8.7.0 Since 8.7.0, we did the following optimization to reduce Elasticsearch load.
+Performance: remove the synchronous persistence mechanism from batch ElasticSearch DAO. Because the current enhanced persistent session mechanism, don&#39;t require the data queryable immediately after the insert and update anymore. Due to this, we flush the metrics into Elasticsearch without using WriteRequest.RefreshPolicy.WAIT_UNTIL. This reduces the load of persistent works in OAP server and load of Elasticsearch CPU dramatically." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/docs/main/latest/en/faq/why-have-traces-no-others/" />
+<meta property="og:url" content="/docs/main/latest/en/faq/es-version-conflict/" />
 <meta property="article:published_time" content="2021-07-14T09:19:49+00:00" />
 <meta property="article:modified_time" content="2021-07-14T09:19:49+00:00" />
-<meta itemprop="name" content="Problem">
-<meta itemprop="description" content="Problem  There is no abnormal log in Agent log and Collector log. The traces can be seen, but no other information is available in UI.  Reason The operating system where the monitored system is located is not set as the current time zone, causing statistics collection time points to deviate.
-Resolution Make sure the time is synchronized between collector servers and monitored application servers.">
+<meta itemprop="name" content="Elasticsearch exception `type=version_conflict_engine_exception` since 8.7.0">
+<meta itemprop="description" content="Elasticsearch exception type=version_conflict_engine_exception since 8.7.0 Since 8.7.0, we did the following optimization to reduce Elasticsearch load.
+Performance: remove the synchronous persistence mechanism from batch ElasticSearch DAO. Because the current enhanced persistent session mechanism, don&#39;t require the data queryable immediately after the insert and update anymore. Due to this, we flush the metrics into Elasticsearch without using WriteRequest.RefreshPolicy.WAIT_UNTIL. This reduces the load of persistent works in OAP server and load of Elasticsearch CPU dramatically.">
 <meta itemprop="datePublished" content="2021-07-14T09:19:49+00:00" />
 <meta itemprop="dateModified" content="2021-07-14T09:19:49+00:00" />
-<meta itemprop="wordCount" content="64">
+<meta itemprop="wordCount" content="211">
 
 
 
 <meta itemprop="keywords" content="" />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Problem"/>
-<meta name="twitter:description" content="Problem  There is no abnormal log in Agent log and Collector log. The traces can be seen, but no other information is available in UI.  Reason The operating system where the monitored system is located is not set as the current time zone, causing statistics collection time points to deviate.
-Resolution Make sure the time is synchronized between collector servers and monitored application servers."/>
+<meta name="twitter:title" content="Elasticsearch exception `type=version_conflict_engine_exception` since 8.7.0"/>
+<meta name="twitter:description" content="Elasticsearch exception type=version_conflict_engine_exception since 8.7.0 Since 8.7.0, we did the following optimization to reduce Elasticsearch load.
+Performance: remove the synchronous persistence mechanism from batch ElasticSearch DAO. Because the current enhanced persistent session mechanism, don&#39;t require the data queryable immediately after the insert and update anymore. Due to this, we flush the metrics into Elasticsearch without using WriteRequest.RefreshPolicy.WAIT_UNTIL. This reduces the load of persistent works in OAP server and load of Elasticsearch CPU dramatically."/>
 
 <script type="application/javascript">
 var doNotTrack = false;
@@ -69,7 +69,7 @@ if (!doNotTrack) {
 
 
 
-    <title>Problem | Apache SkyWalking</title>
+    <title>Elasticsearch exception `type=version_conflict_engine_exception` since 8.7.0 | Apache SkyWalking</title>
   </head>
   <body class="td-page  project-doc">
     <header>
@@ -1254,15 +1254,29 @@ if (!doNotTrack) {
 
 
 
-	<h3 id="problem">Problem</h3>
-<ul>
-<li>There is no abnormal log in Agent log and Collector log.</li>
-<li>The traces can be seen, but no other information is available in UI.</li>
-</ul>
-<h3 id="reason">Reason</h3>
-<p>The operating system where the monitored system is located is not set as the current time zone, causing statistics collection time points to deviate.</p>
-<h3 id="resolution">Resolution</h3>
-<p>Make sure the time is synchronized between collector servers and monitored application servers.</p>
+	<h1 id="elasticsearch-exception-typeversion_conflict_engine_exception-since-870">Elasticsearch exception <code>type=version_conflict_engine_exception</code> since 8.7.0</h1>
+<p>Since 8.7.0, we did the following optimization to reduce Elasticsearch load.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-markdown" data-lang="markdown">Performance: remove the synchronous persistence mechanism from batch ElasticSearch DAO. Because the current enhanced
+persistent session mechanism, don&#39;t require the data queryable immediately after the insert and update anymore.
+</code></pre></div><p>Due to this, we flush the metrics into Elasticsearch without using <code>WriteRequest.RefreshPolicy.WAIT_UNTIL</code>. This reduces
+the load of persistent works in OAP server and load of Elasticsearch CPU dramatically.</p>
+<p>Meanwhile, there is little chance you could see following <strong>warn</strong>s in your logs.</p>
+<pre><code>{
+  &quot;timeMillis&quot;: 1626247722647,
+  &quot;thread&quot;: &quot;I/O dispatcher 4&quot;,
+  &quot;level&quot;: &quot;WARN&quot;,
+  &quot;loggerName&quot;: &quot;org.apache.skywalking.oap.server.library.client.elasticsearch.ElasticSearchClient&quot;,
+  &quot;message&quot;: &quot;Bulk [70] executed with failures:[failure in bulk execution:\n[18875]: index [sw8_service_relation_client_side-20210714], type [_doc], id [20210714_b3BlcmF0aW9uLXJ1bGUtc2VydmVyQDExNDgx.1-bWFya2V0LXJlZmVycmFsLXNlcnZlckAxMDI1MQ==.1], message [[sw8_service_relation_client_side-20210714/D7qzncbeRq6qh2QF5MogTw][[sw8_service_relation_client_side-20210714][0]] ElasticsearchException[Elasticsearch exception [type=version_conflict_engine_exception, reason=[20210714_b3BlcmF0aW9uLXJ1bGUtc2VydmVyQDExNDgx.1-bWFya2V0LXJlZmVycmFsLXNlcnZlckAxMDI1MQ==.1]: version conflict, required seqNo [14012594], primary term [1]. current document has seqNo [14207928] and primary term [1]]]]]&quot;,
+  &quot;endOfBatch&quot;: false,
+  &quot;loggerFqcn&quot;: &quot;org.apache.logging.slf4j.Log4jLogger&quot;,
+  &quot;threadId&quot;: 44,
+  &quot;threadPriority&quot;: 5,
+  &quot;timestamp&quot;: &quot;2021-07-14 15:28:42.647&quot;
+}
+</code></pre><p>This would not affect the system much, just a possibility of inaccurate of metrics. If this wouldn&rsquo;t show up in high
+frequency, you could ignore this directly.</p>
+<p>In case you could see many logs like this. Then it is a signal, that the flush period of your ElasticSearch template can&rsquo;t
+catch up your setting. Or you set the <code>persistentPeriod</code> less than the flush period.</p>
 
 
 
@@ -1298,17 +1312,7 @@ if (!doNotTrack) {
 
 <nav id="TableOfContents">
   <ul>
-    <li>
-      <ul>
-        <li>
-          <ul>
-            <li><a href="#problem">Problem</a></li>
-            <li><a href="#reason">Reason</a></li>
-            <li><a href="#resolution">Resolution</a></li>
-          </ul>
-        </li>
-      </ul>
-    </li>
+    <li><a href="#elasticsearch-exception-typeversion_conflict_engine_exception-since-870">Elasticsearch exception <code>type=version_conflict_engine_exception</code> since 8.7.0</a></li>
   </ul>
 </nav>
 
