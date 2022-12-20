@@ -1,0 +1,433 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Apache SkyWalking – eBPF</title>
+    <link>/tags/ebpf/</link>
+    <description>Recent content in eBPF on Apache SkyWalking</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Tue, 27 Sep 2022 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/ebpf/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Blog: Diagnose Service Mesh Network Performance with eBPF</title>
+      <link>/blog/diagnose-service-mesh-network-performance-with-ebpf/</link>
+      <pubDate>Tue, 27 Sep 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/diagnose-service-mesh-network-performance-with-ebpf/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;background&#34;&gt;Background&lt;/h2&gt;
+&lt;p&gt;This article will show how to use &lt;a href=&#34;https://github.com/apache/skywalking&#34;&gt;Apache SkyWalking&lt;/a&gt; with &lt;a href=&#34;https://ebpf.io/what-is-ebpf/&#34;&gt;eBPF&lt;/a&gt; to make network troubleshooting easier in a service mesh environment.&lt;/p&gt;
+&lt;p&gt;Apache SkyWalking is an application performance monitor tool for distributed systems. It observes metrics, logs, traces, and events in the service mesh environment and uses that data to generate a dependency graph of your pods and services. This dependency graph can provide quick insights into your system, especially when there&amp;rsquo;s an issue.&lt;/p&gt;
+&lt;p&gt;However, when troubleshooting network issues in SkyWalking&amp;rsquo;s service topology, it is not always easy to pinpoint where the error actually is. There are two reasons for the difficulty:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Traffic through the Envoy sidecar is not easy to observe.&lt;/strong&gt; Data from Envoy&amp;rsquo;s &lt;a href=&#34;https://www.envoyproxy.io/docs/envoy/latest/api-v3/service/accesslog/v3/als.proto&#34;&gt;Access Log Service (ALS)&lt;/a&gt; shows traffic between services (sidecar-to-sidecar), but not metrics on communication between the Envoy sidecar and the service it proxies. Without that information, it is more difficult to understand the impact of the sidecar.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;There is a lack of data from transport layer (OSI Layer 4) communication.&lt;/strong&gt; Since services generally use application layer (OSI Layer 7) protocols such as HTTP, observability data is generally restricted to application layer communication. However, the root cause may actually be in the transport layer, which is typically opaque to observability tools.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Access to metrics from Envoy-to-service and transport layer communication can make it easier to diagnose service issues. To this end, SkyWalking needs to collect and analyze transport layer metrics between processes inside Kubernetes pods - a task well suited to eBPF. We investigated using eBPF for this purpose and present our results and
+a demo below.&lt;/p&gt;
+&lt;h2 id=&#34;monitoring-kubernetes-networks-with-ebpf&#34;&gt;Monitoring Kubernetes Networks with eBPF&lt;/h2&gt;
+&lt;p&gt;With its origins as the Extended Berkeley Packet Filter, eBPF is a general purpose mechanism for injecting and running your own code into the Linux kernel and is an excellent tool for monitoring network traffic in Kubernetes Pods. In the next few sections, we&#39;ll provide an overview of how to use eBPF for network monitoring as background for introducing &lt;a href=&#34;https://github.com/apache/skywalking-rover&#34;&gt;Skywalking Rover&lt;/a&gt;, a metrics collector and profiler powered by eBPF to diagnose CPU and network performance.&lt;/p&gt;
+&lt;h3 id=&#34;how-applications-and-the-network-interact&#34;&gt;How Applications and the Network Interact&lt;/h3&gt;
+&lt;p&gt;Interactions between the application and the network can generally be
+divided into the following steps from higher to lower levels of
+abstraction:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;f0.svg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;User Code:&lt;/strong&gt; Application code uses high-level network libraries in the application stack to exchange data across the network, like sending and receiving HTTP requests.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Network Library:&lt;/strong&gt; When the network library receives a network request, it interacts with the language API to send the network data.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Language API:&lt;/strong&gt; Each language provides an API for operating the network, system, etc. When a request is received, it interacts with the system API. In Linux, this API is called syscalls.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Linux API:&lt;/strong&gt; When the Linux kernel receives the request through the API, it communicates with the socket to send the data, which is usually closer to an OSI Layer 4 protocol, such as TCP, UDP, etc.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Socket Ops:&lt;/strong&gt; Sending or receiving the data to/from the NIC.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Our hypothesis is that eBPF can monitor the network. There are two ways
+to implement the interception: &lt;strong&gt;User space (uprobe)&lt;/strong&gt; or &lt;strong&gt;Kernel space
+(kprobe)&lt;/strong&gt;. The table below summarizes the differences.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;th&gt;Pros&lt;/th&gt;
+&lt;th&gt;Cons&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;uprobe&lt;/td&gt;
+&lt;td&gt;•	Get more application-related contexts, such as whether the current request is HTTP or HTTPS.&lt;/br&gt;•	Requests and responses can be intercepted by a single method&lt;/td&gt;
+&lt;td&gt;•	Data structures can be unstable, so it is more difficult to get the desired data. &lt;/br&gt; •	Implementation may differ between language/library versions. &lt;/br&gt; •	Does not work in applications without &lt;a href=&#34;https://en.wikipedia.org/wiki/Symbol_table&#34;&gt;symbol tables&lt;/a&gt;.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;kprobe&lt;/td&gt;
+&lt;td&gt;•	Available for all languages. &lt;/br&gt; •	The data structure and methods are stable and do not require much adaptation. &lt;/br&gt; •	Easier correlation with underlying data, such as getting the destination address of TCP, OSI Layer 4 protocol metrics, etc.&lt;/td&gt;
+&lt;td&gt;•	A single request and response may be split into multiple probes. &lt;/br&gt; •	Contextual information is not easy to get for stateful requests. For example header compression in HTTP/2.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;For the general network performance monitor, we chose to use the kprobe (intercept the syscalls) for the following reasons:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;It&amp;rsquo;s available for applications written in any programming language, and it&amp;rsquo;s stable, so it saves a lot of development/adaptation costs.&lt;/li&gt;
+&lt;li&gt;It can be correlated with metrics from the system level, which makes it easier to troubleshoot.&lt;/li&gt;
+&lt;li&gt;As a single request and response are split into multiple probes, we can use technology to correlate them.&lt;/li&gt;
+&lt;li&gt;For contextual information, It&amp;rsquo;s usually used in OSI Layer 7 protocol network analysis. So, if we just monitor the network performance, then they can be ignored.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;kprobes-and-network-monitoring&#34;&gt;Kprobes and network monitoring&lt;/h3&gt;
+&lt;p&gt;Following the &lt;a href=&#34;http://linasm.sourceforge.net/docs/syscalls/network.php&#34;&gt;network syscalls of Linux documentation&lt;/a&gt;, we can implement network monitoring by intercepting two types of methods: &lt;strong&gt;socket operations&lt;/strong&gt; and &lt;strong&gt;send/receive&lt;/strong&gt; methods.&lt;/p&gt;
+&lt;h4 id=&#34;socket-operations&#34;&gt;Socket Operations&lt;/h4&gt;
+&lt;p&gt;When accepting or connecting with another socket, we can get the
+following information:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Connection information&lt;/strong&gt;: Includes the remote address from the connection which helps us to understand which pod is connected.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Connection statics:&lt;/strong&gt; Includes basic metrics from sockets, such as round-trip time (&lt;a href=&#34;https://en.wikipedia.org/wiki/Round-trip_delay&#34;&gt;RTT&lt;/a&gt;), lost packet count in TCP, etc.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Socket and file descriptor (&lt;a href=&#34;https://en.wikipedia.org/wiki/File_descriptor&#34;&gt;FD&lt;/a&gt;) mapping:&lt;/strong&gt; Includes the relationship between the Linux file descriptor and socket object. It is useful when sending and receiving data through a Linux file descriptor.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;sendreceive&#34;&gt;Send/Receive&lt;/h4&gt;
+&lt;p&gt;The interface related to sending or receiving data is the focus of
+performance analysis. It mainly contains the following parameters:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Socket file descriptor:&lt;/strong&gt; The file descriptor of the current operation corresponding to the socket.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Buffer:&lt;/strong&gt; The data sent or received, passed as a byte array.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Based on the above parameters, we can analyze the following data:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Bytes:&lt;/strong&gt; The size of the packet in bytes.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Protocol:&lt;/strong&gt; The protocol analysis according to the buffer data, such as HTTP, MySQL, etc.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Execution Time:&lt;/strong&gt; The time it takes to send/receive the data.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;At this point (Figure 1) we can analyze the following steps for the
+whole lifecycle of the connection:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Connect/Accept:&lt;/strong&gt; When the connection is created.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Transform:&lt;/strong&gt; Sending and receiving data on the connection.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Close:&lt;/strong&gt; When the connection is closed.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;f1.svg&#34; alt=&#34;Figure 1&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;Figure 1&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;h3 id=&#34;protocol-and-tls&#34;&gt;Protocol and TLS&lt;/h3&gt;
+&lt;p&gt;The previous section described how to analyze connections using send or receive buffer data. For example, following the &lt;a href=&#34;https://www.rfc-editor.org/rfc/rfc2068.html#section-4.1&#34;&gt;HTTP/1.1 message specification&lt;/a&gt; to analyze the connection. However, this does not work for TLS requests/responses.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;f2.svg&#34; alt=&#34;Figure 2&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;Figure 2&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;When TLS is in use, the Linux Kernel transmits data encrypted in user space. In the figure above, The application usually transmits SSL data through a third-party library (such as OpenSSL). For this case, the Linux API can only get the encrypted data, so it cannot recognize any higher layer protocol. To decrypt inside eBPF, we need to follow these steps:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Read unencrypted data through uprobe:&lt;/strong&gt; Compatible multiple languages, using uprobe to capture the data that is not encrypted before sending or after receiving. In this way, we can get the original data and associate it with the socket.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Associate with socket:&lt;/strong&gt; We can associate unencrypted data with the socket.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;openssl-use-case&#34;&gt;OpenSSL Use case&lt;/h4&gt;
+&lt;p&gt;For example, the most common way to send/receive SSL data is to use OpenSSL as a shared library, specifically the &lt;a href=&#34;https://www.openssl.org/docs/man1.1.1/man3/SSL_read.html&#34;&gt;SSL_read&lt;/a&gt; and &lt;a href=&#34;https://www.openssl.org/docs/man1.1.1/man3/SSL_write.html&#34;&gt;SSL_write&lt;/a&gt; methods to submit the buffer data with the socket.&lt;/p&gt;
+&lt;p&gt;Following the &lt;a href=&#34;https://www.openssl.org/docs/man1.1.1/man7/ssl.html&#34;&gt;documentation&lt;/a&gt;, we can intercept these two methods, which are almost identical to the API in Linux. The source code of the SSL structure in OpenSSL shows that the &lt;a href=&#34;https://github.com/openssl/openssl/blob/9eae491721209f302a9a475bffd271370e8bcb8f/crypto/bio/bio_local.h#L115-L125&#34;&gt;Socket FD&lt;/a&gt; exists in the &lt;a href=&#34;https://github.com/openssl/openssl/blob/9eae491721209f302a9a475bffd271370e8bcb8f/ssl/ssl_local.h#L1068-L1083&#34;&gt;BIO object of the SSL structure&lt;/a&gt;, and we can get it by the offset.&lt;/p&gt;
+&lt;p&gt;In summary, with knowledge of how OpenSSL works, we can read unencrypted data in an eBPF function.&lt;/p&gt;
+&lt;h2 id=&#34;introducing-skywalking-rover-an-ebpf-based-metrics-collector-and-profiler&#34;&gt;Introducing SkyWalking Rover, an eBPF-based Metrics Collector and Profiler&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/apache/skywalking-rover&#34;&gt;SkyWalking Rover&lt;/a&gt; introduces the eBPF network profiling feature into the SkyWalking ecosystem. It&amp;rsquo;s currently supported in a Kubernetes environment, so must be deployed inside a Kubernetes cluster. Once the deployment is complete, SkyWalking Rover can monitor the network for all processes inside a given Pod. Based on the monitoring data, SkyWalking can generate the topology relationship diagram and metrics between processes.&lt;/p&gt;
+&lt;h3 id=&#34;topology-diagram&#34;&gt;Topology Diagram&lt;/h3&gt;
+&lt;p&gt;The topology diagram can help us understand the network access between processes inside the same Pod, and between the process and external environment (other Pod or service). Additionally, it can identify the data direction of traffic based on the line flow direction.&lt;/p&gt;
+&lt;p&gt;In Figure 3 below, all nodes within the hexagon are the internal process of a Pod, and nodes outside the hexagon are externally associated services or Pods. Nodes are connected by lines, which indicate the direction of requests or responses between nodes (client or server). The protocol is indicated on the line, and it&amp;rsquo;s either HTTP(S), TCP, or TCP(TLS). Also, we can see in this figure that the line between Envoy and Python applications is bidirectional because Envoy intercepts all application traffic.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;f3.jpg&#34; alt=&#34;Figure 3&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;Figure 3&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;h3 id=&#34;metrics&#34;&gt;Metrics&lt;/h3&gt;
+&lt;p&gt;Once we recognize the network call relationship between processes through the topology, we can select a specific line and view the TCP metrics between the two processes.&lt;/p&gt;
+&lt;p&gt;The diagram below (Figure 4) shows the metrics of network monitoring between two processes. There are four metrics in each line. Two on the left side are on the client side, and two on the right side are on the server side. If the remote process is not in the same Pod, only one side of the metrics is displayed.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;f4.jpg&#34; alt=&#34;Figure 4&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;Figure 4&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;The following two metric types are available:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Counter:&lt;/strong&gt; Records the total number of data in a certain period. Each counter contains the following data:
+a.  &lt;strong&gt;Count:&lt;/strong&gt; Execution count.
+b.  &lt;strong&gt;Bytes:&lt;/strong&gt; Packet size in bytes.
+c.  &lt;strong&gt;Execution time:&lt;/strong&gt; Execution duration.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Histogram:&lt;/strong&gt; Records the distribution of data in the buckets.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Based on the above data types, the following metrics are exposed:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Name&lt;/th&gt;
+&lt;th&gt;Type&lt;/th&gt;
+&lt;th&gt;Unit&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Write&lt;/td&gt;
+&lt;td&gt;Counter and histogram&lt;/td&gt;
+&lt;td&gt;Millisecond&lt;/td&gt;
+&lt;td&gt;The socket write counter.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Read&lt;/td&gt;
+&lt;td&gt;Counter and histogram&lt;/td&gt;
+&lt;td&gt;Millisecond&lt;/td&gt;
+&lt;td&gt;The socket read counter.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Write RTT&lt;/td&gt;
+&lt;td&gt;Counter and histogram&lt;/td&gt;
+&lt;td&gt;Microsecond&lt;/td&gt;
+&lt;td&gt;The socket write round trip time (RTT) counter.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Connect&lt;/td&gt;
+&lt;td&gt;Counter and histogram&lt;/td&gt;
+&lt;td&gt;Millisecond&lt;/td&gt;
+&lt;td&gt;The socket connect/accept with another server/client counter.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Close&lt;/td&gt;
+&lt;td&gt;Counter and histogram&lt;/td&gt;
+&lt;td&gt;Millisecond&lt;/td&gt;
+&lt;td&gt;The socket with other socket counter.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Retransmit&lt;/td&gt;
+&lt;td&gt;Counter&lt;/td&gt;
+&lt;td&gt;Millisecond&lt;/td&gt;
+&lt;td&gt;The socket retransmit package counter.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Drop&lt;/td&gt;
+&lt;td&gt;Counter&lt;/td&gt;
+&lt;td&gt;Millisecond&lt;/td&gt;
+&lt;td&gt;The socket drop package counter.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&#34;demo&#34;&gt;Demo&lt;/h2&gt;
+&lt;p&gt;In this section, we demonstrate how to perform network profiling in the
+service mesh. To follow along, you will need a running Kubernetes
+environment.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;NOTE:&lt;/strong&gt; All commands and scripts are available &lt;a href=&#34;https://github.com/mrproliu/skywalking-network-profiling-demo&#34;&gt;in this GitHub repository&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;install-istio&#34;&gt;Install Istio&lt;/h3&gt;
+&lt;p&gt;Istio is the most widely deployed service mesh, and comes with a complete demo application that we can use for testing. To install Istio and the demo application, follow these steps:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Install Istio using the demo configuration profile.&lt;/li&gt;
+&lt;li&gt;Label the default namespace, so Istio automatically injects Envoy sidecar proxies when we&amp;rsquo;ll deploy the application.&lt;/li&gt;
+&lt;li&gt;Deploy the bookinfo application to the cluster.&lt;/li&gt;
+&lt;li&gt;Deploy the traffic generator to generate some traffic to the application.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#008080&#34;&gt;ISTIO_VERSION&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;1.13.1
+
+&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# install istio&lt;/span&gt;
+istioctl install -y --set &lt;span style=&#34;color:#008080&#34;&gt;profile&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;demo
+kubectl label namespace default istio-injection&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;enabled
+
+&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# deploy the bookinfo applications&lt;/span&gt;
+kubectl apply -f https://raw.githubusercontent.com/istio/istio/&lt;span style=&#34;color:#008080&#34;&gt;$ISTIO_VERSION&lt;/span&gt;/samples/bookinfo/platform/kube/bookinfo.yaml
+kubectl apply -f https://raw.githubusercontent.com/istio/istio/&lt;span style=&#34;color:#008080&#34;&gt;$ISTIO_VERSION&lt;/span&gt;/samples/bookinfo/networking/bookinfo-gateway.yaml
+kubectl apply -f https://raw.githubusercontent.com/istio/istio/&lt;span style=&#34;color:#008080&#34;&gt;$ISTIO_VERSION&lt;/span&gt;/samples/bookinfo/networking/destination-rule-all.yaml
+kubectl apply -f https://raw.githubusercontent.com/istio/istio/&lt;span style=&#34;color:#008080&#34;&gt;$ISTIO_VERSION&lt;/span&gt;/samples/bookinfo/networking/virtual-service-all-v1.yaml
+
+&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# generate traffic&lt;/span&gt;
+kubectl apply -f https://raw.githubusercontent.com/mrproliu/skywalking-network-profiling-demo/main/resources/traffic-generator.yaml
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;install-skywalking&#34;&gt;Install SkyWalking&lt;/h3&gt;
+&lt;p&gt;The following will install the storage, backend, and UI needed for SkyWalking:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;git clone https://github.com/apache/skywalking-kubernetes.git
+&lt;span style=&#34;color:#0086b3&#34;&gt;cd&lt;/span&gt; skywalking-kubernetes
+&lt;span style=&#34;color:#0086b3&#34;&gt;cd&lt;/span&gt; chart
+helm dep up skywalking
+helm -n istio-system install skywalking skywalking &lt;span style=&#34;color:#d14&#34;&gt;\
+&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&lt;/span&gt; --set &lt;span style=&#34;color:#008080&#34;&gt;fullnameOverride&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;skywalking &lt;span style=&#34;color:#d14&#34;&gt;\
+&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&lt;/span&gt; --set elasticsearch.minimumMasterNodes&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#099&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color:#d14&#34;&gt;\
+&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&lt;/span&gt; --set elasticsearch.imageTag&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;7.5.1 &lt;span style=&#34;color:#d14&#34;&gt;\
+&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&lt;/span&gt; --set oap.replicas&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#099&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color:#d14&#34;&gt;\
+&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&lt;/span&gt; --set ui.image.repository&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;apache/skywalking-ui &lt;span style=&#34;color:#d14&#34;&gt;\
+&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&lt;/span&gt; --set ui.image.tag&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;9.2.0 &lt;span style=&#34;color:#d14&#34;&gt;\
+&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&lt;/span&gt; --set oap.image.tag&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;9.2.0 &lt;span style=&#34;color:#d14&#34;&gt;\
+&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&lt;/span&gt; --set oap.envoy.als.enabled&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;true&lt;/span&gt; &lt;span style=&#34;color:#d14&#34;&gt;\
+&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&lt;/span&gt; --set oap.image.repository&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;apache/skywalking-oap-server &lt;span style=&#34;color:#d14&#34;&gt;\
+&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&lt;/span&gt; --set oap.storageType&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;elasticsearch &lt;span style=&#34;color:#d14&#34;&gt;\
+&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&lt;/span&gt; --set oap.env.SW_METER_ANALYZER_ACTIVE_FILES&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#39;network-profiling&amp;#39;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;install-skywalking-rover&#34;&gt;Install SkyWalking Rover&lt;/h3&gt;
+&lt;p&gt;SkyWalking Rover is deployed on every node in Kubernetes, and it automatically detects the services in the Kubernetes cluster. The network profiling feature has been released in the version 0.3.0 of SkyWalking Rover. When a network monitoring task is created, the SkyWalking rover sends the data to the SkyWalking backend.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;kubectl apply -f https://raw.githubusercontent.com/mrproliu/skywalking-network-profiling-demo/main/resources/skywalking-rover.yaml
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;start-the-network-profiling-task&#34;&gt;Start the Network Profiling Task&lt;/h3&gt;
+&lt;p&gt;Once all deployments are completed, we must create a network profiling task for a specific instance of the service in the SkyWalking UI.&lt;/p&gt;
+&lt;p&gt;To open SkyWalking UI, run:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;kubectl port-forward svc/skywalking-ui 8080:80 --namespace
+istio-system
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Currently, we can select the specific instances that we wish to monitor by clicking the &lt;strong&gt;Data Plane&lt;/strong&gt; item in the Service Mesh panel and the &lt;strong&gt;Service&lt;/strong&gt; item in the &lt;strong&gt;Kubernetes&lt;/strong&gt; panel.&lt;/p&gt;
+&lt;p&gt;In the figure below, we have selected an instance with a list of tasks in the network profiling tab. When we click the start button, the SkyWalking Rover starts monitoring this instance&amp;rsquo;s network.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;f5.jpg&#34; alt=&#34;Figure 5&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;Figure 5&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;h3 id=&#34;done&#34;&gt;Done!&lt;/h3&gt;
+&lt;p&gt;After a few seconds, you will see the process topology appear on the right side of the page.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;f6.jpg&#34; alt=&#34;Figure 6&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;Figure 6&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;When you click on the line between processes, you can see the TCP metrics between the two processes.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;f7.jpg&#34; alt=&#34;Figure 7&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;Figure 7&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;In this article, we detailed a problem that makes troubleshooting service mesh architectures difficult: lack of context between layers in the network stack. These are the cases when eBPF begins to really help with debugging/productivity when existing service mesh/envoy cannot. Then, we researched how eBPF could be applied to common communication, such as TLS. Finally, we demo the implementation of this process with SkyWalking Rover.&lt;/p&gt;
+&lt;p&gt;For now, we have completed the performance analysis for OSI layer 4 (mostly TCP). In the future, we will also introduce the analysis for OSI layer 7 protocols like HTTP.&lt;/p&gt;
+&lt;h2 id=&#34;get-started-with-istio&#34;&gt;Get Started with Istio&lt;/h2&gt;
+&lt;p&gt;To &lt;a href=&#34;https://istio.tetratelabs.io/&#34;&gt;get started with service mesh today, Tetrate Istio Distro&lt;/a&gt; is the easiest way to install, manage, and upgrade Istio. It provides a vetted upstream distribution of Istio that&amp;rsquo;s tested and optimized for specific platforms by Tetrate plus a CLI that facilitates acquiring, installing, and configuring multiple Istio versions. Tetrate Istio Distro also offers &lt;a href=&#34;https://www.tetrate.io/blog/tetrate-istio-distro-achieves-fips-certification/&#34;&gt;FIPS certified Istio builds&lt;/a&gt; for FedRAMP environments.&lt;/p&gt;
+&lt;p&gt;For enterprises that need a unified and consistent way to secure and manage services and traditional workloads across complex, heterogeneous deployment environments, we offer &lt;a href=&#34;https://www.tetrate.io/tetrate-service-bridge/&#34;&gt;Tetrate Service Bridge&lt;/a&gt;, our flagship edge-to-workload application connectivity platform built on Istio and Envoy.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.tetrate.io/contact/&#34;&gt;Contact us to learn more&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;additional-resources&#34;&gt;Additional Resources&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/apache/skywalking&#34;&gt;SkyWalking Github Repo&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/apache/skywalking-rover&#34;&gt;SkyWalking Rover Github Repo&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://skywalking.apache.org/docs/skywalking-rover/v0.3.0/readme/&#34;&gt;SkyWalking Rover Documentation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://skywalking.apache.org/blog/2022-07-05-pinpoint-service-mesh-critical-performance-impact-by-using-ebpf/&#34;&gt;Pinpoint Service Mesh Critical Performance impact by using eBPF blog post&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=yUF5qRk4rYY&#34;&gt;Apache SkyWalking with Native eBPF Agent presentation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://ebpf.io/what-is-ebpf#hook-overview&#34;&gt;eBPF hook overview&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Blog: Pinpoint Service Mesh Critical Performance Impact by using eBPF</title>
+      <link>/blog/2022-07-05-pinpoint-service-mesh-critical-performance-impact-by-using-ebpf/</link>
+      <pubDate>Tue, 05 Jul 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2022-07-05-pinpoint-service-mesh-critical-performance-impact-by-using-ebpf/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;content&#34;&gt;Content&lt;/h3&gt;
+&lt;h1 id=&#34;background&#34;&gt;Background&lt;/h1&gt;
+&lt;p&gt;&lt;a href=&#34;https://skywalking.apache.org/&#34;&gt;Apache SkyWalking&lt;/a&gt; observes metrics, logs, traces, and events for services deployed into the service mesh. When troubleshooting, SkyWalking error analysis can be an invaluable tool helping to pinpoint where an error occurred. However, performance problems are more difficult: It’s often impossible to locate the root cause of performance problems with pre-existing observation data. To move beyond the status quo, dynamic debugging and troubleshooting are essential service performance tools. In this article, we&amp;rsquo;ll discuss how to use eBPF technology to improve the profiling feature in SkyWalking and analyze the performance impact in the service mesh.&lt;/p&gt;
+&lt;h1 id=&#34;trace-profiling-in-skywalking&#34;&gt;Trace Profiling in SkyWalking&lt;/h1&gt;
+&lt;p&gt;Since SkyWalking 7.0.0, Trace Profiling has helped developers find performance problems by periodically sampling the thread stack to let developers know which lines of code take more time. However, Trace Profiling is not suitable for the following scenarios:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Thread Model&lt;/strong&gt;: Trace Profiling is most useful for profiling code that executes in a single thread. It is less useful for middleware that relies heavily on async execution models. For example Goroutines in Go or Kotlin Coroutines.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Language&lt;/strong&gt;: Currently, Trace Profiling is only supported in Java and Python, since it’s not easy to obtain the thread stack in the runtimes of some languages such as Go and Node.js.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Agent Binding&lt;/strong&gt;: Trace Profiling requires Agent installation, which can be tricky depending on the language (e.g., PHP has to rely on its C kernel; Rust and C/C++ require manual instrumentation to make install).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Trace Correlation&lt;/strong&gt;: Since Trace Profiling is only associated with a single request it can be hard to determine which request is causing the problem.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Short Lifecycle Services&lt;/strong&gt;: Trace Profiling doesn&amp;rsquo;t support short-lived services for (at least) two reasons:
+&lt;ol&gt;
+&lt;li&gt;It&amp;rsquo;s hard to differentiate system performance from class code manipulation in the booting stage.&lt;/li&gt;
+&lt;li&gt;Trace profiling is linked to an endpoint to identify performance impact, but there is no endpoint to match these short-lived services.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Fortunately, there are techniques that can go further than Trace Profiling in these situations.&lt;/p&gt;
+&lt;h1 id=&#34;introduce-ebpf&#34;&gt;Introduce eBPF&lt;/h1&gt;
+&lt;p&gt;We have found that eBPF — a technology that can run sandboxed programs in an operating system kernel and thus safely and efficiently extend the capabilities of the kernel without requiring kernel modifications or loading kernel modules — can help us fill gaps left by Trace Profiling. eBPF is a trending technology because it breaks the traditional barrier between user and kernel space. Programs can now inject bytecode that runs in the kernel, instead of having to recompile the kernel to customize it. This is naturally a good fit for observability.&lt;/p&gt;
+&lt;p&gt;In the figure below, we can see that when the system executes the execve syscalls, the eBPF program is triggered, and the current process runtime information is obtained by using function calls.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;eBPF-hook-points.png&#34; alt=&#34;eBPF Hook Point&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Using eBPF technology, we can expand the scope of Skywalking&amp;rsquo;s profiling capabilities:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Global Performance Analysis&lt;/strong&gt;: Before eBPF, data collection was limited to what agents can observe. Since eBPF programs run in the kernel, they can observe all threads. This is especially useful when you are not sure whether a performance problem is caused by a particular request.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Data Content&lt;/strong&gt;: eBPF can dump both user and kernel space thread stacks, so if a performance issue happens in kernel space, it’s easier to find.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Agent Binding&lt;/strong&gt;: All modern Linux kernels support eBPF, so there is no need to install anything. This means it is an orchestration-free vs an agent model. This reduces friction caused by built-in software which may not have the correct agents installed, such as Envoy in a Service Mesh.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Sampling Type&lt;/strong&gt;: Unlike Trace Profiling, eBPF is event-driven and, therefore, not constrained by interval polling. For example, eBPF can trigger events and collect more data depending on a transfer size threshold. This can allow the system to triage and prioritize data collection under extreme load.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;ebpf-limitations&#34;&gt;eBPF Limitations&lt;/h2&gt;
+&lt;p&gt;While eBPF offers significant advantages for hunting performance bottlenecks, no technology is perfect. eBPF has a number of limitations described below. Fortunately, since SkyWalking does not require eBPF, the impact is limited.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Linux Version Requirement&lt;/strong&gt;: eBPF programs require a Linux kernel version above 4.4, with later kernel versions offering more data to be collected. The BCC has &lt;a href=&#34;https://github.com/iovisor/bcc/blob/13b5563c11f7722a61a17c6ca0a1a387d2fa7788/docs/kernel-versions.md#main-features&#34;&gt;documented the features supported by different Linux kernel versions&lt;/a&gt;, with the differences between versions usually being what data can be collected with eBPF.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Privileges Required&lt;/strong&gt;: All processes that intend to load eBPF programs into the Linux kernel must be running in privileged mode. As such, bugs or other issues in such code may have a big impact.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Weak Support for Dynamic Language&lt;/strong&gt;: eBPF has weak support for JIT-based dynamic languages, such as Java. It also depends on what data you want to collect. For Profiling, eBPF does not support parsing the symbols of the program, which is why most eBPF-based profiling technologies only support static languages like C, C++, Go, and Rust. However, symbol mapping can sometimes be solved through tools provided by the language. For example, in Java, &lt;a href=&#34;https://github.com/jvm-profiling-tools/perf-map-agent#architecture&#34;&gt;perf-map-agent&lt;/a&gt; can be used to generate the symbol mapping. However, dynamic languages don&amp;rsquo;t support the attach (uprobe) functionality that would allow us to trace execution events through symbols.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;introducing-skywalking-rover&#34;&gt;Introducing SkyWalking Rover&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/apache/skywalking-rover&#34;&gt;SkyWalking Rover&lt;/a&gt; introduces the eBPF profiling feature into the SkyWalking ecosystem. The figure below shows the overall architecture of SkyWalking Rover. SkyWalking Rover is currently supported in Kubernetes environments and must be deployed inside a Kubernetes cluster. After establishing a connection with the SkyWalking backend server, it saves information about the processes on the current machine to SkyWalking. When the user creates an eBPF profiling task via the user interface, SkyWalking Rover receives the task and executes it in the relevant C, C++, Golang, and Rust language-based programs.&lt;/p&gt;
+&lt;p&gt;Other than an eBPF-capable kernel, there are no additional prerequisites for deploying SkyWalking Rover.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;architecture.png&#34; alt=&#34;architecture&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;cpu-profiling-with-rover&#34;&gt;CPU Profiling with Rover&lt;/h2&gt;
+&lt;p&gt;CPU profiling is the most intuitive way to show service performance. Inspired by &lt;a href=&#34;https://www.brendangregg.com/offcpuanalysis.html&#34;&gt;Brendan Gregg‘s blog post&lt;/a&gt;, we&amp;rsquo;ve divided CPU profiling into two types that we have implemented in Rover:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;On-CPU Profiling&lt;/strong&gt;: Where threads are spending time running on-CPU.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Off-CPU Profiling&lt;/strong&gt;: Where time is spent waiting while blocked on I/O, locks, timers, paging/swapping, etc.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id=&#34;profiling-envoy-with-ebpf&#34;&gt;Profiling Envoy with eBPF&lt;/h1&gt;
+&lt;p&gt;Envoy is a popular proxy, used as the data plane by the Istio service mesh. In a Kubernetes cluster, Istio injects Envoy into each service’s pod as a sidecar where it transparently intercepts and processes incoming and outgoing traffic. As the data plane, any performance issues in Envoy can affect all service traffic in the mesh. In this scenario, it’s more powerful to use &lt;strong&gt;eBPF profiling&lt;/strong&gt; to analyze issues in production caused by service mesh configuration.&lt;/p&gt;
+&lt;h2 id=&#34;demo-environment&#34;&gt;Demo Environment&lt;/h2&gt;
+&lt;p&gt;If you want to see this scenario in action, we&amp;rsquo;ve built a demo environment where we deploy an Nginx service for stress testing. Traffic is intercepted by Envoy and forwarded to Nginx. The commands to install the whole environment can be accessed through &lt;a href=&#34;https://github.com/mrproliu/skywalking-rover-profiling-demo&#34;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+&lt;h1 id=&#34;on-cpu-profiling&#34;&gt;On-CPU Profiling&lt;/h1&gt;
+&lt;p&gt;On-CPU profiling is suitable for analyzing thread stacks when service CPU usage is high. If the stack is dumped more times, it means that the thread stack occupies more CPU resources.&lt;/p&gt;
+&lt;p&gt;When installing Istio using the demo configuration profile, we found there are two places where we can optimize performance:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Zipkin Tracing&lt;/strong&gt;: Different Zipkin sampling percentages have a direct impact on QPS.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Access Log Format&lt;/strong&gt;: Reducing the fields of the Envoy access log can improve QPS.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;zipkin-tracing&#34;&gt;Zipkin Tracing&lt;/h2&gt;
+&lt;h3 id=&#34;zipkin-with-100-sampling&#34;&gt;Zipkin with 100% sampling&lt;/h3&gt;
+&lt;p&gt;In the default demo configuration profile, Envoy is using 100% sampling as default tracing policy. How does that impact the performance?&lt;/p&gt;
+&lt;p&gt;As shown in the figure below, using the &lt;strong&gt;on-CPU profiling&lt;/strong&gt;, we found that it takes about &lt;strong&gt;16%&lt;/strong&gt; of the CPU overhead. At a fixed consumption of &lt;strong&gt;2 CPUs&lt;/strong&gt;, its QPS can reach &lt;strong&gt;5.7K&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;zipkin-sampling-100.png&#34; alt=&#34;Zipkin with 100% sampling&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;disable-zipkin-tracing&#34;&gt;Disable Zipkin tracing&lt;/h3&gt;
+&lt;p&gt;At this point, we found that if Zipkin is not necessary, the sampling percentage can be reduced or we can even disable tracing. Based on the &lt;a href=&#34;https://istio.io/latest/docs/reference/config/istio.mesh.v1alpha1/#Tracing&#34;&gt;Istio documentation&lt;/a&gt;, we can disable tracing when installing the service mesh using the following command:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;istioctl install -y --set &lt;span style=&#34;color:#008080&#34;&gt;profile&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;demo &lt;span style=&#34;color:#d14&#34;&gt;\
+&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&lt;/span&gt;   --set &lt;span style=&#34;color:#d14&#34;&gt;&amp;#39;meshConfig.enableTracing=false&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#d14&#34;&gt;\
+&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&lt;/span&gt;   --set &lt;span style=&#34;color:#d14&#34;&gt;&amp;#39;meshConfig.defaultConfig.tracing.sampling=0.0&amp;#39;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;After disabling tracing, we performed on-CPU profiling again. According to the figure below, we found that Zipkin has disappeared from the flame graph. With the same &lt;strong&gt;2 CPU&lt;/strong&gt; consumption as in the previous example, the QPS reached &lt;strong&gt;9K&lt;/strong&gt;, which is an almost &lt;strong&gt;60%&lt;/strong&gt; increase.
+&lt;img src=&#34;zipkin-disable-tracing.png&#34; alt=&#34;Disable Zipkin tracing&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;tracing-with-throughput&#34;&gt;Tracing with Throughput&lt;/h3&gt;
+&lt;p&gt;With the same CPU usage, we&amp;rsquo;ve discovered that Envoy performance greatly improves when the tracing feature is disabled. Of course, this requires us to make trade-offs between the number of samples Zipkin collects and the desired performance of Envoy (QPS).&lt;/p&gt;
+&lt;p&gt;The table below illustrates how different Zipkin sampling percentages under the same CPU usage affect QPS.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Zipkin sampling %&lt;/th&gt;
+&lt;th&gt;QPS&lt;/th&gt;
+&lt;th&gt;CPUs&lt;/th&gt;
+&lt;th&gt;Note&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;100% &lt;strong&gt;(default)&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;5.7K&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;16% used by Zipkin&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;1%&lt;/td&gt;
+&lt;td&gt;8.1K&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;0.3% used by Zipkin&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;disabled&lt;/td&gt;
+&lt;td&gt;9.2K&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;0% used by Zipkin&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&#34;access-log-format&#34;&gt;Access Log Format&lt;/h2&gt;
+&lt;h3 id=&#34;default-log-format&#34;&gt;Default Log Format&lt;/h3&gt;
+&lt;p&gt;In the default demo configuration profile, &lt;a href=&#34;https://istio.io/latest/docs/tasks/observability/logs/access-log/#default-access-log-format&#34;&gt;the default Access Log format&lt;/a&gt; contains a lot of data. The flame graph below shows various functions involved in parsing the data such as request headers, response headers, and streaming the body.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;log-format-default.png&#34; alt=&#34;Default Log Format&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;simplifying-access-log-format&#34;&gt;Simplifying Access Log Format&lt;/h3&gt;
+&lt;p&gt;Typically, we don’t need all the information in the access log, so we can often simplify it to get what we need. The following command simplifies the access log format to only display basic information:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;istioctl install -y --set &lt;span style=&#34;color:#008080&#34;&gt;profile&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;demo &lt;span style=&#34;color:#d14&#34;&gt;\
+&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&lt;/span&gt;   --set meshConfig.accessLogFormat&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;[%START_TIME%] \&amp;#34;%REQ(:METHOD)% %REQ(X-ENVOY-ORIGINAL-PATH?:PATH)% %PROTOCOL%\&amp;#34; %RESPONSE_CODE%\n&amp;#34;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;After simplifying the access log format, we found that the QPS increased from &lt;strong&gt;5.7K&lt;/strong&gt; to &lt;strong&gt;5.9K&lt;/strong&gt;. When executing the on-CPU profiling again, the CPU usage of log formatting dropped from &lt;strong&gt;2.4%&lt;/strong&gt; to &lt;strong&gt;0.7%&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Simplifying the log format helped us to improve the performance.&lt;/p&gt;
+&lt;h1 id=&#34;off-cpu-profiling&#34;&gt;Off-CPU Profiling&lt;/h1&gt;
+&lt;p&gt;Off-CPU profiling is suitable for performance issues that are not caused by high CPU usage. For example, when there are too many threads in one service, using off-CPU profiling could reveal which threads spend more time context switching.&lt;/p&gt;
+&lt;p&gt;We provide data aggregation in two dimensions:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Switch count&lt;/strong&gt;: The number of times a thread switches context. When the thread returns to the CPU, it completes one context switch. A thread stack with a higher switch count spends more time context switching.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Switch duration&lt;/strong&gt;: The time it takes a thread to switch the context. A thread stack with a higher switch duration spends more time off-CPU.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;write-access-log&#34;&gt;Write Access Log&lt;/h2&gt;
+&lt;h3 id=&#34;enable-write&#34;&gt;Enable Write&lt;/h3&gt;
+&lt;p&gt;Using the same environment and settings as before in the on-CPU test, we performed off-CPU profiling. As shown below, we found that access log writes accounted for about &lt;strong&gt;28%&lt;/strong&gt; of the total context switches. The &amp;ldquo;__write&amp;rdquo; shown below also indicates that this method is the Linux kernel method.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;access-log-write-enable.png&#34; alt=&#34;Enable Write Access Log&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;disable-write&#34;&gt;Disable Write&lt;/h3&gt;
+&lt;p&gt;SkyWalking implements Envoy&amp;rsquo;s Access Log Service (ALS) feature which allows us to send access logs to the SkyWalking Observability Analysis Platform (OAP) using the gRPC protocol. Even by disabling the access logging, we can still use ALS to capture/aggregate the logs. We&amp;rsquo;ve disabled writing to the access log using the following command:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;istioctl install -y --set &lt;span style=&#34;color:#008080&#34;&gt;profile&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;demo --set meshConfig.accessLogFile&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;After disabling the Access Log feature, we performed the off-CPU profiling. File writing entries have disappeared as shown in the figure below. Envoy throughput also increased from &lt;strong&gt;5.7K&lt;/strong&gt; to &lt;strong&gt;5.9K&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;access-log-write-disable.png&#34; alt=&#34;Disable Write Access Log&#34;&gt;&lt;/p&gt;
+&lt;h1 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h1&gt;
+&lt;p&gt;In this article, we&amp;rsquo;ve examined the insights Apache Skywalking&amp;rsquo;s Trace Profiling can give us and how much more can be achieved with eBPF profiling. All of these features are implemented in &lt;a href=&#34;https://github.com/apache/skywalking-rover&#34;&gt;skywalking-rover&lt;/a&gt;. In addition to on- and off-CPU profiling, you will also find the following features:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Continuous profiling&lt;/strong&gt;, helps you automatically profile without manual intervention. For example, when Rover detects that the CPU exceeds a configurable threshold, it automatically executes the on-CPU profiling task.&lt;/li&gt;
+&lt;li&gt;More profiling types to enrich usage scenarios, such as network, and memory profiling.&lt;/li&gt;
+&lt;/ol&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>
