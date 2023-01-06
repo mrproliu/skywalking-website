@@ -1,12 +1,18 @@
 <script>
-  initBanner();
+  initUISwiper();
   openDemoDropdown();
 
-  function initBanner() {
-    $('.banner-nav li').click(function () {
-      var index = $(this).index();
-      $(this).addClass('active').siblings().removeClass('active');
-      $('.banner-wrapper .img-item').eq(index).fadeIn().siblings().fadeOut();
+  function initUISwiper() {
+    new Swiper('.ui-swiper-container', {
+      loop: true,
+      effect: 'fade',
+      autoplay: {
+        delay: 3000,
+      },
+      navigation: {
+        nextEl: '.ui-swiper-button-next',
+        prevEl: '.ui-swiper-button-prev',
+      },
     });
   }
 

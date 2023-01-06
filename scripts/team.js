@@ -9,8 +9,7 @@ const docsFile = path.join(__dirname, '../data/docs.yml')
 const teamFile = path.join(__dirname, '../data/team.yml')
 const mergedDataFile = path.join(__dirname, '../themes/docsy/static/js/mergedData.js')
 
-const sleep = (ms = 4 * 1000) => {
-  console.log('waiting...');
+const sleep = (ms) => {
   return new Promise(resolve => setTimeout(() => resolve(), ms));
 }
 
@@ -47,7 +46,7 @@ class GenerateTeamYaml {
           promiseList.push(this.getRepoContributors({user, repo, extraContributors, list, item}));
           mergedPromiseList.push(this.getMergedData({user, repo}));
         }
-        await sleep()
+        await sleep(1500)
       }
     }
     await Promise.all(promiseList)
@@ -87,7 +86,7 @@ class GenerateTeamYaml {
         } else {
           console.log(`${user}/${repo}/graphs: res.status ${status}!`);
           if (count < NUM) {
-            await sleep()
+            await sleep(1000)
             await getContributionsGraphs()
           }
 
@@ -95,7 +94,6 @@ class GenerateTeamYaml {
       } catch (e) {
         console.log(`${user}/${repo}/`, e);
         if (count < NUM) {
-          await sleep()
           await getContributionsGraphs()
         }
       }
@@ -197,8 +195,6 @@ class GenerateTeamYaml {
     list.push(...data);
     if (data.length === per_page) {
       page++;
-      await sleep()
-      console.log(`/${user}/${repo}/contributors?page=${page}`)
       await this.getRepoContributors({user, repo, extraContributors, page, per_page, list, item})
     } else {
       if (extraContributors && extraContributors.length) {
