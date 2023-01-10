@@ -961,7 +961,15 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/main/next/en/setup/envoy/als_setting">Observe Service Mesh</a>
+            <a href="/docs/main/next/en/setup/envoy/als_setting">Observe Service Mesh through Access Log Service (ALS)</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/zipkin/tracing">Observe Service Mesh through Zipkin traces</a>
         
     </li>
 
@@ -1726,7 +1734,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 2b40270</div>
+                  <div class="commit-id">Commit Id: 9e8081d</div>
                 
 
 
@@ -1783,7 +1791,7 @@ SkyWalking integrates its MicroMeter 1.10 APIs so that it can send metrics to th
 </span><span style="color:#bbb">  </span><span style="color:#000080">default</span>:<span style="color:#bbb">
 </span></code></pre></div><ol start="2">
 <li>
-<p>Configure the meter config file. It already has the <a href="https://github.com/apache/skywalking/tree/2b40270f711900917252591f16f095f46b6c79ac/oap-server/server-starter/src/main/resources/meter-analyzer-config/spring-micrometer.yaml">spring sleuth meter config</a>.
+<p>Configure the meter config file. It already has the <a href="https://github.com/apache/skywalking/tree/9e8081dea4871c299fdff6130d5888560126b4ea/oap-server/server-starter/src/main/resources/meter-analyzer-config/spring-micrometer.yaml">spring sleuth meter config</a>.
 If you have a customized meter at the agent side, please configure the meter using the steps set out in the <a href="../backend-meter#meters-configure">meter document</a>.</p>
 </li>
 <li>
@@ -1962,6 +1970,8 @@ the <a href="../../../ui/readme#metrics">customized dashboard documentation</a> 
 
     </div>
     
+
+
 
 
 
