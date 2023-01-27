@@ -386,7 +386,65 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/skywalking-java/next/en/setup/service-agent/java-agent/application-toolkit-trace">Tracing APIs</a>
+
+            
+            <a href="#">Tracing APIs<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-java/next/en/setup/service-agent/java-agent/application-toolkit-dependency">Add Trace Toolkit Dependencies</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-java/next/en/setup/service-agent/java-agent/application-toolkit-tracer">Use Native Tracer</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-java/next/en/setup/service-agent/java-agent/application-toolkit-trace-read-context">Read Tracing Context</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-java/next/en/setup/service-agent/java-agent/application-toolkit-trace-annotation">Annotations</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-java/next/en/setup/service-agent/java-agent/application-toolkit-trace-correlation-context">Use Correlation Context</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-java/next/en/setup/service-agent/java-agent/application-toolkit-trace-cross-thread">Across Thread Solution</a>
+        
+    </li>
+
+    
+
+</ul>
+
         
     </li>
 
@@ -403,14 +461,6 @@ if (!doNotTrack) {
     <li>
         
             <a href="/docs/skywalking-java/next/en/setup/service-agent/java-agent/application-toolkit-meter">Meter APIs</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/skywalking-java/next/en/setup/service-agent/java-agent/application-toolkit-trace-cross-thread">Across Thread Solution</a>
         
     </li>
 
@@ -679,7 +729,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: f366503</div>
+                  <div class="commit-id">Commit Id: 8a7fe75</div>
                 
 
 
@@ -729,7 +779,7 @@ at the same time, the SkyWalking backend is in another region (VPC).</p>
 <h2 id="creating-ssltls-certificates">Creating SSL/TLS Certificates</h2>
 <p>The first step is to generate certificates and key files for encrypting communication. This is
 fairly straightforward: use <code>openssl</code> from the command line.</p>
-<p>Use this <a href="https://github.com/apache/skywalking-java/tree/f366503d58aa7e3395d88f6c70e6ea885fc50d2e/tools/TLS/tls_key_generate.sh">script</a> if you are not familiar with how to generate key files.</p>
+<p>Use this <a href="https://github.com/apache/skywalking-java/tree/8a7fe75624b8bc10b1ee7ebfb3f3ae04bcf7d597/tools/TLS/tls_key_generate.sh">script</a> if you are not familiar with how to generate key files.</p>
 <p>We need the following files:</p>
 <ul>
 <li><code>client.pem</code>: A private RSA key to sign and authenticate the public key. It&rsquo;s either a PKCS#8(PEM) or PKCS#1(DER).</li>
@@ -925,6 +975,18 @@ collector.backend_service=${SW_AGENT_COLLECTOR_BACKEND_SERVICES:skywalking-oap:1
 
     </div>
     
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
