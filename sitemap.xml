@@ -3433,6 +3433,12 @@
   </url>
   
   <url>
+    <loc>/docs/skywalking-banyandb/next/concept/wal/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/blog/</loc>
     <lastmod>2023-01-12T10:24:03+08:00</lastmod>
     <changefreq>daily</changefreq>
@@ -5591,13 +5597,13 @@
   </url>
   
   <url>
-    <loc>/docs/skywalking-python/next/en/setup/faq/how-to-use-with-uwsgi/</loc>
+    <loc>/docs/skywalking-python/v0.8.0/en/setup/faq/how-to-use-with-uwsgi/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>/docs/skywalking-python/v0.8.0/en/setup/faq/how-to-use-with-uwsgi/</loc>
+    <loc>/docs/skywalking-python/next/en/setup/faq/how-to-use-with-uwsgi/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
@@ -10047,6 +10053,12 @@
   
   <url>
     <loc>/docs/skywalking-java/v8.9.0/en/faq/ext-dirs/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/docs/main/next/en/setup/backend/backend-win-monitoring/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
