@@ -7499,6 +7499,12 @@
   </url>
   
   <url>
+    <loc>/docs/main/next/en/api/promql-service/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/docs/skywalking-banyandb/next/api-reference/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
@@ -9632,6 +9638,12 @@
   
   <url>
     <loc>/docs/skywalking-java/next/en/setup/service-agent/java-agent/application-toolkit-trace-annotation/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/docs/main/next/en/setup/backend/ui-grafana/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
