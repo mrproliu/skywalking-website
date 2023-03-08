@@ -21,21 +21,21 @@
 <meta name="theme-color" content="#ffffff">
 
 <title>9.4.0 | Apache SkyWalking</title><meta property="og:title" content="9.4.0" />
-<meta property="og:description" content="9.4.0 Project  Bump up Zipkin and Zipkin lens UI dependency to 2.24.0. Bump up Apache parent pom version to 29. Bump up Armeria version to 1.21.0. Clean up maven pom.xmls. Bump up Java version to 11.  OAP Server  Add ServerStatusService in the core module to provide a new way to expose booting status to other modules. Adds Micrometer as a new component.(ID=141) Refactor session cache in MetricsPersistentWorker. Cache enhancement - don&rsquo;t read new metrics from database in minute dimensionality." />
+<meta property="og:description" content="9.4.0 Project  Bump up Zipkin and Zipkin lens UI dependency to 2.24.0. Bump up Apache parent pom version to 29. Bump up Armeria version to 1.21.0. Clean up maven pom.xmls. Bump up Java version to 11. Bump up snakeyaml to 2.0.  OAP Server  Add ServerStatusService in the core module to provide a new way to expose booting status to other modules. Adds Micrometer as a new component.(ID=141) Refactor session cache in MetricsPersistentWorker." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/docs/main/next/en/changes/changes/" />
 
 <meta itemprop="name" content="9.4.0">
-<meta itemprop="description" content="9.4.0 Project  Bump up Zipkin and Zipkin lens UI dependency to 2.24.0. Bump up Apache parent pom version to 29. Bump up Armeria version to 1.21.0. Clean up maven pom.xmls. Bump up Java version to 11.  OAP Server  Add ServerStatusService in the core module to provide a new way to expose booting status to other modules. Adds Micrometer as a new component.(ID=141) Refactor session cache in MetricsPersistentWorker. Cache enhancement - don&rsquo;t read new metrics from database in minute dimensionality.">
+<meta itemprop="description" content="9.4.0 Project  Bump up Zipkin and Zipkin lens UI dependency to 2.24.0. Bump up Apache parent pom version to 29. Bump up Armeria version to 1.21.0. Clean up maven pom.xmls. Bump up Java version to 11. Bump up snakeyaml to 2.0.  OAP Server  Add ServerStatusService in the core module to provide a new way to expose booting status to other modules. Adds Micrometer as a new component.(ID=141) Refactor session cache in MetricsPersistentWorker.">
 
-<meta itemprop="wordCount" content="1258">
+<meta itemprop="wordCount" content="1286">
 
 
 
 <meta itemprop="keywords" content="" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="9.4.0"/>
-<meta name="twitter:description" content="9.4.0 Project  Bump up Zipkin and Zipkin lens UI dependency to 2.24.0. Bump up Apache parent pom version to 29. Bump up Armeria version to 1.21.0. Clean up maven pom.xmls. Bump up Java version to 11.  OAP Server  Add ServerStatusService in the core module to provide a new way to expose booting status to other modules. Adds Micrometer as a new component.(ID=141) Refactor session cache in MetricsPersistentWorker. Cache enhancement - don&rsquo;t read new metrics from database in minute dimensionality."/>
+<meta name="twitter:description" content="9.4.0 Project  Bump up Zipkin and Zipkin lens UI dependency to 2.24.0. Bump up Apache parent pom version to 29. Bump up Armeria version to 1.21.0. Clean up maven pom.xmls. Bump up Java version to 11. Bump up snakeyaml to 2.0.  OAP Server  Add ServerStatusService in the core module to provide a new way to expose booting status to other modules. Adds Micrometer as a new component.(ID=141) Refactor session cache in MetricsPersistentWorker."/>
 
 <script type="application/javascript">
 var doNotTrack = false;
@@ -1828,7 +1828,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 4274b6e</div>
+                  <div class="commit-id">Commit Id: 1c644ba</div>
                 
 
 
@@ -1880,6 +1880,7 @@ if (!doNotTrack) {
 <li>Bump up Armeria version to 1.21.0.</li>
 <li>Clean up maven <code>pom.xml</code>s.</li>
 <li>Bump up Java version to 11.</li>
+<li>Bump up snakeyaml to 2.0.</li>
 </ul>
 <h4 id="oap-server">OAP Server</h4>
 <ul>
@@ -1976,6 +1977,7 @@ support. By following AWS Firehose request, it uses <a href="https://en.wikipedi
 <li>Add explicit <code>ReadTimeout</code> for ConsulConfigurationWatcher to avoid <code>IllegalArgumentException: Cache watchInterval=10sec &gt;= networkClientReadTimeout=10000ms</code>.</li>
 <li>Fix <code>DurationUtils.getDurationPoints</code> exceed, when <code>startTimeBucket</code> equals <code>endTimeBucket</code>.</li>
 <li>Support process OpenTelemetry ExponentialHistogram metrics</li>
+<li>Add FreeRedis component ID(3018).</li>
 </ul>
 <h4 id="ui">UI</h4>
 <ul>
@@ -2006,13 +2008,15 @@ support. By following AWS Firehose request, it uses <a href="https://en.wikipedi
 <li>Fix: remove duplicate popup message for query result.</li>
 <li>Add logo for HTTPX.</li>
 <li>Refactor: optimize the attached events visualization in the trace widget.</li>
-<li>Update BanyanDB client to 0.3.0.</li>
+<li>Update BanyanDB client to 0.3.1.</li>
 <li>Add AWS DynamoDB menu.</li>
 <li>Fix: add auto period to the independent mode for widgets.</li>
 <li>Optimize menus and add Windows monitoring menu.</li>
 <li>Add a calculation for the cpm5dAvg.</li>
 <li>add a cpm5d calculation.</li>
 <li>Fix data processing error in the eBPF profiling widget.</li>
+<li>Support for double quotes in SlowSQL statements.</li>
+<li>Fix: the wrong position of the menu when clicking the topology node.</li>
 </ul>
 <h4 id="documentation">Documentation</h4>
 <ul>
