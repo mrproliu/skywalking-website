@@ -5741,6 +5741,12 @@
   </url>
   
   <url>
+    <loc>/docs/skywalking-php/next/en/configuration/ini-settings/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/docs/main/next/en/setup/backend/backend-init-mode/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
