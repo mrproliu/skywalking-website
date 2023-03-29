@@ -32,7 +32,7 @@ The alerting core is driven by a collection of rules defined in config/alarm-set
 The alerting core is driven by a collection of rules defined in config/alarm-settings.yml. There are three parts to alerting rule definitions.
  alerting rules. They define how metrics alerting should be triggered and what conditions should be considered. Webhooks. The list of web service endpoints, which should be called after an alerting is triggered.">
 
-<meta itemprop="wordCount" content="2194">
+<meta itemprop="wordCount" content="2195">
 
 
 
@@ -1834,7 +1834,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: ffc8453</div>
+                  <div class="commit-id">Commit Id: 886589c</div>
                 
 
 
@@ -1925,7 +1925,7 @@ The four label settings mentioned above must implement <code>LabeledValueHolder<
 For multiple-value metrics, such as <strong>percentile</strong>, the threshold is an array. It is described as:  <code>value1, value2, value3, value4, value5</code>.
 Each value may serve as the threshold for each value of the metrics. Set the value to <code>-</code> if you do not wish to trigger the Alarm by one or more of the values.<br>
 For example, in <strong>percentile</strong>, <code>value1</code> is the threshold of P50, and <code>-, -, value3, value4, value5</code> means that there is no threshold for P50 and P75 in the percentile alarm rule.</li>
-<li><strong>OP</strong>. The operator. It supports <code>&gt;</code>, <code>&gt;=</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>==</code>. We welcome contributions of all OPs.</li>
+<li><strong>OP</strong>. The operator. It supports <code>&gt;</code>, <code>&gt;=</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>==</code>, <code>!=</code>. We welcome contributions of all OPs.</li>
 <li><strong>Period</strong>. The size of metrics cache in minutes for checking the alarm conditions. This is a time window that corresponds to the backend deployment env time.</li>
 <li><strong>Count</strong>. Within a period window, if the number of times which <strong>value</strong> goes over the threshold (based on OP) reaches <code>count</code>, then an alarm will be sent.</li>
 <li><strong>Only as condition</strong>. Indicates if the rule can send notifications or if it simply serves as a condition of the composite rule.</li>

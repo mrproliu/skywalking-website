@@ -20,25 +20,28 @@
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
 
-<title>Use `TraceContext.putCorrelation()` API to put custom data in tracing context. | Apache SkyWalking</title><meta property="og:title" content="Use `TraceContext.putCorrelation()` API to put custom data in tracing context." />
-<meta property="og:description" content="Use TraceContext.putCorrelation() API to put custom data in tracing context.  Optional&lt;String&gt; previous = TraceContext.putCorrelation(&#34;customKey&#34;, &#34;customValue&#34;); CorrelationContext will remove the item when the value is null or empty.
- Use TraceContext.getCorrelation() API to get custom data.  Optional&lt;String&gt; value = TraceContext.getCorrelation(&#34;customKey&#34;); CorrelationContext configuration descriptions could be found in the agent configuration documentation, with correlation. as the prefix. Sample codes only" />
+<title>Trace Correlation Context | Apache SkyWalking</title><meta property="og:title" content="Trace Correlation Context" />
+<meta property="og:description" content="Trace Correlation Context Trace correlation context APIs provide a way to put custom data in tracing context. All the data in the context will be propagated with the in-wire process automatically.
+ Use TraceContext.putCorrelation() API to put custom data in tracing context.  Optional&lt;String&gt; previous = TraceContext.putCorrelation(&#34;customKey&#34;, &#34;customValue&#34;); CorrelationContext will remove the item when the value is null or empty.
+ Use TraceContext.getCorrelation() API to get custom data.  Optional&lt;String&gt; value = TraceContext." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/docs/skywalking-java/next/en/setup/service-agent/java-agent/application-toolkit-trace-correlation-context/" />
 
-<meta itemprop="name" content="Use `TraceContext.putCorrelation()` API to put custom data in tracing context.">
-<meta itemprop="description" content="Use TraceContext.putCorrelation() API to put custom data in tracing context.  Optional&lt;String&gt; previous = TraceContext.putCorrelation(&#34;customKey&#34;, &#34;customValue&#34;); CorrelationContext will remove the item when the value is null or empty.
- Use TraceContext.getCorrelation() API to get custom data.  Optional&lt;String&gt; value = TraceContext.getCorrelation(&#34;customKey&#34;); CorrelationContext configuration descriptions could be found in the agent configuration documentation, with correlation. as the prefix. Sample codes only">
+<meta itemprop="name" content="Trace Correlation Context">
+<meta itemprop="description" content="Trace Correlation Context Trace correlation context APIs provide a way to put custom data in tracing context. All the data in the context will be propagated with the in-wire process automatically.
+ Use TraceContext.putCorrelation() API to put custom data in tracing context.  Optional&lt;String&gt; previous = TraceContext.putCorrelation(&#34;customKey&#34;, &#34;customValue&#34;); CorrelationContext will remove the item when the value is null or empty.
+ Use TraceContext.getCorrelation() API to get custom data.  Optional&lt;String&gt; value = TraceContext.">
 
-<meta itemprop="wordCount" content="57">
+<meta itemprop="wordCount" content="88">
 
 
 
 <meta itemprop="keywords" content="" />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Use `TraceContext.putCorrelation()` API to put custom data in tracing context."/>
-<meta name="twitter:description" content="Use TraceContext.putCorrelation() API to put custom data in tracing context.  Optional&lt;String&gt; previous = TraceContext.putCorrelation(&#34;customKey&#34;, &#34;customValue&#34;); CorrelationContext will remove the item when the value is null or empty.
- Use TraceContext.getCorrelation() API to get custom data.  Optional&lt;String&gt; value = TraceContext.getCorrelation(&#34;customKey&#34;); CorrelationContext configuration descriptions could be found in the agent configuration documentation, with correlation. as the prefix. Sample codes only"/>
+<meta name="twitter:title" content="Trace Correlation Context"/>
+<meta name="twitter:description" content="Trace Correlation Context Trace correlation context APIs provide a way to put custom data in tracing context. All the data in the context will be propagated with the in-wire process automatically.
+ Use TraceContext.putCorrelation() API to put custom data in tracing context.  Optional&lt;String&gt; previous = TraceContext.putCorrelation(&#34;customKey&#34;, &#34;customValue&#34;); CorrelationContext will remove the item when the value is null or empty.
+ Use TraceContext.getCorrelation() API to get custom data.  Optional&lt;String&gt; value = TraceContext."/>
 
 <script type="application/javascript">
 var doNotTrack = false;
@@ -67,7 +70,7 @@ if (!doNotTrack) {
 
 
 
-    <title>Use `TraceContext.putCorrelation()` API to put custom data in tracing context. | Apache SkyWalking</title>
+    <title>Trace Correlation Context | Apache SkyWalking</title>
   </head>
   <body class="td-page  project-doc">
     <header>
@@ -446,7 +449,7 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/skywalking-java/next/en/setup/service-agent/java-agent/opentracing">OpenTracing Tracer</a>
+            <a href="/docs/skywalking-java/next/en/setup/service-agent/java-agent/opentracing">OpenTracing (Deprecated)</a>
         
     </li>
 
@@ -731,7 +734,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: e91514c</div>
+                  <div class="commit-id">Commit Id: db7a14d</div>
                 
 
 
@@ -770,7 +773,10 @@ if (!doNotTrack) {
 
 
 
-	<ul>
+	<h1 id="trace-correlation-context">Trace Correlation Context</h1>
+<p>Trace correlation context APIs provide a way to put custom data in tracing context. All the data in
+the context will be propagated with the in-wire process automatically.</p>
+<ul>
 <li>Use <code>TraceContext.putCorrelation()</code> API to put custom data in tracing context.</li>
 </ul>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">Optional<span style="color:#000;font-weight:bold">&lt;</span>String<span style="color:#000;font-weight:bold">&gt;</span> previous <span style="color:#000;font-weight:bold">=</span> TraceContext<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">putCorrelation</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;customKey&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#d14">&#34;customValue&#34;</span><span style="color:#000;font-weight:bold">);</span>
