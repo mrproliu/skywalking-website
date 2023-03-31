@@ -30,7 +30,7 @@ SkyWalking also provides InfluxDB Telegraf to receive VMs&#39; metrics data by T
 <meta itemprop="description" content="Linux Monitoring SkyWalking leverages Prometheus node-exporter to collect metrics data from the VMs and leverages OpenTelemetry Collector to transfer the metrics to OpenTelemetry receiver and into the Meter System. VM entity as a Service in OAP and on the Layer: OS_LINUX.
 SkyWalking also provides InfluxDB Telegraf to receive VMs&#39; metrics data by Telegraf receiver. The telegraf receiver plugin receiver, process and convert the metrics, then it send converted metrics to Meter System.">
 
-<meta itemprop="wordCount" content="555">
+<meta itemprop="wordCount" content="558">
 
 
 
@@ -814,6 +814,48 @@ if (!doNotTrack) {
     <li>
         
             <a href="/docs/main/next/en/setup/backend/on-demand-pod-log">On Demand Pod Logs</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
+            <a href="#">Profiling<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/backend-trace-profiling">Tracing Profiling</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/backend-ebpf-profiling">eBPF Profiling</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/backend-continuous-profiling">Continuous Profiling</a>
         
     </li>
 
@@ -1831,7 +1873,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 886589c</div>
+                  <div class="commit-id">Commit Id: 6d432c3</div>
                 
 
 
@@ -1901,7 +1943,7 @@ VM entity as a <code>Service</code> in OAP and on the <code>Layer: OS_LINUX</cod
 <p><strong>For OpenTelemetry receiver:</strong></p>
 <ol>
 <li>Setup <a href="https://prometheus.io/docs/guides/node-exporter/">Prometheus node-exporter</a>.</li>
-<li>Setup <a href="https://opentelemetry.io/docs/collector/">OpenTelemetry Collector </a>. This is an example for OpenTelemetry Collector configuration <a href="https://github.com/apache/skywalking/tree/886589c15c6225d18e7ca170a814f94bcf0abbff/test/e2e-v2/cases/vm/prometheus-node-exporter/otel-collector-config.yaml">otel-collector-config.yaml</a>.</li>
+<li>Setup <a href="https://opentelemetry.io/docs/collector/">OpenTelemetry Collector </a>. This is an example for OpenTelemetry Collector configuration <a href="https://github.com/apache/skywalking/tree/6d432c31f21cb0345e3f2f3e2955506cc829bb85/test/e2e-v2/cases/vm/prometheus-node-exporter/otel-collector-config.yaml">otel-collector-config.yaml</a>.</li>
 <li>Config SkyWalking <a href="../opentelemetry-receiver">OpenTelemetry receiver</a>.</li>
 </ol>
 <p><strong>For Telegraf receiver:</strong></p>
@@ -1960,8 +2002,8 @@ VM entity as a <code>Service</code> in OAP and on the <code>Layer: OS_LINUX</cod
 <tr>
 <td>Memory RAM</td>
 <td>MB</td>
-<td>meter_vm_memory_total<br />meter_vm_memory_available<br />meter_vm_memory_used</td>
-<td>The RAM statistics, including Total / Available / Used</td>
+<td>meter_vm_memory_total<br />meter_vm_memory_available<br />meter_vm_memory_used /&gt;meter_vm_memory_buff_cache</td>
+<td>The RAM statistics, including Total / Available / Used / Buff-Cache</td>
 <td>Prometheus node-exporter<br />Telegraf input plugin</td>
 </tr>
 <tr>
@@ -2173,6 +2215,12 @@ The dashboard panel confirmations are found in <code>/config/ui-initialized-temp
 
     </div>
     
+
+
+
+
+
+
 
 
 

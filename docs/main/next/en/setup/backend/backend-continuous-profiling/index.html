@@ -20,22 +20,25 @@
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
 
-<title>Thread dump merging mechanism | Apache SkyWalking</title><meta property="og:title" content="Thread dump merging mechanism" />
-<meta property="og:description" content="Thread dump merging mechanism The performance profile is an enhancement feature in the APM system. We are using the thread dump to estimate the method execution time, rather than adding multiple local spans. In this way, the resource cost would be much less than using distributed tracing to locate slow method. This feature is suitable in the production environment. This document introduces how thread dumps are merged into the final report as a stack tree(s)." />
+<title>Continuous Profiling | Apache SkyWalking</title><meta property="og:title" content="Continuous Profiling" />
+<meta property="og:description" content="Continuous Profiling Continuous profiling utilizes eBPF, process monitoring, and other technologies to collect data. When the configured threshold is met, it would automatically start profiling tasks. Corresponds to Continuous Profiling in the concepts and designs. This approach helps identify performance bottlenecks and potential issues in a proactive manner, allowing users to optimize their applications and systems more effectively.
+Active in the OAP Continuous profiling uses the same protocol service as eBPF Profiling, so you only need to ensure that the eBPF Profiling receiver is running." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/docs/main/next/en/guides/backend-profile/" />
+<meta property="og:url" content="/docs/main/next/en/setup/backend/backend-continuous-profiling/" />
 
-<meta itemprop="name" content="Thread dump merging mechanism">
-<meta itemprop="description" content="Thread dump merging mechanism The performance profile is an enhancement feature in the APM system. We are using the thread dump to estimate the method execution time, rather than adding multiple local spans. In this way, the resource cost would be much less than using distributed tracing to locate slow method. This feature is suitable in the production environment. This document introduces how thread dumps are merged into the final report as a stack tree(s).">
+<meta itemprop="name" content="Continuous Profiling">
+<meta itemprop="description" content="Continuous Profiling Continuous profiling utilizes eBPF, process monitoring, and other technologies to collect data. When the configured threshold is met, it would automatically start profiling tasks. Corresponds to Continuous Profiling in the concepts and designs. This approach helps identify performance bottlenecks and potential issues in a proactive manner, allowing users to optimize their applications and systems more effectively.
+Active in the OAP Continuous profiling uses the same protocol service as eBPF Profiling, so you only need to ensure that the eBPF Profiling receiver is running.">
 
-<meta itemprop="wordCount" content="566">
+<meta itemprop="wordCount" content="633">
 
 
 
 <meta itemprop="keywords" content="" />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Thread dump merging mechanism"/>
-<meta name="twitter:description" content="Thread dump merging mechanism The performance profile is an enhancement feature in the APM system. We are using the thread dump to estimate the method execution time, rather than adding multiple local spans. In this way, the resource cost would be much less than using distributed tracing to locate slow method. This feature is suitable in the production environment. This document introduces how thread dumps are merged into the final report as a stack tree(s)."/>
+<meta name="twitter:title" content="Continuous Profiling"/>
+<meta name="twitter:description" content="Continuous Profiling Continuous profiling utilizes eBPF, process monitoring, and other technologies to collect data. When the configured threshold is met, it would automatically start profiling tasks. Corresponds to Continuous Profiling in the concepts and designs. This approach helps identify performance bottlenecks and potential issues in a proactive manner, allowing users to optimize their applications and systems more effectively.
+Active in the OAP Continuous profiling uses the same protocol service as eBPF Profiling, so you only need to ensure that the eBPF Profiling receiver is running."/>
 
 <script type="application/javascript">
 var doNotTrack = false;
@@ -64,7 +67,7 @@ if (!doNotTrack) {
 
 
 
-    <title>Thread dump merging mechanism | Apache SkyWalking</title>
+    <title>Continuous Profiling | Apache SkyWalking</title>
   </head>
   <body class="td-page  project-doc">
     <header>
@@ -811,6 +814,48 @@ if (!doNotTrack) {
     <li>
         
             <a href="/docs/main/next/en/setup/backend/on-demand-pod-log">On Demand Pod Logs</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
+            <a href="#">Profiling<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/backend-trace-profiling">Tracing Profiling</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/backend-ebpf-profiling">eBPF Profiling</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/backend-continuous-profiling">Continuous Profiling</a>
         
     </li>
 
@@ -1828,7 +1873,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 886589c</div>
+                  <div class="commit-id">Commit Id: 6d432c3</div>
                 
 
 
@@ -1872,65 +1917,95 @@ if (!doNotTrack) {
 
 
 
-	<h1 id="thread-dump-merging-mechanism">Thread dump merging mechanism</h1>
-<p>The performance profile is an enhancement feature in the APM system. We are using the thread dump to estimate the method execution time, rather than adding multiple local spans. In this way, the resource cost would be much less than using distributed tracing to locate slow method. This feature is suitable in the production environment. This document introduces how thread dumps are merged into the final report as a stack tree(s).</p>
-<h2 id="thread-analyst">Thread analyst</h2>
-<h3 id="read-data-and-transform">Read data and transform</h3>
-<p>Read the data from the database and convert it to a data structure in gRPC.</p>
-<pre><code>st=&gt;start: Start
-e=&gt;end: End
-op1=&gt;operation: Load data using paging
-op2=&gt;operation: Transform data using parallel
-
-st(right)-&gt;op1(right)-&gt;op2
-op2(right)-&gt;e
-</code></pre><p>Copy the code and paste it into this <a href="http://flowchart.js.org/">link</a> to generate flow chart.</p>
+	<h1 id="continuous-profiling">Continuous Profiling</h1>
+<p>Continuous profiling utilizes <a href="https://ebpf.io">eBPF</a>, process monitoring, and other technologies to collect data.
+When the configured threshold is met, it would automatically start profiling tasks. Corresponds to <a href="../../../concepts-and-designs/profiling#continuous-profiling">Continuous Profiling</a> in the concepts and designs.
+This approach helps identify performance bottlenecks and potential issues in a proactive manner,
+allowing users to optimize their applications and systems more effectively.</p>
+<h2 id="active-in-the-oap">Active in the OAP</h2>
+<p>Continuous profiling uses the same protocol service as eBPF Profiling, so you only need to ensure that the eBPF Profiling receiver is running.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#000080">receiver-ebpf</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#000080">selector</span>:<span style="color:#bbb"> </span>${SW_RECEIVER_EBPF:default}<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#000080">default</span>:<span style="color:#bbb">
+</span></code></pre></div><h2 id="configuration-of-continuous-profiling-policy">Configuration of Continuous Profiling Policy</h2>
+<p>Continuous profiling can be configured on a service entity, with the following fields in the configuration:</p>
 <ol>
-<li>Use the stream to read data by page (50 records per page).</li>
-<li>Convert the data into gRPC data structures in the form of parallel streams.</li>
-<li>Merge into a list of data.</li>
-</ol>
-<h3 id="data-analysis">Data analysis</h3>
-<p>Use the group-by and collector modes in the Java parallel stream to group according to the first stack element in the database records,
-and use the collector to perform data aggregation. Generate a multi-root tree.</p>
-<pre><code>st=&gt;start: Start
-e=&gt;end: End
-op1=&gt;operation: Group by first stack element
-sup=&gt;operation: Generate empty stack tree
-acc=&gt;operation: Accumulator data to stack tree
-com=&gt;operation: Combine stack trees
-fin=&gt;operation: Calculate durations and build result
-
-st(right)-&gt;op1-&gt;sup(right)-&gt;acc
-acc(right)-&gt;com(right)-&gt;fin-&gt;e
-</code></pre><p>Copy the code and paste it into this <a href="http://flowchart.js.org/">link</a> to generate a flow chart.</p>
-<ul>
-<li><strong>Group by first stack element</strong>: Use the first level element in each stack to group, ensuring that the stacks have the same root node.</li>
-<li><strong>Generate empty stack tree</strong>: Generate multiple top-level empty trees to prepare for the following steps.
-The reason for generating multiple top-level trees is that original data can be added in parallel without generating locks.</li>
-<li><strong>Accumulator data to stack tree</strong>: Add every thread dump into the generated trees.
+<li><strong>Service</strong>: The service entity for which you want to monitor the processes.</li>
+<li><strong>Targets</strong>: Configuration conditions.
 <ol>
-<li>Iterate through each element in the thread dump to find if there is any child element with the same code signature and same stack depth in the parent element.
-If not, add this element.</li>
-<li>Keep the dump sequences and timestamps in each nodes from the source.</li>
+<li><strong>Target Type</strong>: Target profiling type, currently supporting On CPU Profiling, Off CPU Profiling, and Network Profiling.</li>
+<li><strong>Check Items</strong>: Detection conditions, only one of the multiple condition rules needs to be met to start the task.
+<ol>
+<li><strong>Type</strong>: Monitoring type, currently supporting &ldquo;System Load&rdquo;, &ldquo;Process CPU&rdquo;, &ldquo;Process Thread Count&rdquo;, &ldquo;HTTP Error Rate&rdquo;, &ldquo;HTTP Avg Response Time&rdquo;.</li>
+<li><strong>Threshold</strong>: Check if the monitoring value meets the specified expectations.</li>
+<li><strong>Period</strong>: The time period for monitoring data, which can also be understood as the most recent duration.</li>
+<li><strong>Count</strong>: The number of times the threshold is triggered within the detection period, which can also be understood as the total number of times the specified threshold rule is triggered in the most recent duration. Once the count check is met, the specified Profiling task will be started.</li>
+<li><strong>URI</strong>: For HTTP-related monitoring types, used to filter specific URIs.</li>
 </ol>
 </li>
-<li><strong>Combine stack trees</strong>: Combine all trees structures into one by using the same rules as the <code>Accumulator</code>.
-<ol>
-<li>Use LDR to traverse the tree node. Use the <code>Stack</code> data structure to avoid recursive calls. Each stack element represents the node that needs to be merged.</li>
-<li>The task of merging two nodes is to merge the list of children nodes. If they have the same code signature and same parents, save the dump sequences and timestamps in this node. Otherwise, the node needs to be added into the target node as a new child.</li>
 </ol>
 </li>
-<li><strong>Calculate durations and build result</strong>: Calculate relevant statistics and generate response.
-<ol>
-<li>Use the same traversal node logic as in the <code>Combine stack trees</code> step. Convert to a GraphQL data structure, and put all nodes into a list for subsequent duration calculations.</li>
-<li>Calculate each node&rsquo;s duration in parallel. For each node, sort the sequences. If there are two continuous sequences, the duration should add the duration of these two seq&rsquo;s timestamp.</li>
-<li>Calculate each node execution in parallel. For each node, the duration of the current node should deduct the time consumed by all children.</li>
 </ol>
-</li>
-</ul>
-<h2 id="profile-data-debugging">Profile data debugging</h2>
-<p>Please follow the <a href="../backend-profile-export#export-using-command-line">exporter tool</a> to package profile data. Unzip the profile data and use <a href="https://github.com/apache/skywalking/tree/886589c15c6225d18e7ca170a814f94bcf0abbff/oap-server/server-tools/profile-exporter/tool-profile-snapshot-bootstrap/src/test/java/org/apache/skywalking/oap/server/tool/profile/exporter/ProfileExportedAnalyze.java">analyzer main function</a> to run it.</p>
+<h2 id="monitoring">Monitoring</h2>
+<p>After saving the configuration, the eBPF agent can perform monitoring operations on the processes under the specified service based on the service-level configuration.</p>
+<h3 id="metrics">Metrics</h3>
+<p>While performing monitoring, the eBPF agent would report the monitoring data to OAP for storage, making it more convenient to understand the real-time monitoring status. The main metrics include:</p>
+<table>
+<thead>
+<tr>
+<th>Monitor Type</th>
+<th>Unit</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>System Load</td>
+<td>Load</td>
+<td>System load average over a specified period.</td>
+</tr>
+<tr>
+<td>Process CPU</td>
+<td>Percentage</td>
+<td>The CPU usage of the process as a percentage.</td>
+</tr>
+<tr>
+<td>Process Thread Count</td>
+<td>Count</td>
+<td>The number of threads in the process.</td>
+</tr>
+<tr>
+<td>HTTP Error Rate</td>
+<td>Percentage</td>
+<td>The percentage of HTTP requests that result in error responses (e.g., 4xx or 5xx status codes).</td>
+</tr>
+<tr>
+<td>HTTP Avg Response Time</td>
+<td>Millisecond</td>
+<td>The average response time for HTTP requests.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="threshold-with-trigger">Threshold With Trigger</h3>
+<p>In the eBPF agent, data is collected periodically, and the sliding time window technique is used to store the data from the most recent <strong>Period</strong> cycles.
+The <strong>Threshold</strong> rule is used to verify whether the data within each cycle meets the specified criteria.
+If the number of times the conditions are met within the sliding time window exceeds the <strong>Count</strong> value, the corresponding Profiling task would be triggered.</p>
+<p>The sliding time window technique ensures that the most recent and relevant data is considered when evaluating the conditions.
+This approach allows for a more accurate and dynamic assessment of the system&rsquo;s performance,
+making it possible to identify and respond to issues in a timely manner.
+By triggering Profiling tasks when specific conditions are met, the system can automatically initiate performance analysis and help uncover potential bottlenecks or areas for improvement.</p>
+<h4 id="causes">Causes</h4>
+<p>When the eBPF agent reports a Profiling task, it also reports the reason for triggering the Profiling task, which mainly includes the following information:</p>
+<ol>
+<li><strong>Process</strong>: The specific process that triggered the policy.</li>
+<li><strong>Monitor Type</strong>: The type of monitoring that was triggered.</li>
+<li><strong>Threshold</strong>: The configured threshold value.</li>
+<li><strong>Current</strong>: The monitoring value at the time the rule was triggered.</li>
+</ol>
+<h4 id="silence-period">Silence Period</h4>
+<p>Upon triggering a continuous profiling task, the eBPF agent supports a feature that prevents re-triggering tasks within a specified period.
+This feature is designed to prevent an unlimited number of profiling tasks from being initiated if the process continuously reaches the threshold,
+which could potentially cause system issues.</p>
 
 
 
@@ -1966,15 +2041,16 @@ If not, add this element.</li>
 
 <nav id="TableOfContents">
   <ul>
-    <li><a href="#thread-dump-merging-mechanism">Thread dump merging mechanism</a>
+    <li><a href="#continuous-profiling">Continuous Profiling</a>
       <ul>
-        <li><a href="#thread-analyst">Thread analyst</a>
+        <li><a href="#active-in-the-oap">Active in the OAP</a></li>
+        <li><a href="#configuration-of-continuous-profiling-policy">Configuration of Continuous Profiling Policy</a></li>
+        <li><a href="#monitoring">Monitoring</a>
           <ul>
-            <li><a href="#read-data-and-transform">Read data and transform</a></li>
-            <li><a href="#data-analysis">Data analysis</a></li>
+            <li><a href="#metrics">Metrics</a></li>
+            <li><a href="#threshold-with-trigger">Threshold With Trigger</a></li>
           </ul>
         </li>
-        <li><a href="#profile-data-debugging">Profile data debugging</a></li>
       </ul>
     </li>
   </ul>
@@ -2092,6 +2168,12 @@ If not, add this element.</li>
 
     </div>
     
+
+
+
+
+
+
 
 
 
