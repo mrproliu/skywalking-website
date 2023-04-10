@@ -14,6 +14,1080 @@
     
     
     <item>
+      <title>Zh: 为 Apache SkyWalking 构建 Grafana Dashboard —— 原生 PromQL 支持</title>
+      <link>/zh/2023-03-17-build-grafana-dashboards-for-apache-skywalking-native-promql-support/</link>
+      <pubDate>Thu, 16 Mar 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/zh/2023-03-17-build-grafana-dashboards-for-apache-skywalking-native-promql-support/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;背景&#34;&gt;背景&lt;/h2&gt;
+&lt;p&gt;Apache SkyWalking 作为分布式系统的应用性能监控工具，提供了对云原生架构下的分布式系统的监控、跟踪、诊断能力。&lt;a href=&#34;https://prometheus.io/docs/introduction/overview/#what-is-prometheus&#34;&gt;Prometheus&lt;/a&gt; 是一个开源系统监控和警报工具包，具有活跃的生态系统。特别是 Prometheus 指标通过 &lt;a href=&#34;https://prometheus.io/docs/instrumenting/exporters/#exporters-and-integrations&#34;&gt;导出器和集成&lt;/a&gt; 得到广泛支持。 &lt;a href=&#34;https://prometheus.io/docs/prometheus/latest/querying/basics/#querying-prometheus&#34;&gt;PromQL&lt;/a&gt; 作为 Prometheus 查询语言，包含一组表达式并公开 HTTP API 以读取指标。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://opentelemetry.io/ecosystem/integrations/&#34;&gt;SkyWalking 支持通过 OpenTelemetry 收集器&lt;/a&gt; 摄取 Prometheus 指标，并通过这些指标的聚合计算提供多种系统监控，例如 Linux 监控和 Kubernetes 监控。SkyWalking 已经为用户提供了 &lt;a href=&#34;https://skywalking.apache.org/docs/main/next/en/ui/readme/&#34;&gt;原生 UI&lt;/a&gt; 和 &lt;a href=&#34;https://skywalking.apache.org/docs/main/next/en/api/query-protocol/&#34;&gt;GraphQL API&lt;/a&gt;。但为了提供更广泛的生态整合能力，从 9.4.0 开始，它提供了 PromQL 服务，已经支持 PromQL 的第三方系统或可视化平台（如 Grafana），可以通过它获取指标。SkyWalking 用户在与不同系统集成时将从中受益。&lt;/p&gt;
+&lt;h2 id=&#34;skywalking-中的-promql-服务是什么&#34;&gt;SkyWalking 中的 PromQL 服务是什么？&lt;/h2&gt;
+&lt;p&gt;PromQL 服务是 SkyWalking 原生 GraphQL 查询之上的查询引擎，具有由 Prometheus 表达式提供支持的附加查询阶段计算能力。它可以接受 PromQL HTTP API 请求，解析 Prometheus 表达式，并在 Prometheus 指标和 SkyWalking 指标之间进行转换。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;img_1.png#pic_left&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;PromQL 服务遵循 PromQL 的所有协议和语法，用户可以像使用 PromQL 一样使用它。由于 SkyWalking 在度量分类、格式、存储等方面与 Prometheus 有根本不同，因此 PromQL 服务不必实现完整的 PromQL 功能。&lt;a href=&#34;https://skywalking.apache.org/docs/main/next/en/api/promql-service/#promql-service&#34;&gt;有关详细信息&lt;/a&gt;，请参阅文档。&lt;/p&gt;
+&lt;h2 id=&#34;skywalking-基本概念&#34;&gt;SkyWalking 基本概念&lt;/h2&gt;
+&lt;p&gt;以下是用户使用 PromQL 服务需要了解的一些基本概念和与 Prometheus 的区别： Prometheus 指标指定命名格式和结构，实际指标名称和标签由客户端提供商确定，并存储详细信息。用户使用 PromQL 中的表达式聚合和计算指标。与 Prometheus 不同，SkyWalking 的度量机制是围绕以下具有层次结构的核心概念构建的：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;层（Layer）：表示计算机科学中的一个抽象框架，如 Operating System（OS_LINUX 层）、Kubernetes（k8s 层）。该层将是从不同技术检测到的不同服务的所有者。&lt;a href=&#34;https://github.com/apache/skywalking/blob/master/oap-server/server-core/src/main/java/org/apache/skywalking/oap/server/core/analysis/Layer.java&#34;&gt;可以在此处&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;找到所有层定义。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;服务：表示一组 / 一组工作负载，它为传入请求提供相同的行为。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;服务实例：服务组中的单个工作负载。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;端点：传入请求的服务路径。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;进程：操作系统进程。在某些场景下，&lt;code&gt;service instance&lt;/code&gt; 不是一个进程，比如一个 Kubernetes Pod 可能包含多个进程。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Metric 名称和属性（标签）由 SkyWalking OAP 服务器根据数据源以及 OAL 和 MAL 配置。SkyWalking 提供了对时间序列指标进行下采样（down-sampling），并生成不同时间段数据（分钟、小时、天）的能力。&lt;/p&gt;
+&lt;p&gt;SkyWalking 指标流如下：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;img_3.png#pic_left&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;流量&#34;&gt;流量&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Service/ServiceRelation/Instance/ServiceInstanceRelation/Endpoint/EndpointRelation/Process/ProcessRelation 的元数据。包括名称、层、属性、它们之间的关系等。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;指标&#34;&gt;指标&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;名称（Name）：指标名称，来自 OAL 和 MAL 的配置。&lt;/li&gt;
+&lt;li&gt;实体（Entity）：表示指标的归属，用于查询。一个 Entity 根据 &lt;code&gt;Scope&lt;/code&gt; 不同会包含如下信息： Scope 代表指标级别，在查询阶段代表 Scope catalog，Scope catalog 为所有的 scope 提供了高维的分类，层次结构。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Scope&lt;/th&gt;
+&lt;th&gt;实体信息&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Service&lt;/td&gt;
+&lt;td&gt;服务（包括图层信息）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ServiceInstance&lt;/td&gt;
+&lt;td&gt;服务、服务实例&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Endpoint&lt;/td&gt;
+&lt;td&gt;服务、端点&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ServiceRelation&lt;/td&gt;
+&lt;td&gt;服务，目标服务&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ServiceInstanceRelation&lt;/td&gt;
+&lt;td&gt;服务实例、目标服务实例&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;EndpointRelation&lt;/td&gt;
+&lt;td&gt;端点、目标端点&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Process&lt;/td&gt;
+&lt;td&gt;服务、服务实例、流程&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ProcessRelation&lt;/td&gt;
+&lt;td&gt;进程、服务实例、DestProcess&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;值：&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol&gt;
+&lt;li&gt;单值：long&lt;/li&gt;
+&lt;li&gt;标签值：文本，&lt;code&gt;label1,value1|label2,value2|...&lt;/code&gt; ，例如 &lt;code&gt;L2 aggregation,5000 | L1 aggregation,8000&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;TimeBucket：时间精确到分钟、小时、天&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;如何使用-promql-服务&#34;&gt;如何使用 PromQL 服务&lt;/h2&gt;
+&lt;h3 id=&#34;设置&#34;&gt;设置&lt;/h3&gt;
+&lt;p&gt;PromQL 服务在 v9.4.0 之后默认开启，不需要额外配置。例如，可以使用 OAP 环境变量配置默认端口：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;restHost: ${SW_PROMQL_REST_HOST:0.0.0.0}
+restPort: ${SW_PROMQL_REST_PORT:9090}
+restContextPath: ${SW_PROMQL_REST_CONTEXT_PATH:/}
+restMaxThreads: ${SW_PROMQL_REST_MAX_THREADS:200}
+restIdleTimeOut: ${SW_PROMQL_REST_IDLE_TIMEOUT:30000}
+restAcceptQueueSize: ${SW_PROMQL_REST_QUEUE_SIZE:0}
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;使用-prometheus-表达式&#34;&gt;使用 Prometheus 表达式&lt;/h3&gt;
+&lt;p&gt;PromQL 通过 Prometheus 表达式匹配指标。这是一个典型的 Prometheus 指标。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;img_2.png#pic_left&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;为了匹配指标，Prometheus 表达式如下：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;img_4.png#pic_left&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;在 PromQL 服务中，这些保留的标签将被解析为度量名称和实体信息字段以及用于查询的其他标签。映射如下。&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;SkyWalking 概念&lt;/th&gt;
+&lt;th&gt;Prometheus 表达&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;指标名称&lt;/td&gt;
+&lt;td&gt;指标名称&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;层&lt;/td&gt;
+&lt;td&gt;标签&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;服务&lt;/td&gt;
+&lt;td&gt;标签&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;服务实例&lt;/td&gt;
+&lt;td&gt;标签 &amp;lt;服务实例&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;端点&lt;/td&gt;
+&lt;td&gt;标签&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;……&lt;/td&gt;
+&lt;td&gt;……&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;例如，以下表达式用于匹配查询指标：service_cpm、service_instance_cpm、endpoint_cpm&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;service_cpm {service=&#39;agent::songs&#39;, layer=&#39;GENERAL&#39;}
+service_instance_cpm {service=&#39;agent::songs&#39;, service_instance=&#39;agent::songs_instance_1&#39;, layer=&#39;GENERAL&#39;}
+endpoint_cpm {service=&#39;agent::songs&#39;, endpoint=&#39;GET:/songs&#39;, layer=&#39;GENERAL&#39;}
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;典型查询示例&#34;&gt;典型查询示例&lt;/h3&gt;
+&lt;p&gt;在这里，我们将 &lt;a href=&#34;https://skywalking.apache.org/docs/skywalking-showcase/next/readme/&#34;&gt;SkyWalking Showcase&lt;/a&gt; 部署作为 Playground 来演示如何使用 PromQL 获取 SkyWalking 指标。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;img_5.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;以下示例可用于通过 PromQL 服务查询服务的元数据和指标。&lt;/p&gt;
+&lt;h3 id=&#34;获取指标名称&#34;&gt;获取指标名称&lt;/h3&gt;
+&lt;p&gt;查询：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;http://localhost:9099/api/v1/label/__name__/values
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;结果：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;{
+    &lt;span style=&#34;color:#000080&#34;&gt;&amp;#34;status&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;success&amp;#34;&lt;/span&gt;,
+    &lt;span style=&#34;color:#000080&#34;&gt;&amp;#34;data&amp;#34;&lt;/span&gt;: [
+        &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;meter_mysql_instance_qps&amp;#34;&lt;/span&gt;,
+        &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;service_cpm&amp;#34;&lt;/span&gt;,
+        &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;envoy_cluster_up_rq_active&amp;#34;&lt;/span&gt;,
+        &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;instance_jvm_class_loaded_class_count&amp;#34;&lt;/span&gt;,
+        &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;k8s_cluster_memory_requests&amp;#34;&lt;/span&gt;,
+        &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;meter_vm_memory_used&amp;#34;&lt;/span&gt;,
+        &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;meter_apisix_sv_bandwidth_unmatched&amp;#34;&lt;/span&gt;,
+        &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;meter_vm_memory_total&amp;#34;&lt;/span&gt;,
+        &lt;span style=&#34;color:#a61717;background-color:#e3d2d2&#34;&gt;...&lt;/span&gt;
+    ]
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;选择一个指标并获取标签&#34;&gt;选择一个指标并获取标签&lt;/h3&gt;
+&lt;p&gt;查询：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;http://localhost:9099/api/v1/labels?match []=service_cpm
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;结果：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;{
+  &lt;span style=&#34;color:#000080&#34;&gt;&amp;#34;status&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;success&amp;#34;&lt;/span&gt;,
+  &lt;span style=&#34;color:#000080&#34;&gt;&amp;#34;data&amp;#34;&lt;/span&gt;: [
+    &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;layer&amp;#34;&lt;/span&gt;,
+    &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;service&amp;#34;&lt;/span&gt;,
+    &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;top_n&amp;#34;&lt;/span&gt;,
+    &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;order&amp;#34;&lt;/span&gt;
+  ]
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;从特定层获取服务&#34;&gt;从特定层获取服务&lt;/h3&gt;
+&lt;p&gt;查询：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;http://127.0.0.1:9099/api/v1/series?match []=service_traffic {layer=&#39;GENERAL&#39;}&amp;amp;start=1677479336&amp;amp;end=1677479636
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;结果：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;{
+    &lt;span style=&#34;color:#000080&#34;&gt;&amp;#34;status&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;success&amp;#34;&lt;/span&gt;,
+    &lt;span style=&#34;color:#000080&#34;&gt;&amp;#34;data&amp;#34;&lt;/span&gt;: [
+        {&lt;span style=&#34;color:#000080&#34;&gt;&amp;#34;__name__&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;service_traffic&amp;#34;&lt;/span&gt;,
+            &lt;span style=&#34;color:#000080&#34;&gt;&amp;#34;service&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;agent::songs&amp;#34;&lt;/span&gt;,
+            &lt;span style=&#34;color:#000080&#34;&gt;&amp;#34;scope&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;Service&amp;#34;&lt;/span&gt;,
+            &lt;span style=&#34;color:#000080&#34;&gt;&amp;#34;layer&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;GENERAL&amp;#34;&lt;/span&gt;
+        },
+        {&lt;span style=&#34;color:#000080&#34;&gt;&amp;#34;__name__&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;service_traffic&amp;#34;&lt;/span&gt;,
+            &lt;span style=&#34;color:#000080&#34;&gt;&amp;#34;service&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;agent::recommendation&amp;#34;&lt;/span&gt;,
+            &lt;span style=&#34;color:#000080&#34;&gt;&amp;#34;scope&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;Service&amp;#34;&lt;/span&gt;,
+            &lt;span style=&#34;color:#000080&#34;&gt;&amp;#34;layer&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;GENERAL&amp;#34;&lt;/span&gt;
+        },
+        {&lt;span style=&#34;color:#000080&#34;&gt;&amp;#34;__name__&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;service_traffic&amp;#34;&lt;/span&gt;,
+            &lt;span style=&#34;color:#000080&#34;&gt;&amp;#34;service&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;agent::app&amp;#34;&lt;/span&gt;,
+            &lt;span style=&#34;color:#000080&#34;&gt;&amp;#34;scope&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;Service&amp;#34;&lt;/span&gt;,
+            &lt;span style=&#34;color:#000080&#34;&gt;&amp;#34;layer&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;GENERAL&amp;#34;&lt;/span&gt;
+        },
+        {&lt;span style=&#34;color:#000080&#34;&gt;&amp;#34;__name__&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;service_traffic&amp;#34;&lt;/span&gt;,
+            &lt;span style=&#34;color:#000080&#34;&gt;&amp;#34;service&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;agent::gateway&amp;#34;&lt;/span&gt;,
+            &lt;span style=&#34;color:#000080&#34;&gt;&amp;#34;scope&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;Service&amp;#34;&lt;/span&gt;,
+            &lt;span style=&#34;color:#000080&#34;&gt;&amp;#34;layer&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;GENERAL&amp;#34;&lt;/span&gt;
+        },
+        {&lt;span style=&#34;color:#000080&#34;&gt;&amp;#34;__name__&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;service_traffic&amp;#34;&lt;/span&gt;,
+            &lt;span style=&#34;color:#000080&#34;&gt;&amp;#34;service&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;agent::frontend&amp;#34;&lt;/span&gt;,
+            &lt;span style=&#34;color:#000080&#34;&gt;&amp;#34;scope&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;Service&amp;#34;&lt;/span&gt;,
+            &lt;span style=&#34;color:#000080&#34;&gt;&amp;#34;layer&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;GENERAL&amp;#34;&lt;/span&gt;
+        }
+    ]
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;查询服务的特定指标&#34;&gt;查询服务的特定指标&lt;/h3&gt;
+&lt;p&gt;查询：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;http://127.0.0.1:9099/api/v1/query?query=service_cpm {service=&#39;agent::songs&#39;, layer=&#39;GENERAL&#39;}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;结果：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;{
+  &lt;span style=&#34;color:#000080&#34;&gt;&amp;#34;status&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;success&amp;#34;&lt;/span&gt;,
+  &lt;span style=&#34;color:#000080&#34;&gt;&amp;#34;data&amp;#34;&lt;/span&gt;: {
+    &lt;span style=&#34;color:#000080&#34;&gt;&amp;#34;resultType&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;vector&amp;#34;&lt;/span&gt;,
+    &lt;span style=&#34;color:#000080&#34;&gt;&amp;#34;result&amp;#34;&lt;/span&gt;: [
+      {&lt;span style=&#34;color:#000080&#34;&gt;&amp;#34;metric&amp;#34;&lt;/span&gt;: {
+          &lt;span style=&#34;color:#000080&#34;&gt;&amp;#34;__name__&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;service_cpm&amp;#34;&lt;/span&gt;,
+          &lt;span style=&#34;color:#000080&#34;&gt;&amp;#34;layer&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;GENERAL&amp;#34;&lt;/span&gt;,
+          &lt;span style=&#34;color:#000080&#34;&gt;&amp;#34;scope&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;Service&amp;#34;&lt;/span&gt;,
+          &lt;span style=&#34;color:#000080&#34;&gt;&amp;#34;service&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;agent::songs&amp;#34;&lt;/span&gt;
+        },&lt;span style=&#34;color:#000080&#34;&gt;&amp;#34;value&amp;#34;&lt;/span&gt;: [
+          &lt;span style=&#34;color:#099&#34;&gt;1679559960&lt;/span&gt;,
+          &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;6&amp;#34;&lt;/span&gt;
+        ]
+      }
+    ]
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;关于&lt;code&gt;range query&lt;/code&gt;和不同的&lt;code&gt;metrics type for query&lt;/code&gt; 可以参考 &lt;a href=&#34;https://skywalking.apache.org/docs/main/next/en/api/promql-service&#34;&gt;这里的&lt;/a&gt; 文档。&lt;/p&gt;
+&lt;h2 id=&#34;构建-grafana-dashboard&#34;&gt;构建 Grafana Dashboard&lt;/h2&gt;
+&lt;p&gt;从上面我们知道了 PromQL 服务的机制和查询方式，现在我们可以为上面的服务示例构建 Grafana Dashboard。&lt;strong&gt;注&lt;/strong&gt;：以下所有配置均基于 Grafana 9.1.0 版本。&lt;/p&gt;
+&lt;p&gt;SkyWalking Showcase 提供了 &lt;code&gt;General Service&lt;/code&gt; 和 &lt;code&gt;Service Mesh&lt;/code&gt; 层等 Dashboard 文件，我们可以通过导入 Dashboard JSON 文件快速为层服务创建 Dashboard。&lt;/p&gt;
+&lt;p&gt;部署 Grafana 应用程序后，请按照以下步骤操作：&lt;/p&gt;
+&lt;h3 id=&#34;配置数据源&#34;&gt;配置数据源&lt;/h3&gt;
+&lt;p&gt;首先，我们需要创建一个数据源： 在数据源配置面板中，选择 &lt;code&gt;Prometheus&lt;/code&gt; 并设置 URL 为 OAP 服务器地址，默认端口为 &lt;code&gt;9090&lt;/code&gt;。 &lt;code&gt;SkyWalking&lt;/code&gt; 如果有多个 Prometheus 数据源，请在此处设置数据源名称。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;datasource.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;导入-dashboard-文件&#34;&gt;导入 Dashboard 文件&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;创建一个名为 &lt;code&gt;SkyWalking&lt;/code&gt; 的 Dashboard 文件夹。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;dashboard-folder.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;将 Dashboard 文件导入到 Grafana 中，有两种获取文件的方式：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;来自 &lt;a href=&#34;https://github.com/apache/skywalking-showcase/tree/main/deploy/platform/config/promql/dashboards&#34;&gt;SkyWalking Showcase&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;转到 SkyWaking Demo：&lt;a href=&#34;https://skywalking.apache.org/#demo&#34;&gt;在 Grafana 上预览指标&lt;/a&gt;，并将其从 &lt;code&gt;General Service&lt;/code&gt; Dashboard 导出。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;dashboard-import.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;完毕！现在我们可以看到 Dashboard 正在运行，服务位于下拉列表中，指标显示在面板上。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;dashboard.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;这是一种简单的构建方式，但是如果我们想要自定义它，我们需要知道它是如何工作的。&lt;/p&gt;
+&lt;h3 id=&#34;dashboard-的工作原理&#34;&gt;Dashboard 的工作原理&lt;/h3&gt;
+&lt;h3 id=&#34;dashboard-设置&#34;&gt;Dashboard 设置&lt;/h3&gt;
+&lt;p&gt;打开 &lt;code&gt;Settings-Variables&lt;/code&gt; 我们可以看到如下变量：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;dashboard-variables.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;让我们看看每个变量的作用：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;$DS_SkyWalking&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;这是一个数据源 ty 变量，它指定了之前定义为 &lt;code&gt;SkyWalking&lt;/code&gt; 的 Prometheus 数据源。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;v-DS_SkyWalking.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;$layer&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;这是一个常量类型，因为在 &amp;lsquo;General Service&amp;rsquo; Dashboard 中，所有服务都属于 &amp;lsquo;GENERAL&amp;rsquo; 层，因此可以在每个查询中直接使用它们。注意，当您自定义其他层时，必须在 &lt;code&gt;Layer&lt;/code&gt; 上面定义该值。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;v-layer.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;$service&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;查询类型变量，为下拉列表获取该层下的所有服务名称。&lt;/p&gt;
+&lt;p&gt;查询表达式：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;label_values (service_traffic {layer=&#39;$layer&#39;}, service)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;查询表达式将查询 HTTP API &lt;code&gt;/api/v1/series&lt;/code&gt;，以获取 &lt;code&gt;$layer&lt;/code&gt; 中服务元数据，并根据标签（服务）提取服务名称。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;v-service.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;$service_instance&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;与 &lt;code&gt;$service&lt;/code&gt; 一样，是一个查询变量，用于在下拉列表中选择服务的所有实例。&lt;/p&gt;
+&lt;p&gt;查询表达式：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;label_values (instance_traffic {layer=&#39;$layer&#39;, service=&#39;$service&#39;}, service_instance)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;这里的查询表达式不仅指定了 &lt;code&gt;$layer&lt;/code&gt; 还包含 &lt;code&gt;$service&lt;/code&gt; 变量，用于关联下拉列表的服务。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;$endpoint&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;与 &lt;code&gt;$service&lt;/code&gt; 一样，是一个查询变量，用于在下拉列表中选择服务的所有端点。&lt;/p&gt;
+&lt;p&gt;查询表达式：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;label_values (endpoint_traffic {layer=&#39;$layer&#39;, service=&#39;$service&#39;, keyword=&#39;$endpoint_keyword&#39;, limit=&#39;$endpoint_limit&#39;}, endpoint)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;此处的查询表达式指定 &lt;code&gt;$layer&lt;/code&gt; 和 &lt;code&gt;$service&lt;/code&gt; 用于与下拉列表的服务相关联的。并且还接受 &lt;code&gt;$endpoint_keyword&lt;/code&gt; 和 &lt;code&gt;$endpoint_limit&lt;/code&gt; 变量作为过滤条件。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;$endpoint_keyword&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;一个文本类型的变量，用户可以输入它来过滤 &lt;code&gt;$endpoint&lt;/code&gt; 的返回值。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;v-endpoint_keyword.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;$endpoint_limit&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;自定义类型，用户可以选择它以限制返回端点的最大数量。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;v-endpoint_limit.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;dashboard-配置&#34;&gt;Dashboard 配置&lt;/h3&gt;
+&lt;p&gt;这个 Dashboard 上有几个典型的指标面板，让我们看看它是如何配置的。&lt;/p&gt;
+&lt;h3 id=&#34;普通值指标&#34;&gt;普通值指标&lt;/h3&gt;
+&lt;p&gt;选择 &lt;code&gt;Time series chart&lt;/code&gt; 面板 &lt;code&gt;Service Apdex&lt;/code&gt; 并单击 &lt;code&gt;edit。&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;panel-common-value.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;查询表达式&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;service_apdex {service=&#39;$service&#39;, layer=&#39;$layer&#39;} / 10000
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;指标范围为 &lt;code&gt;Service&lt;/code&gt;，添加 &lt;code&gt;service&lt;/code&gt; 和 &lt;code&gt;layer&lt;/code&gt; 标签用于匹配，label 值使用上面配置的变量。该计算 &lt;code&gt;Divided by 10000&lt;/code&gt; 用于匹配结果单位。查询文档可以参考 &lt;a href=&#34;https://skywalking.apache.org/docs/main/next/en/api/promql-service/#common-value-metrics&#34;&gt;这里&lt;/a&gt;。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;设置 &lt;code&gt;Query options --&amp;gt; Min interval = 1m&lt;/code&gt;，因为 SkyWalking 中的指标最小时间段是 1m。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;设置 &lt;code&gt;Connect null values --&amp;gt; AlwaysShow points --&amp;gt; Always&lt;/code&gt;，因为当查询间隔大于 1 小时或 1 天时，SkyWalking 返回小时 / 天步长指标值。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;标签值指标&#34;&gt;标签值指标&lt;/h3&gt;
+&lt;p&gt;选择 &lt;code&gt;Time series chart&lt;/code&gt; 面板 &lt;code&gt;Service Response Time Percentile&lt;/code&gt; 并单击 &lt;code&gt;edit&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;panel-labeled-value.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;查询表达式&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;service_percentile {service=&#39;$service&#39;, layer=&#39;$layer&#39;, labels=&#39;0,1,2,3,4&#39;, relabels=&#39;P50,P75,P90,P95,P99&#39;}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;指标范围为 &lt;code&gt;Service&lt;/code&gt;，添加 &lt;code&gt;service&lt;/code&gt; 和 &lt;code&gt;layer&lt;/code&gt; 标签用于匹配，label 值使用上面配置的变量。添加 &lt;code&gt;labels=&#39;0,1,2,3,4&#39;&lt;/code&gt; 过滤结果标签，并添加 &lt;code&gt;relabels=&#39;P50,P75,P90,P95,P99&#39;&lt;/code&gt; 重命名结果标签。查询文档可以参考 &lt;a href=&#34;https://skywalking.apache.org/docs/main/next/en/api/promql-service/#labeled-value-metrics&#34;&gt;这里&lt;/a&gt;。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;设置 &lt;code&gt;Query options --&amp;gt; Min interval = 1m&lt;/code&gt;，因为 SkyWalking 中的指标最小时间段是 1m。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;设置 &lt;code&gt;Connect null values --&amp;gt; AlwaysShow points --&amp;gt; Always&lt;/code&gt;，因为当查询间隔 &amp;gt; 1 小时或 1 天时，SkyWalking 返回小时 / 天步长指标值。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;设置 &lt;code&gt;Legend&lt;/code&gt; 为 &lt;code&gt;{{label}}&lt;/code&gt; 来展示。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;排序指标&#34;&gt;排序指标&lt;/h3&gt;
+&lt;p&gt;选择 &lt;code&gt;Time series chart&lt;/code&gt; 面板 &lt;code&gt;Service Response Time Percentile&lt;/code&gt; 并单击 &lt;code&gt;edit&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;panel-sort-metric.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;查询表达式&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;service_instance_cpm {parent_service=&#39;$service&#39;, layer=&#39;$layer&#39;, top_n=&#39;10&#39;, order=&#39;DES&#39;}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;该表达式用于查询服务下的排序指标，因此添加标签 &lt;code&gt;parent_service&lt;/code&gt; 和 &lt;code&gt;layer&lt;/code&gt; 进行匹配。添加 &lt;code&gt;top_n=&#39;10&#39;&lt;/code&gt; 和 &lt;code&gt;order=&#39;DES&#39;&lt;/code&gt; 过滤结果。查询文档可以参考 &lt;a href=&#34;https://skywalking.apache.org/docs/main/next/en/api/promql-service/#sort-metrics&#34;&gt;这里&lt;/a&gt;。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;设置 &lt;code&gt;Query options --&amp;gt; Min interval = 1m&lt;/code&gt;，因为 SkyWalking 中的指标最小时间段是 1m。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;设置 &lt;code&gt;Calculation --&amp;gt; Latest*&lt;/code&gt;。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;设置 &lt;code&gt;Legend&lt;/code&gt; 为 &lt;code&gt;{{service_instance}}&lt;/code&gt; 来展示。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;结论&#34;&gt;结论&lt;/h2&gt;
+&lt;p&gt;在这篇文章中，我们介绍了 SkyWalking 中的 PromQL 服务是什么以及它的背景。详细介绍了 PromQL 服务的使用方法和 SkyWalking 相关的基本概念，展示了如何使用 PromQL 服务为 SkyWalking 构建 Grafana Dashboard。&lt;/p&gt;
+&lt;p&gt;未来，将会有更多的集成利用这个协议，比如 CI/CD、HPA（缩放）等。&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Zh: 使用SkyWalking监控DynamoDB</title>
+      <link>/zh/2023-03-13-skywalking-aws-dynamodb/</link>
+      <pubDate>Mon, 13 Mar 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/zh/2023-03-13-skywalking-aws-dynamodb/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;img src=&#34;./icon.png&#34; alt=&#34;icon.png&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;背景&#34;&gt;背景&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://skywalking.apache.org/&#34;&gt;Apache SkyWalking&lt;/a&gt;  是一个开源应用性能管理系统，帮助用户收集和聚合日志、追踪、指标和事件，并在 UI 上显示。从 OAP 9.4.0 开始，SkyWalking 新增了 &lt;a href=&#34;https://skywalking.apache.org/docs/main/next/en/setup/backend/aws-firehose-receiver/&#34;&gt;AWS Firehose receiver&lt;/a&gt;，用来接收，计算CloudWatch metrics的数据。本文将以DynamoDB为例，展示如何使用 SkyWalking接收并计算 CloudWatch metrics 数据，以监控Amazon Web Services。&lt;/p&gt;
+&lt;h2 id=&#34;什么是-amazon-cloudwatch-与-amazon-kinesis-data-firehose-&#34;&gt;什么是 Amazon CloudWatch 与 Amazon Kinesis Data Firehose ？&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://aws.amazon.com/cn/cloudwatch/&#34;&gt;Amazon CloudWatch&lt;/a&gt; 是一个指标存储库, 此工具可从 AWS中 ( 如 DynamoDB ) 收集原始数据，近实时处理为可读取的指标。同时，我们也可以使用&lt;strong&gt;指标流&lt;/strong&gt;持续地将 CloudWatch 指标流式传输到所选的目标位置，实现近实时传送和低延迟。SkyWalking 利用此特性，创建指标流并将其导向 Amazon Kinesis Data Firehose 传输流，并由后者进一步传输处理。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://aws.amazon.com/cn/kinesis/data-firehose/&#34;&gt;Amazon Kinesis Data Firehose&lt;/a&gt;是一项提取、转换、加载服务，可以将流式处理数据以可靠方式捕获、转换和提供到数据湖、数据存储和分析服务中。SkyWalking利用此特性，将指标流最终导向 aws-firehose-receiver，交由OAP计算并最终展示指标。&lt;/p&gt;
+&lt;p&gt;整体过程流程图如下：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./aws-service.png&#34; alt=&#34;aws-service.png&#34;&gt;&lt;/p&gt;
+&lt;h6 id=&#34;注意&#34;&gt;注意&lt;/h6&gt;
+&lt;ul&gt;
+&lt;li&gt;由于 Kinesis Data Firehose 规定，HTTP端点的URL必须使用HTTPS协议，且必须使用443端口。同时，此URL必须由Gateway代理并转发到真正的aws-firehose-receiver。&lt;/li&gt;
+&lt;li&gt;TLS 证书必须由CA签发的，自签证书不会被 Kinesis Data Firehose 信任。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;设置dynamodb监控&#34;&gt;设置DynamoDB监控&lt;/h2&gt;
+&lt;p&gt;接下来以DynamoDB为例说明使用OAP 收集CloudWatch metrics 前，aws中必要的设置:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;进入 &lt;a href=&#34;https://console.aws.amazon.com/kinesis/home&#34;&gt;Kinesis 控制台&lt;/a&gt;，创建数据流， &lt;code&gt;Source&lt;/code&gt;选择 &lt;code&gt;Direct PUT&lt;/code&gt;, &lt;code&gt;Destination&lt;/code&gt; 选择 &lt;code&gt;HTTP Endpoint&lt;/code&gt;. 并且设置&lt;code&gt;HTTP Endpoint URL&lt;/code&gt; 为 &lt;code&gt;Gateway对应URL&lt;/code&gt;。 其余配置选项可由需要自行配置。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;./kinesis.png&#34; alt=&#34;image.png&#34;&gt;&lt;/p&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;进入 &lt;a href=&#34;https://console.aws.amazon.com/cloudwatch/home&#34;&gt;CloudWatch 控制台&lt;/a&gt;，在左侧控制面板中选择&lt;code&gt;Metrics-Stream&lt;/code&gt;，点击Create metric stream。其中，&lt;code&gt;namespace&lt;/code&gt; 选择 &lt;code&gt;AWS/DynamoDB&lt;/code&gt;。同时，根据需要，也可以增加其他命名空间。 &lt;code&gt;Kinesis Data Firehose&lt;/code&gt;选择在第一步中创建好的数据流。最后，设置输出格式为opentelemetry0.7。其余配置选项可由需要自行配置。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;./cloudwatch.png&#34; alt=&#34;cloudwatch.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;至此，DynamoDB监控配置的AWS方面设置完成。&lt;/p&gt;
+&lt;h2 id=&#34;skywalking-oap-指标处理分析&#34;&gt;SkyWalking OAP 指标处理分析&lt;/h2&gt;
+&lt;p&gt;SkyWalking 利用 aws-firehose-receiver 接收并解码由Gateway转发来的 AWS 指标流，交由&lt;a href=&#34;https://github.com/apache/skywalking/tree/master/oap-server/server-receiver-plugin/otel-receiver-plugin&#34;&gt;Opentelemetry-receiver&lt;/a&gt;进行处理，转化为SkyWalking metrics。并由&lt;a href=&#34;https://skywalking.apache.org/docs/main/next/en/concepts-and-designs/mal/&#34;&gt;Meter Analysis Language (MAL)&lt;/a&gt;进行指标的分析与聚合，最终呈现在UI上。&lt;/p&gt;
+&lt;p&gt;其中 MAL 部分以及 UI 部分，SkyWalking支持用户自由定制，从而更多样性的展示指标数据。详情请参考&lt;a href=&#34;https://skywalking.apache.org/docs/main/next/en/concepts-and-designs/mal/&#34;&gt;MAL doc&lt;/a&gt; 以及 &lt;a href=&#34;https://skywalking.apache.org/docs/main/next/en/ui/readme/&#34;&gt;UI doc&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./gateway_to_ui.png&#34; alt=&#34;gateway_to_ui.png&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;典型指标分析&#34;&gt;典型指标分析&lt;/h2&gt;
+&lt;h3 id=&#34;作用域&#34;&gt;作用域&lt;/h3&gt;
+&lt;p&gt;SkyWalking中，有作用域 ( scope ) 的概念。通过作用域, 我们可以对指标进行更合理的分类与聚合。在对DynamoDB的监控中，使用到了其中两种作用域———Service和Endpoint。&lt;/p&gt;
+&lt;p&gt;Service表示一组工作负荷，这些工作负荷为传入请求提供相同的行为。常用作服务的集群级别作用域，在AWS中，用户的账户更接近集群的概念。 所以SkyWalking将AWS account id作为key，将AWS账户映射为Service类型。&lt;/p&gt;
+&lt;p&gt;同理，Endpoint表示一种逻辑概念，常用于服务中用于传入请求的路径，例如 HTTP URI 路径或 gRPC 服务类 + 方法签名，也可以表示数据库中的表结构。所以SkyWalking将DynamoDB表映射为Endpoint类型。&lt;/p&gt;
+&lt;h3 id=&#34;指标&#34;&gt;指标&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;指标名称&lt;/th&gt;
+&lt;th&gt;含义&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;AccountMaxReads / AccountMaxWrites&lt;/td&gt;
+&lt;td&gt;账户可以使用的最大 读取/写入 容量单位数。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;AccountMaxTableLevelReads / AccountMaxTableLevelWrites&lt;/td&gt;
+&lt;td&gt;账户的表或全局二级索引可以使用的最大 读取/写入 容量单位数。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;AccountProvisionedReadCapacityUtilization / AccountProvisionedWriteCapacityUtilization&lt;/td&gt;
+&lt;td&gt;账户使用的预置 读取/写入 容量单位百分比。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;MaxProvisionedTableReadCapacityUtilization / MaxProvisionedTableWriteCapacityUtilization&lt;/td&gt;
+&lt;td&gt;账户的最高预调配 读取/写入 表或全局二级索引使用的预调配读取容量单位百分比。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;以上为一些常用的账户指标(Serivce 作用域)。它们是DynamoDB中的各种配置信息，SkyWalking通过对这些指标的监控，可以完整的展示出数据库配置的变动情况。&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;指标名称&lt;/th&gt;
+&lt;th&gt;含义&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;ConsumedReadCapacityUnits / ConsumedWriteCapacityUnits&lt;/td&gt;
+&lt;td&gt;指定时间段内占用的 读取/写入 容量单位数&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ReturnedItemCount&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;Query&lt;/code&gt;、&lt;code&gt;Scan&lt;/code&gt; 或 &lt;code&gt;ExecuteStatement&lt;/code&gt;（可选择）操作在指定时段内返回的项目数。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;SuccessfulRequestLatency&lt;/td&gt;
+&lt;td&gt;指定时间段内对于 DynamoDB 或 Amazon DynamoDB Streams 的成功请求的延迟。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;TimeToLiveDeletedItemCount&lt;/td&gt;
+&lt;td&gt;指定时间段内按存活时间 (TTL) 删除的项目数。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;以上为一些常用的表指标(Endpoint作用域)，它们也会被聚合到账户指标中。这些指标一般用于分析数据库的性能，用户可以通过它们判断出数据库配置的合理程度。例如，用户可以通过ConsumedReadCapicityUnits / ConsumedReadCapicityUnits，跟踪预置吞吐量的使用，从而判断表或账户的预制吞吐量的合理性。关于预置吞吐量，请参见&lt;a href=&#34;https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ProvisionedThroughputIntro.html&#34;&gt;读/写容量模式&lt;/a&gt;。&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;指标名称&lt;/th&gt;
+&lt;th&gt;含义&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;UserErrors&lt;/td&gt;
+&lt;td&gt;在指定时间段内生成 HTTP 400 状态代码的对 DynamoDB 或 Amazon DynamoDB Streams 的请求。HTTP 400 通常表示客户端错误，如参数组合无效，尝试更新不存在的表或请求签名错误。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;SystemErrors&lt;/td&gt;
+&lt;td&gt;在指定的时间段内生成 HTTP 500 状态代码的对 DynamoDB 或 Amazon DynamoDB Streams 的请求。HTTP 500 通常指示内部服务错误。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ThrottledRequests&lt;/td&gt;
+&lt;td&gt;超出资源（如表或索引）预置吞吐量限制的 DynamoDB 请求。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;TransactionConflict&lt;/td&gt;
+&lt;td&gt;由于同一项目的并发请求之间的事务性冲突而被拒绝的项目级请求。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;以上为一些常用的错误指标，其中UserErrors为用户级别指标，其余为表级别指标。用户可以在这些指标上设置告警，如果警告出现，那么可能说明数据库的使用出现了一些问题，需要用户自行查看验证。&lt;/p&gt;
+&lt;h3 id=&#34;注意-1&#34;&gt;注意&lt;/h3&gt;
+&lt;p&gt;SkyWalking对于DynamoDB的指标选取直接来源于CloudWatch metrics， 您也可以通过&lt;a href=&#34;https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/metrics-dimensions.html&#34;&gt;CloudWatch metrics doc&lt;/a&gt;来获取指标详细信息。&lt;/p&gt;
+&lt;h2 id=&#34;demo&#34;&gt;Demo&lt;/h2&gt;
+&lt;p&gt;在本节中，我们将演示如何利用terraform创建一个DynamoDB表，以及可以产生指标流的其他AWS服务，并部署Skywalking完成指标收集。&lt;/p&gt;
+&lt;p&gt;首先，您需要一个正在运行的网关实例，例如 &lt;a href=&#34;https://www.nginx.com/&#34;&gt;NGINX&lt;/a&gt;，它负责接收AWS传来的指标流并且转发到aws-firehose-receiver。注意, 网关需要配置证书以便接受HTTPS协议的请求。&lt;/p&gt;
+&lt;p&gt;下面是一个NGINX的示例配置。配置不要求完全一致，只要能将收到的HTTPS请求发送到&lt;code&gt;oap所在host:12801/aws/firehose/metrics&lt;/code&gt;即可。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;server {
+        listen       443 ssl;
+        
+        ssl_certificate     /crt/test.pem;
+        ssl_certificate_key  /crt/test.key; 
+        
+        ssl_session_timeout  5m;   
+        ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4; 
+        ssl_protocols TLSv1 TLSv1.1 TLSv1.2;  
+        ssl_prefer_server_ciphers on; 
+    
+        location /aws/firehose/metrics {
+            proxy_pass http://test.xyz:12801/aws/firehose/metrics;
+        }
+    }
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;部署skywalking&#34;&gt;部署SkyWalking&lt;/h3&gt;
+&lt;p&gt;SkyWalking的部署方式有很多种，您可以直接从&lt;a href=&#34;https://github.com/apache/skywalking/releases/tag/v9.4.0&#34;&gt;release页面&lt;/a&gt;中直接获取。&lt;/p&gt;
+&lt;p&gt;当然，如果您更习惯于 Kubernetes，您也可以从&lt;a href=&#34;https://github.com/apache/skywalking-kubernetes&#34;&gt;SkyWalking-kubernetes&lt;/a&gt;找到相应部署方式。&lt;/p&gt;
+&lt;p&gt;请注意，无论使用哪种部署方式，请确保OAP和UI的版本为9.4.0以上，并且需要开放12801端口。&lt;/p&gt;
+&lt;p&gt;下面是一个使用helm指令部署的示例：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;export SKYWALKING_RELEASE_VERSION=4.3.0 
+export SKYWALKING_RELEASE_NAME=skywalking  
+export SKYWALKING_RELEASE_NAMESPACE=default
+
+helm install &amp;quot;${SKYWALKING_RELEASE_NAME}&amp;quot; \
+  oci://registry-1.docker.io/apache/skywalking-helm \
+  --version &amp;quot;${SKYWALKING_RELEASE_VERSION}&amp;quot; \
+  -n &amp;quot;${SKYWALKING_RELEASE_NAMESPACE}&amp;quot; \
+  --set oap.image.tag=9.4.0 \
+  --set oap.storageType=elasticsearch \
+  --set ui.image.tag=9.4.0 \
+  --set oap.ports.firehose=12801
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;开启对应aws服务&#34;&gt;开启对应AWS服务&lt;/h3&gt;
+&lt;p&gt;terraform 配置文件如下（实例修改于&lt;a href=&#34;https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/kinesis_firehose_delivery_stream&#34;&gt;Terraform Registry - kinesis_firehose_delivery_stream&lt;/a&gt;）：&lt;/p&gt;
+&lt;details&gt;
+&lt;summary&gt;terraform 配置文件 &lt;/summary&gt;
+&lt;pre&gt;&lt;code&gt;provider &amp;quot;aws&amp;quot; {
+  region = &amp;quot;ap-northeast-1&amp;quot;
+  access_key = &amp;quot;在这里填入您的access_key&amp;quot;
+  secret_key = &amp;quot;在这里填入您的secret_key&amp;quot;
+}
+resource &amp;quot;aws_dynamodb_table&amp;quot; &amp;quot;basic-dynamodb-table&amp;quot; {
+  name           = &amp;quot;GameScores&amp;quot;
+  billing_mode   = &amp;quot;PROVISIONED&amp;quot;
+  read_capacity  = 20
+  write_capacity = 20
+  hash_key       = &amp;quot;UserId&amp;quot;
+  range_key      = &amp;quot;GameTitle&amp;quot;
+
+  attribute {
+    name = &amp;quot;UserId&amp;quot;
+    type = &amp;quot;S&amp;quot;
+  }
+
+  attribute {
+    name = &amp;quot;GameTitle&amp;quot;
+    type = &amp;quot;S&amp;quot;
+  }
+
+  attribute {
+    name = &amp;quot;TopScore&amp;quot;
+    type = &amp;quot;N&amp;quot;
+  }
+
+  ttl {
+    attribute_name = &amp;quot;TimeToExist&amp;quot;
+    enabled        = true
+  }
+
+  global_secondary_index {
+    name               = &amp;quot;GameTitleIndex&amp;quot;
+    hash_key           = &amp;quot;GameTitle&amp;quot;
+    range_key          = &amp;quot;TopScore&amp;quot;
+    write_capacity     = 10
+    read_capacity      = 10
+    projection_type    = &amp;quot;INCLUDE&amp;quot;
+    non_key_attributes = [&amp;quot;UserId&amp;quot;]
+  }
+
+  tags = {
+    Name        = &amp;quot;dynamodb-table-1&amp;quot;
+    Environment = &amp;quot;production&amp;quot;
+  }
+}
+
+resource &amp;quot;aws_cloudwatch_metric_stream&amp;quot; &amp;quot;main&amp;quot; {
+  name          = &amp;quot;my-metric-stream&amp;quot;
+  role_arn      = aws_iam_role.metric_stream_to_firehose.arn
+  firehose_arn  = aws_kinesis_firehose_delivery_stream.http_stream.arn
+  output_format = &amp;quot;opentelemetry0.7&amp;quot;
+
+  include_filter {
+    namespace = &amp;quot;AWS/DynamoDB&amp;quot;
+  }
+}
+
+# https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-metric-streams-trustpolicy.html
+data &amp;quot;aws_iam_policy_document&amp;quot; &amp;quot;streams_assume_role&amp;quot; {
+  statement {
+    effect = &amp;quot;Allow&amp;quot;
+
+    principals {
+      type        = &amp;quot;Service&amp;quot;
+      identifiers = [&amp;quot;streams.metrics.cloudwatch.amazonaws.com&amp;quot;]
+    }
+
+    actions = [&amp;quot;sts:AssumeRole&amp;quot;]
+  }
+}
+
+resource &amp;quot;aws_iam_role&amp;quot; &amp;quot;metric_stream_to_firehose&amp;quot; {
+  name               = &amp;quot;metric_stream_to_firehose_role&amp;quot;
+  assume_role_policy = data.aws_iam_policy_document.streams_assume_role.json
+}
+
+# https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-metric-streams-trustpolicy.html
+data &amp;quot;aws_iam_policy_document&amp;quot; &amp;quot;metric_stream_to_firehose&amp;quot; {
+  statement {
+    effect = &amp;quot;Allow&amp;quot;
+
+    actions = [
+      &amp;quot;firehose:PutRecord&amp;quot;,
+      &amp;quot;firehose:PutRecordBatch&amp;quot;,
+    ]
+
+    resources = [aws_kinesis_firehose_delivery_stream.http_stream.arn]
+  }
+}
+resource &amp;quot;aws_iam_role_policy&amp;quot; &amp;quot;metric_stream_to_firehose&amp;quot; {
+  name   = &amp;quot;default&amp;quot;
+  role   = aws_iam_role.metric_stream_to_firehose.id
+  policy = data.aws_iam_policy_document.metric_stream_to_firehose.json
+}
+
+resource &amp;quot;aws_s3_bucket&amp;quot; &amp;quot;bucket&amp;quot; {
+  bucket = &amp;quot;metric-stream-test-bucket&amp;quot;
+}
+
+resource &amp;quot;aws_s3_bucket_acl&amp;quot; &amp;quot;bucket_acl&amp;quot; {
+  bucket = aws_s3_bucket.bucket.id
+  acl    = &amp;quot;private&amp;quot;
+}
+
+data &amp;quot;aws_iam_policy_document&amp;quot; &amp;quot;firehose_assume_role&amp;quot; {
+  statement {
+    effect = &amp;quot;Allow&amp;quot;
+
+    principals {
+      type        = &amp;quot;Service&amp;quot;
+      identifiers = [&amp;quot;firehose.amazonaws.com&amp;quot;]
+    }
+
+    actions = [&amp;quot;sts:AssumeRole&amp;quot;]
+  }
+}
+
+resource &amp;quot;aws_iam_role&amp;quot; &amp;quot;firehose_to_s3&amp;quot; {
+  assume_role_policy = data.aws_iam_policy_document.firehose_assume_role.json
+}
+
+data &amp;quot;aws_iam_policy_document&amp;quot; &amp;quot;firehose_to_s3&amp;quot; {
+  statement {
+    effect = &amp;quot;Allow&amp;quot;
+
+    actions = [
+      &amp;quot;s3:AbortMultipartUpload&amp;quot;,
+      &amp;quot;s3:GetBucketLocation&amp;quot;,
+      &amp;quot;s3:GetObject&amp;quot;,
+      &amp;quot;s3:ListBucket&amp;quot;,
+      &amp;quot;s3:ListBucketMultipartUploads&amp;quot;,
+      &amp;quot;s3:PutObject&amp;quot;,
+    ]
+
+    resources = [
+      aws_s3_bucket.bucket.arn,
+      &amp;quot;${aws_s3_bucket.bucket.arn}/*&amp;quot;,
+    ]
+  }
+}
+
+resource &amp;quot;aws_iam_role_policy&amp;quot; &amp;quot;firehose_to_s3&amp;quot; {
+  name   = &amp;quot;default&amp;quot;
+  role   = aws_iam_role.firehose_to_s3.id
+  policy = data.aws_iam_policy_document.firehose_to_s3.json
+}
+
+resource &amp;quot;aws_kinesis_firehose_delivery_stream&amp;quot; &amp;quot;http_stream&amp;quot; {
+  name        = &amp;quot;metric-stream-test-stream&amp;quot;
+  destination = &amp;quot;http_endpoint&amp;quot;
+
+  http_endpoint_configuration {
+    name       = &amp;quot;test_http_endpoint&amp;quot;
+    url        = &amp;quot;这里填入Gateway的url&amp;quot;
+    role_arn   = aws_iam_role.firehose_to_s3.arn
+  }
+  s3_configuration {
+    role_arn   = aws_iam_role.firehose_to_s3.arn
+    bucket_arn = aws_s3_bucket.bucket.arn
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/details&gt;
+&lt;p&gt;使用步骤：&lt;/p&gt;
+&lt;p&gt;1.获取AWS账户的access_key以及secret_key。( 关于如何获取，请参考：&lt;a href=&#34;https://aws.amazon.com/premiumsupport/knowledge-center/create-access-key/&#34;&gt;create-access-key&lt;/a&gt; )&lt;/p&gt;
+&lt;p&gt;2.将上一步中获取的access_key与secret_key填入对应位置，并将您的网关对应 url 填入 &lt;code&gt;aws_kinesis_firehose_delivery_stream&lt;/code&gt; 配置的对应位置中。&lt;/p&gt;
+&lt;p&gt;3.复制以上内容并保存到main.tf文件中。&lt;/p&gt;
+&lt;p&gt;4.在对应路径下执行以下代码。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;terraform init
+terraform apply
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;至此，需要的AWS服务已全部建立成功，您可以检查您的控制台，查看服务是否成功创建。&lt;/p&gt;
+&lt;h3 id=&#34;完成&#34;&gt;完成！&lt;/h3&gt;
+&lt;p&gt;如果以上步骤全部成功，请耐心等待约五分钟。之后您可以访问SkyWalking UI，查看指标变动情况&lt;/p&gt;
+&lt;p&gt;目前，SkyWalking 默认收集的指标展示如下：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;账户指标:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./service.png&#34; alt=&#34;service.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;表指标：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./endpoint.png&#34; alt=&#34;endpoint.png&#34;&gt;&lt;/p&gt;
+&lt;h5 id=&#34;现已支持的服务&#34;&gt;现已支持的服务&lt;/h5&gt;
+&lt;p&gt;目前SkyWalking官方支持EKS，S3，DynamoDB监控。
+用户也参考 &lt;a href=&#34;https://skywalking.apache.org/docs/main/next/en/setup/backend/opentelemetry-receiver/&#34;&gt;OpenTelemetry receiver&lt;/a&gt; 配置OTEL rules来收集，计算AWS其他服务的CloudWatch metrics，并且通过&lt;a href=&#34;https://skywalking.apache.org/docs/main/next/en/ui/readme/&#34;&gt;自定义dashboard&lt;/a&gt;展示。&lt;/p&gt;
+&lt;h4 id=&#34;相关的资料&#34;&gt;相关的资料&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.aws.amazon.com/AmazonS3/latest/userguide/cloudwatch-monitoring.html&#34;&gt;Monitoring S3 metrics with Amazon CloudWatch&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/monitoring-cloudwatch.html&#34;&gt;Monitoring DynamoDB metrics with Amazon CloudWatch&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://skywalking.apache.org/docs/main/next/en/setup/backend/aws-firehose-receiver/&#34;&gt;Supported metrics in AWS Firehose receiver of OAP&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://skywalking.apache.org/docs/main/next/en/setup/backend/configuration-vocabulary/&#34;&gt;Configuration Vocabulary | Apache SkyWalking&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Zh: 使用SkyWalking监控AWS EKS和S3</title>
+      <link>/zh/2023-03-12-skywalking-aws-s3-eks/</link>
+      <pubDate>Sun, 12 Mar 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/zh/2023-03-12-skywalking-aws-s3-eks/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;img src=&#34;./icon.png&#34; alt=&#34;icon.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;SKyWalking OAP 现有的 &lt;a href=&#34;https://skywalking.apache.org/docs/main/next/en/setup/backend/opentelemetry-receiver/&#34;&gt;OpenTelemetry receiver&lt;/a&gt; 可以通过&lt;a href=&#34;https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/protocol/otlp.md&#34;&gt;OTLP&lt;/a&gt;协议接收指标(metrics)，并且使用&lt;a href=&#34;https://skywalking.apache.org/docs/main/next/en/concepts-and-designs/mal/&#34;&gt;MAL&lt;/a&gt;实时分析相关指标。从OAP 9.4.0开始，SkyWalking 新增了&lt;a href=&#34;https://skywalking.apache.org/docs/main/next/en/setup/backend/aws-firehose-receiver/&#34;&gt;AWS Firehose receiver&lt;/a&gt;，用来接收，分析CloudWatch metrics数据。本文将以EKS和S3为例介绍SkyWalking OAP 接收，分析 AWS 服务的指标数据的过程&lt;/p&gt;
+&lt;h3 id=&#34;eks&#34;&gt;EKS&lt;/h3&gt;
+&lt;h4 id=&#34;opentelemetry-collector&#34;&gt;OpenTelemetry Collector&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;https://opentelemetry.io/&#34;&gt;OpenTelemetry (OTel)&lt;/a&gt; 是一系列tools，API，SDK，可以生成，收集，导出遥测数据，比如 指标(metrics)，日志(logs)和链路信息(traces)，而OTel Collector主要负责收集、处理和导出遥测数据，Collector由以下主要组件组成:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;receiver: 负责获取遥测数据，不同的receiver支持不同的数据源，比如prometheus ，kafka，otlp，&lt;/li&gt;
+&lt;li&gt;processor：在receiver和exporter之间处理数据，比如增加或者删除attributes，&lt;/li&gt;
+&lt;li&gt;exporter：负责发送数据到不同的后端，比如kafka，SkyWalking OAP(通过OTLP)&lt;/li&gt;
+&lt;li&gt;service: 作为一个单元配置启用的组件，只有配置的组件才会被启用&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h6 id=&#34;opentelemetry-protocol-specificationotlp&#34;&gt;OpenTelemetry Protocol Specification(OTLP)&lt;/h6&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/protocol/otlp.md&#34;&gt;OTLP&lt;/a&gt; 主要描述了如何通过gRPC，HTTP协议接收(拉取)指标数据。SKyWalking OAP的 &lt;a href=&#34;https://skywalking.apache.org/docs/main/next/en/setup/backend/opentelemetry-receiver/&#34;&gt;OpenTelemetry receiver&lt;/a&gt; 实现了OTLP/gRPC协议，通过OTLP/gRPC exporter可以将指标数据导出到OAP。通常一个Collector的数据流向如下:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./collector.png&#34; alt=&#34;collector.png&#34;&gt;&lt;/p&gt;
+&lt;h4 id=&#34;使用otel监控eks&#34;&gt;使用OTel监控EKS&lt;/h4&gt;
+&lt;p&gt;EKS的监控就是通过OTel实现的，只需在EKS集群中以&lt;code&gt;DaemonSet &lt;/code&gt; 的方式部署 OpenTelemetry Collector，使用 &lt;a href=&#34;https://github.com/open-telemetry/opentelemetry-collector-contrib/blob/main/receiver/awscontainerinsightreceiver/README.md&#34;&gt;AWS Container Insights Receiver&lt;/a&gt; 作为receiver，并且设置otlp exporter的地址为OAP的的地址即可。另外需要注意的是OAP根据attribute &lt;code&gt;job_name : aws-cloud-eks-monitoring&lt;/code&gt; 作为EKS metrics的标识，所以还需要再collector中配置一个processor来增加这个属性&lt;/p&gt;
+&lt;h6 id=&#34;otel-collector配置demo&#34;&gt;OTel Collector配置demo&lt;/h6&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;extensions&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;health_check&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;receivers&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;awscontainerinsightreceiver&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;processors&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# 为了OAP能够正确识别EKS metrics，增加job_name attribute&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;resource/job-name&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;attributes&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;- &lt;span style=&#34;color:#000080&#34;&gt;key&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;job_name   &lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;value&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;aws-cloud-eks-monitoring&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;action&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;insert     &lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# 指定OAP作为 exporters&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;exporters&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;otlp&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;endpoint&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;oap-service:11800 &lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;tls&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;insecure&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;true&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;logging&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;loglevel&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;debug          &lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;service&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;pipelines&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;metrics&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;receivers&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;[awscontainerinsightreceiver]&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;processors&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;[resource/job-name]&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;exporters&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;[otlp,logging]&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;extensions&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;[health_check]&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;SkyWalking OAP 默认统计 Node，Pod，Service 三个维度的网络、磁盘、CPU等相关的指标数据，这里仅展示了部分内容&lt;/p&gt;
+&lt;h6 id=&#34;pod-维度&#34;&gt;Pod 维度&lt;/h6&gt;
+&lt;p&gt;&lt;img src=&#34;./eks-pod.png&#34; alt=&#34;eks-pod.png&#34;&gt;&lt;/p&gt;
+&lt;h6 id=&#34;service-维度&#34;&gt;Service 维度&lt;/h6&gt;
+&lt;p&gt;&lt;img src=&#34;./eks-service.png&#34; alt=&#34;eks-service.png&#34;&gt;&lt;/p&gt;
+&lt;h6 id=&#34;eks监控完整配置&#34;&gt;EKS监控完整配置&lt;/h6&gt;
+&lt;details&gt;
+&lt;summary&gt;Click here to view complete k8s resource configuration &lt;/summary&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;apiVersion&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;v1&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;kind&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;ServiceAccount&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;metadata&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;name&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;aws-otel-sa&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;namespace&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;aws-otel-eks&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;---&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;kind&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;ClusterRole&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;apiVersion&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;rbac.authorization.k8s.io/v1&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;metadata&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;name&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;aoc-agent-role&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;rules&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;- &lt;span style=&#34;color:#000080&#34;&gt;apiGroups&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;[&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;]&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;resources&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;[&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;pods&amp;#34;&lt;/span&gt;,&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;nodes&amp;#34;&lt;/span&gt;,&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;endpoints&amp;#34;&lt;/span&gt;]&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;verbs&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;[&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;list&amp;#34;&lt;/span&gt;,&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;watch&amp;#34;&lt;/span&gt;]&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;- &lt;span style=&#34;color:#000080&#34;&gt;apiGroups&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;[&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;apps&amp;#34;&lt;/span&gt;]&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;resources&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;[&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;replicasets&amp;#34;&lt;/span&gt;]&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;verbs&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;[&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;list&amp;#34;&lt;/span&gt;,&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;watch&amp;#34;&lt;/span&gt;]&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;- &lt;span style=&#34;color:#000080&#34;&gt;apiGroups&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;[&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;batch&amp;#34;&lt;/span&gt;]&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;resources&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;[&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;jobs&amp;#34;&lt;/span&gt;]&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;verbs&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;[&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;list&amp;#34;&lt;/span&gt;,&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;watch&amp;#34;&lt;/span&gt;]&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;- &lt;span style=&#34;color:#000080&#34;&gt;apiGroups&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;[&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;]&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;resources&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;[&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;nodes/proxy&amp;#34;&lt;/span&gt;]&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;verbs&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;[&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;get&amp;#34;&lt;/span&gt;]&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;- &lt;span style=&#34;color:#000080&#34;&gt;apiGroups&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;[&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;]&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;resources&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;[&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;nodes/stats&amp;#34;&lt;/span&gt;,&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;configmaps&amp;#34;&lt;/span&gt;,&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;events&amp;#34;&lt;/span&gt;]&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;verbs&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;[&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;create&amp;#34;&lt;/span&gt;,&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;get&amp;#34;&lt;/span&gt;]&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;- &lt;span style=&#34;color:#000080&#34;&gt;apiGroups&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;[&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;]&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;resources&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;[&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;configmaps&amp;#34;&lt;/span&gt;]&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;resourceNames&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;[&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;otel-container-insight-clusterleader&amp;#34;&lt;/span&gt;]&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;verbs&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;[&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;get&amp;#34;&lt;/span&gt;,&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;update&amp;#34;&lt;/span&gt;]&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;- &lt;span style=&#34;color:#000080&#34;&gt;apiGroups&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;[&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;coordination.k8s.io&amp;#34;&lt;/span&gt;]&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;resources&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;[&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;leases&amp;#34;&lt;/span&gt;]&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;verbs&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;[&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;create&amp;#34;&lt;/span&gt;,&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;get&amp;#34;&lt;/span&gt;,&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;update&amp;#34;&lt;/span&gt;]&lt;span style=&#34;color:#bbb&#34;&gt;    
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;---&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;kind&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;ClusterRoleBinding&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;apiVersion&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;rbac.authorization.k8s.io/v1&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;metadata&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;name&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;aoc-agent-role-binding&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;subjects&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;- &lt;span style=&#34;color:#000080&#34;&gt;kind&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;ServiceAccount&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;name&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;aws-otel-sa&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;namespace&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;aws-otel-eks&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;roleRef&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;kind&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;ClusterRole&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;name&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;aoc-agent-role&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;apiGroup&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;rbac.authorization.k8s.io&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;---&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;apiVersion&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;v1&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;kind&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;ConfigMap&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;metadata&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;name&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;otel-agent-conf&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;namespace&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;aws-otel-eks&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;labels&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;app&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;opentelemetry&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;component&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;otel-agent-conf&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;data&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;otel-agent-config&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;|&lt;span style=&#34;color:#d14&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;    extensions:
+&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;      health_check:
+&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;    receivers:
+&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;      awscontainerinsightreceiver:
+&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;    processors:
+&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;      resource/job-name:
+&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;        attributes:
+&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;        - key: job_name   
+&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;          value: aws-cloud-eks-monitoring
+&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;          action: insert     
+&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;    exporters:
+&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;      otlp:
+&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;        endpoint: oap-service:11800
+&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;        tls:
+&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;          insecure: true
+&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;      logging:
+&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;          loglevel: debug          
+&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;    service:
+&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;      pipelines:
+&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;        metrics:
+&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;          receivers: [awscontainerinsightreceiver]
+&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;          processors: [resource/job-name]
+&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;          exporters: [otlp,logging]
+&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;      extensions: [health_check]&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;---&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;apiVersion&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;apps/v1&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;kind&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;DaemonSet&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;metadata&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;name&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;aws-otel-eks-ci&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;namespace&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;aws-otel-eks&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;spec&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;selector&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;matchLabels&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;name&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;aws-otel-eks-ci&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;template&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;metadata&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;labels&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;        &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;name&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;aws-otel-eks-ci&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;spec&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;containers&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;        &lt;/span&gt;- &lt;span style=&#34;color:#000080&#34;&gt;name&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;aws-otel-collector&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;          &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;image&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;amazon/aws-otel-collector:v0.23.0&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;          &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;env&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;         	  &lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# Specify region&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;            &lt;/span&gt;- &lt;span style=&#34;color:#000080&#34;&gt;name&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;AWS_REGION&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;              &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;value&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;ap-northeast-1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;            &lt;/span&gt;- &lt;span style=&#34;color:#000080&#34;&gt;name&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;K8S_NODE_NAME&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;              &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;valueFrom&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;                &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;fieldRef&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;                  &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;fieldPath&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;spec.nodeName&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;            &lt;/span&gt;- &lt;span style=&#34;color:#000080&#34;&gt;name&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;HOST_IP&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;              &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;valueFrom&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;                &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;fieldRef&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;                  &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;fieldPath&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;status.hostIP&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;            &lt;/span&gt;- &lt;span style=&#34;color:#000080&#34;&gt;name&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;HOST_NAME&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;              &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;valueFrom&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;                &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;fieldRef&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;                  &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;fieldPath&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;spec.nodeName&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;            &lt;/span&gt;- &lt;span style=&#34;color:#000080&#34;&gt;name&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;K8S_NAMESPACE&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;              &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;valueFrom&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;                 &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;fieldRef&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;                   &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;fieldPath&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;metadata.namespace&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;          &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;imagePullPolicy&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;Always&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;          &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;command&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;            &lt;/span&gt;- &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;/awscollector&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;            &lt;/span&gt;- &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;--config=/conf/otel-agent-config.yaml&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;          &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;volumeMounts&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;            &lt;/span&gt;- &lt;span style=&#34;color:#000080&#34;&gt;name&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;rootfs&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;              &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;mountPath&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;/rootfs&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;              &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;readOnly&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;true&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;            &lt;/span&gt;- &lt;span style=&#34;color:#000080&#34;&gt;name&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;dockersock&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;              &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;mountPath&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;/var/run/docker.sock&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;              &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;readOnly&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;true&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;            &lt;/span&gt;- &lt;span style=&#34;color:#000080&#34;&gt;name&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;varlibdocker&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;              &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;mountPath&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;/var/lib/docker&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;              &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;readOnly&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;true&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;            &lt;/span&gt;- &lt;span style=&#34;color:#000080&#34;&gt;name&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;containerdsock&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;              &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;mountPath&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;/run/containerd/containerd.sock&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;              &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;readOnly&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;true&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;            &lt;/span&gt;- &lt;span style=&#34;color:#000080&#34;&gt;name&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;sys&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;              &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;mountPath&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;/sys&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;              &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;readOnly&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;true&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;            &lt;/span&gt;- &lt;span style=&#34;color:#000080&#34;&gt;name&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;devdisk&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;              &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;mountPath&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;/dev/disk&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;              &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;readOnly&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;true&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;            &lt;/span&gt;- &lt;span style=&#34;color:#000080&#34;&gt;name&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;otel-agent-config-vol&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;              &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;mountPath&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;/conf&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;            &lt;/span&gt;- &lt;span style=&#34;color:#000080&#34;&gt;name&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;otel-output-vol  &lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;              &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;mountPath&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;/otel-output&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;          &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;resources&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;            &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;limits&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;              &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;cpu&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;200m&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;              &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;memory&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;200Mi&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;            &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;requests&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;              &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;cpu&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;200m&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;              &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;memory&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;200Mi&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;volumes&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;        &lt;/span&gt;- &lt;span style=&#34;color:#000080&#34;&gt;configMap&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;            &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;name&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;otel-agent-conf&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;            &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;items&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;              &lt;/span&gt;- &lt;span style=&#34;color:#000080&#34;&gt;key&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;otel-agent-config&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;                &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;path&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;otel-agent-config.yaml&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;          &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;name&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;otel-agent-config-vol&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;        &lt;/span&gt;- &lt;span style=&#34;color:#000080&#34;&gt;name&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;rootfs&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;          &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;hostPath&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;            &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;path&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;/&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;        &lt;/span&gt;- &lt;span style=&#34;color:#000080&#34;&gt;name&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;dockersock&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;          &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;hostPath&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;            &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;path&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;/var/run/docker.sock&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;        &lt;/span&gt;- &lt;span style=&#34;color:#000080&#34;&gt;name&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;varlibdocker&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;          &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;hostPath&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;            &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;path&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;/var/lib/docker&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;        &lt;/span&gt;- &lt;span style=&#34;color:#000080&#34;&gt;name&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;containerdsock&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;          &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;hostPath&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;            &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;path&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;/run/containerd/containerd.sock&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;        &lt;/span&gt;- &lt;span style=&#34;color:#000080&#34;&gt;name&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;sys&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;          &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;hostPath&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;            &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;path&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;/sys&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;        &lt;/span&gt;- &lt;span style=&#34;color:#000080&#34;&gt;name&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;devdisk&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;          &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;hostPath&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;            &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;path&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;/dev/disk/&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;        &lt;/span&gt;- &lt;span style=&#34;color:#000080&#34;&gt;name&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;otel-output-vol  &lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;          &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;hostPath&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;            &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;path&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;/otel-output&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;serviceAccountName&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;aws-otel-sa&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;        
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/details&gt;
+&lt;h3 id=&#34;s3&#34;&gt;S3&lt;/h3&gt;
+&lt;h4 id=&#34;amazon-cloudwatch&#34;&gt;Amazon CloudWatch&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/WhatIsCloudWatch.html&#34;&gt;Amazon CloudWatch&lt;/a&gt; 是AWS提供的监控服务，负责收集AWS 服务，资源的指标数据，CloudWatch metrics stream 负责将指标数据转换为流式处理数据，支持输出json，OTel v0.7.0 两种格式。&lt;/p&gt;
+&lt;h4 id=&#34;amazon-kinesis-data-firehose-firehose&#34;&gt;Amazon Kinesis Data Firehose (Firehose)&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;https://aws.amazon.com/cn/kinesis/data-firehose/&#34;&gt;Firehose&lt;/a&gt; 是一项提取、转换、加载（ETL）服务，可以将流式处理数据以可靠方式捕获、转换和提供到数据湖、数据存储(比如S3)和分析服务中。&lt;/p&gt;
+&lt;p&gt;为了确保外部服务能够正确地接收指标数据， AWS提供了 &lt;a href=&#34;https://docs.aws.amazon.com/firehose/latest/dev/httpdeliveryrequestresponse.html&#34;&gt;Kinesis Data Firehose HTTP Endpoint Delivery Request and Response Specifications (Firehose Specifications)&lt;/a&gt;。Firhose以POST的方式推送Json数据&lt;/p&gt;
+&lt;h6 id=&#34;json数据示例&#34;&gt;Json数据示例&lt;/h6&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;{
+  &lt;span style=&#34;color:#000080&#34;&gt;&amp;#34;requestId&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;ed4acda5-034f-9f42-bba1-f29aea6d7d8f&amp;#34;&lt;/span&gt;,
+  &lt;span style=&#34;color:#000080&#34;&gt;&amp;#34;timestamp&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#099&#34;&gt;1578090901599&lt;/span&gt;
+  &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;records&amp;#34;&lt;/span&gt;: [
+    {
+      &lt;span style=&#34;color:#000080&#34;&gt;&amp;#34;data&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;aGVsbG8=&amp;#34;&lt;/span&gt;
+    },
+    {
+      &lt;span style=&#34;color:#000080&#34;&gt;&amp;#34;data&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;aGVsbG8gd29ybGQ=&amp;#34;&lt;/span&gt;
+    }
+  ]
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol&gt;
+&lt;li&gt;requestId:  请求id，可以实现去重，debug目的&lt;/li&gt;
+&lt;li&gt;timestamp:  Firehose 产生该请求的时间戳(毫秒)&lt;/li&gt;
+&lt;li&gt;records: 实际投递的记录
+&lt;ol&gt;
+&lt;li&gt;data: 投递的数据，以base64编码数据，可以是json或者OTel v0.7.0格式，取决于CloudWatch数据数据的格式(稍后会有描述)。Skywalking目前支持OTel v0.7.0格式&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h5 id=&#34;aws-firehose-receiver&#34;&gt;aws-firehose-receiver&lt;/h5&gt;
+&lt;p&gt;&lt;code&gt;aws-firehose-receiver&lt;/code&gt; 就是提供了一个实现了Firehose Specifications的HTTP Endpoint:&lt;code&gt;/aws/firehose/metrics&lt;/code&gt;。下图展示了通过CloudWatch监控DynamoDB，S3等服务，并利用Firehose将指标数据发送到SKywalking OAP的数据流向&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./aws-service.png&#34; alt=&#34;aws-service.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;从上图可以看到 &lt;code&gt;aws-firehose-receiver&lt;/code&gt; 将数据转换后交由 &lt;code&gt;OpenTelemetry-receiver&lt;/code&gt;处理 ，所以  &lt;a href=&#34;https://skywalking.apache.org/docs/main/next/en/setup/backend/opentelemetry-receiver/&#34;&gt;OpenTelemetry receiver&lt;/a&gt; 中配置的 &lt;code&gt;otel-rules&lt;/code&gt; 同样可以适用CloudWatch metrics&lt;/p&gt;
+&lt;h6 id=&#34;注意&#34;&gt;注意&lt;/h6&gt;
+&lt;ul&gt;
+&lt;li&gt;因为 Kinesis Data Firehose 要求，必须在AWS Firehose receiver 前放置一个Gateway用来建立HTTPS链接。&lt;code&gt;aws-firehose-receiver&lt;/code&gt; 将从v9.5.0开始支持HTTPS协议&lt;/li&gt;
+&lt;li&gt;TLS 证书必须是CA签发的&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;逐步设置s3监控&#34;&gt;逐步设置S3监控&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;进入 S3控制台，通过 &lt;code&gt;Amazon S3 &amp;gt;&amp;gt; Buckets &amp;gt;&amp;gt; (Your Bucket) &amp;gt;&amp;gt; Metrics &amp;gt;&amp;gt; metrics &amp;gt;&amp;gt; View additional charts &amp;gt;&amp;gt; Request metrics&lt;/code&gt; 为 &lt;code&gt;Request metrics&lt;/code&gt; 创建filter&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;./s3-create-filter.png&#34; alt=&#34;s3-create-filter.png&#34;&gt;&lt;/p&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;进入Amazon Kinesis 控制台，创建一个delivery stream， &lt;code&gt;Source&lt;/code&gt;选择 &lt;code&gt;Direct PUT&lt;/code&gt;, &lt;code&gt;Destination&lt;/code&gt; 选择 &lt;code&gt;HTTP Endpoint&lt;/code&gt;. 并且设置&lt;code&gt;HTTP endpoint URL&lt;/code&gt; 为 &lt;code&gt;https://your_domain/aws/firehose/metrics&lt;/code&gt;。其他配置项:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Buffer hints&lt;/code&gt;: 设置缓存的大小和周期&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Access key&lt;/code&gt; 与aws-firehose-receiver中的AccessKey一致即可&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Retry duration&lt;/code&gt;: 重试周期&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Backup settings&lt;/code&gt;: 备份设置，可选地将投递的数据同时备份到S3。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;./firehose-stream-create.png&#34; alt=&#34;firehose-stream-create.png&#34;&gt;&lt;/p&gt;
+&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;进入 CloudWatch控制台，&lt;code&gt;Streams&lt;/code&gt; 标签创建CloudWatch Stream。并且在&lt;code&gt;Select your Kinesis Data Firehose stream&lt;/code&gt;项中配置第二步创建的delivery stream。注意需要设置&lt;code&gt;Change output format&lt;/code&gt; 为 &lt;code&gt;OpenTelemetry v0.7.0&lt;/code&gt;。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;./cloud-watch-stream.png&#34; alt=&#34;cloud-watch-stream.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;至此，S3监控配置设置完成。目前SkyWalking默认收集的S3 metrics 展示如下&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./s3-metrics.png&#34; alt=&#34;s3-metrics.png&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;其他服务&#34;&gt;其他服务&lt;/h3&gt;
+&lt;p&gt;目前SkyWalking官方支持EKS，S3，DynamoDB监控。
+用户也参考 &lt;a href=&#34;https://skywalking.apache.org/docs/main/next/en/setup/backend/opentelemetry-receiver/&#34;&gt;OpenTelemetry receiver&lt;/a&gt; 配置OTel rules来收集，分析AWS其他服务的CloudWatch metrics，并且通过&lt;a href=&#34;https://skywalking.apache.org/docs/main/next/en/ui/readme/&#34;&gt;自定义dashboard&lt;/a&gt;展示&lt;/p&gt;
+&lt;h3 id=&#34;资料&#34;&gt;资料&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.aws.amazon.com/AmazonS3/latest/userguide/cloudwatch-monitoring.html&#34;&gt;Monitoring S3 metrics with Amazon CloudWatch&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/monitoring-cloudwatch.html&#34;&gt;Monitoring DynamoDB metrics with Amazon CloudWatch&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://skywalking.apache.org/docs/main/next/en/setup/backend/aws-firehose-receiver/&#34;&gt;Supported metrics in AWS Firehose receiver of OAP&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://skywalking.apache.org/docs/main/next/en/setup/backend/configuration-vocabulary/&#34;&gt;Configuration Vocabulary | Apache SkyWalking&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
       <title>Zh: 使用 eBPF 提升 HTTP 可观测性 - L7 指标和追踪</title>
       <link>/zh/ebpf-enhanced-http-observability-l7-metrics-and-tracing/</link>
       <pubDate>Thu, 12 Jan 2023 00:00:00 +0000</pubDate>
@@ -38,8 +1112,8 @@
 &lt;p&gt;为了获取 HTTP 内容，必须从此过程的第二步读取它。根据 &lt;a href=&#34;http://rfc-editor.org/rfc/rfc2068.html&#34;&gt;RFC&lt;/a&gt; 定义，内容包含在 4 层协议的数据中，可以通过解析数据来获取。请求和响应对可以相关联，因为它们都在两端的同一连接内发生。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;f1.png&#34; alt=&#34;图 1：HTTP 通信时间线。&#34;&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;图 1：HTTP 通信时间线。&lt;/em&gt;&lt;/p&gt;
-&lt;h3 id=&#34;http-多路复用&#34;&gt;HTTP 多路复用&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/HTTP_pipelining&amp;amp;sa=D&amp;amp;source=editors&amp;amp;ust=1672289009768584&amp;amp;usg=AOvVaw0wJkiaMGDCg4gWbj8zCd43&#34;&gt;HTTP 多路复用（Pipelining）&lt;/a&gt;是 HTTP/1.1 的一个特性，允许在等待对应的响应的情况下在单个 TCP 连接上发送多个 HTTP 请求。这个特性很重要，因为它确保了服务器端的响应顺序必须与请求的顺序匹配。&lt;/p&gt;
+&lt;h3 id=&#34;http-管线化&#34;&gt;HTTP 管线化&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/HTTP_pipelining&#34;&gt;HTTP 管线化（Pipelining）&lt;/a&gt;是 HTTP/1.1 的一个特性，允许在等待对应的响应的情况下在单个 TCP 连接上发送多个 HTTP 请求。这个特性很重要，因为它确保了服务器端的响应顺序必须与请求的顺序匹配。&lt;/p&gt;
 &lt;p&gt;图 2 说明了这是如何工作的，考虑以下情况：HTTP 客户端向服务器发送多个请求，服务器通过按照请求的顺序发送 HTTP 响应来响应。这意味着客户端发送的第一个请求将收到服务器的第一个响应，第二个请求将收到第二个响应，以此类推。&lt;/p&gt;
 &lt;p&gt;在设计 HTTP 解析时，我们应该遵循这个原则，将请求数据添加到列表中，并在解析响应时删除第一个项目。这可以确保响应按正确的顺序处理。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;f2.png&#34; alt=&#34;图 2： HTTP/1.1 管道。&#34;&gt;&lt;/p&gt;
@@ -5926,349 +7000,6 @@ Use module classpath需要选择oap-server&lt;/p&gt;
 &lt;p&gt;答：只要skywalking的探针支持的应该都是可以的。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;问9：sw对于商用的web中间件，如bes、tongweb、websphere、weblogic的支持如何？&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;答：商业组件支持的比较少，因为涉及到相关license的问题，sw项目组需要获得他们的支持来进行数据上报，据我了解，支持不是很好。&lt;/p&gt;
-
-      </description>
-    </item>
-    
-    <item>
-      <title>Zh: 关于 ElastiSsearch 因 basic 认证导致 SkyWalking 无法正常调用接口问题</title>
-      <link>/zh/2019-01-02-skywalking-elasticsearch-basic/</link>
-      <pubDate>Wed, 02 Jan 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/zh/2019-01-02-skywalking-elasticsearch-basic/</guid>
-      <description>
-        
-        
-        &lt;p&gt;SkyWalking 依赖 elasticsearch 集群，如果 elasticsearch 安装有 x-pack 插件的话，那么就会存在一个 Basic 认证，导致 skywalking 无法调用 elasticsearch, 解决方法是使用 nginx 做代理，让 nginx 来做这个 Basic 认证，那么这个问题就自然解决了。&lt;/p&gt;
-&lt;p&gt;方法如下:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;安装 nginx&lt;/li&gt;
-&lt;/ol&gt;
-&lt;blockquote&gt;
-&lt;p&gt;yum install -y nginx&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;ol start=&#34;2&#34;&gt;
-&lt;li&gt;配置 nginx&lt;/li&gt;
-&lt;/ol&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;server {
-        listen       9200 default_server;
-        server_name  _;
-        
-        location / {
-                 proxy_set_header Host $host;
-                 proxy_set_header X-Real-IP $remote_addr;
-                 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                 proxy_pass http://localhost:9200;
-                 #Basic字符串就是使用你的用户名(admin),密码(12345)编码后的值
-                 #注意:在进行Basic加密的时候要使用如下格式如:admin:123456 注意中间有个冒号
-                 proxy_set_header Authorization &amp;#34;Basic YWRtaW4gMTIzNDU2&amp;#34;;
-        }
-    }
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;3&#34;&gt;
-&lt;li&gt;验证&lt;/li&gt;
-&lt;/ol&gt;
-&lt;blockquote&gt;
-&lt;p&gt;curl localhost:9200&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;{
-  &amp;#34;name&amp;#34; : &amp;#34;Yd0rCp9&amp;#34;,
-  &amp;#34;cluster_name&amp;#34; : &amp;#34;es-cn-4590xv9md0009doky&amp;#34;,
-  &amp;#34;cluster_uuid&amp;#34; : &amp;#34;jAPLrqY5R6KWWgHnGCWOAA&amp;#34;,
-  &amp;#34;version&amp;#34; : {
-    &amp;#34;number&amp;#34; : &amp;#34;6.3.2&amp;#34;,
-    &amp;#34;build_flavor&amp;#34; : &amp;#34;default&amp;#34;,
-    &amp;#34;build_type&amp;#34; : &amp;#34;tar&amp;#34;,
-    &amp;#34;build_hash&amp;#34; : &amp;#34;053779d&amp;#34;,
-    &amp;#34;build_date&amp;#34; : &amp;#34;2018-07-20T05:20:23.451332Z&amp;#34;,
-    &amp;#34;build_snapshot&amp;#34; : false,
-    &amp;#34;lucene_version&amp;#34; : &amp;#34;7.3.1&amp;#34;,
-    &amp;#34;minimum_wire_compatibility_version&amp;#34; : &amp;#34;5.6.0&amp;#34;,
-    &amp;#34;minimum_index_compatibility_version&amp;#34; : &amp;#34;5.0.0&amp;#34;
-  },
-  &amp;#34;tagline&amp;#34; : &amp;#34;You Know, for Search&amp;#34;
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;看到如上结果那么恭喜你成功了。&lt;/p&gt;
-
-      </description>
-    </item>
-    
-    <item>
-      <title>Zh: 更容易理解将要到来的分布式链路追踪 6.0GA (翻译)</title>
-      <link>/zh/2019-01-02-understand-trace-trans2cn/</link>
-      <pubDate>Wed, 02 Jan 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/zh/2019-01-02-understand-trace-trans2cn/</guid>
-      <description>
-        
-        
-        &lt;ul&gt;
-&lt;li&gt;作者: Wu Sheng, tetrate, SkyWalking original creator&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/wu-sheng&#34;&gt;GitHub&lt;/a&gt;, &lt;a href=&#34;https://twitter.com/wusheng1108&#34;&gt;Twitter&lt;/a&gt;, &lt;a href=&#34;https://www.linkedin.com/in/wusheng1108&#34;&gt;Linkedin&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;翻译: jjlu521016&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id=&#34;背景&#34;&gt;背景&lt;/h1&gt;
-&lt;p&gt;在当前的微服务架构中分布式链路追踪是很有必要的一部分，但是对于一些用户来说如何去理解和使用分布式链路追踪的相关数据是不清楚的。
-这个博客概述了典型的分布式跟踪用例，以及Skywalking的V6版本中新的可视化功能。我们希望新的用户通过这些示例来更好的理解。&lt;/p&gt;
-&lt;h2 id=&#34;指标和拓扑图&#34;&gt;指标和拓扑图&lt;/h2&gt;
-&lt;p&gt;跟踪数据支持两个众所周知的分析特性：&lt;code&gt;指标&lt;/code&gt;和&lt;code&gt;拓扑图&lt;/code&gt;&lt;br&gt;
-&lt;code&gt;指标&lt;/code&gt;: 每个service, service instance, endpoint的指标都是从跟踪中的入口span派生的。指标代表响应时间的性能。所以可以有一个平均响应时间，99%的响应时间，成功率等。它们按service, service instance, endpoint进行分解。&lt;br&gt;
-&lt;code&gt;拓扑图&lt;/code&gt;: 拓扑表示服务之间的链接，是分布式跟踪最有吸引力的特性。拓扑结构允许所有用户理解分布式服务关系和依赖关系，即使它们是不同的或复杂的。这一点很重要，因为它为所有相关方提供了一个单一的视图，无论他们是开发人员、设计者还是操作者。&lt;/p&gt;
-&lt;p&gt;这里有一个拓扑图的例子包含了4个项目，包括kafka和两个外部依赖。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;0081Kckwly1gkl44oveesj31gr0u00u1.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p align=&#34;center&#34;&gt;-在skywalking的可选择UI0RocketBot的拓扑图-&lt;/p&gt;
-&lt;h1 id=&#34;trace&#34;&gt;Trace&lt;/h1&gt;
-&lt;p&gt;在分布式链路追踪系统中，我们花费大量资源（CPU、内存、磁盘和网络）来生成、传输和持久跟踪数据。让我们试着回答为什么要这样做？我们可以用跟踪数据回答哪些典型的诊断和系统性能问题？&lt;/p&gt;
-&lt;p&gt;Skywalking v6包含两种追踪视图:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;ol&gt;
-&lt;li&gt;TreeMode: 第一次提供,帮助您更容易识别问题。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;ol start=&#34;2&#34;&gt;
-&lt;li&gt;ListMode: 常规的时间线视图，通常也出现在其他跟踪系统中，如Zipkin。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id=&#34;发生错误&#34;&gt;发生错误&lt;/h1&gt;
-&lt;p&gt;在trace视图，最简单的部分是定位错误，可能是由代码异常或网络故障引起的。通过span详情提供的细节，ListMode和TreeMode都能够找到错误
-&lt;img src=&#34;0081Kckwly1gkl44lh09oj32ha0se42w.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p align=&#34;center&#34;&gt;-ListMode 错误span-&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;0081Kckwly1gkl44kwl6nj31q20u0dl0.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p align=&#34;center&#34;&gt;-TreeMode 错误span-&lt;/p&gt;
-&lt;h1 id=&#34;慢span&#34;&gt;慢span&lt;/h1&gt;
-&lt;p&gt;一个高优先级的特性是识别跟踪中最慢的span。这将使用应用程序代理捕获的执行持续时间。在旧的ListMode跟踪视图中，由于嵌套，父span几乎总是包括子span的持续时间。换句话说，一个缓慢的span通常会导致它的父节点也变慢，在Skywalking 6中，我们提供了 &lt;code&gt;最慢的前5个span&lt;/code&gt; 过滤器来帮助你您直接定位span。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;0081Kckwly1gkl44odek5j31sd0u0q8f.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p align=&#34;center&#34;&gt;-最慢的前5个span-&lt;/p&gt;
-&lt;h1 id=&#34;太多子span&#34;&gt;太多子span&lt;/h1&gt;
-&lt;p&gt;在某些情况下，个别持续时间很快，但跟踪速度仍然很慢，如：
-&lt;img src=&#34;0081Kckwly1gkl44mxmddj310i0lktbp.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p align=&#34;center&#34;&gt;-没有慢span的追踪-&lt;/p&gt;
-&lt;p&gt;如果要了解根问题是否与太多操作相关，请使用子范围号的&lt;code&gt;Top 5 of children span number&lt;/code&gt;,筛选器显示每个span的子级数量，突出显示前5个。
-&lt;img src=&#34;0081Kckwly1gkl44nbryhj31fa0tcafl.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p align=&#34;center&#34;&gt;-13个数据库访问相关的span-&lt;/p&gt;
-&lt;p&gt;在这个截图中，有一个包含13个子项的span，这些子项都是数据库访问。另外，当您看到跟踪的概述时，这个2000ms跟踪的数据库花费了1380ms。
-&lt;img src=&#34;0081Kckwly1gkl44lzkbwj31040famyy.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p align=&#34;center&#34;&gt;-1380ms花费在数据库访问-&lt;/p&gt;
-&lt;p&gt;在本例中，根本原因是数据库访问太多。这在其他场景中也很常见，比如太多的RPC或缓存访问。&lt;/p&gt;
-&lt;h1 id=&#34;链路深度&#34;&gt;链路深度&lt;/h1&gt;
-&lt;p&gt;跟踪深度也与延迟有关。像&lt;a href=&#34;#%E5%A4%AA%E5%A4%9A%E5%AD%90span&#34;&gt;太多子span&lt;/a&gt;的场景一样，每个span延迟看起来不错，但整个链路追踪的过程很慢。
-&lt;img src=&#34;0081Kckwly1gkl44nv4gfj32600u0q7a.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p align=&#34;center&#34;&gt;-链路深度-&lt;/p&gt;
-&lt;p&gt;上图所示,最慢的span小鱼500ms,对于2000毫秒的跟踪来说，速度并不太慢。当您看到第一行时，有四种不同的颜色表示这个分布式跟踪中涉及的四个services。每一个都需要100~400ms，这四个都需要近2000ms，从这里我们知道这个缓慢的跟踪是由一个序列中的3个RPC造成的。&lt;/p&gt;
-&lt;h2 id=&#34;结束语&#34;&gt;结束语&lt;/h2&gt;
-&lt;p&gt;分布式链路追踪和APM 工具帮助我们确定造成问题的根源，允许开发和操作团队进行相应的优化。我们希望您喜欢这一点，并且喜欢Apache Skywalking和我们的新链路追踪可视化界面。如果你喜欢的话，在&lt;a href=&#34;https://github.com/apache/incubator-skywalking&#34;&gt;github上面给我们加start来鼓励我们&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Skywakling 6计划在2019年的1月底完成release。您可以通过以下渠道联系项目团队成员&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;关注 &lt;a href=&#34;https://twitter.com/ASFSkyWalking&#34;&gt;skywalking推特&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;订阅邮件:dev@skywalking.apache.org。发送邮件到 &lt;a href=&#34;mailto:dev-subscribe@kywalking.apache.org&#34;&gt;dev-subscribe@kywalking.apache.org&lt;/a&gt; 来订阅.&lt;/li&gt;
-&lt;li&gt;加入&lt;a href=&#34;https://gitter.im/OpenSkywalking/Lobby&#34;&gt;Gitter&lt;/a&gt;聊天室&lt;/li&gt;
-&lt;/ul&gt;
-
-      </description>
-    </item>
-    
-    <item>
-      <title>Zh: SkyWalking apm-sniffer 原理学习与插件编写</title>
-      <link>/zh/2018-12-21-skywalking-apm-sniffer-beginning/</link>
-      <pubDate>Fri, 21 Dec 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/zh/2018-12-21-skywalking-apm-sniffer-beginning/</guid>
-      <description>
-        
-        
-        &lt;h2 id=&#34;导读&#34;&gt;导读&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;SkyWalking 中 Java 探针是使用 JavaAgent 的两大字节码操作工具之一的 Byte Buddy（另外是 Javassist）实现的。项目还包含.Net core 和 Nodejs 自动探针，以及 Service Mesh Istio 的监控。总体上，SkyWalking 是一个多语言，多场景的适配，特别为微服务、云原生和基于容器架构设计的可观测性分析平台（Observability Analysis Platform）。&lt;/li&gt;
-&lt;li&gt;本文基于 SkyWalking 5.0.0-RC2 和 Byte Buddy 1.7.9 版本，会从以下几个章节，让大家掌握 SkyWalking Java 探针的使用，进而让 SkyWalking 在自己公司中的二次开发变得触手可及。
-&lt;ul&gt;
-&lt;li&gt;Byte Buddy 实现 JavaAgent 项目&lt;/li&gt;
-&lt;li&gt;迭代 JavaAgent 项目的方法论&lt;/li&gt;
-&lt;li&gt;SkyWalking agent 项目如何 Debug&lt;/li&gt;
-&lt;li&gt;SkyWalking 插件开发实践&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;文章底部有 SkyWalking 和 Byte Buddy 相应的学习资源。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;byte-buddy-实现&#34;&gt;Byte Buddy 实现&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;首先如果你对 JavaAgent 还不是很了解可以先百度一下，或在公众号内看下《JavaAgent 原理与实践》简单入门下。&lt;/li&gt;
-&lt;li&gt;SpringMVC 分发请求的关键方法相信已经不用我在赘述了，那我们来编写 Byte Buddy JavaAgent 代码吧。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-Java&#34; data-lang=&#34;Java&#34;&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;AgentMain&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;premain&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;String agentOps&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; Instrumentation instrumentation&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;new&lt;/span&gt; AgentBuilder&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;Default&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt;
-                &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;type&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;ElementMatchers&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;named&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;org.springframework.web.servlet.DispatcherServlet&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;))&lt;/span&gt;
-                &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;transform&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;((&lt;/span&gt;builder&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; type&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; classLoader&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; module&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;-&amp;gt;&lt;/span&gt;
-                        builder&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;method&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;ElementMatchers&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;named&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;doDispatch&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;))&lt;/span&gt;
-                                &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;intercept&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;MethodDelegation&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;to&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;DoDispatchInterceptor&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;class&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)))&lt;/span&gt;
-                &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;installOn&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;instrumentation&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
-    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
-&lt;li&gt;编写 DispatcherServlet doDispatch 拦截器代码（是不是跟 AOP 如出一辙）&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-Java&#34; data-lang=&#34;Java&#34;&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;DoDispatchInterceptor&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color:#3c5d5d;font-weight:bold&#34;&gt;@RuntimeType&lt;/span&gt;
-    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;static&lt;/span&gt; Object &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;intercept&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#3c5d5d;font-weight:bold&#34;&gt;@Argument&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;0&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; HttpServletRequest request&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#3c5d5d;font-weight:bold&#34;&gt;@SuperCall&lt;/span&gt; Callable&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;?&amp;gt;&lt;/span&gt; callable&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;final&lt;/span&gt; StringBuilder in &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;new&lt;/span&gt; StringBuilder&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;();&lt;/span&gt;
-        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;request&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;getParameterMap&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;null&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; request&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;getParameterMap&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;().&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;size&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; 0&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-            request&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;getParameterMap&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;().&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;keySet&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;().&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;forEach&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;key &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;-&amp;gt;&lt;/span&gt; in&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;append&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;key=&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+&lt;/span&gt; key &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;_value=&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+&lt;/span&gt; request&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;getParameter&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;key&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;,&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;));&lt;/span&gt;
-        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-        &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;long&lt;/span&gt; agentStart &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; System&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;currentTimeMillis&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;();&lt;/span&gt;
-        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;try&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-            &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; callable&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;call&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;();&lt;/span&gt;
-        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;catch&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;Exception e&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-            System&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;Exception :&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+&lt;/span&gt; e&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;getMessage&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;());&lt;/span&gt;
-            &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
-        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;finally&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-            System&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;path:&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+&lt;/span&gt; request&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;getRequestURI&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34; 入参:&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+&lt;/span&gt; in &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34; 耗时:&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;System&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;currentTimeMillis&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;-&lt;/span&gt; agentStart&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;));&lt;/span&gt;
-        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
-&lt;li&gt;resources/META-INF/MANIFEST.MF&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;Manifest-Version: 1.0
-Premain-Class: com.z.test.agent.AgentMain
-Can-Redefine-Classes: true
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
-&lt;li&gt;pom.xml 文件&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;dependencies
-    +net.bytebuddy.byte-buddy 
-    +javax.servlet.javax.servlet-api *scope=provided
-plugins
-    +maven-jar-plugin *manifestFile=src/main/resources/META-INF/MANIFEST.MF
-    +maven-shade-plugin *include:net.bytebuddy:byte-buddy:jar:
-    +maven-compiler-plugin
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
-&lt;li&gt;小结：没几十行代码就完成了，通过 Byte Buddy 实现应用组件 SpringMVC 记录请求路径、入参、执行时间 JavaAgent 项目，是不是觉得自己很优秀。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;持续迭代-javaagent&#34;&gt;持续迭代 JavaAgent&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;本章节主要介绍 JavaAgent 如何 Debug，以及持续集成的方法论。&lt;/li&gt;
-&lt;li&gt;首先我的 JavaAgent 项目目录结构如图所示:&lt;/li&gt;
-&lt;li&gt;应用项目是用几行代码实现的 SpringBootWeb 项目:&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-Java&#34; data-lang=&#34;Java&#34;&gt;&lt;span style=&#34;color:#3c5d5d;font-weight:bold&#34;&gt;@SpringBootApplication&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;scanBasePackages &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;com&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;})&lt;/span&gt;
-&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;TestBootWeb&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;main&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;String&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[]&lt;/span&gt; args&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-        SpringApplication&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;run&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;TestBootWeb&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;class&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; args&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
-    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-    &lt;span style=&#34;color:#3c5d5d;font-weight:bold&#34;&gt;@RestController&lt;/span&gt;
-    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;ApiController&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color:#3c5d5d;font-weight:bold&#34;&gt;@PostMapping&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;/ping&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
-        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; String &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;ping&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;HttpServletRequest request&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-            &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;pong&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
-        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
-&lt;li&gt;下面是关键 JavaAgent 项目如何持续迭代与集成:&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;VM options增加:-JavaAgent:{$HOME}/Code/github/z_my_test/test-agent/target/test-agent-1.0-SNAPSHOT.jar=args
-Before launch 在Build之前增加：
-    Working directory:{$HOME}/Code/github/incubator-skywalking
-    Command line:-T 1C -pl test-agent -am clean package -Denforcer.skip=true -Dmaven.test.skip=true -Dmaven.compile.fork=true
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
-&lt;li&gt;小结：看到这里的将 JavaAgent 持续迭代集成方法，是不是瞬间觉得自己手心已经发痒起来，很想编写一个自己的 agent 项目了呢，等等还有一个好消息:test-demo 这 10 几行的代码实现的 Web 服务，居然有 5k 左右的类可以使用 agent 增强。&lt;/li&gt;
-&lt;li&gt;注意 mvn 编译加速的命令是 maven3 + 版本以上才支持的哈。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;skywalking-debug&#34;&gt;SkyWalking Debug&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;峰回路转，到了文章的主题《SkyWalking 之高级用法》的正文啦。首先，JavaAgent 项目想 Debug，还需要将 agent 代码与接入 agent 项目至少在同一个工作空间内，网上方法有很多，这里我推荐大家一个最简单的方法。File-&amp;gt;New-&amp;gt;Module from Exisiting Sources… 引入 skywalking-agent 源码即可&lt;/li&gt;
-&lt;li&gt;详细的 idea 编辑器配置：&lt;/li&gt;
-&lt;li&gt;优化 SkyWalking agent 编译时间，我的集成时间优化到 30 秒左右：&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;VM options增加:-JavaAgent:-JavaAgent:{$HOME}/Code/github/incubator-skywalking/skywalking-agent/skywalking-agent.jar：不要用dist里面的skywalking-agent.jar，具体原因大家可以看看源码：apm-sniffer/apm-agent/pom.xml中的maven插件的使用。
-Before launch 在Build之前增加：
-    Working directory:{$HOME}/Code/github/incubator-skywalking
-    Command line:-T 1C -pl apm-sniffer/apm-sdk-plugin -amd clean package -Denforcer.skip=true -Dmaven.test.skip=true -Dmaven.compile.fork=true： 这里我针对插件包，因为紧接着下文要开发插件
-另外根pom注释maven-checkstyle-plugin也可加速编译
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;kob-之-skywalking-插件编写&#34;&gt;kob 之 SkyWalking 插件编写&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;kob（贝壳分布式作业调度框架）是贝壳找房项目微服务集群中的基础组件，通过编写贝壳分布式作业调度框架的 SkyWalking 插件，可以实时收集作业调度任务的执行链路信息，从而及时得到基础组件的稳定性，了解细节可点击阅读《&lt;a href=&#34;https://mp.weixin.qq.com/s/3hXyFCgclsuoznNQ2ulC4g&#34;&gt;贝壳分布式调度框架简介&lt;/a&gt;》。想详细了解 SkyWalking 插件编写可在文章底部参考链接中，跳转至对应的官方资源，好话不多说，代码一把唆起来。&lt;/li&gt;
-&lt;li&gt;apm-sdk-plugin pom.xml 增加自己的插件 model&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span style=&#34;color:#000080&#34;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;apm-sdk-plugin&lt;span style=&#34;color:#000080&#34;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
-    &lt;span style=&#34;color:#000080&#34;&gt;&amp;lt;modules&amp;gt;&lt;/span&gt;
-        &lt;span style=&#34;color:#000080&#34;&gt;&amp;lt;module&amp;gt;&lt;/span&gt;kob-plugin&lt;span style=&#34;color:#000080&#34;&gt;&amp;lt;/module&amp;gt;&lt;/span&gt;
-        ...
-    &lt;span style=&#34;color:#000080&#34;&gt;&amp;lt;modules&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
-&lt;li&gt;resources.skywalking-plugin.def 增加自己的描述&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;kob=org.apache.skywalking.apm.plugin.kob.KobInstrumentation
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
-&lt;li&gt;在 SkyWalking 的项目中，通过继承 ClassInstanceMethodsEnhancePluginDefine 可以定义需要拦截的类和增强的方法，编写作业调度方法的 instrumentation&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-Java&#34; data-lang=&#34;Java&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;KobInstrumentation&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;extends&lt;/span&gt; ClassInstanceMethodsEnhancePluginDefine &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;final&lt;/span&gt; String ENHANCE_CLASS &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;com.ke.kob.client.spring.core.TaskDispatcher&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
-    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;final&lt;/span&gt; String INTERCEPT_CLASS &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;org.apache.skywalking.apm.plugin.kob.KobInterceptor&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
-    &lt;span style=&#34;color:#3c5d5d;font-weight:bold&#34;&gt;@Override&lt;/span&gt;
-    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;protected&lt;/span&gt; ClassMatch &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;enhanceClass&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; NameMatch&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;byName&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;ENHANCE_CLASS&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
-    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-    &lt;span style=&#34;color:#3c5d5d;font-weight:bold&#34;&gt;@Override&lt;/span&gt;
-    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;protected&lt;/span&gt; ConstructorInterceptPoint&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[]&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;getConstructorsInterceptPoints&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
-    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-    &lt;span style=&#34;color:#3c5d5d;font-weight:bold&#34;&gt;@Override&lt;/span&gt;
-    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;protected&lt;/span&gt; InstanceMethodsInterceptPoint&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[]&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;getInstanceMethodsInterceptPoints&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;new&lt;/span&gt; InstanceMethodsInterceptPoint&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[]&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-                &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;new&lt;/span&gt; InstanceMethodsInterceptPoint&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-                    &lt;span style=&#34;color:#3c5d5d;font-weight:bold&#34;&gt;@Override&lt;/span&gt;
-                    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; ElementMatcher&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;MethodDescription&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;getMethodsMatcher&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-                        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; named&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;dispatcher1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
-                    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-                    &lt;span style=&#34;color:#3c5d5d;font-weight:bold&#34;&gt;@Override&lt;/span&gt;
-                    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; String &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;getMethodsInterceptor&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-                        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; INTERCEPT_CLASS&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
-                    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-                    &lt;span style=&#34;color:#3c5d5d;font-weight:bold&#34;&gt;@Override&lt;/span&gt;
-                    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;boolean&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;isOverrideArgs&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-                        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;false&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
-                    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-                &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;};&lt;/span&gt;
-    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
-&lt;li&gt;通过实现 InstanceMethodsAroundInterceptor 后，定义 beforeMethod、afterMethod 和 handleMethodException 的实现方法，可以环绕增强指定目标方法，下面自定义 interceptor 实现 span 的跟踪（这里需要注意 SkyWalking 中 span 的生命周期，在 afterMethod 方法中结束 span）&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-Java&#34; data-lang=&#34;Java&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;KobInterceptor&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;implements&lt;/span&gt; InstanceMethodsAroundInterceptor &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color:#3c5d5d;font-weight:bold&#34;&gt;@Override&lt;/span&gt;
-    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;beforeMethod&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;EnhancedInstance objInst&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; Method method&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; Object&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[]&lt;/span&gt; allArguments&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;  Class&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;?&amp;gt;[]&lt;/span&gt; argumentsTypes&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; MethodInterceptResult result&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;throws&lt;/span&gt; Throwable &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;final&lt;/span&gt; ContextCarrier contextCarrier &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;new&lt;/span&gt; ContextCarrier&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;();&lt;/span&gt;
-        com&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;ke&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;kob&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;client&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;spring&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;model&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;TaskContext&lt;/span&gt; context &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;TaskContext&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; allArguments&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;0&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;];&lt;/span&gt;
-        CarrierItem next &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; contextCarrier&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;items&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;();&lt;/span&gt;
-        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;next&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;hasNext&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;())&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-            next &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; next&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;next&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;();&lt;/span&gt;
-            next&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;setHeadValue&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;JSON&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;toJSONString&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;context&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;getUserParam&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()));&lt;/span&gt;
-        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-        AbstractSpan span &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; ContextManager&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;createEntrySpan&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;client:&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+&lt;/span&gt;allArguments&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;1&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;]+&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;,task:&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+&lt;/span&gt;context&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;getTaskKey&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(),&lt;/span&gt; contextCarrier&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
-        span&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;setComponent&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;ComponentsDefine&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;TRANSPORT_CLIENT&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
-        SpanLayer&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;asRPCFramework&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;span&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
-    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-    &lt;span style=&#34;color:#3c5d5d;font-weight:bold&#34;&gt;@Override&lt;/span&gt;
-    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; Object &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;afterMethod&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;EnhancedInstance objInst&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; Method method&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; Object&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[]&lt;/span&gt; allArguments&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; Class&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;?&amp;gt;[]&lt;/span&gt; argumentsTypes&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; Object ret&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;throws&lt;/span&gt; Throwable &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-        ContextManager&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;stopSpan&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;();&lt;/span&gt;
-        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; ret&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
-    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-    &lt;span style=&#34;color:#3c5d5d;font-weight:bold&#34;&gt;@Override&lt;/span&gt;
-    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;handleMethodException&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;EnhancedInstance objInst&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; Method method&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; Object&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[]&lt;/span&gt; allArguments&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; Class&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;?&amp;gt;[]&lt;/span&gt; argumentsTypes&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; Throwable t&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
-&lt;li&gt;实现效果，将操作名改成任务执行节点 + 任务执行方法，实现 kob 的 SkyWalking 的插件编写，加上报警体系，可以进一步增加公司基础组件的稳定性。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;参考链接&#34;&gt;参考链接&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/apache/skywalking&#34;&gt;Apache SkyWalking&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/raphw/byte-buddy&#34;&gt;Byte Buddy（runtime code generation for the Java virtual machine）&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
 
       </description>
     </item>

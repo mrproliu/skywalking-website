@@ -14,6 +14,495 @@
     
     
     <item>
+      <title>Events: Release Apache SkyWalking PHP 0.4.0</title>
+      <link>/events/release-apache-skwaylking-php-0-4-0/</link>
+      <pubDate>Wed, 29 Mar 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/events/release-apache-skwaylking-php-0-4-0/</guid>
+      <description>
+        
+        
+        &lt;p&gt;SkyWalking PHP 0.4.0 is released. Go to &lt;a href=&#34;https://skywalking.apache.org/downloads&#34;&gt;downloads&lt;/a&gt; page to find release tars.&lt;/p&gt;
+&lt;h2 id=&#34;whats-changed&#34;&gt;What&amp;rsquo;s Changed&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Bump tokio from 1.24.1 to 1.24.2 by @dependabot in &lt;a href=&#34;https://github.com/apache/skywalking-php/pull/52&#34;&gt;https://github.com/apache/skywalking-php/pull/52&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Bump to 0.4.0-dev by @heyanlong in &lt;a href=&#34;https://github.com/apache/skywalking-php/pull/53&#34;&gt;https://github.com/apache/skywalking-php/pull/53&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Avoid potential panic for logger. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-php/pull/54&#34;&gt;https://github.com/apache/skywalking-php/pull/54&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Fix the curl plugin hook curl_setopt by mistake. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-php/pull/55&#34;&gt;https://github.com/apache/skywalking-php/pull/55&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Update documents. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-php/pull/56&#34;&gt;https://github.com/apache/skywalking-php/pull/56&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Upgrade dependencies and adapt the codes. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-php/pull/57&#34;&gt;https://github.com/apache/skywalking-php/pull/57&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Add sub components licenses in dist material. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-php/pull/58&#34;&gt;https://github.com/apache/skywalking-php/pull/58&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Bump to 0.4.0. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-php/pull/59&#34;&gt;https://github.com/apache/skywalking-php/pull/59&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;new-contributors&#34;&gt;New Contributors&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;@dependabot made their first contribution in &lt;a href=&#34;https://github.com/apache/skywalking-php/pull/52&#34;&gt;https://github.com/apache/skywalking-php/pull/52&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Full Changelog&lt;/strong&gt;: &lt;a href=&#34;https://github.com/apache/skywalking-php/compare/v0.3.0...v0.4.0&#34;&gt;https://github.com/apache/skywalking-php/compare/v0.3.0...v0.4.0&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;pecl&#34;&gt;PECL&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://pecl.php.net/package/skywalking_agent/0.4.0&#34;&gt;https://pecl.php.net/package/skywalking_agent/0.4.0&lt;/a&gt;&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Events: Release Apache SkyWalking Rust 0.6.0</title>
+      <link>/events/release-apache-skywalking-rust-0-6-0/</link>
+      <pubDate>Sat, 11 Mar 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/events/release-apache-skywalking-rust-0-6-0/</guid>
+      <description>
+        
+        
+        &lt;p&gt;SkyWalking Rust 0.6.0 is released. Go to &lt;a href=&#34;/downloads&#34;&gt;downloads&lt;/a&gt; page to find release tars.&lt;/p&gt;
+&lt;h2 id=&#34;whats-changed&#34;&gt;What&amp;rsquo;s Changed&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Refactor span object api to make it more friendly. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-rust/pull/52&#34;&gt;https://github.com/apache/skywalking-rust/pull/52&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Refactor management report and keep alive api. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-rust/pull/53&#34;&gt;https://github.com/apache/skywalking-rust/pull/53&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Use stream and completed for a bulk to collect for grpc reporter. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-rust/pull/54&#34;&gt;https://github.com/apache/skywalking-rust/pull/54&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Add sub components licenses in dist material. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-rust/pull/55&#34;&gt;https://github.com/apache/skywalking-rust/pull/55&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Bump to 0.6.0. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-rust/pull/56&#34;&gt;https://github.com/apache/skywalking-rust/pull/56&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Events: Release Apache SkyWalking APM 9.4.0</title>
+      <link>/events/release-apache-skywalking-apm-9.4.0/</link>
+      <pubDate>Thu, 09 Mar 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/events/release-apache-skywalking-apm-9.4.0/</guid>
+      <description>
+        
+        
+        &lt;p&gt;SkyWalking 9.4.0 is released. Go to &lt;a href=&#34;/downloads&#34;&gt;downloads&lt;/a&gt; page to find release tars.&lt;/p&gt;
+&lt;h4 id=&#34;promql-and-grafana-support&#34;&gt;PromQL and Grafana Support&lt;/h4&gt;
+&lt;img src=&#34;grafana.jpg&#34;/&gt;
+&lt;h4 id=&#34;zipkin-lens-ui-bundled&#34;&gt;Zipkin Lens UI Bundled&lt;/h4&gt;
+&lt;img src=&#34;zipkin.png&#34;/&gt;
+&lt;h4 id=&#34;aws-s3-and-dynamodb-monitoring&#34;&gt;AWS S3 and DynamoDB monitoring&lt;/h4&gt;
+&lt;img src=&#34;aws-s3.png&#34;/&gt;
+&lt;h4 id=&#34;project&#34;&gt;Project&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;Bump up Zipkin and Zipkin lens UI dependency to 2.24.0.&lt;/li&gt;
+&lt;li&gt;Bump up Apache parent pom version to 29.&lt;/li&gt;
+&lt;li&gt;Bump up Armeria version to 1.21.0.&lt;/li&gt;
+&lt;li&gt;Clean up maven &lt;code&gt;pom.xml&lt;/code&gt;s.&lt;/li&gt;
+&lt;li&gt;Bump up Java version to 11.&lt;/li&gt;
+&lt;li&gt;Bump up snakeyaml to 2.0.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;oap-server&#34;&gt;OAP Server&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;Add &lt;code&gt;ServerStatusService&lt;/code&gt; in the core module to provide a new way to expose booting status to other modules.&lt;/li&gt;
+&lt;li&gt;Adds Micrometer as a new component.(ID=141)&lt;/li&gt;
+&lt;li&gt;Refactor session cache in MetricsPersistentWorker.&lt;/li&gt;
+&lt;li&gt;Cache enhancement - don&amp;rsquo;t read new metrics from database in minute dimensionality.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;    // When
+    // (1) the time bucket of the server&#39;s latest stability status is provided
+    //     1.1 the OAP has booted successfully
+    //     1.2 the current dimensionality is in minute.
+    //     1.3 the OAP cluster is rebalanced due to scaling
+    // (2) the metrics are from the time after the timeOfLatestStabilitySts
+    // (3) the metrics don&#39;t exist in the cache
+    // the kernel should NOT try to load it from the database.
+    //
+    // Notice, about condition (2),
+    // for the specific minute of booted successfully, the metrics are expected to load from database when
+    // it doesn&#39;t exist in the cache.
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;Remove the offset of metric session timeout according to worker creation sequence.&lt;/li&gt;
+&lt;li&gt;Correct &lt;code&gt;MetricsExtension&lt;/code&gt; annotations declarations in manual entities.&lt;/li&gt;
+&lt;li&gt;Support component IDs&#39; priority in process relation metrics.&lt;/li&gt;
+&lt;li&gt;Remove abandon logic in MergableBufferedData, which caused unexpected no-update.&lt;/li&gt;
+&lt;li&gt;Fix miss set &lt;code&gt;LastUpdateTimestamp&lt;/code&gt; that caused the metrics session to expire.&lt;/li&gt;
+&lt;li&gt;Rename MAL rule &lt;code&gt;spring-sleuth.yaml&lt;/code&gt; to &lt;code&gt;spring-micrometer.yaml&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Fix memory leak in Zipkin API.&lt;/li&gt;
+&lt;li&gt;Remove the dependency of &lt;code&gt;refresh_interval&lt;/code&gt; of ElasticSearch indices from &lt;code&gt;elasticsearch/flushInterval&lt;/code&gt; config. Now,
+it uses &lt;code&gt;core/persistentPeriod&lt;/code&gt; + 5s as &lt;code&gt;refresh_interval&lt;/code&gt; for all indices instead.&lt;/li&gt;
+&lt;li&gt;Change &lt;code&gt;elasticsearch/flushInterval&lt;/code&gt; to 5s(was 15s).&lt;/li&gt;
+&lt;li&gt;Optimize &lt;code&gt;flushInterval&lt;/code&gt; of ElasticSearch BulkProcessor to avoid extra periodical flush in the continuous bulk streams.&lt;/li&gt;
+&lt;li&gt;An unexpected dot is added when exp is a pure metric name and expPrefix != null.&lt;/li&gt;
+&lt;li&gt;Support monitoring MariaDB.&lt;/li&gt;
+&lt;li&gt;Remove measure/stream specific interval settings in BanyanDB.&lt;/li&gt;
+&lt;li&gt;Add global-specific settings used to override global configurations (e.g &lt;code&gt;segmentIntervalDays&lt;/code&gt;, &lt;code&gt;blockIntervalHours&lt;/code&gt;) in BanyanDB.&lt;/li&gt;
+&lt;li&gt;Use TTL-driven interval settings for the &lt;code&gt;measure-default&lt;/code&gt; group in BanyanDB.&lt;/li&gt;
+&lt;li&gt;Fix wrong group of non time-relative metadata in BanyanDB.&lt;/li&gt;
+&lt;li&gt;Refactor &lt;code&gt;StorageData#id&lt;/code&gt; to the new StorageID object from a String type.&lt;/li&gt;
+&lt;li&gt;Support multiple component IDs in the service topology level.&lt;/li&gt;
+&lt;li&gt;Add &lt;code&gt;ElasticSearch.Keyword&lt;/code&gt; annotation to declare the target field type as &lt;code&gt;keyword&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;[Breaking Change] Column &lt;code&gt;component_id&lt;/code&gt; of &lt;code&gt;service_relation_client_side&lt;/code&gt; and &lt;code&gt;service_relation_server_side&lt;/code&gt; have been replaced by &lt;code&gt;component_ids&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Support &lt;code&gt;priority&lt;/code&gt; definition in the &lt;code&gt;component-libraries.yml&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Enhance service topology query. When there are multiple components detected from the server side,
+the component type of the node would be determined by the priority, which was random in the previous release.&lt;/li&gt;
+&lt;li&gt;Remove &lt;code&gt;component_id&lt;/code&gt; from &lt;code&gt;service_instance_relation_client_side&lt;/code&gt; and &lt;code&gt;service_instance_relation_server_side&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Make the satellite E2E test more stable.&lt;/li&gt;
+&lt;li&gt;Add Istio 1.16 to test matrix.&lt;/li&gt;
+&lt;li&gt;Register ValueColumn as Tag for Record in BanyanDB storage plugin.&lt;/li&gt;
+&lt;li&gt;Bump up Netty to 4.1.86.&lt;/li&gt;
+&lt;li&gt;Remove unnecessary additional columns when storage is in logical sharding mode.&lt;/li&gt;
+&lt;li&gt;The cluster coordinator support watch mechanism for notifying &lt;code&gt;RemoteClientManager&lt;/code&gt; and &lt;code&gt;ServerStatusService&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Fix ServiceMeshServiceDispatcher overwrite ServiceDispatcher debug file when open SW_OAL_ENGINE_DEBUG.&lt;/li&gt;
+&lt;li&gt;Use &lt;code&gt;groupBy&lt;/code&gt; and &lt;code&gt;in&lt;/code&gt; operators to optimize topology query for BanyanDB storage plugin.&lt;/li&gt;
+&lt;li&gt;Support server status watcher for &lt;code&gt;MetricsPersistentWorker&lt;/code&gt; to check the metrics whether required initialization.&lt;/li&gt;
+&lt;li&gt;Fix the meter value are not correct when using &lt;code&gt;sumPerMinLabeld&lt;/code&gt; or &lt;code&gt;sumHistogramPercentile&lt;/code&gt; MAL function.&lt;/li&gt;
+&lt;li&gt;Fix cannot display attached events when using Zipkin Lens UI query traces.&lt;/li&gt;
+&lt;li&gt;Remove &lt;code&gt;time_bucket&lt;/code&gt; for both Stream and Measure kinds in BanyanDB plugin.&lt;/li&gt;
+&lt;li&gt;Merge &lt;code&gt;TIME_BUCKET&lt;/code&gt; of &lt;code&gt;Metrics&lt;/code&gt; and &lt;code&gt;Record&lt;/code&gt; into &lt;code&gt;StorageData&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Support no &lt;code&gt;layer&lt;/code&gt; in the &lt;code&gt;listServices&lt;/code&gt; query.&lt;/li&gt;
+&lt;li&gt;Fix &lt;code&gt;time_bucket&lt;/code&gt; of &lt;code&gt;ServiceTraffic&lt;/code&gt; not set correctly in &lt;code&gt;slowSql&lt;/code&gt; of MAL.&lt;/li&gt;
+&lt;li&gt;Correct the TopN record query DAO of BanyanDB.&lt;/li&gt;
+&lt;li&gt;Tweak interval settings of BanyanDB.&lt;/li&gt;
+&lt;li&gt;Support monitoring AWS Cloud EKS.&lt;/li&gt;
+&lt;li&gt;Bump BanyanDB Java client to 0.3.0-rc1.&lt;/li&gt;
+&lt;li&gt;Remove &lt;code&gt;id&lt;/code&gt; tag from measures.&lt;/li&gt;
+&lt;li&gt;Add &lt;code&gt;Banyandb.MeasureField&lt;/code&gt; to mark a column as a BanyanDB Measure field.&lt;/li&gt;
+&lt;li&gt;Add &lt;code&gt;BanyanDB.StoreIDTag&lt;/code&gt; to store a process&amp;rsquo;s id for searching.&lt;/li&gt;
+&lt;li&gt;[&lt;strong&gt;Breaking Change&lt;/strong&gt;] The supported version of ShardingSphere-Proxy is upgraded from 5.1.2 to 5.3.1. Due to the changes of ShardingSphere&amp;rsquo;s API, versions before 5.3.1 are not compatible.&lt;/li&gt;
+&lt;li&gt;Add the eBPF network profiling E2E Test in the per storage.&lt;/li&gt;
+&lt;li&gt;Fix TCP service instances are lack of instance properties like &lt;code&gt;pod&lt;/code&gt; and &lt;code&gt;namespace&lt;/code&gt;, which causes Pod log not to work for TCP workloads.&lt;/li&gt;
+&lt;li&gt;Add Python HBase happybase module component ID(94).&lt;/li&gt;
+&lt;li&gt;Fix gRPC alarm cannot update settings from dynamic configuration source.&lt;/li&gt;
+&lt;li&gt;Add &lt;code&gt;batchOfBytes&lt;/code&gt; configuration to limit the size of bulk flush.&lt;/li&gt;
+&lt;li&gt;Add Python Websocket module component ID(7018).&lt;/li&gt;
+&lt;li&gt;[Optional] Optimize single trace query performance by customizing routing in ElasticSearch. SkyWalking trace segments and Zipkin spans are using trace ID for routing. This is OFF by default, controlled by &lt;code&gt;storage/elasticsearch/enableCustomRouting&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Enhance OAP HTTP server to support HTTPS&lt;/li&gt;
+&lt;li&gt;Remove handler scan in otel receiver, manual initialization instead&lt;/li&gt;
+&lt;li&gt;Add aws-firehose-receiver to support collecting AWS CloudWatch metric(OpenTelemetry format). Notice, no HTTPS/TLS setup
+support. By following AWS Firehose request, it uses &lt;a href=&#34;https://en.wikipedia.org/wiki/Proxy_server#Web_proxy_servers&#34;&gt;proxy request&lt;/a&gt;
+(&lt;code&gt;https://...&lt;/code&gt; instead of &lt;code&gt;/aws/firehose/metrics&lt;/code&gt;), there must be a proxy(Nginx, Envoy, etc.).&lt;/li&gt;
+&lt;li&gt;Avoid Antlr dependencies&#39; versions might be different in compile time and runtime.&lt;/li&gt;
+&lt;li&gt;Now &lt;code&gt;PrometheusMetricConverter#escapedName&lt;/code&gt; also support converting &lt;code&gt;/&lt;/code&gt; to &lt;code&gt;_&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Add missing TCP throughput metrics.&lt;/li&gt;
+&lt;li&gt;Refactor &lt;code&gt;@Column&lt;/code&gt; annotation, swap &lt;code&gt;Column#name&lt;/code&gt; and &lt;code&gt;ElasticSearch.Column#columnAlias&lt;/code&gt; and rename &lt;code&gt;ElasticSearch.Column#columnAlias&lt;/code&gt; to &lt;code&gt;ElasticSearch.Column#legacyName&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Add Python HTTPX module component ID(7019).&lt;/li&gt;
+&lt;li&gt;Migrate tests from junit 4 to junit 5.&lt;/li&gt;
+&lt;li&gt;Refactor http-based alarm plugins and extract common logic to &lt;code&gt;HttpAlarmCallback&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Support Amazon Simple Storage Service (Amazon S3) metrics monitoring&lt;/li&gt;
+&lt;li&gt;Support process Sum metrics with AGGREGATION_TEMPORALITY_DELTA case&lt;/li&gt;
+&lt;li&gt;Support Amazon DynamoDB monitoring.&lt;/li&gt;
+&lt;li&gt;Support prometheus HTTP API and promQL.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Scope&lt;/code&gt; in the Entity of Metrics query v1 protocol is not required and automatical correction. The scope is determined based on the metric itself.&lt;/li&gt;
+&lt;li&gt;Add explicit &lt;code&gt;ReadTimeout&lt;/code&gt; for ConsulConfigurationWatcher to avoid &lt;code&gt;IllegalArgumentException: Cache watchInterval=10sec &amp;gt;= networkClientReadTimeout=10000ms&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Fix &lt;code&gt;DurationUtils.getDurationPoints&lt;/code&gt; exceed, when &lt;code&gt;startTimeBucket&lt;/code&gt; equals &lt;code&gt;endTimeBucket&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Support process OpenTelemetry ExponentialHistogram metrics&lt;/li&gt;
+&lt;li&gt;Add FreeRedis component ID(3018).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;ui&#34;&gt;UI&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;Add Zipkin Lens UI to webapp, and proxy it to context path &lt;code&gt;/zipkin&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Migrate the build tool from vue cli to Vite4.&lt;/li&gt;
+&lt;li&gt;Fix Instance Relation and Endpoint Relation dashboards show up.&lt;/li&gt;
+&lt;li&gt;Add Micrometer icon.&lt;/li&gt;
+&lt;li&gt;Update MySQL UI to support MariaDB.&lt;/li&gt;
+&lt;li&gt;Add AWS menu for supporting AWS monitoring.&lt;/li&gt;
+&lt;li&gt;Add missing FastAPI logo.&lt;/li&gt;
+&lt;li&gt;Update the log details page to support the formatted display of JSON content.&lt;/li&gt;
+&lt;li&gt;Fix build config.&lt;/li&gt;
+&lt;li&gt;Avoid being unable to drag process nodes for the first time.&lt;/li&gt;
+&lt;li&gt;Add node folder into ignore list.&lt;/li&gt;
+&lt;li&gt;Add ElPopconfirm to component types.&lt;/li&gt;
+&lt;li&gt;Add an iframe widget for zipkin UI.&lt;/li&gt;
+&lt;li&gt;Optimize graph tooltips to make them more friendly.&lt;/li&gt;
+&lt;li&gt;Bump json5 from 1.0.1 to 1.0.2.&lt;/li&gt;
+&lt;li&gt;Add websockets icon.&lt;/li&gt;
+&lt;li&gt;Implement independent mode for widgets.&lt;/li&gt;
+&lt;li&gt;Bump http-cache-semantics from 4.1.0 to 4.1.1.&lt;/li&gt;
+&lt;li&gt;Update menus for OpenFunction.&lt;/li&gt;
+&lt;li&gt;Add auto fresh to widgets independent mode.&lt;/li&gt;
+&lt;li&gt;Fix: clear trace ID on the Log and Trace widgets after using association.&lt;/li&gt;
+&lt;li&gt;Fix: reset duration for query conditions after time range changes.&lt;/li&gt;
+&lt;li&gt;Add AWS S3 menu.&lt;/li&gt;
+&lt;li&gt;Refactor: optimize side bar component to make it more friendly.&lt;/li&gt;
+&lt;li&gt;Fix: remove duplicate popup message for query result.&lt;/li&gt;
+&lt;li&gt;Add logo for HTTPX.&lt;/li&gt;
+&lt;li&gt;Refactor: optimize the attached events visualization in the trace widget.&lt;/li&gt;
+&lt;li&gt;Update BanyanDB client to 0.3.1.&lt;/li&gt;
+&lt;li&gt;Add AWS DynamoDB menu.&lt;/li&gt;
+&lt;li&gt;Fix: add auto period to the independent mode for widgets.&lt;/li&gt;
+&lt;li&gt;Optimize menus and add Windows monitoring menu.&lt;/li&gt;
+&lt;li&gt;Add a calculation for the cpm5dAvg.&lt;/li&gt;
+&lt;li&gt;add a cpm5d calculation.&lt;/li&gt;
+&lt;li&gt;Fix data processing error in the eBPF profiling widget.&lt;/li&gt;
+&lt;li&gt;Support for double quotes in SlowSQL statements.&lt;/li&gt;
+&lt;li&gt;Fix: the wrong position of the menu when clicking the topology node.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;documentation&#34;&gt;Documentation&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;Remove Spring Sleuth docs, and add &lt;code&gt;Spring MicroMeter Observations Analysis&lt;/code&gt; with the latest Java agent side
+enhancement.&lt;/li&gt;
+&lt;li&gt;Update &lt;code&gt;monitoring MySQL document&lt;/code&gt; to add the &lt;code&gt;MariaDB&lt;/code&gt; part.&lt;/li&gt;
+&lt;li&gt;Reorganize the protocols docs to a more clear API docs.&lt;/li&gt;
+&lt;li&gt;Add documentation about replacing Zipkin server with SkyWalking OAP.&lt;/li&gt;
+&lt;li&gt;Add Lens UI relative docs in Zipkin trace section.&lt;/li&gt;
+&lt;li&gt;Add Profiling APIs.&lt;/li&gt;
+&lt;li&gt;Fix backend telemetry doc and so11y dashboard doc as the OAP Prometheus fetcher was removed since 9.3.0&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;All issues and pull requests are &lt;a href=&#34;https://github.com/apache/skywalking/milestone/160?closed=1&#34;&gt;here&lt;/a&gt;&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Events: Release Apache SkyWalking BanyanDB 0.3.1</title>
+      <link>/events/release-apache-skywalking-banyandb-0-3-1/</link>
+      <pubDate>Mon, 27 Feb 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/events/release-apache-skywalking-banyandb-0-3-1/</guid>
+      <description>
+        
+        
+        &lt;p&gt;SkyWalking BanyanDB 0.3.1 is released. Go to &lt;a href=&#34;/downloads&#34;&gt;downloads&lt;/a&gt; page to find release tars.&lt;/p&gt;
+&lt;h2 id=&#34;bugs&#34;&gt;Bugs&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Fix the broken of schema chain.&lt;/li&gt;
+&lt;li&gt;Add a timeout to all go leaking checkers.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;chores&#34;&gt;Chores&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Bump golang.org/x/net from 0.2.0 to 0.7.0.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Events: Release Apache SkyWalking Python 1.0.0</title>
+      <link>/events/release-apache-skywalking-python-1-0-0/</link>
+      <pubDate>Wed, 22 Feb 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/events/release-apache-skywalking-python-1-0-0/</guid>
+      <description>
+        
+        
+        &lt;p&gt;SkyWalking Python 1.0.0 is released! Go to &lt;a href=&#34;/downloads&#34;&gt;downloads&lt;/a&gt; page to find release tars.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;PyPI Wheel&lt;/strong&gt;: &lt;a href=&#34;https://pypi.org/project/apache-skywalking/1.0.0/&#34;&gt;https://pypi.org/project/apache-skywalking/1.0.0/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;DockerHub Image&lt;/strong&gt;: &lt;a href=&#34;https://hub.docker.com/r/apache/skywalking-python&#34;&gt;https://hub.docker.com/r/apache/skywalking-python&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Important Notes and Breaking Changes:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The new PVM metrics reported from Python agent requires SkyWalking OAP v9.3.0 to show out-of-the-box.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;BREAKING&lt;/strong&gt;: Python 3.6 is no longer supported and may not function properly, Python 3.11 support is added and tested.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;BREAKING&lt;/strong&gt;: A number of common configuration options and environment variables are renamed to follow the convention of Java agent,
+please check with the latest official documentation before upgrading. (#273, #282)
+&lt;a href=&#34;https://skywalking.apache.org/docs/skywalking-python/v1.0.0/en/setup/configuration/&#34;&gt;https://skywalking.apache.org/docs/skywalking-python/v1.0.0/en/setup/configuration/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;BREAKING&lt;/strong&gt;: All agent core capabilities are now covered by test cases and enabled by default (Trace, Log, PVM runtime metrics, Profiler)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;BREAKING&lt;/strong&gt;: DockerHub Python agent images since v1.0.0 will no longer include the &lt;code&gt;run&lt;/code&gt; part in &lt;code&gt;ENTRYPOINT [&amp;quot;sw-python&amp;quot;, &amp;quot;run&amp;quot;]&lt;/code&gt;,
+user should prefix their command with &lt;code&gt;[-d/--debug] run [-p/--prefork] &amp;lt;Command&amp;gt;&lt;/code&gt; for extra flexibility.&lt;/li&gt;
+&lt;li&gt;Packaged wheel now provides a extra [all] option to support all three report protocols&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Feature:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Add support for Python 3.11 (#285)&lt;/li&gt;
+&lt;li&gt;Add MeterReportService (gRPC, Kafka reporter) (default:enabled) (#231, #236, #241, #243)&lt;/li&gt;
+&lt;li&gt;Add reporter for PVM runtime metrics (default:enabled) (#238, #247)&lt;/li&gt;
+&lt;li&gt;Add Greenlet profiler (#246)&lt;/li&gt;
+&lt;li&gt;Add test and support for Python Slim base images (#249)&lt;/li&gt;
+&lt;li&gt;Add support for the tags of Virtual Cache for Redis (#263)&lt;/li&gt;
+&lt;li&gt;Add a new configuration &lt;code&gt;kafka_namespace&lt;/code&gt; to prefix the kafka topic names (#277)&lt;/li&gt;
+&lt;li&gt;Add log reporter support for loguru (#276)&lt;/li&gt;
+&lt;li&gt;Add &lt;strong&gt;experimental&lt;/strong&gt; support for explicit os.fork(), restarts agent in forked process (#286)&lt;/li&gt;
+&lt;li&gt;Add &lt;strong&gt;experimental&lt;/strong&gt; sw-python CLI &lt;code&gt;sw-python run [-p]&lt;/code&gt; flag (-p/&amp;ndash;prefork) to enable non-intrusive uWSGI and Gunicorn postfork support (#288)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Plugins:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Add aioredis, aiormq, amqp, asyncpg, aio-pika, kombu RMQ plugins (#230 Missing test coverage)&lt;/li&gt;
+&lt;li&gt;Add Confluent Kafka plugin (#233 Missing test coverage)&lt;/li&gt;
+&lt;li&gt;Add HBase plugin Python HappyBase model  (#266)&lt;/li&gt;
+&lt;li&gt;Add FastAPI plugin websocket protocol support (#269)&lt;/li&gt;
+&lt;li&gt;Add Websockets (client) plugin (#269)&lt;/li&gt;
+&lt;li&gt;Add HTTPX plugin (#283)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Fixes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Allow RabbitMQ BlockingChannel.basic_consume() to link with outgoing spans (#224)&lt;/li&gt;
+&lt;li&gt;Fix RabbitMQ basic_get bug (#225, #226)&lt;/li&gt;
+&lt;li&gt;Fix case when tornado socket name is None (#227)&lt;/li&gt;
+&lt;li&gt;Fix misspelled text &amp;ldquo;PostgreSLQ&amp;rdquo; -&amp;gt; &amp;ldquo;PostgreSQL&amp;rdquo; in Postgres-related plugins (#234)&lt;/li&gt;
+&lt;li&gt;Make sure &lt;code&gt;span.component&lt;/code&gt; initialized as Unknown rather than 0 (#242)&lt;/li&gt;
+&lt;li&gt;Ignore websocket connections inside fastapi temporarily (#244, issue#9724)&lt;/li&gt;
+&lt;li&gt;Fix Kafka-python plugin SkyWalking self reporter ignore condition (#249)&lt;/li&gt;
+&lt;li&gt;Add primary endpoint in tracing context and endpoint info to log reporter (#261)&lt;/li&gt;
+&lt;li&gt;Enforce tag class type conversion (#262)&lt;/li&gt;
+&lt;li&gt;Fix sw_logging (log reporter) potentially throw exception leading to traceback confusion (#267)&lt;/li&gt;
+&lt;li&gt;Avoid reporting meaningless tracecontext with logs when there&amp;rsquo;s no active span, UI will now show empty traceID (#272)&lt;/li&gt;
+&lt;li&gt;Fix exception handler in profile_context (#273)&lt;/li&gt;
+&lt;li&gt;Add namespace suffix to service name (#275)&lt;/li&gt;
+&lt;li&gt;Add periodical instance property report to prevent data loss (#279)&lt;/li&gt;
+&lt;li&gt;Fix sw_logging when &lt;code&gt;Logger.disabled&lt;/code&gt; is true (#281)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Docs:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;New documentation on how to test locally (#222)&lt;/li&gt;
+&lt;li&gt;New documentation on the newly added meter reporter feature (#240)&lt;/li&gt;
+&lt;li&gt;New documentation on the newly added greenlet profiler and the original threading profiler (#250)&lt;/li&gt;
+&lt;li&gt;Overhaul documentation on development setup and testing (#249)&lt;/li&gt;
+&lt;li&gt;Add tables to state currently supported features of Python agent. (#271)&lt;/li&gt;
+&lt;li&gt;New configuration documentation generator (#273)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Others:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Pin CI SkyWalking License Eye (#221)&lt;/li&gt;
+&lt;li&gt;Fix dead link due to the &amp;lsquo;next&amp;rsquo; url change (#235)&lt;/li&gt;
+&lt;li&gt;Pin CI SkyWalking Infra-E2E (#251)&lt;/li&gt;
+&lt;li&gt;Sync OAP, SWCTL versions in E2E and fix test cases (#249)&lt;/li&gt;
+&lt;li&gt;Overhaul development flow with Poetry (#249)&lt;/li&gt;
+&lt;li&gt;Fix grpcio-tools generated message type (#253)&lt;/li&gt;
+&lt;li&gt;Switch plugin tests to use slim Python images (#268)&lt;/li&gt;
+&lt;li&gt;Add unit tests to sw_filters (#269)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;new-contributors&#34;&gt;New Contributors&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;@ZEALi made their first contribution in &lt;a href=&#34;https://github.com/apache/skywalking-python/pull/242&#34;&gt;https://github.com/apache/skywalking-python/pull/242&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;@westarest made their first contribution in &lt;a href=&#34;https://github.com/apache/skywalking-python/pull/246&#34;&gt;https://github.com/apache/skywalking-python/pull/246&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;@Jedore made their first contribution in &lt;a href=&#34;https://github.com/apache/skywalking-python/pull/263&#34;&gt;https://github.com/apache/skywalking-python/pull/263&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;@alidisi made their first contribution in &lt;a href=&#34;https://github.com/apache/skywalking-python/pull/266&#34;&gt;https://github.com/apache/skywalking-python/pull/266&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;@SheltonZSL made their first contribution in &lt;a href=&#34;https://github.com/apache/skywalking-python/pull/275&#34;&gt;https://github.com/apache/skywalking-python/pull/275&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;@XinweiLyu made their first contribution in &lt;a href=&#34;https://github.com/apache/skywalking-python/pull/283&#34;&gt;https://github.com/apache/skywalking-python/pull/283&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Full Changelog&lt;/strong&gt;: &lt;a href=&#34;https://github.com/apache/skywalking-python/compare/v0.8.0...v1.0.0&#34;&gt;https://github.com/apache/skywalking-python/compare/v0.8.0...v1.0.0&lt;/a&gt;&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Events: Release Apache SkyWalking BanyanDB 0.3.0</title>
+      <link>/events/release-apache-skywalking-banyandb-0-3-0/</link>
+      <pubDate>Fri, 10 Feb 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/events/release-apache-skywalking-banyandb-0-3-0/</guid>
+      <description>
+        
+        
+        &lt;p&gt;SkyWalking BanyanDB 0.3.0 is released. Go to &lt;a href=&#34;/downloads&#34;&gt;downloads&lt;/a&gt; page to find release tars.&lt;/p&gt;
+&lt;h3 id=&#34;features&#34;&gt;Features&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Support 64-bit float type.&lt;/li&gt;
+&lt;li&gt;Web Application.&lt;/li&gt;
+&lt;li&gt;Close components in tsdb gracefully.&lt;/li&gt;
+&lt;li&gt;Add TLS for the HTTP server.&lt;/li&gt;
+&lt;li&gt;Use the table builder to compress data.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;bugs&#34;&gt;Bugs&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Open blocks concurrently.&lt;/li&gt;
+&lt;li&gt;Sync index writing and shard closing.&lt;/li&gt;
+&lt;li&gt;TimestampRange query throws an exception if no data in this time range.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;chores&#34;&gt;Chores&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Fixes issues related to leaked goroutines.&lt;/li&gt;
+&lt;li&gt;Add validations to APIs.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Events: Release Apache SkyWalking PHP 0.3.0</title>
+      <link>/events/release-apache-skwaylking-php-0-3-0/</link>
+      <pubDate>Thu, 02 Feb 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/events/release-apache-skwaylking-php-0-3-0/</guid>
+      <description>
+        
+        
+        &lt;p&gt;SkyWalking PHP 0.3.0 is released. Go to &lt;a href=&#34;https://skywalking.apache.org/downloads&#34;&gt;downloads&lt;/a&gt; page to find release tars.&lt;/p&gt;
+&lt;h2 id=&#34;whats-changed&#34;&gt;What&amp;rsquo;s Changed&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Make explicit rust version requirement by @wu-sheng in &lt;a href=&#34;https://github.com/apache/skywalking-php/pull/35&#34;&gt;https://github.com/apache/skywalking-php/pull/35&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Update dependencies version limitation. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-php/pull/36&#34;&gt;https://github.com/apache/skywalking-php/pull/36&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Startup 0.3.0 by @heyanlong in &lt;a href=&#34;https://github.com/apache/skywalking-php/pull/37&#34;&gt;https://github.com/apache/skywalking-php/pull/37&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Support PHP 8.2 by @heyanlong in &lt;a href=&#34;https://github.com/apache/skywalking-php/pull/38&#34;&gt;https://github.com/apache/skywalking-php/pull/38&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Fix php-fpm freeze after large amount of request. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-php/pull/39&#34;&gt;https://github.com/apache/skywalking-php/pull/39&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Lock develop rust version to 1.65, upgrade deps. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-php/pull/41&#34;&gt;https://github.com/apache/skywalking-php/pull/41&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Fix worker unexpected shutdown. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-php/pull/42&#34;&gt;https://github.com/apache/skywalking-php/pull/42&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Update docs about installing rust. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-php/pull/43&#34;&gt;https://github.com/apache/skywalking-php/pull/43&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Retry cargo test when failed in CI. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-php/pull/44&#34;&gt;https://github.com/apache/skywalking-php/pull/44&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Hack dtor for mysqli to cleanup resources. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-php/pull/45&#34;&gt;https://github.com/apache/skywalking-php/pull/45&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Report instance properties and keep alive. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-php/pull/46&#34;&gt;https://github.com/apache/skywalking-php/pull/46&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Add configuration option &lt;code&gt;skywalking_agent.runtime_dir&lt;/code&gt;. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-php/pull/47&#34;&gt;https://github.com/apache/skywalking-php/pull/47&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Add authentication support. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-php/pull/48&#34;&gt;https://github.com/apache/skywalking-php/pull/48&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Support TLS. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-php/pull/49&#34;&gt;https://github.com/apache/skywalking-php/pull/49&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Periodic reporting instance properties. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-php/pull/50&#34;&gt;https://github.com/apache/skywalking-php/pull/50&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Bump to 0.3.0. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-php/pull/51&#34;&gt;https://github.com/apache/skywalking-php/pull/51&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;breaking&#34;&gt;Breaking&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Remove &lt;code&gt;http://&lt;/code&gt; scheme in &lt;code&gt;skywalking_agent.server_addr&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;new-contributors&#34;&gt;New Contributors&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;@wu-sheng made their first contribution in &lt;a href=&#34;https://github.com/apache/skywalking-php/pull/35&#34;&gt;https://github.com/apache/skywalking-php/pull/35&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Full Changelog&lt;/strong&gt;: &lt;a href=&#34;https://github.com/apache/skywalking-php/compare/v0.2.0...v0.3.0&#34;&gt;https://github.com/apache/skywalking-php/compare/v0.2.0...v0.3.0&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;pecl&#34;&gt;PECL&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://pecl.php.net/package/skywalking_agent/0.3.0&#34;&gt;https://pecl.php.net/package/skywalking_agent/0.3.0&lt;/a&gt;&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Events: Release Apache SkyWalking Java Agent 8.14.0</title>
+      <link>/events/release-apache-skywalking-java-agent-8-14-0/</link>
+      <pubDate>Sun, 15 Jan 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/events/release-apache-skywalking-java-agent-8-14-0/</guid>
+      <description>
+        
+        
+        &lt;p&gt;SkyWalking Java Agent 8.14.0 is released. Go to &lt;a href=&#34;/downloads&#34;&gt;downloads&lt;/a&gt; page to find release tars.
+Changes by Version&lt;/p&gt;
+&lt;h2 id=&#34;8140&#34;&gt;8.14.0&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Polish test framework to support &lt;code&gt;arm64/v8&lt;/code&gt; platforms&lt;/li&gt;
+&lt;li&gt;Fix wrong config name &lt;code&gt;plugin.toolkit.use_qualified_name_as_operation_name&lt;/code&gt;, and system variable name &lt;code&gt;SW_PLUGIN_TOOLKIT_USE_QUALIFIED_NAME_AS_OPERATION_NAME:false&lt;/code&gt;. They were &lt;strong&gt;toolit&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Rename &lt;code&gt;JDBI&lt;/code&gt; to &lt;code&gt;JDBC&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Support collecting dubbo thread pool metrics&lt;/li&gt;
+&lt;li&gt;Bump up byte-buddy to 1.12.19&lt;/li&gt;
+&lt;li&gt;Upgrade agent test tools&lt;/li&gt;
+&lt;li&gt;[Breaking Change] Compatible with 3.x and 4.x RabbitMQ Client, rename &lt;code&gt;rabbitmq-5.x-plugin&lt;/code&gt; to &lt;code&gt;rabbitmq-plugin&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Polish JDBC plugins to make DBType accurate&lt;/li&gt;
+&lt;li&gt;Report the agent version to OAP as an instance attribute&lt;/li&gt;
+&lt;li&gt;Polish jedis-4.x-plugin to change command to lowercase, which is consistent with jedis-2.x-3.x-plugin&lt;/li&gt;
+&lt;li&gt;Add micronauthttpclient,micronauthttpserver,memcached,ehcache,guavacache,jedis,redisson plugin config properties to agent.config&lt;/li&gt;
+&lt;li&gt;Add &lt;a href=&#34;https://github.com/micrometer-metrics/micrometer/&#34;&gt;Micrometer Observation&lt;/a&gt; support&lt;/li&gt;
+&lt;li&gt;Add tags &lt;code&gt;mq.message.keys&lt;/code&gt; and &lt;code&gt;mq.message.tags&lt;/code&gt; for RocketMQ producer span&lt;/li&gt;
+&lt;li&gt;Clean the trace context which injected into Pulsar MessageImpl after the instance recycled&lt;/li&gt;
+&lt;li&gt;Fix In the higher version of mysql-connector-java 8x, there is an error in the value of db.instance.&lt;/li&gt;
+&lt;li&gt;Add support for KafkaClients 3.x.&lt;/li&gt;
+&lt;li&gt;Support to customize the collect period of JVM relative metrics.&lt;/li&gt;
+&lt;li&gt;Upgrade netty-codec-http2 to 4.1.86.Final.&lt;/li&gt;
+&lt;li&gt;Put &lt;code&gt;Agent-Version&lt;/code&gt; property reading in the premain stage to avoid deadlock when using &lt;code&gt;jarsigner&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Add a config &lt;code&gt;agent.enable&lt;/code&gt;(default: true) to support disabling the agent through system property &lt;code&gt;-Dskywalking.agent.disable=false&lt;/code&gt;
+or system environment variable setting &lt;code&gt;SW_AGENT_ENABLE=false&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Enhance redisson plugin to adopt uniform tags.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;documentation&#34;&gt;Documentation&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;Update &lt;code&gt;Plugin-test.md&lt;/code&gt;, support string operators &lt;code&gt;start with&lt;/code&gt; and &lt;code&gt;end with&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Polish agent configurations doc to fix type error&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;All issues and pull requests are &lt;a href=&#34;https://github.com/apache/skywalking/milestone/161?closed=1&#34;&gt;here&lt;/a&gt;&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
       <title>Events: Release Apache SkyWalking Rust 0.5.0</title>
       <link>/events/release-apache-skywalking-rust-0-5-0/</link>
       <pubDate>Mon, 09 Jan 2023 00:00:00 +0000</pubDate>
@@ -1991,311 +2480,6 @@ metrics query.&lt;/li&gt;
 &lt;li&gt;Update &lt;code&gt;k8s-monitoring&lt;/code&gt;, &lt;code&gt;backend-telemetry&lt;/code&gt; and &lt;code&gt;v9-version-upgrade&lt;/code&gt; doc for v9.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;All issues and pull requests are &lt;a href=&#34;https://github.com/apache/skywalking/milestone/112?closed=1&#34;&gt;here&lt;/a&gt;&lt;/p&gt;
-
-      </description>
-    </item>
-    
-    <item>
-      <title>Events: Release Apache SkyWalking CLI 0.10.0</title>
-      <link>/events/release-apache-skywalking-cli-0-10-0/</link>
-      <pubDate>Wed, 06 Apr 2022 00:00:00 +0000</pubDate>
-      
-      <guid>/events/release-apache-skywalking-cli-0-10-0/</guid>
-      <description>
-        
-        
-        &lt;p&gt;SkyWalking CLI 0.10.0 is released. Go to &lt;a href=&#34;https://skywalking.apache.org/downloads&#34;&gt;downloads&lt;/a&gt; page to find release tars.&lt;/p&gt;
-&lt;h3 id=&#34;features&#34;&gt;Features&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;Allow setting &lt;code&gt;start&lt;/code&gt; and &lt;code&gt;end&lt;/code&gt; with relative time (#128)&lt;/li&gt;
-&lt;li&gt;Add some commands for the browser (#126)&lt;/li&gt;
-&lt;li&gt;Add the sub-command &lt;code&gt;service layer&lt;/code&gt; to query services according to layer (#133)&lt;/li&gt;
-&lt;li&gt;Add the sub-command &lt;code&gt;layer list&lt;/code&gt; to query layer list (#133)&lt;/li&gt;
-&lt;li&gt;Add the sub-command &lt;code&gt;instance get&lt;/code&gt; to query single instance (#134)&lt;/li&gt;
-&lt;li&gt;Add the sub-command &lt;code&gt;endpoint get&lt;/code&gt; to query single endpoint info (#134)&lt;/li&gt;
-&lt;li&gt;Change the GraphQL method to the v9 version according to the server version (#134)&lt;/li&gt;
-&lt;li&gt;Add &lt;code&gt;normal&lt;/code&gt; field to Service entity (#136)&lt;/li&gt;
-&lt;li&gt;Add the command &lt;code&gt;process&lt;/code&gt; for query Process metadata (#137)&lt;/li&gt;
-&lt;li&gt;Add the command &lt;code&gt;profiling ebpf&lt;/code&gt; for process ebpf profiling (#138)&lt;/li&gt;
-&lt;li&gt;Support &lt;code&gt;getprofiletasklogs&lt;/code&gt; query (#125)&lt;/li&gt;
-&lt;li&gt;Support query list alarms (#127)&lt;/li&gt;
-&lt;li&gt;[Breaking Change] Update the command &lt;code&gt;profile&lt;/code&gt; as a sub-command &lt;code&gt;profiling trace&lt;/code&gt;, and update &lt;code&gt;profiled-analyze&lt;/code&gt; command to &lt;code&gt;analysis&lt;/code&gt; (#138)&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;profiling ebpf/trace analysis&lt;/code&gt; generates the profiling graph HTML on default and saves it to the current work directory (#138)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;bug-fixes&#34;&gt;Bug Fixes&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;Fix quick install (#131)&lt;/li&gt;
-&lt;li&gt;Set correct go version in publishing snapshot docker image (#124)&lt;/li&gt;
-&lt;li&gt;Stop build kit container after finishing (#130)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;chores&#34;&gt;Chores&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;Add cross platform build targets (#129)&lt;/li&gt;
-&lt;li&gt;Update download host (#132)&lt;/li&gt;
-&lt;/ul&gt;
-
-      </description>
-    </item>
-    
-    <item>
-      <title>Events: Open Source Promotion Plan 2022 -- Project List</title>
-      <link>/events/summer-ospp-2022/readme/</link>
-      <pubDate>Mon, 04 Apr 2022 00:00:00 +0000</pubDate>
-      
-      <guid>/events/summer-ospp-2022/readme/</guid>
-      <description>
-        
-        
-        &lt;p&gt;&lt;strong&gt;SkyWalking&lt;/strong&gt; is an open-source APM system, including monitoring, tracing, and diagnosing capabilities for distributed systems in Cloud Native architecture. It covers monitoring for Linux, Kubernetes, Service Mesh, Serverless/Function-as-a-Service, agent-attached services, and browsers. With data covering traces, metrics, logs, and events, SkyWalking is a full-stack observability APM system.&lt;/p&gt;
-&lt;p&gt;Open Source Promotion Plan is a summer program organized and long-term supported by Open Source Software Supply Chain Promotion Plan. It aims to encourage college students to actively participate in developing and maintaining open-source software and promote the vigorous development of an excellent open-source software community.&lt;/p&gt;
-&lt;p&gt;Apache SkyWalking has been accepted in OSPP 2022&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;Project&lt;/th&gt;
-&lt;th&gt;Description&lt;/th&gt;
-&lt;th&gt;Difficulty&lt;/th&gt;
-&lt;th&gt;Mentor / E-mail&lt;/th&gt;
-&lt;th&gt;Expectation&lt;/th&gt;
-&lt;th&gt;Tech. Requirements&lt;/th&gt;
-&lt;th&gt;Repository&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;SkyAPM-PHP&lt;/td&gt;
-&lt;td&gt;Add switches for monitoring items&lt;/td&gt;
-&lt;td&gt;Advanced Level&lt;/td&gt;
-&lt;td&gt;Yanlong He / &lt;a href=&#34;mailto:heyanlong@apache.org&#34;&gt;heyanlong@apache.org&lt;/a&gt;&lt;/td&gt;
-&lt;td&gt;Complete project development work&lt;/td&gt;
-&lt;td&gt;C++, GO, PHP&lt;/td&gt;
-&lt;td&gt;&lt;a href=&#34;https://github.com/SkyAPM/SkyAPM-php-sdk&#34;&gt;https://github.com/SkyAPM/SkyAPM-php-sdk&lt;/a&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;SkyWalking-Infra-E2E&lt;/td&gt;
-&lt;td&gt;Optimize verifier&lt;/td&gt;
-&lt;td&gt;Normal Level&lt;/td&gt;
-&lt;td&gt;Huaxi Jiang / &lt;a href=&#34;mailto:hoshea@apache.org&#34;&gt;hoshea@apache.org&lt;/a&gt;&lt;/td&gt;
-&lt;td&gt;1. Continue to verify cases when other cases fail &lt;br/&gt; 2. Merge retry outputs &lt;br/&gt; 3. Prettify verify results&#39; output&lt;/td&gt;
-&lt;td&gt;Go&lt;/td&gt;
-&lt;td&gt;&lt;a href=&#34;https://github.com/apache/skywalking-infra-e2e&#34;&gt;https://github.com/apache/skywalking-infra-e2e&lt;/a&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;SkyWalking&lt;/td&gt;
-&lt;td&gt;Metrics anomaly detection with machine learning&lt;/td&gt;
-&lt;td&gt;Advanced Level&lt;/td&gt;
-&lt;td&gt;Yihao Chen / &lt;a href=&#34;mailto:yihaochen@apache.org&#34;&gt;yihaochen@apache.org&lt;/a&gt;&lt;/td&gt;
-&lt;td&gt;An MVP version of ML-powered metrics anomaly detection using dynamic baselines and thresholds&lt;/td&gt;
-&lt;td&gt;Python, Java&lt;/td&gt;
-&lt;td&gt;&lt;a href=&#34;https://github.com/apache/skywalking&#34;&gt;https://github.com/apache/skywalking&lt;/a&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;SkyWalking Python&lt;/td&gt;
-&lt;td&gt;Collect PVM metrics and send the metrics to OAP backend, configure dashboard in UI&lt;/td&gt;
-&lt;td&gt;Normal Level&lt;/td&gt;
-&lt;td&gt;Zhenxu Ke / &lt;a href=&#34;mailto:kezhenxu94@apache.org&#34;&gt;kezhenxu94@apache.org&lt;/a&gt;&lt;/td&gt;
-&lt;td&gt;Core Python VM metrics should be collected and displayed in SkyWalking.&lt;/td&gt;
-&lt;td&gt;Python&lt;/td&gt;
-&lt;td&gt;&lt;a href=&#34;https://github.com/apache/skywalking-python&#34;&gt;https://github.com/apache/skywalking-python&lt;/a&gt; &lt;a href=&#34;https://github.com/apache/skywalking/issues/5944&#34;&gt;issue&lt;/a&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;SkyWalking BanyanDB&lt;/td&gt;
-&lt;td&gt;Command line tools for BanyanDB&lt;/td&gt;
-&lt;td&gt;Normal Level&lt;/td&gt;
-&lt;td&gt;Hongtao Gao / &lt;a href=&#34;mailto:hanahmily@apache.org&#34;&gt;hanahmily@apache.org&lt;/a&gt;&lt;/td&gt;
-&lt;td&gt;Command line tools should access relevant APIs to manage resources and online data.&lt;/td&gt;
-&lt;td&gt;Go&lt;/td&gt;
-&lt;td&gt;&lt;a href=&#34;https://github.com/apache/skywalking-banyandb&#34;&gt;https://github.com/apache/skywalking-banyandb&lt;/a&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;SkyWalking SWCK&lt;/td&gt;
-&lt;td&gt;CRD and controller for BanyanDB&lt;/td&gt;
-&lt;td&gt;Advance Level&lt;/td&gt;
-&lt;td&gt;Ye Cao / &lt;a href=&#34;mailto:dashanji@apache.org&#34;&gt;dashanji@apache.org&lt;/a&gt;&lt;/td&gt;
-&lt;td&gt;CRD and controller provision BanyanDB as the native Storage resource.&lt;/td&gt;
-&lt;td&gt;Go&lt;/td&gt;
-&lt;td&gt;&lt;a href=&#34;https://github.com/apache/skywalking-swck&#34;&gt;https://github.com/apache/skywalking-swck&lt;/a&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;SkyAPM-Go2sky&lt;/td&gt;
-&lt;td&gt;Collect golang metrics such as gc, goroutines and threads, and send the the metrics to OAP backend, configure dashboard in UI&lt;/td&gt;
-&lt;td&gt;Normal Level&lt;/td&gt;
-&lt;td&gt;Wei Zhang / &lt;a href=&#34;mailto:zhangwei24@apache.org&#34;&gt;zhangwei24@apache.org&lt;/a&gt;&lt;/td&gt;
-&lt;td&gt;Core golang metrics should be collected and displayed in SkyWalking.&lt;/td&gt;
-&lt;td&gt;Go&lt;/td&gt;
-&lt;td&gt;&lt;a href=&#34;https://github.com/SkyAPM/go2sky&#34;&gt;https://github.com/SkyAPM/go2sky&lt;/a&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;SkyWalking&lt;/td&gt;
-&lt;td&gt;Collect system metrics such as system_load, cpu_usage, mem_usage from telegraf and send the metrics to OAP backend, configure dashboard in UI&lt;/td&gt;
-&lt;td&gt;Normal Level&lt;/td&gt;
-&lt;td&gt;Haoyang Liu / &lt;a href=&#34;mailto:liuhaoyangzz@apache.org&#34;&gt;liuhaoyangzz@apache.org&lt;/a&gt;&lt;/td&gt;
-&lt;td&gt;System metrics should be collected and displayed in SkyWalking.&lt;/td&gt;
-&lt;td&gt;Java&lt;/td&gt;
-&lt;td&gt;&lt;a href=&#34;https://github.com/apache/skywalking&#34;&gt;https://github.com/apache/skywalking&lt;/a&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;Mentors could submit pull requests to update the above list.&lt;/p&gt;
-&lt;h1 id=&#34;contact-the-community&#34;&gt;Contact the community&lt;/h1&gt;
-&lt;p&gt;You could send emails to mentor&amp;rsquo;s personal email to talk about the project and details.
-The official mail list of the community is &lt;a href=&#34;mailto:dev@skywalking.apache.org&#34;&gt;dev@skywalking.apache.org&lt;/a&gt;. You need to subscribe to the mail list to get all replies. Send mail to &lt;a href=&#34;mailto:dev-suscribe@skywalking.apache.org&#34;&gt;dev-suscribe@skywalking.apache.org&lt;/a&gt; and follow the replies.&lt;/p&gt;
-
-      </description>
-    </item>
-    
-    <item>
-      <title>Events: Release Apache SkyWalking for NodeJS 0.4.0</title>
-      <link>/events/release-apache-skywalking-nodejs-0-4-0/</link>
-      <pubDate>Sun, 13 Mar 2022 00:00:00 +0000</pubDate>
-      
-      <guid>/events/release-apache-skywalking-nodejs-0-4-0/</guid>
-      <description>
-        
-        
-        &lt;p&gt;SkyWalking NodeJS 0.4.0 is released. Go to &lt;a href=&#34;/downloads&#34;&gt;downloads&lt;/a&gt; page to find release tars.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Fix mysql2 plugin install error. (#74)&lt;/li&gt;
-&lt;li&gt;Update IORedis Plugin, fill &lt;code&gt;dbinstance&lt;/code&gt; tag as host if &lt;code&gt;condition.select&lt;/code&gt; doesn&amp;rsquo;t exist. (#73)&lt;/li&gt;
-&lt;li&gt;Experimental AWS Lambda Function support. (#70)&lt;/li&gt;
-&lt;li&gt;Upgrade dependencies to fix vulnerabilities. (#68)&lt;/li&gt;
-&lt;li&gt;Add lint pre-commit hook and migrate to eslint. (#66, #67)&lt;/li&gt;
-&lt;li&gt;Bump up gRPC version, and use its new release repository. (#65)&lt;/li&gt;
-&lt;li&gt;Regard &lt;code&gt;baseURL&lt;/code&gt; when in Axios Plugin. (#63)&lt;/li&gt;
-&lt;li&gt;Add an API to access the trace id. (#60)&lt;/li&gt;
-&lt;li&gt;Use agent test tool snapshot Docker image instead of building in CI. (#59)&lt;/li&gt;
-&lt;li&gt;Wrapped IORedisPlugin call in try/catch. (#58)&lt;/li&gt;
-&lt;/ul&gt;
-
-      </description>
-    </item>
-    
-    <item>
-      <title>Events: Release Apache SkyWalking Client Rust 0.1.0</title>
-      <link>/events/release-apache-skywalking-client-rust-0-1-0/</link>
-      <pubDate>Thu, 17 Feb 2022 00:00:00 +0000</pubDate>
-      
-      <guid>/events/release-apache-skywalking-client-rust-0-1-0/</guid>
-      <description>
-        
-        
-        &lt;p&gt;SkyWalking Client Rust 0.1.0 is released. Go to &lt;a href=&#34;/downloads&#34;&gt;downloads&lt;/a&gt; page to find release tars.&lt;/p&gt;
-
-      </description>
-    </item>
-    
-    <item>
-      <title>Events: Release Apache SkyWalking Java Agent 8.9.0</title>
-      <link>/events/release-apache-skywalking-java-agent-8-9-0/</link>
-      <pubDate>Sun, 30 Jan 2022 00:00:00 +0000</pubDate>
-      
-      <guid>/events/release-apache-skywalking-java-agent-8-9-0/</guid>
-      <description>
-        
-        
-        &lt;p&gt;SkyWalking Java Agent 8.9.0 is released. Go to &lt;a href=&#34;/downloads&#34;&gt;downloads&lt;/a&gt; page to find release tars.
-Changes by Version&lt;/p&gt;
-&lt;h2 id=&#34;890&#34;&gt;8.9.0&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;Support &lt;code&gt;Transaction&lt;/code&gt; and fix duplicated methods enhancements for &lt;code&gt;jedis-2.x&lt;/code&gt; plugin.&lt;/li&gt;
-&lt;li&gt;Add ConsumerWrapper/FunctionWrapper to support CompletableFuture.x.thenAcceptAsync/thenApplyAsync.&lt;/li&gt;
-&lt;li&gt;Build CLI from Docker instead of source codes, add alpine based Docker image.&lt;/li&gt;
-&lt;li&gt;Support set instance properties in json format.&lt;/li&gt;
-&lt;li&gt;Upgrade grpc-java to 1.42.1 and protoc to 3.17.3 to allow using native Mac osx-aarch_64 artifacts.&lt;/li&gt;
-&lt;li&gt;Add doc about system environment variables to configurations.md&lt;/li&gt;
-&lt;li&gt;Avoid &lt;code&gt;ProfileTaskChannelService.addProfilingSnapshot&lt;/code&gt; throw IllegalStateException(Queue full)&lt;/li&gt;
-&lt;li&gt;Increase &lt;code&gt;ProfileTaskChannelService.snapshotQueue&lt;/code&gt; default size from 50 to 4500&lt;/li&gt;
-&lt;li&gt;Support 2.8 and 2.9 of pulsar client.&lt;/li&gt;
-&lt;li&gt;Add dubbo 3.x plugin.&lt;/li&gt;
-&lt;li&gt;Fix TracePathMatcher should match pattern &amp;ldquo;**&amp;rdquo; with paths end by &amp;ldquo;/&amp;rdquo;&lt;/li&gt;
-&lt;li&gt;Add support &lt;code&gt;returnedObj&lt;/code&gt; expression for apm-customize-enhance-plugin&lt;/li&gt;
-&lt;li&gt;Fix the bug that httpasyncclient-4.x-plugin puts the dirty tracing context in the connection context&lt;/li&gt;
-&lt;li&gt;Compatible with the versions after dubbo-2.7.14&lt;/li&gt;
-&lt;li&gt;Follow protocol grammar fix &lt;code&gt;GCPhrase -&amp;gt; GCPhase&lt;/code&gt;.&lt;/li&gt;
-&lt;li&gt;Support ZGC GC time and count metric collect. (Require 9.0.0 OAP)&lt;/li&gt;
-&lt;li&gt;Support configuration for collecting redis parameters for jedis-2.x and redisson-3.x plugin.&lt;/li&gt;
-&lt;li&gt;Migrate base images to Temurin and add images for ARM.&lt;/li&gt;
-&lt;li&gt;(Plugin Test) Fix compiling issues in many plugin tests due to they didn&amp;rsquo;t lock the Spring version, and Spring 3 is
-incompatible with 2.x APIs and JDK8 compiling.&lt;/li&gt;
-&lt;li&gt;Support ShardingSphere 5.0.0&lt;/li&gt;
-&lt;li&gt;Bump up gRPC to 1.44.0, fix relative CVEs.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&#34;documentation&#34;&gt;Documentation&lt;/h4&gt;
-&lt;ul&gt;
-&lt;li&gt;Add a FAQ, &lt;code&gt;Why is -Djava.ext.dirs not supported?&lt;/code&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;All issues and pull requests are &lt;a href=&#34;https://github.com/apache/skywalking/milestone/108?closed=1&#34;&gt;here&lt;/a&gt;&lt;/p&gt;
-
-      </description>
-    </item>
-    
-    <item>
-      <title>Events: Release Apache SkyWalking Cloud on Kubernetes 0.6.1</title>
-      <link>/events/release-apache-skywalking-cloud-on-kubernetes-0-6-1/</link>
-      <pubDate>Thu, 20 Jan 2022 00:00:00 +0000</pubDate>
-      
-      <guid>/events/release-apache-skywalking-cloud-on-kubernetes-0-6-1/</guid>
-      <description>
-        
-        
-        &lt;p&gt;SkyWalking Cloud on Kubernetes 0.6.1 is released. Go to &lt;a href=&#34;/downloads&#34;&gt;downloads&lt;/a&gt; page to find release tars.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Bugs
-&lt;ul&gt;
-&lt;li&gt;Fix could not deploy metrics adapter to GKE&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-
-      </description>
-    </item>
-    
-    <item>
-      <title>Events: Release Apache SkyWalking Cloud on Kubernetes 0.6.0</title>
-      <link>/events/release-apache-skywalking-cloud-on-kubernetes-0-6-0/</link>
-      <pubDate>Fri, 14 Jan 2022 00:00:00 +0000</pubDate>
-      
-      <guid>/events/release-apache-skywalking-cloud-on-kubernetes-0-6-0/</guid>
-      <description>
-        
-        
-        &lt;p&gt;SkyWalking Cloud on Kubernetes 0.6.0 is released. Go to &lt;a href=&#34;/downloads&#34;&gt;downloads&lt;/a&gt; page to find release tars.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Features
-&lt;ul&gt;
-&lt;li&gt;Add the Satellite CRD, webhooks and controller&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Bugs
-&lt;ul&gt;
-&lt;li&gt;Update release images to set numeric user id&lt;/li&gt;
-&lt;li&gt;Fix the satellite config not support number error&lt;/li&gt;
-&lt;li&gt;Use env JAVA_TOOL_OPTIONS to replace AGENT_OPTS&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Chores
-&lt;ul&gt;
-&lt;li&gt;Add stabilization windows feature in satellite HPA documentation&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-
-      </description>
-    </item>
-    
-    <item>
-      <title>Events: Release Apache SkyWalking Kong 0.2.0</title>
-      <link>/events/release-apache-skywalking-kong-0-2-0/</link>
-      <pubDate>Sun, 09 Jan 2022 00:00:00 +0000</pubDate>
-      
-      <guid>/events/release-apache-skywalking-kong-0-2-0/</guid>
-      <description>
-        
-        
-        &lt;p&gt;SkyWalking Kong Agent 0.2.0 is released. Go to &lt;a href=&#34;/downloads&#34;&gt;downloads&lt;/a&gt; page to find release tars.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Establish the SkyWalking Kong Agent.&lt;/li&gt;
-&lt;/ul&gt;
 
       </description>
     </item>
