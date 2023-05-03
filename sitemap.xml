@@ -4068,6 +4068,18 @@
   </url>
   
   <url>
+    <loc>/docs/main/next/en/setup/backend/filelog-native/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/docs/main/next/en/setup/backend/log-agent-native/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/docs/skywalking-satellite/next/en/setup/configuration/common/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
@@ -6855,6 +6867,12 @@
   </url>
   
   <url>
+    <loc>/docs/main/next/en/setup/backend/log-analyzer/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/docs/main/next/en/concepts-and-designs/lal/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
@@ -6886,12 +6904,6 @@
   
   <url>
     <loc>/docs/main/v9.4.0/en/concepts-and-designs/lal/</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>/docs/main/next/en/setup/backend/log-analyzer/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
@@ -7630,6 +7642,12 @@
   
   <url>
     <loc>/docs/main/v9.4.0/en/setup/backend/on-demand-pod-log/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/docs/main/next/en/setup/backend/log-otlp/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>

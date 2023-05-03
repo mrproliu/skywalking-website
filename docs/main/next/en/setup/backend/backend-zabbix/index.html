@@ -831,7 +831,49 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/main/next/en/setup/backend/log-analyzer">Log Collecting And Analysis</a>
+
+            
+            <a href="#">Persistent Logging<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/filelog-native">Native Logging from Files</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/log-agent-native">Native Logging from Agents</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/log-otlp">OpenTelemetry Logging</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/log-analyzer">Log Analysis</a>
+        
+    </li>
+
+    
+
+</ul>
+
         
     </li>
 
@@ -1931,7 +1973,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 8276328</div>
+                  <div class="commit-id">Commit Id: 8453e00</div>
                 
 
 
@@ -1996,7 +2038,7 @@ from agents, as well as which rule files to load.</p>
 <p>The OAP can load the configuration at bootstrap. If the new configuration is not well-formed, the OAP fails to start up. The files
 are located at <code>$CLASSPATH/zabbix-rules</code>.</p>
 <p>The file is written in YAML format, defined by the scheme described below. Square brackets indicate that a parameter is optional.</p>
-<p>An example for Zabbix agent configuration could be found <a href="https://github.com/apache/skywalking/tree/8276328436530d09c305a53b6beeee454c7d3955/test/e2e-v2/cases/vm/zabbix/zabbix_agentd.conf">here</a>.
+<p>An example for Zabbix agent configuration could be found <a href="https://github.com/apache/skywalking/tree/8453e00f14e94e4a34d64b2cea5c57c153e04789/test/e2e-v2/cases/vm/zabbix/zabbix_agentd.conf">here</a>.
 You can find details on Zabbix agent items from <a href="https://www.zabbix.com/documentation/current/manual/config/items/itemtypes/zabbix_agent">Zabbix Agent documentation</a>.</p>
 <h3 id="configuration-file-1">Configuration file</h3>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#998;font-style:italic"># initExp is the expression that initializes the current configuration file</span><span style="color:#bbb">
@@ -2194,6 +2236,12 @@ You can find details on Zabbix agent items from <a href="https://www.zabbix.com/
 
     </div>
     
+
+
+
+
+
+
 
 
 

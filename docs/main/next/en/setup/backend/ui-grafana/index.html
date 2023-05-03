@@ -834,7 +834,49 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/main/next/en/setup/backend/log-analyzer">Log Collecting And Analysis</a>
+
+            
+            <a href="#">Persistent Logging<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/filelog-native">Native Logging from Files</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/log-agent-native">Native Logging from Agents</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/log-otlp">OpenTelemetry Logging</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/log-analyzer">Log Analysis</a>
+        
+    </li>
+
+    
+
+</ul>
+
         
     </li>
 
@@ -1934,7 +1976,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 8276328</div>
+                  <div class="commit-id">Commit Id: 8453e00</div>
                 
 
 
@@ -1994,7 +2036,7 @@ Grafana UI is an extension on our support of PromQL APIs. We don&rsquo;t maintai
 <h3 id="dashboards-settings">Dashboards Settings</h3>
 <p>The following steps are the example of config a <code>General Service</code> dashboard:</p>
 <ol>
-<li>Create a dashboard named <code>General Service</code>. A <a href="https://github.com/apache/skywalking/tree/8276328436530d09c305a53b6beeee454c7d3955/oap-server/server-core/src/main/java/org/apache/skywalking/oap/server/core/analysis/Layer.java">layer</a> is recommended as a dashboard.</li>
+<li>Create a dashboard named <code>General Service</code>. A <a href="https://github.com/apache/skywalking/tree/8453e00f14e94e4a34d64b2cea5c57c153e04789/oap-server/server-core/src/main/java/org/apache/skywalking/oap/server/core/analysis/Layer.java">layer</a> is recommended as a dashboard.</li>
 <li>Configure variables for the dashboard:
 <img src="https://skywalking.apache.org/doc-graph/promql/grafana-variables.jpg"/>
 After configure, you can select the service/instance/endpoint on the top of the dashboard:
@@ -2203,6 +2245,12 @@ You could take a glance through <a href="https://skywalking.apache.org/#demo"><s
 
     </div>
     
+
+
+
+
+
+
 
 
 

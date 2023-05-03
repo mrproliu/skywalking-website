@@ -831,7 +831,49 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/main/next/en/setup/backend/log-analyzer">Log Collecting And Analysis</a>
+
+            
+            <a href="#">Persistent Logging<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/filelog-native">Native Logging from Files</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/log-agent-native">Native Logging from Agents</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/log-otlp">OpenTelemetry Logging</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/log-analyzer">Log Analysis</a>
+        
+    </li>
+
+    
+
+</ul>
+
         
     </li>
 
@@ -1931,7 +1973,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 8276328</div>
+                  <div class="commit-id">Commit Id: 8453e00</div>
                 
 
 
@@ -1990,7 +2032,7 @@ if (!doNotTrack) {
 <h3 id="set-up">Set up</h3>
 <ol>
 <li>Set up <a href="https://github.com/oliver006/redis_exporter#building-and-running-the-exporter">redis-exporter</a>.</li>
-<li>Set up <a href="https://opentelemetry.io/docs/collector/getting-started/#docker">OpenTelemetry Collector</a>. For details on Redis Receiver in OpenTelemetry Collector, refer to <a href="https://github.com/apache/skywalking/tree/8276328436530d09c305a53b6beeee454c7d3955/test/e2e-v2/cases/redis/redis-exporter/otel-collector-config.yaml">here</a>.</li>
+<li>Set up <a href="https://opentelemetry.io/docs/collector/getting-started/#docker">OpenTelemetry Collector</a>. For details on Redis Receiver in OpenTelemetry Collector, refer to <a href="https://github.com/apache/skywalking/tree/8453e00f14e94e4a34d64b2cea5c57c153e04789/test/e2e-v2/cases/redis/redis-exporter/otel-collector-config.yaml">here</a>.</li>
 <li>Config SkyWalking <a href="../opentelemetry-receiver">OpenTelemetry receiver</a>.</li>
 </ol>
 <h3 id="redis-monitoring-1">Redis Monitoring</h3>
@@ -2253,6 +2295,12 @@ The Redis dashboard panel configurations are found in <code>/config/ui-initializ
 
     </div>
     
+
+
+
+
+
+
 
 
 
