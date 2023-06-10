@@ -42,7 +42,7 @@ Expression = &lt;Operation&gt; Expression1 &lt;Operation&gt; Expression2 &lt;Ope
 Metrics Expression Metrics Expression will return a collection of time-series values.
 Common Value Metrics Expression:">
 
-<meta itemprop="wordCount" content="723">
+<meta itemprop="wordCount" content="756">
 
 
 
@@ -964,6 +964,40 @@ if (!doNotTrack) {
     <li>
         
             <a href="/docs/main/next/en/setup/backend/dynamic-config">Dynamic Configuration</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
+            <a href="#">AI Pipeline<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/ai-pipeline/readme">Introduction</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/ai-pipeline/http-restful-uri-pattern">HTTP Restful URI recognition</a>
+        
+    </li>
+
+    
+
+</ul>
+
         
     </li>
 
@@ -2039,7 +2073,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: ee309fb</div>
+                  <div class="commit-id">Commit Id: a5b2448</div>
                 
 
 
@@ -2156,7 +2190,8 @@ If we want to transform the service_sla metric value to percent, we can use the 
 <p>The result type of the expression please refer to the following table.</p>
 <h3 id="binary-operation-rules">Binary Operation Rules</h3>
 <p>The following table listed if the difference result types of the input expressions could do this operation and the result type after the operation.
-The expression could on the left or right side of the operator.</p>
+The expression could on the left or right side of the operator.
+<strong>Note</strong>: If the expressions on both sides of the operator are the <code>TIME_SERIES_VALUES with labels</code>, they should have the same labels for calculation.</p>
 <table>
 <thead>
 <tr>
@@ -2226,6 +2261,11 @@ The expression could on the left or right side of the operator.</p>
 <tr>
 <td>count</td>
 <td>count number of the result</td>
+<td>SINGLE_VALUE</td>
+</tr>
+<tr>
+<td>latest</td>
+<td>select the latest non-null value from the result</td>
 <td>SINGLE_VALUE</td>
 </tr>
 <tr>
@@ -2503,6 +2543,10 @@ If we want to query the <code>service_percentile</code> metric with the labels <
 
     </div>
     
+
+
+
+
 
 
 
