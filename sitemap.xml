@@ -8421,6 +8421,12 @@
   </url>
   
   <url>
+    <loc>/docs/skywalking-go/next/en/agent/plugin-configurations/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/docs/skywalking-go/next/en/development-and-contribution/development-guide/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
