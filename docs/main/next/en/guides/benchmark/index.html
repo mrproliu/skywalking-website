@@ -28,34 +28,28 @@
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
 
-<title>Extend storage | Apache SkyWalking</title><meta property="og:title" content="Extend storage" />
-<meta property="og:description" content="Extend storage SkyWalking has already provided several storage solutions. In this document, you could learn how to easily implement a new storage.
-Define your storage provider  Define class extension org.apache.skywalking.oap.server.library.module.ModuleProvider. Set this provider targeting to storage module.  @Override public Class&lt;? extends ModuleDefine&gt; module() { return StorageModule.class; } Implement all DAOs Here&rsquo;s a list of all DAO interfaces in storage:
-  IServiceInventoryCacheDAO
-  IServiceInstanceInventoryCacheDAO
-  IEndpointInventoryCacheDAO" />
+<title>Java Microbenchmark Harness (JMH) | Apache SkyWalking</title><meta property="og:title" content="Java Microbenchmark Harness (JMH)" />
+<meta property="og:description" content="Java Microbenchmark Harness (JMH) JMH is a Java harness for building, running, and analysing nano/micro/milli/macro benchmarks written in Java and other languages targeting the JVM.
+We have a module called microbench which performs a series of micro-benchmark tests for JMH testing. Make new JMH tests extend the org.apache.skywalking.oap.server.microbench.base.AbstractMicrobenchmark to customize runtime conditions (Measurement, Fork, Warmup, etc.).
+JMH tests could run as a normal unit test. And they could run as an independent uber jar via java -jar benchmark." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/docs/main/next/en/guides/storage-extention/" />
+<meta property="og:url" content="/docs/main/next/en/guides/benchmark/" />
 
-<meta itemprop="name" content="Extend storage">
-<meta itemprop="description" content="Extend storage SkyWalking has already provided several storage solutions. In this document, you could learn how to easily implement a new storage.
-Define your storage provider  Define class extension org.apache.skywalking.oap.server.library.module.ModuleProvider. Set this provider targeting to storage module.  @Override public Class&lt;? extends ModuleDefine&gt; module() { return StorageModule.class; } Implement all DAOs Here&rsquo;s a list of all DAO interfaces in storage:
-  IServiceInventoryCacheDAO
-  IServiceInstanceInventoryCacheDAO
-  IEndpointInventoryCacheDAO">
+<meta itemprop="name" content="Java Microbenchmark Harness (JMH)">
+<meta itemprop="description" content="Java Microbenchmark Harness (JMH) JMH is a Java harness for building, running, and analysing nano/micro/milli/macro benchmarks written in Java and other languages targeting the JVM.
+We have a module called microbench which performs a series of micro-benchmark tests for JMH testing. Make new JMH tests extend the org.apache.skywalking.oap.server.microbench.base.AbstractMicrobenchmark to customize runtime conditions (Measurement, Fork, Warmup, etc.).
+JMH tests could run as a normal unit test. And they could run as an independent uber jar via java -jar benchmark.">
 
-<meta itemprop="wordCount" content="112">
+<meta itemprop="wordCount" content="151">
 
 
 
 <meta itemprop="keywords" content="" />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Extend storage"/>
-<meta name="twitter:description" content="Extend storage SkyWalking has already provided several storage solutions. In this document, you could learn how to easily implement a new storage.
-Define your storage provider  Define class extension org.apache.skywalking.oap.server.library.module.ModuleProvider. Set this provider targeting to storage module.  @Override public Class&lt;? extends ModuleDefine&gt; module() { return StorageModule.class; } Implement all DAOs Here&rsquo;s a list of all DAO interfaces in storage:
-  IServiceInventoryCacheDAO
-  IServiceInstanceInventoryCacheDAO
-  IEndpointInventoryCacheDAO"/>
+<meta name="twitter:title" content="Java Microbenchmark Harness (JMH)"/>
+<meta name="twitter:description" content="Java Microbenchmark Harness (JMH) JMH is a Java harness for building, running, and analysing nano/micro/milli/macro benchmarks written in Java and other languages targeting the JVM.
+We have a module called microbench which performs a series of micro-benchmark tests for JMH testing. Make new JMH tests extend the org.apache.skywalking.oap.server.microbench.base.AbstractMicrobenchmark to customize runtime conditions (Measurement, Fork, Warmup, etc.).
+JMH tests could run as a normal unit test. And they could run as an independent uber jar via java -jar benchmark."/>
 
 <script type="application/javascript">
 var doNotTrack = false;
@@ -84,7 +78,7 @@ if (!doNotTrack) {
 
 
 
-    <title>Extend storage | Apache SkyWalking</title>
+    <title>Java Microbenchmark Harness (JMH) | Apache SkyWalking</title>
   </head>
   <body class="td-page  project-doc">
     <header>
@@ -1810,7 +1804,7 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/main/next/en/guides/readme">Contribute</a>
+            <a href="/docs/main/next/en/guides/community">Contact the community</a>
         
     </li>
 
@@ -1842,7 +1836,109 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/main/next/en/guides/how-to-bump-up-zipkin">How to bump up Zipkin dependency</a>
+
+            
+            <a href="#">Contribute<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/guides/it-guide">Integration Tests</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/guides/benchmark">Benchmark Tests</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/guides/e2e">End to End Tests</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
+            <a href="#">Project Extensions<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/guides/component-library-settings">Component Library Settings</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/guides/source-extension">Extend An OAL Source</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
+            <a href="#">Dependencies<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/guides/dependencies">Project Dependencies Check</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/guides/how-to-bump-up-zipkin">Zipkin dependency</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+</ul>
+
         
     </li>
 
@@ -2084,7 +2180,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: fb19ec4</div>
+                  <div class="commit-id">Commit Id: 1f3443e</div>
                 
 
 
@@ -2135,98 +2231,15 @@ if (!doNotTrack) {
 
 
 
-	<h1 id="extend-storage">Extend storage</h1>
-<p>SkyWalking has already provided several storage solutions. In this document, you could
-learn how to easily implement a new storage.</p>
-<h2 id="define-your-storage-provider">Define your storage provider</h2>
-<ol>
-<li>Define class extension <code>org.apache.skywalking.oap.server.library.module.ModuleProvider</code>.</li>
-<li>Set this provider targeting to storage module.</li>
-</ol>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#3c5d5d;font-weight:bold">@Override</span> 
-<span style="color:#000;font-weight:bold">public</span> Class<span style="color:#000;font-weight:bold">&lt;?</span> <span style="color:#000;font-weight:bold">extends</span> ModuleDefine<span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#900;font-weight:bold">module</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
-    <span style="color:#000;font-weight:bold">return</span> StorageModule<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">class</span><span style="color:#000;font-weight:bold">;</span>
-<span style="color:#000;font-weight:bold">}</span>
-</code></pre></div><h2 id="implement-all-daos">Implement all DAOs</h2>
-<p>Here&rsquo;s a list of all DAO interfaces in storage:</p>
-<ol>
-<li>
-<p>IServiceInventoryCacheDAO</p>
-</li>
-<li>
-<p>IServiceInstanceInventoryCacheDAO</p>
-</li>
-<li>
-<p>IEndpointInventoryCacheDAO</p>
-</li>
-<li>
-<p>INetworkAddressInventoryCacheDAO</p>
-</li>
-<li>
-<p>IBatchDAO</p>
-</li>
-<li>
-<p>StorageDAO</p>
-</li>
-<li>
-<p>IRegisterLockDAO</p>
-</li>
-<li>
-<p>ITopologyQueryDAO</p>
-</li>
-<li>
-<p>IMetricsQueryDAO</p>
-</li>
-<li>
-<p>ITraceQueryDAO</p>
-</li>
-<li>
-<p>IMetadataQueryDAO</p>
-</li>
-<li>
-<p>IAggregationQueryDAO</p>
-</li>
-<li>
-<p>IAlarmQueryDAO</p>
-</li>
-<li>
-<p>IHistoryDeleteDAO</p>
-</li>
-<li>
-<p>IMetricsDAO</p>
-</li>
-<li>
-<p>IRecordDAO</p>
-</li>
-<li>
-<p>IRegisterDAO</p>
-</li>
-<li>
-<p>ILogQueryDAO</p>
-</li>
-<li>
-<p>ITopNRecordsQueryDAO</p>
-</li>
-<li>
-<p>IBrowserLogQueryDAO</p>
-</li>
-<li>
-<p>IProfileTaskQueryDAO</p>
-</li>
-<li>
-<p>IProfileTaskLogQueryDAO</p>
-</li>
-<li>
-<p>IProfileThreadSnapshotQueryDAO</p>
-</li>
-<li>
-<p>UITemplateManagementDAO</p>
-</li>
-</ol>
-<h2 id="register-all-service-implementations">Register all service implementations</h2>
-<p>In <code>public void prepare()</code>, use <code>this#registerServiceImplementation</code> method to register and bind with your implementation of the above interfaces.</p>
-<h2 id="example">Example</h2>
-<p><code>org.apache.skywalking.oap.server.storage.plugin.elasticsearch.StorageModuleElasticsearchProvider</code> and <code>org.apache.skywalking.oap.server.storage.plugin.jdbc.mysql.MySQLStorageProvider</code>  are good examples.</p>
+	<h1 id="java-microbenchmark-harness-jmh">Java Microbenchmark Harness (JMH)</h1>
+<p>JMH is a Java harness for building, running, and analysing nano/micro/milli/macro benchmarks written in Java and other languages targeting the JVM.</p>
+<p>We have a module called <code>microbench</code> which performs a series of micro-benchmark tests for JMH testing.
+Make new JMH tests extend the <code>org.apache.skywalking.oap.server.microbench.base.AbstractMicrobenchmark</code>
+to customize runtime conditions (Measurement, Fork, Warmup, etc.).</p>
+<p>JMH tests could run as a normal unit test. And they could run as an independent uber jar via <code>java -jar benchmark.jar</code> for all benchmarks,
+or via <code>java -jar /benchmarks.jar exampleClassName</code> for a specific test.</p>
+<p>Output test results in JSON format, you can add <code>-rf json</code> like <code>java -jar benchmarks.jar -rf json</code>, if you run through the IDE, you can configure the <code>-DperfReportDir=savePath</code> parameter to set the JMH report result save path, a report results in JSON format will be generated when the run ends.</p>
+<p>More information about JMH can be found here: <a href="https://openjdk.java.net/projects/code-tools/jmh/">jmh docs</a>.</p>
 
 
 
@@ -2259,19 +2272,6 @@ learn how to easily implement a new storage.</p>
 
 
 
-
-<nav id="TableOfContents">
-  <ul>
-    <li><a href="#extend-storage">Extend storage</a>
-      <ul>
-        <li><a href="#define-your-storage-provider">Define your storage provider</a></li>
-        <li><a href="#implement-all-daos">Implement all DAOs</a></li>
-        <li><a href="#register-all-service-implementations">Register all service implementations</a></li>
-        <li><a href="#example">Example</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav>
 
 
 
@@ -6822,6 +6822,10 @@ learn how to easily implement a new storage.</p>
 
 
 
+
+
+
+
 <div class="sky-event-popup">
 
     <div class="sky-pop-modal">
@@ -6858,6 +6862,10 @@ learn how to easily implement a new storage.</p>
                     
                 </a>
             </div>
+            
+            
+            
+            
             
             
             
