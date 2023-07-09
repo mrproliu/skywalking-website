@@ -7991,12 +7991,6 @@
   </url>
   
   <url>
-    <loc>/docs/skywalking-java/next/en/setup/service-agent/java-agent/application-toolkit-webflux/</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>/docs/skywalking-java/v8.13.0/en/setup/service-agent/java-agent/application-toolkit-webflux/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
@@ -13137,6 +13131,12 @@
   
   <url>
     <loc>/docs/main/v9.5.0/en/setup/service-agent/virtual-mq/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/docs/skywalking-java/next/en/setup/service-agent/java-agent/application-toolkit-webflux/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
