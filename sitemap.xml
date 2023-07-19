@@ -4171,6 +4171,12 @@
   </url>
   
   <url>
+    <loc>/docs/skywalking-banyandb/next/concept/clustering/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/blog/</loc>
     <lastmod>2023-06-20T11:55:42+08:00</lastmod>
     <changefreq>daily</changefreq>
