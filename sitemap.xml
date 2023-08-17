@@ -4511,6 +4511,12 @@
   </url>
   
   <url>
+    <loc>/docs/skywalking-banyandb/next/installation/cluster/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/docs/main/next/en/setup/backend/backend-cluster/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
@@ -6669,6 +6675,12 @@
   
   <url>
     <loc>/docs/skywalking-satellite/v1.2.0/en/setup/plugins/forwarder_otlp-metrics-v1-grpc-forwarder/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/docs/skywalking-banyandb/next/installation/binaries/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
@@ -11848,6 +11860,12 @@
   
   <url>
     <loc>/docs/main/v9.5.0/en/papers/stam/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/docs/skywalking-banyandb/next/installation/standalone/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
