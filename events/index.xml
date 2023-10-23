@@ -14,6 +14,590 @@
     
     
     <item>
+      <title>Events: Release Apache SkyWalking BanyanDB 0.5.0</title>
+      <link>/events/release-apache-skywalking-banyandb-0-5-0/</link>
+      <pubDate>Mon, 23 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/events/release-apache-skywalking-banyandb-0-5-0/</guid>
+      <description>
+        
+        
+        &lt;p&gt;SkyWalking BanyanDB 0.5.0 is released. Go to &lt;a href=&#34;/downloads&#34;&gt;downloads&lt;/a&gt; page to find release tars.&lt;/p&gt;
+&lt;h3 id=&#34;features&#34;&gt;Features&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;List all properties in a group.&lt;/li&gt;
+&lt;li&gt;Implement Write-ahead Logging&lt;/li&gt;
+&lt;li&gt;Document the clustering.&lt;/li&gt;
+&lt;li&gt;Support multiple roles for banyand server.&lt;/li&gt;
+&lt;li&gt;Support for recovery buffer using wal.&lt;/li&gt;
+&lt;li&gt;Register the node role to the metadata registry.&lt;/li&gt;
+&lt;li&gt;Implement the remote queue to spreading data to data nodes.&lt;/li&gt;
+&lt;li&gt;Fix parse environment variables error&lt;/li&gt;
+&lt;li&gt;Implement the distributed query engine.&lt;/li&gt;
+&lt;li&gt;Add mod revision check to write requests.&lt;/li&gt;
+&lt;li&gt;Add TTL to the property.&lt;/li&gt;
+&lt;li&gt;Implement node selector (e.g. PickFirst Selector, Maglev Selector).&lt;/li&gt;
+&lt;li&gt;Unified the buffers separated in blocks to a single buffer in the shard.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;bugs&#34;&gt;Bugs&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;BanyanDB ui unable to load icon.&lt;/li&gt;
+&lt;li&gt;BanyanDB ui type error&lt;/li&gt;
+&lt;li&gt;Fix timer not released&lt;/li&gt;
+&lt;li&gt;BanyanDB ui misses fields when creating a group&lt;/li&gt;
+&lt;li&gt;Fix data duplicate writing&lt;/li&gt;
+&lt;li&gt;Syncing metadata change events from etcd instead of a local channel.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;chores&#34;&gt;Chores&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Bump several dependencies and tools.&lt;/li&gt;
+&lt;li&gt;Drop redundant &amp;ldquo;discovery&amp;rdquo; module from banyand. &amp;ldquo;metadata&amp;rdquo; module is enough to play the node and shard discovery role.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Events: Release Apache SkyWalking PHP 0.7.0</title>
+      <link>/events/release-apache-skywalking-php-0-7-0/</link>
+      <pubDate>Thu, 28 Sep 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/events/release-apache-skywalking-php-0-7-0/</guid>
+      <description>
+        
+        
+        &lt;p&gt;SkyWalking PHP 0.7.0 is released. Go to &lt;a href=&#34;https://skywalking.apache.org/downloads&#34;&gt;downloads&lt;/a&gt; page to find release tars.&lt;/p&gt;
+&lt;h2 id=&#34;whats-changed&#34;&gt;What&amp;rsquo;s Changed&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Start 0.7.0 development. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-php/pull/90&#34;&gt;https://github.com/apache/skywalking-php/pull/90&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Add more info for error log. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-php/pull/91&#34;&gt;https://github.com/apache/skywalking-php/pull/91&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Fix amqplib and predis argument problems. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-php/pull/92&#34;&gt;https://github.com/apache/skywalking-php/pull/92&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Add Memcache plugin. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-php/pull/93&#34;&gt;https://github.com/apache/skywalking-php/pull/93&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Refactor mysqli plugin, support procedural api. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-php/pull/94&#34;&gt;https://github.com/apache/skywalking-php/pull/94&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Fix target address in cross process header. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-php/pull/95&#34;&gt;https://github.com/apache/skywalking-php/pull/95&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Release SkyWalking PHP 0.7.0 by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-php/pull/96&#34;&gt;https://github.com/apache/skywalking-php/pull/96&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Full Changelog&lt;/strong&gt;: &lt;a href=&#34;https://github.com/apache/skywalking-php/compare/v0.7.0...v0.7.0&#34;&gt;https://github.com/apache/skywalking-php/compare/v0.7.0...v0.7.0&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;pecl&#34;&gt;PECL&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://pecl.php.net/package/skywalking_agent/0.7.0&#34;&gt;https://pecl.php.net/package/skywalking_agent/0.7.0&lt;/a&gt;&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Events: Release Apache SkyWalking BanyanDB Helm 0.1.0</title>
+      <link>/events/release-apache-skywalking-banyandb-helm-0-1-0/</link>
+      <pubDate>Mon, 25 Sep 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/events/release-apache-skywalking-banyandb-helm-0-1-0/</guid>
+      <description>
+        
+        
+        &lt;p&gt;SkyWalking BanyanDB Helm 0.1.0 is released. Go to &lt;a href=&#34;/downloads&#34;&gt;downloads&lt;/a&gt; page to find release tars.&lt;/p&gt;
+&lt;h3 id=&#34;features&#34;&gt;Features&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Deploy banyandb with standalone mode by Chart&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Events: Release Apache SkyWalking Eyes 0.5.0</title>
+      <link>/events/release-apache-skywalking-eyes-0-5-0/</link>
+      <pubDate>Sat, 09 Sep 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/events/release-apache-skywalking-eyes-0-5-0/</guid>
+      <description>
+        
+        
+        &lt;p&gt;SkyWalking Eyes 0.5.0 is released. Go to &lt;a href=&#34;/downloads&#34;&gt;downloads&lt;/a&gt; page to find release tars.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;feat(header templates): add support for AGPL-3.0 by @elijaholmos in &lt;a href=&#34;https://github.com/apache/skywalking-eyes/pull/125&#34;&gt;https://github.com/apache/skywalking-eyes/pull/125&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Upgrade go version to 1.18 by @kezhenxu94 in &lt;a href=&#34;https://github.com/apache/skywalking-eyes/pull/126&#34;&gt;https://github.com/apache/skywalking-eyes/pull/126&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Add MulanPSL-2.0 support. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-eyes/pull/127&#34;&gt;https://github.com/apache/skywalking-eyes/pull/127&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;New Header Template: GPL-3.0-or-later by @ddlees in &lt;a href=&#34;https://github.com/apache/skywalking-eyes/pull/128&#34;&gt;https://github.com/apache/skywalking-eyes/pull/128&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Update README.md by @rovast in &lt;a href=&#34;https://github.com/apache/skywalking-eyes/pull/129&#34;&gt;https://github.com/apache/skywalking-eyes/pull/129&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Add more &lt;code&gt;.env.[mode]&lt;/code&gt; support for VueJS project by @rovast in &lt;a href=&#34;https://github.com/apache/skywalking-eyes/pull/130&#34;&gt;https://github.com/apache/skywalking-eyes/pull/130&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Docker Multiple Architecture Support :fixes#9089 by @mohammedtabish0 in &lt;a href=&#34;https://github.com/apache/skywalking-eyes/pull/132&#34;&gt;https://github.com/apache/skywalking-eyes/pull/132&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Polish maven test for convenient debug by @kezhenxu94 in &lt;a href=&#34;https://github.com/apache/skywalking-eyes/pull/134&#34;&gt;https://github.com/apache/skywalking-eyes/pull/134&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;feat: list files by git when possible by @tisonkun in &lt;a href=&#34;https://github.com/apache/skywalking-eyes/pull/133&#34;&gt;https://github.com/apache/skywalking-eyes/pull/133&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Switch to npm ci for reliable builds by @kezhenxu94 in &lt;a href=&#34;https://github.com/apache/skywalking-eyes/pull/135&#34;&gt;https://github.com/apache/skywalking-eyes/pull/135&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Fix optional dependencies are not excluded by @kezhenxu94 in &lt;a href=&#34;https://github.com/apache/skywalking-eyes/pull/136&#34;&gt;https://github.com/apache/skywalking-eyes/pull/136&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Fix exclude not work for transitive dependencies and add recursive config by @kezhenxu94 in &lt;a href=&#34;https://github.com/apache/skywalking-eyes/pull/137&#34;&gt;https://github.com/apache/skywalking-eyes/pull/137&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Add some tests for maven resovler by @kezhenxu94 in &lt;a href=&#34;https://github.com/apache/skywalking-eyes/pull/138&#34;&gt;https://github.com/apache/skywalking-eyes/pull/138&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;feat(header-fix): add Svelte support by @elijaholmos in &lt;a href=&#34;https://github.com/apache/skywalking-eyes/pull/139&#34;&gt;https://github.com/apache/skywalking-eyes/pull/139&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;dep: do not write license files if they already exist by @kezhenxu94 in &lt;a href=&#34;https://github.com/apache/skywalking-eyes/pull/140&#34;&gt;https://github.com/apache/skywalking-eyes/pull/140&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;fix: not ignore *.txt to make sure files like CMakeLists.txt can be checked by @acelyc111 in &lt;a href=&#34;https://github.com/apache/skywalking-eyes/pull/141&#34;&gt;https://github.com/apache/skywalking-eyes/pull/141&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;fix license header normalizer by @xiaoyawei in &lt;a href=&#34;https://github.com/apache/skywalking-eyes/pull/142&#34;&gt;https://github.com/apache/skywalking-eyes/pull/142&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Substitute variables in license content for header command by @kezhenxu94 in &lt;a href=&#34;https://github.com/apache/skywalking-eyes/pull/143&#34;&gt;https://github.com/apache/skywalking-eyes/pull/143&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Correct indent in Apache-2.0 template by @tisonkun in &lt;a href=&#34;https://github.com/apache/skywalking-eyes/pull/144&#34;&gt;https://github.com/apache/skywalking-eyes/pull/144&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Add copyright-year configuration by @kezhenxu94 in &lt;a href=&#34;https://github.com/apache/skywalking-eyes/pull/145&#34;&gt;https://github.com/apache/skywalking-eyes/pull/145&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;dep/maven: use output file to store the dep tree for cleaner result by @kezhenxu94 in &lt;a href=&#34;https://github.com/apache/skywalking-eyes/pull/146&#34;&gt;https://github.com/apache/skywalking-eyes/pull/146&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;dep/maven: resolve dependencies before analysis by @kezhenxu94 in &lt;a href=&#34;https://github.com/apache/skywalking-eyes/pull/147&#34;&gt;https://github.com/apache/skywalking-eyes/pull/147&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;gha: switch to composite running mode and set up cache by @kezhenxu94 in &lt;a href=&#34;https://github.com/apache/skywalking-eyes/pull/149&#34;&gt;https://github.com/apache/skywalking-eyes/pull/149&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;gha: switch to composite running mode and set up cache by @kezhenxu94 in &lt;a href=&#34;https://github.com/apache/skywalking-eyes/pull/150&#34;&gt;https://github.com/apache/skywalking-eyes/pull/150&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Fix GitHub Actions wrong path by @kezhenxu94 in &lt;a href=&#34;https://github.com/apache/skywalking-eyes/pull/151&#34;&gt;https://github.com/apache/skywalking-eyes/pull/151&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Normalize license for cargo. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-eyes/pull/153&#34;&gt;https://github.com/apache/skywalking-eyes/pull/153&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Remove space characters in license for cargo. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-eyes/pull/154&#34;&gt;https://github.com/apache/skywalking-eyes/pull/154&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Bump up dependencies to fix CVE by @kezhenxu94 in &lt;a href=&#34;https://github.com/apache/skywalking-eyes/pull/155&#34;&gt;https://github.com/apache/skywalking-eyes/pull/155&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Bump up GHA to depress warnings by @kezhenxu94 in &lt;a href=&#34;https://github.com/apache/skywalking-eyes/pull/156&#34;&gt;https://github.com/apache/skywalking-eyes/pull/156&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Leverage the built-in cache in setup-go@v4 by @kezhenxu94 in &lt;a href=&#34;https://github.com/apache/skywalking-eyes/pull/157&#34;&gt;https://github.com/apache/skywalking-eyes/pull/157&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Dependencies check should report unknown licneses by @kezhenxu94 in &lt;a href=&#34;https://github.com/apache/skywalking-eyes/pull/158&#34;&gt;https://github.com/apache/skywalking-eyes/pull/158&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Fix wrong indentation in doc by @kezhenxu94 in &lt;a href=&#34;https://github.com/apache/skywalking-eyes/pull/159&#34;&gt;https://github.com/apache/skywalking-eyes/pull/159&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Add EPL-2.0 header template by @kezhenxu94 in &lt;a href=&#34;https://github.com/apache/skywalking-eyes/pull/160&#34;&gt;https://github.com/apache/skywalking-eyes/pull/160&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Fix wrong indentation in doc about multi license config by @kezhenxu94 in &lt;a href=&#34;https://github.com/apache/skywalking-eyes/pull/161&#34;&gt;https://github.com/apache/skywalking-eyes/pull/161&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;dependency resolve with default template and specified output of license by @crholm in &lt;a href=&#34;https://github.com/apache/skywalking-eyes/pull/163&#34;&gt;https://github.com/apache/skywalking-eyes/pull/163&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Bump up go git to support .gitconfig user path by @kezhenxu94 in &lt;a href=&#34;https://github.com/apache/skywalking-eyes/pull/164&#34;&gt;https://github.com/apache/skywalking-eyes/pull/164&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Draft release notes for 0.5.0 by @kezhenxu94 in &lt;a href=&#34;https://github.com/apache/skywalking-eyes/pull/165&#34;&gt;https://github.com/apache/skywalking-eyes/pull/165&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Remove &amp;ldquo;portions copyright&amp;rdquo; header normalizer by @antgamdia in &lt;a href=&#34;https://github.com/apache/skywalking-eyes/pull/166&#34;&gt;https://github.com/apache/skywalking-eyes/pull/166&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Full Changelog&lt;/strong&gt;: &lt;a href=&#34;https://github.com/apache/skywalking-eyes/compare/v0.4.0...v0.5.0&#34;&gt;https://github.com/apache/skywalking-eyes/compare/v0.4.0...v0.5.0&lt;/a&gt;&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Events: SkyWalking Summit 2023 @ Shanghai China</title>
+      <link>/events/summit-23-cn/</link>
+      <pubDate>Thu, 07 Sep 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/events/summit-23-cn/</guid>
+      <description>
+        
+        
+        &lt;img src=&#34;banner.jpg&#34;&gt;
+&lt;h2 id=&#34;abstract&#34;&gt;Abstract&lt;/h2&gt;
+&lt;p&gt;Apache SkyWalking hosts SkyWalking Summit 2023 on Nov. 4th, 2023, UTC+8, sponsored by ZMOps and Tetrate.&lt;/p&gt;
+&lt;p&gt;We are going to share SkyWalking&amp;rsquo;s roadmap, features, product experiences, and open-source culture.&lt;/p&gt;
+&lt;p&gt;Welcome to join us.&lt;/p&gt;
+&lt;h2 id=&#34;venue&#34;&gt;Venue&lt;/h2&gt;
+&lt;p&gt;Addr./地址  &lt;a href=&#34;https://j.map.baidu.com/35/vCJ&#34;&gt;上海大华虹桥假日酒店&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;date&#34;&gt;Date&lt;/h2&gt;
+&lt;p&gt;8:00 - 17:00, Nov 4th.&lt;/p&gt;
+&lt;h2 id=&#34;register&#34;&gt;Register&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.huodongxing.com/event/7719199521100?td=1934994410311&#34;&gt;Register for IN-PERSON ticket&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;call-for-proposals-cfp&#34;&gt;Call For Proposals (CFP)&lt;/h2&gt;
+&lt;p&gt;The Call For Proposals open from now to 18:00 on Oct. 27th 2023, UTC+8. Submit your proposal at &lt;a href=&#34;https://www.huodongxing.com/event/6719686666700?td=1934994410311&#34;&gt;here&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;We have 1 open session and 8 sessions for the whole event.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Open session is reserved for SkyWalking PMC members.&lt;/li&gt;
+&lt;li&gt;6 sessions are opened for CFP process.&lt;/li&gt;
+&lt;li&gt;2 sessions are reserved for sponsors.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;sponsors&#34;&gt;Sponsors&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;ZMOps Inc.&lt;/li&gt;
+&lt;li&gt;Tetrate Inc.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;anti-harassment-policy&#34;&gt;Anti-harassment policy&lt;/h2&gt;
+&lt;p&gt;SkyWalkingDay is dedicated to providing a harassment-free experience for everyone. We do not tolerate harassment of participants in any form. Sexual language and imagery will also not be tolerated in any event venue. Participants violating these rules may be sanctioned or expelled without a refund, at the discretion of the event organizers. Our anti-harassment policy can be found at &lt;a href=&#34;https://www.apache.org/foundation/policies/anti-harassment.html&#34;&gt;Apache website&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;contact-us&#34;&gt;Contact Us&lt;/h2&gt;
+&lt;p&gt;Send mail to &lt;a href=&#34;mailto:dev@skywalking.apache.org&#34;&gt;dev@skywalking.apache.org&lt;/a&gt;.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Events: Release Apache SkyWalking APM 9.6.0</title>
+      <link>/events/release-apache-skywalking-apm-9.6.0/</link>
+      <pubDate>Sat, 02 Sep 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/events/release-apache-skywalking-apm-9.6.0/</guid>
+      <description>
+        
+        
+        &lt;p&gt;SkyWalking 9.6.0 is released. Go to &lt;a href=&#34;/downloads&#34;&gt;downloads&lt;/a&gt; page to find release tars.&lt;/p&gt;
+&lt;h4 id=&#34;new-alerting-kernel&#34;&gt;New Alerting Kernel&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;MQE(Metrics Query Expression) and a new notification mechanism are supported.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;img src=&#34;alerting-rules.png&#34;/&gt;
+&lt;h4 id=&#34;support-loki-logql&#34;&gt;Support Loki LogQL&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;Newly added support for Loki LogQL and Grafana Loki Dashboard for SkyWalking collected logs&lt;/li&gt;
+&lt;/ul&gt;
+&lt;img src=&#34;grafana-logql.png&#34;/&gt;
+&lt;h4 id=&#34;warning&#34;&gt;WARNING&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;ElasticSearch 6 storage relative tests are removed. It worked and is not promised due to end of life officially.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;project&#34;&gt;Project&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;Bump up Guava to 32.0.1 to avoid the lib listed as vulnerable due to CVE-2020-8908. This API is never used.&lt;/li&gt;
+&lt;li&gt;Maven artifact &lt;code&gt;skywalking-log-recevier-plugin&lt;/code&gt; is renamed to &lt;code&gt;skywalking-log-receiver-plugin&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Bump up cli version 0.11 to 0.12.&lt;/li&gt;
+&lt;li&gt;Bump up the version of ASF parent pom to v30.&lt;/li&gt;
+&lt;li&gt;Make builds reproducible for automatic releases CI.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;oap-server&#34;&gt;OAP Server&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;Add Neo4j component ID(112) language: Python.&lt;/li&gt;
+&lt;li&gt;Add Istio ServiceEntry registry to resolve unknown IPs in ALS.&lt;/li&gt;
+&lt;li&gt;Wrap &lt;code&gt;deleteProperty&lt;/code&gt; API to the BanyanDBStorageClient.&lt;/li&gt;
+&lt;li&gt;[Breaking change] Remove &lt;code&gt;matchedCounter&lt;/code&gt; from &lt;code&gt;HttpUriRecognitionService#feedRawData&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Remove patterns from &lt;code&gt;HttpUriRecognitionService#feedRawData&lt;/code&gt; and add max 10 candidates of raw URIs for each pattern.&lt;/li&gt;
+&lt;li&gt;Add component ID for WebSphere.&lt;/li&gt;
+&lt;li&gt;Fix AI Pipeline uri caching NullPointer and IllegalArgument Exceptions.&lt;/li&gt;
+&lt;li&gt;Fix &lt;code&gt;NPE&lt;/code&gt; in metrics query when the metric is not exist.&lt;/li&gt;
+&lt;li&gt;Remove E2E tests for Istio &amp;lt; 1.15, ElasticSearch &amp;lt; 7.16.3, they might still work but are not supported as planed.&lt;/li&gt;
+&lt;li&gt;Scroll all results in ElasticSearch storage and refactor scrolling logics, including Service, Instance, Endpoint,
+Process, etc.&lt;/li&gt;
+&lt;li&gt;Improve Kubernetes coordinator to remove &lt;code&gt;Terminating&lt;/code&gt; OAP Pods in cluster.&lt;/li&gt;
+&lt;li&gt;Support &lt;code&gt;SW_CORE_SYNC_PERIOD_HTTP_URI_RECOGNITION_PATTERN&lt;/code&gt; and &lt;code&gt;SW_CORE_TRAINING_PERIOD_HTTP_URI_RECOGNITION_PATTERN&lt;/code&gt;
+to control the period of training and sync HTTP URI recognition patterns. And shorten the default period to 10s for
+sync and 60s for training.&lt;/li&gt;
+&lt;li&gt;Fix ElasticSearch scroller bug.&lt;/li&gt;
+&lt;li&gt;Add component ID for Aerospike(ID=149).&lt;/li&gt;
+&lt;li&gt;Packages with name &lt;code&gt;recevier&lt;/code&gt; are renamed to &lt;code&gt;receiver&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;BanyanDBMetricsDAO&lt;/code&gt; handles &lt;code&gt;storeIDTag&lt;/code&gt; in &lt;code&gt;multiGet&lt;/code&gt; for &lt;code&gt;BanyanDBModelExtension&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Fix endpoint grouping-related logic and enhance the performance of PatternTree retrieval.&lt;/li&gt;
+&lt;li&gt;Fix metric session cache saving after batch insert when using &lt;code&gt;mysql-connector-java&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Support dynamic UI menu query.&lt;/li&gt;
+&lt;li&gt;Add comment for &lt;code&gt;docker/.env&lt;/code&gt; to explain the usage.&lt;/li&gt;
+&lt;li&gt;Fix wrong environment variable name &lt;code&gt;SW_OTEL_RECEIVER_ENABLED_OTEL_RULES&lt;/code&gt; to right &lt;code&gt;SW_OTEL_RECEIVER_ENABLED_OTEL_METRICS_RULES&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Fix instance query in JDBC implementation.&lt;/li&gt;
+&lt;li&gt;Set the &lt;code&gt;SW_QUERY_MAX_QUERY_COMPLEXITY&lt;/code&gt; default value to 3000(was 1000).&lt;/li&gt;
+&lt;li&gt;Accept &lt;code&gt;length=4000&lt;/code&gt; parameter value of the event. It was 2000.&lt;/li&gt;
+&lt;li&gt;Tolerate parameter value in illegal JSON format.&lt;/li&gt;
+&lt;li&gt;Update BanyanDB Java Client to 0.4.0&lt;/li&gt;
+&lt;li&gt;Support aggregate &lt;code&gt;Labeled Value Metrics&lt;/code&gt; in MQE.&lt;/li&gt;
+&lt;li&gt;[Breaking change] Change the default label name in MQE from &lt;code&gt;labe&lt;/code&gt;l to &lt;code&gt;_&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Bump up grpc version to 1.53.0.&lt;/li&gt;
+&lt;li&gt;[Breaking change] Removed &amp;lsquo;&amp;amp;&amp;rsquo; symbols from shell scripts to avoid OAP server process running as a background process.&lt;/li&gt;
+&lt;li&gt;Revert part of #10616 to fix the unexpected changes: if there is no data we should return an array with &lt;code&gt;0&lt;/code&gt;s,
+but in #10616, an empty array is returned.&lt;/li&gt;
+&lt;li&gt;Cache all service entity in memory for query.&lt;/li&gt;
+&lt;li&gt;Bump up jackson version to 2.15.2.&lt;/li&gt;
+&lt;li&gt;Increase the default memory size to avoid OOM.&lt;/li&gt;
+&lt;li&gt;Bump up graphql-java to 21.0.&lt;/li&gt;
+&lt;li&gt;Add Echo component ID(5015) language: Golang.&lt;/li&gt;
+&lt;li&gt;Fix &lt;code&gt;index out of bounds exception&lt;/code&gt; in &lt;code&gt;aggregate_labels&lt;/code&gt; MQE function.&lt;/li&gt;
+&lt;li&gt;Support MongoDB Server/Cluster monitoring powered by OTEL.&lt;/li&gt;
+&lt;li&gt;Do not print configurations values in logs to avoid sensitive info leaked.&lt;/li&gt;
+&lt;li&gt;Move created the latest index before retrieval indexes by aliases to avoid the 404 exception. This just prevents some interference from manual operations.&lt;/li&gt;
+&lt;li&gt;Add more Go VM metrics, as new skywalking-go agent provided since its 0.2 release.&lt;/li&gt;
+&lt;li&gt;Add component ID for Lock (ID=5016).&lt;/li&gt;
+&lt;li&gt;[Breaking change] Adjust the structure of hooks in the &lt;code&gt;alarm-settings.yml&lt;/code&gt;. Support multiple configs for each hook types and specifying the hooks in the alarm rule.&lt;/li&gt;
+&lt;li&gt;Bump up Armeria to 1.24.3.&lt;/li&gt;
+&lt;li&gt;Fix BooleanMatch and BooleanNotEqualMatch doing Boolean comparison.&lt;/li&gt;
+&lt;li&gt;Support LogQL HTTP query APIs.&lt;/li&gt;
+&lt;li&gt;Add Mux Server component ID(5017) language: Golang.&lt;/li&gt;
+&lt;li&gt;Remove ElasticSearch 6.3.2 from our client lib tests.&lt;/li&gt;
+&lt;li&gt;Bump up ElasticSearch server 8.8.1 to 8.9.0 for latest e2e testing. 8.1.0, 7.16.3 and 7.17.10 are still tested.&lt;/li&gt;
+&lt;li&gt;Add OpenSearch 2.8.0 to our client lib tests.&lt;/li&gt;
+&lt;li&gt;Use listening mode for apollo implementation of dynamic configuration.&lt;/li&gt;
+&lt;li&gt;Add &lt;code&gt;view_as_seq&lt;/code&gt; function in MQE for listing metrics in the given prioritized sequence.&lt;/li&gt;
+&lt;li&gt;Fix the wrong default value of &lt;code&gt;k8sServiceNameRule&lt;/code&gt; if it&amp;rsquo;s not explicitly set.&lt;/li&gt;
+&lt;li&gt;Improve PromQL to allow for multiple metric operations within a single query.&lt;/li&gt;
+&lt;li&gt;Fix MQE Binary Operation between labeled metrics and other type of value result.&lt;/li&gt;
+&lt;li&gt;Add component ID for Nacos (ID=150).&lt;/li&gt;
+&lt;li&gt;Support &lt;code&gt;Compare Operation&lt;/code&gt; in MQE.&lt;/li&gt;
+&lt;li&gt;Fix the Kubernetes resource cache not refreshed.&lt;/li&gt;
+&lt;li&gt;Fix wrong classpath that might cause OOM in startup.&lt;/li&gt;
+&lt;li&gt;Enhance the &lt;code&gt;serviceRelation&lt;/code&gt; in MAL by adding settings for the &lt;code&gt;delimiter&lt;/code&gt; and &lt;code&gt;component&lt;/code&gt; fields.&lt;/li&gt;
+&lt;li&gt;[Breaking change] Support MQE in the Alerting. The Alarm Rules configuration(alarm-settings.yml),
+add &lt;code&gt;expression&lt;/code&gt; field and remove &lt;code&gt;metrics-name/count/threshold/op/only-as-condition&lt;/code&gt; fields and remove &lt;code&gt;composite-rules&lt;/code&gt; configuration.&lt;/li&gt;
+&lt;li&gt;Check results in ALS as per downstream/upstream instead of per log.&lt;/li&gt;
+&lt;li&gt;Fix GraphQL query &lt;code&gt;listInstances&lt;/code&gt; not using endTime query&lt;/li&gt;
+&lt;li&gt;Do not start server and Kafka consumer in init mode.&lt;/li&gt;
+&lt;li&gt;Add Iris component ID(5018).&lt;/li&gt;
+&lt;li&gt;Add OTLP Tracing support as a Zipkin trace input.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;ui&#34;&gt;UI&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;Fix metric name &lt;code&gt;browser_app_error_rate&lt;/code&gt; in &lt;code&gt;Browser-Root&lt;/code&gt; dashboard.&lt;/li&gt;
+&lt;li&gt;Fix display name of &lt;code&gt;endpoint_cpm&lt;/code&gt; for endpoint list in &lt;code&gt;General-Service&lt;/code&gt; dashboard.&lt;/li&gt;
+&lt;li&gt;Implement customize menus and marketplace page.&lt;/li&gt;
+&lt;li&gt;Fix minTraceDuration and maxTraceDuration types.&lt;/li&gt;
+&lt;li&gt;Fix init minTime to Infinity.&lt;/li&gt;
+&lt;li&gt;Bump dependencies to fix vulnerabilities.&lt;/li&gt;
+&lt;li&gt;Add scss variables.&lt;/li&gt;
+&lt;li&gt;Fix the title of instance list and notices in the continue profiling.&lt;/li&gt;
+&lt;li&gt;Add a link to explain the expression metric, add units in the continue profiling widget.&lt;/li&gt;
+&lt;li&gt;Calculate string width to set Tabs name width.&lt;/li&gt;
+&lt;li&gt;[Breaking change] Removed &amp;lsquo;&amp;amp;&amp;rsquo; symbols from shell scripts to avoid web application server process running as a background process.&lt;/li&gt;
+&lt;li&gt;Reset chart label.&lt;/li&gt;
+&lt;li&gt;Fix service associates instances.&lt;/li&gt;
+&lt;li&gt;Remove node-sass.&lt;/li&gt;
+&lt;li&gt;Fix commit error on Windows.&lt;/li&gt;
+&lt;li&gt;Apply MQE on &lt;code&gt;MYSQL&lt;/code&gt;, &lt;code&gt;POSTGRESQL&lt;/code&gt;, &lt;code&gt;REDIS&lt;/code&gt;, &lt;code&gt;ELASTICSEARCH&lt;/code&gt; and &lt;code&gt;DYNAMODB&lt;/code&gt; layer UI-templates.&lt;/li&gt;
+&lt;li&gt;Apply MQE on Virtual-Cache layer UI-templates&lt;/li&gt;
+&lt;li&gt;Apply MQE on APISIX, AWS_EKS, AWS_GATEWAY and AWS_S3 layer UI templates.&lt;/li&gt;
+&lt;li&gt;Apply MQE on RabbitMQ Dashboards.&lt;/li&gt;
+&lt;li&gt;Apply MQE on Virtual-MQ layer UI-templates&lt;/li&gt;
+&lt;li&gt;Apply MQE on Infra-Linux layer UI-templates&lt;/li&gt;
+&lt;li&gt;Apply MQE on Infra-Windows layer UI-templates&lt;/li&gt;
+&lt;li&gt;Apply MQE on Browser layer UI-templates.&lt;/li&gt;
+&lt;li&gt;Implement MQE on topology widget.&lt;/li&gt;
+&lt;li&gt;Fix getEndpoints keyword blank.&lt;/li&gt;
+&lt;li&gt;Implement a breadcrumb component as navigation.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;documentation&#34;&gt;Documentation&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;Add Go agent into the server agent documentation.&lt;/li&gt;
+&lt;li&gt;Add data unit description in the configuration of continuous profiling policy.&lt;/li&gt;
+&lt;li&gt;Remove &lt;code&gt;storage extension&lt;/code&gt; doc, as it is expired.&lt;/li&gt;
+&lt;li&gt;Remove &lt;code&gt;how to add menu&lt;/code&gt; doc, as SkyWalking supports marketplace and new backend-based setup.&lt;/li&gt;
+&lt;li&gt;Separate contribution docs to a new menu structure.&lt;/li&gt;
+&lt;li&gt;Add a doc to explain how to manage i18n.&lt;/li&gt;
+&lt;li&gt;Add a doc to explain OTLP Trace support.&lt;/li&gt;
+&lt;li&gt;Fix typo in &lt;code&gt;dynamic-config-configmap.md&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Fix out-dated docs about Kafka fetcher.&lt;/li&gt;
+&lt;li&gt;Remove 3rd part fetchers from the docs, as they are not maintained anymore.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;All issues and pull requests are &lt;a href=&#34;https://github.com/apache/skywalking/milestone/181?closed=1&#34;&gt;here&lt;/a&gt;&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Events: Release Apache SkyWalking Java Agent 9.0.0</title>
+      <link>/events/release-apache-skywalking-java-agent-9-0-0/</link>
+      <pubDate>Tue, 29 Aug 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/events/release-apache-skywalking-java-agent-9-0-0/</guid>
+      <description>
+        
+        
+        &lt;p&gt;SkyWalking Java Agent 9.0.0 is released. Go to &lt;a href=&#34;/downloads&#34;&gt;downloads&lt;/a&gt; page to find release tars.
+Changes by Version&lt;/p&gt;
+&lt;h2 id=&#34;900&#34;&gt;9.0.0&lt;/h2&gt;
+&lt;h3 id=&#34;kernel-updates&#34;&gt;Kernel Updates&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Support re-transform/hot-swap classes with other java agents, and remove the obsolete cache enhanced class feature.&lt;/li&gt;
+&lt;li&gt;Implement new naming policies for names of auxiliary type, interceptor delegate field, renamed origin method, method
+access name, method cache value field. All names are under &lt;code&gt;sw$&lt;/code&gt; name trait. They are predictable and unchanged after
+re-transform.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;* SWAuxiliaryTypeNamingStrategy
+  Auxiliary type name pattern: &amp;lt;origin_class_name&amp;gt;$&amp;lt;name_trait&amp;gt;$auxiliary$&amp;lt;auxiliary_type_instance_hash&amp;gt;
+
+* DelegateNamingResolver
+  Interceptor delegate field name pattern: &amp;lt;name_trait&amp;gt;$delegate$&amp;lt;class_name_hash&amp;gt;$&amp;lt;plugin_define_hash&amp;gt;$&amp;lt;intercept_point_hash&amp;gt;
+
+* SWMethodNameTransformer
+  Renamed origin method pattern: &amp;lt;name_trait&amp;gt;$original$&amp;lt;method_name&amp;gt;$&amp;lt;method_description_hash&amp;gt;
+
+* SWImplementationContextFactory
+  Method cache value field pattern: cachedValue$&amp;lt;name_trait&amp;gt;$&amp;lt;origin_class_name_hash&amp;gt;$&amp;lt;field_value_hash&amp;gt;
+  Accessor method name pattern:  &amp;lt;renamed_origin_method&amp;gt;$accessor$&amp;lt;name_trait&amp;gt;$&amp;lt;origin_class_name_hash&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Here is an example of manipulated enhanced class with new naming policies of auxiliary classes, fields, and methods&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;sample.mybatis.controller.HotelController&lt;/span&gt;$sw$auxiliary$19cja42&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+ &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;sample.mybatis.controller.HotelController&lt;/span&gt;$sw$auxiliary$p257su0&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+ &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;sample.mybatis.domain.Hotel&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+ &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;sample.mybatis.service.HotelService&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+
+ &lt;span style=&#34;color:#3c5d5d;font-weight:bold&#34;&gt;@RequestMapping&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;value&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;={&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;/hotel&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;})&lt;/span&gt;
+ &lt;span style=&#34;color:#3c5d5d;font-weight:bold&#34;&gt;@RestController&lt;/span&gt;
+ &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;HotelController&lt;/span&gt;
+ &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;implements&lt;/span&gt; EnhancedInstance &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+     &lt;span style=&#34;color:#3c5d5d;font-weight:bold&#34;&gt;@Autowired&lt;/span&gt;
+     &lt;span style=&#34;color:#3c5d5d;font-weight:bold&#34;&gt;@lazy&lt;/span&gt;
+     &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;private&lt;/span&gt; HotelService hotelService&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+     &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;volatile&lt;/span&gt; Object _$EnhancedClassField_ws&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+
+     &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// Interceptor delegate fields
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;     &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;volatile&lt;/span&gt; &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;/* synthetic */&lt;/span&gt; InstMethodsInter sw$delegate$td03673$ain2do0$8im5jm1&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+     &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;volatile&lt;/span&gt; &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;/* synthetic */&lt;/span&gt; InstMethodsInter sw$delegate$td03673$ain2do0$edkmf61&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+     &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;volatile&lt;/span&gt; &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;/* synthetic */&lt;/span&gt; ConstructorInter sw$delegate$td03673$ain2do0$qs9unv1&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+     &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;volatile&lt;/span&gt; &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;/* synthetic */&lt;/span&gt; InstMethodsInter sw$delegate$td03673$fl4lnk1$m3ia3a2&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+     &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;volatile&lt;/span&gt; &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;/* synthetic */&lt;/span&gt; InstMethodsInter sw$delegate$td03673$fl4lnk1$sufrvp1&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+     &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;volatile&lt;/span&gt; &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;/* synthetic */&lt;/span&gt; ConstructorInter sw$delegate$td03673$fl4lnk1$cteu7s1&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+
+     &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// Origin method cache value field
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;     &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;final&lt;/span&gt; &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;/* synthetic */&lt;/span&gt; Method cachedValue$sw$td03673$g5sobj1&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+
+     &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;HotelController&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+         &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+         sw$delegate$td03673$ain2do0$qs9unv1&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;intercept&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;new&lt;/span&gt; Object&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;0&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;]);&lt;/span&gt;
+     &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+     &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;/* synthetic */&lt;/span&gt; HotelController&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;sw&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;auxiliary&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;p257su0&lt;/span&gt; p257su02&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+     &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+     &lt;span style=&#34;color:#3c5d5d;font-weight:bold&#34;&gt;@GetMapping&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;value&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;={&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;city/{cityId}&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;})&lt;/span&gt;
+     &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; Hotel &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;selectByCityId&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#3c5d5d;font-weight:bold&#34;&gt;@PathVariable&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;value&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;cityId&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; n&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+         &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// call interceptor with auxiliary type and parameters and origin method object
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;         &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;Hotel&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;sw$delegate$td03673$ain2do0$8im5jm1&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;intercept&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;new&lt;/span&gt; Object&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[]{&lt;/span&gt;n&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;},&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;new&lt;/span&gt; HotelController$sw$auxiliary$19cja42&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; n&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;),&lt;/span&gt; cachedValue$sw$td03673$g5sobj1&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+     &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+     &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// Renamed origin method
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;     &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;/* synthetic */&lt;/span&gt; Hotel &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;sw$origin$selectByCityId$a8458p3&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; cityId&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;/*22*/&lt;/span&gt;         &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;hotelService&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;selectByCityId&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;cityId&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+     &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+     &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// Accessor of renamed origin method, calling from auxiliary type
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;     &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;final&lt;/span&gt; &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;/* synthetic */&lt;/span&gt; Hotel &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;sw$origin$selectByCityId$a8458p3$accessor$sw$td03673&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; n&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+         &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// Calling renamed origin method
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;         &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;sw$origin$selectByCityId$a8458p3&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;n&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+     &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+     &lt;span style=&#34;color:#3c5d5d;font-weight:bold&#34;&gt;@OverRide&lt;/span&gt;
+     &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; Object &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;getSkyWalkingDynamicField&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+         &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;_$EnhancedClassField_ws&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+     &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+     &lt;span style=&#34;color:#3c5d5d;font-weight:bold&#34;&gt;@OverRide&lt;/span&gt;
+     &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;setSkyWalkingDynamicField&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;Object object&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+         &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;_$EnhancedClassField_ws&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; object&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+     &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+     &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+         ClassLoader&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;getSystemClassLoader&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;().&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;loadClass&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;org.apache.skywalking.apm.dependencies.net.bytebuddy.dynamic.Nexus&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;getMethod&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;initialize&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; Class&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;class&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; Integer&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;TYPE&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;invoke&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; HotelController&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;class&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;-&lt;/span&gt;1072476370&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+         &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// Method object
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;         cachedValue$sw$td03673$g5sobj1 &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; HotelController&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;class&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;getMethod&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;selectByCityId&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; Integer&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;TYPE&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+     &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+ &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Auxiliary type of Constructor :&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;HotelController$sw$auxiliary$p257su0&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Auxiliary type of  &lt;code&gt;selectByCityId&lt;/code&gt; method:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;HotelController$sw$auxiliary$19cja42&lt;/span&gt;
+&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;implements&lt;/span&gt; Runnable&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;
+Callable &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;private&lt;/span&gt; HotelController argument0&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; argument1&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; Object &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;call&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;throws&lt;/span&gt; Exception &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;argument0&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;sw$origin$selectByCityId$a8458p3$accessor$sw$td03673&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;argument1&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+    &lt;span style=&#34;color:#3c5d5d;font-weight:bold&#34;&gt;@OverRide&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;run&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;argument0&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;sw$origin$selectByCityId$a8458p3$accessor$sw$td03673&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;argument1&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+    HotelController$sw$auxiliary$19cja42&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;HotelController hotelController&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; n&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;argument0&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; hotelController&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;argument1&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; n&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;features-and-bug-fixes&#34;&gt;Features and Bug Fixes&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Support Jdk17 ZGC metric collect&lt;/li&gt;
+&lt;li&gt;Support Jetty 11.x plugin&lt;/li&gt;
+&lt;li&gt;Support access to the sky-walking tracer context in spring gateway filter&lt;/li&gt;
+&lt;li&gt;Fix the scenario of using the HBase plugin with spring-data-hadoop.&lt;/li&gt;
+&lt;li&gt;Add RocketMQ 5.x plugin&lt;/li&gt;
+&lt;li&gt;Fix the conflict between the logging kernel and the JDK threadpool plugin.&lt;/li&gt;
+&lt;li&gt;Fix the thread safety bug of finishing operation for the span named &amp;ldquo;SpringCloudGateway/sendRequest&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;Fix NPE in guava-eventbus-plugin.&lt;/li&gt;
+&lt;li&gt;Add WebSphere Liberty 23.x plugin&lt;/li&gt;
+&lt;li&gt;Add Plugin to support aerospike Java client&lt;/li&gt;
+&lt;li&gt;Add ClickHouse parsing to the jdbc-common plugin.&lt;/li&gt;
+&lt;li&gt;Support to trace redisson lock&lt;/li&gt;
+&lt;li&gt;Upgrade netty-codec-http2 to 4.1.94.Final&lt;/li&gt;
+&lt;li&gt;Upgrade guava to 32.0.1&lt;/li&gt;
+&lt;li&gt;Fix issue with duplicate enhancement by ThreadPoolExecutor&lt;/li&gt;
+&lt;li&gt;Add plugin to support for RESTeasy 6.x.&lt;/li&gt;
+&lt;li&gt;Fix the conditions for resetting UUID, avoid the same uuid causing the configuration not to be updated.&lt;/li&gt;
+&lt;li&gt;Fix witness class in springmvc-annotation-5.x-plugin to avoid falling into v3 use cases.&lt;/li&gt;
+&lt;li&gt;Fix Jedis-2.x plugin bug and add test for Redis cluster scene&lt;/li&gt;
+&lt;li&gt;Merge two instrumentation classes to avoid duplicate enhancements in MySQL plugins.&lt;/li&gt;
+&lt;li&gt;Support asynchronous invocation in jetty client 9.0 and 9.x plugin&lt;/li&gt;
+&lt;li&gt;Add nacos-client 2.x plugin&lt;/li&gt;
+&lt;li&gt;Staticize the tags for preventing synchronization in JDK 8&lt;/li&gt;
+&lt;li&gt;Add RocketMQ-Client-Java 5.x plugin&lt;/li&gt;
+&lt;li&gt;Fix NullPointerException in lettuce-5.x-plugin.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;All issues and pull requests are &lt;a href=&#34;https://github.com/apache/skywalking/milestone/178?closed=1&#34;&gt;here&lt;/a&gt;&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Events: Release Apache SkyWalking PHP 0.6.0</title>
+      <link>/events/release-apache-skwaylking-php-0-6-0/</link>
+      <pubDate>Fri, 25 Aug 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/events/release-apache-skwaylking-php-0-6-0/</guid>
+      <description>
+        
+        
+        &lt;p&gt;SkyWalking PHP 0.6.0 is released. Go to &lt;a href=&#34;https://skywalking.apache.org/downloads&#34;&gt;downloads&lt;/a&gt; page to find release tars.&lt;/p&gt;
+&lt;h2 id=&#34;whats-changed&#34;&gt;What&amp;rsquo;s Changed&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Polish doc about Swoole by @wu-sheng in &lt;a href=&#34;https://github.com/apache/skywalking-php/pull/73&#34;&gt;https://github.com/apache/skywalking-php/pull/73&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Start 0.6.0 development. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-php/pull/74&#34;&gt;https://github.com/apache/skywalking-php/pull/74&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Fix hook for Doctrine PDO class by @matikij in &lt;a href=&#34;https://github.com/apache/skywalking-php/pull/76&#34;&gt;https://github.com/apache/skywalking-php/pull/76&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Log Exception in tracing span when throw. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-php/pull/75&#34;&gt;https://github.com/apache/skywalking-php/pull/75&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Upgrade dependencies and adapt. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-php/pull/77&#34;&gt;https://github.com/apache/skywalking-php/pull/77&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Fix required rust version and add runing php-fpm notice in docs. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-php/pull/78&#34;&gt;https://github.com/apache/skywalking-php/pull/78&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Bump openssl from 0.10.48 to 0.10.55 by @dependabot in &lt;a href=&#34;https://github.com/apache/skywalking-php/pull/79&#34;&gt;https://github.com/apache/skywalking-php/pull/79&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Fix the situation where the redis port is string. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-php/pull/80&#34;&gt;https://github.com/apache/skywalking-php/pull/80&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Optionally enable zend observer api for auto instrumentation. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-php/pull/81&#34;&gt;https://github.com/apache/skywalking-php/pull/81&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Fix the empty span situation in redis after hook. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-php/pull/82&#34;&gt;https://github.com/apache/skywalking-php/pull/82&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Add mongodb pluhgin. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-php/pull/83&#34;&gt;https://github.com/apache/skywalking-php/pull/83&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Update rust nightly toolchain in CI and format. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-php/pull/84&#34;&gt;https://github.com/apache/skywalking-php/pull/84&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Add notice document for &lt;code&gt;skywalking_agent.enable&lt;/code&gt;. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-php/pull/85&#34;&gt;https://github.com/apache/skywalking-php/pull/85&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Upgrade dependencies. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-php/pull/86&#34;&gt;https://github.com/apache/skywalking-php/pull/86&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Fix docs by @heyanlong in &lt;a href=&#34;https://github.com/apache/skywalking-php/pull/87&#34;&gt;https://github.com/apache/skywalking-php/pull/87&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Add kafka reporter. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-php/pull/88&#34;&gt;https://github.com/apache/skywalking-php/pull/88&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Release SkyWalking PHP Agent 0.6.0 by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-php/pull/89&#34;&gt;https://github.com/apache/skywalking-php/pull/89&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;new-contributors&#34;&gt;New Contributors&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;@matikij made their first contribution in &lt;a href=&#34;https://github.com/apache/skywalking-php/pull/76&#34;&gt;https://github.com/apache/skywalking-php/pull/76&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Full Changelog&lt;/strong&gt;: &lt;a href=&#34;https://github.com/apache/skywalking-php/compare/v0.5.0...v0.6.0&#34;&gt;https://github.com/apache/skywalking-php/compare/v0.5.0...v0.6.0&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;pecl&#34;&gt;PECL&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://pecl.php.net/package/skywalking_agent/0.6.0&#34;&gt;https://pecl.php.net/package/skywalking_agent/0.6.0&lt;/a&gt;&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Events: Release Apache SkyWalking Rust 0.8.0</title>
+      <link>/events/release-apache-skywalking-rust-0-8-0/</link>
+      <pubDate>Wed, 02 Aug 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/events/release-apache-skywalking-rust-0-8-0/</guid>
+      <description>
+        
+        
+        &lt;p&gt;SkyWalking Rust 0.8.0 is released. Go to &lt;a href=&#34;/downloads&#34;&gt;downloads&lt;/a&gt; page to find release tars.&lt;/p&gt;
+&lt;h2 id=&#34;whats-changed&#34;&gt;What&amp;rsquo;s Changed&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Add kafka reporter. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-rust/pull/61&#34;&gt;https://github.com/apache/skywalking-rust/pull/61&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Rename &lt;code&gt;AbstractSpan&lt;/code&gt; to &lt;code&gt;HandleSpanObject&lt;/code&gt;. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-rust/pull/62&#34;&gt;https://github.com/apache/skywalking-rust/pull/62&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Bump to 0.8.0. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-rust/pull/63&#34;&gt;https://github.com/apache/skywalking-rust/pull/63&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Events: Release Apache SkyWalking Cloud on Kubernetes 0.8.0</title>
+      <link>/events/release-apache-skywalking-cloud-on-kubernetes-0-8-0/</link>
+      <pubDate>Tue, 01 Aug 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/events/release-apache-skywalking-cloud-on-kubernetes-0-8-0/</guid>
+      <description>
+        
+        
+        &lt;p&gt;SkyWalking Cloud on Kubernetes 0.8.0 is released. Go to &lt;a href=&#34;https://skywalking.apache.org/downloads&#34;&gt;downloads&lt;/a&gt; page to find release tars.&lt;/p&gt;
+&lt;h3 id=&#34;features&#34;&gt;Features&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;[Breaking Change] Remove the way to configure the agent through Configmap.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;bugs&#34;&gt;Bugs&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Fix errors in banyandb e2e test.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;chores&#34;&gt;Chores&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Bump up golang to v1.20.&lt;/li&gt;
+&lt;li&gt;Bump up golangci-lint to v1.53.3.&lt;/li&gt;
+&lt;li&gt;Bump up skywalking-java-agent to v8.16.0.&lt;/li&gt;
+&lt;li&gt;Bump up kustomize to v4.5.6.&lt;/li&gt;
+&lt;li&gt;Bump up SkyWalking OAP to 9.5.0.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
       <title>Events: Release Apache SkyWalking Go 0.2.0</title>
       <link>/events/release-apache-skwaylking-go-0.2.0/</link>
       <pubDate>Mon, 31 Jul 2023 00:00:00 +0000</pubDate>
@@ -1881,460 +2465,6 @@ Our community would work more closely forward the new PHP agent together.&lt;/p&
 &lt;ul&gt;
 &lt;li&gt;All issues are &lt;a href=&#34;https://github.com/apache/skywalking/milestone/144?closed=1&#34;&gt;here&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;All and pull requests are &lt;a href=&#34;https://github.com/apache/skywalking-rover/milestone/3?closed=1&#34;&gt;here&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-      </description>
-    </item>
-    
-    <item>
-      <title>Events: Release Apache SkyWalking Java Agent 8.12.0</title>
-      <link>/events/release-apache-skywalking-java-agent-8-12-0/</link>
-      <pubDate>Sat, 03 Sep 2022 00:00:00 +0000</pubDate>
-      
-      <guid>/events/release-apache-skywalking-java-agent-8-12-0/</guid>
-      <description>
-        
-        
-        &lt;p&gt;SkyWalking Java Agent 8.12.0 is released. Go to &lt;a href=&#34;/downloads&#34;&gt;downloads&lt;/a&gt; page to find release tars.
-Changes by Version&lt;/p&gt;
-&lt;h2 id=&#34;8120&#34;&gt;8.12.0&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;Fix &lt;code&gt;Shenyu plugin&lt;/code&gt;&amp;rsquo;s NPE in reading trace ID when IgnoredTracerContext is used in the context.&lt;/li&gt;
-&lt;li&gt;Update witness class in elasticsearch-6.x-plugin, avoid throw NPE.&lt;/li&gt;
-&lt;li&gt;Fix &lt;code&gt;onHalfClose&lt;/code&gt; using span operation name &lt;code&gt;/Request/onComplete&lt;/code&gt; instead of the wrong name &lt;code&gt;/Request/onHalfClose&lt;/code&gt;.&lt;/li&gt;
-&lt;li&gt;Add plugin to support RESTeasy 4.x.&lt;/li&gt;
-&lt;li&gt;Add plugin to support hutool-http 5.x.&lt;/li&gt;
-&lt;li&gt;Add plugin to support Tomcat 10.x.&lt;/li&gt;
-&lt;li&gt;Save http status code regardless of it&amp;rsquo;s status.&lt;/li&gt;
-&lt;li&gt;Upgrade byte-buddy to 1.12.13, and adopt byte-buddy APIs changes.&lt;/li&gt;
-&lt;li&gt;Upgrade gson to 2.8.9.&lt;/li&gt;
-&lt;li&gt;Upgrade netty-codec-http2 to 4.1.79.Final.&lt;/li&gt;
-&lt;li&gt;Fix race condition causing agent to not reconnect after network error&lt;/li&gt;
-&lt;li&gt;Force the injected high-priority classes in order to avoid NoClassDefFoundError.&lt;/li&gt;
-&lt;li&gt;Plugin to support xxl-job 2.3.x.&lt;/li&gt;
-&lt;li&gt;Add plugin to support Micronaut(HTTP Client/Server) 3.2.x-3.6.x&lt;/li&gt;
-&lt;li&gt;Add plugin to support NATS Java client 2.14.x-2.15.x&lt;/li&gt;
-&lt;li&gt;Remove inappropriate dependency from elasticsearch-7.x-plugin&lt;/li&gt;
-&lt;li&gt;Upgrade jedis plugin to support 3.x(stream),4.x&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&#34;documentation&#34;&gt;Documentation&lt;/h4&gt;
-&lt;ul&gt;
-&lt;li&gt;Add a section in &lt;code&gt;Bootstrap-plugins&lt;/code&gt; doc, introducing HttpURLConnection Plugin compatibility.&lt;/li&gt;
-&lt;li&gt;Update &lt;code&gt;Plugin automatic test framework&lt;/code&gt;, fix inconsistent description about configuration.yml.&lt;/li&gt;
-&lt;li&gt;Update &lt;code&gt;Plugin automatic test framework&lt;/code&gt;, add expected data format of the log items.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;All issues and pull requests are &lt;a href=&#34;https://github.com/apache/skywalking/milestone/138?closed=1&#34;&gt;here&lt;/a&gt;&lt;/p&gt;
-
-      </description>
-    </item>
-    
-    <item>
-      <title>Events: Plan to End-of-life(EOL) all v8 releases in Nov. 2022</title>
-      <link>/events/deprecate-v8/</link>
-      <pubDate>Fri, 02 Sep 2022 00:00:00 +0000</pubDate>
-      
-      <guid>/events/deprecate-v8/</guid>
-      <description>
-        
-        
-        &lt;p&gt;This is an official annoucement from SkyWalking team.&lt;/p&gt;
-&lt;p&gt;SkyWalking backend server and UI released significant &lt;a href=&#34;../release-apache-skywalking-apm-9.2.0/index.md&#34;&gt;9.2.0&lt;/a&gt; at Sep. 2nd, 2022.
-With the new added Layer concept, the &lt;a href=&#34;https://github.com/apache/skywalking-rover&#34;&gt;ebpf agent&lt;/a&gt;, wider middleware server monitoring(Such as MySQL and PostgreSQL servers) powered
-by OpenTelemetry ecosystem, SkyWalking v9 has been much more powerful than the last v8 version(8.9.1).&lt;/p&gt;
-&lt;p&gt;From now, we have resolved all found critical bugs since 9.0.0 release which could block the v8 users to upgrade. v9 releases also provide the as same compatibility
-as the 8.9.1 release. So, end users would not have a block when they apply to upgrade. (We don&amp;rsquo;t provide storage structure compatibility as usually, users should use an empty database to initialize for a new version.)&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;And more importantly, we are confident that, v9 could provide a stable and higher performance APM in the product environment.&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;The 8.9.1 release was released at Dec., 2021. Since then, there is no one contributed any code,
-and there is no committer requested to begin a new iteration or plan to run a patch release.
-From the project management committee perspective, the 8.x had became inactive.&lt;/p&gt;
-&lt;p&gt;We are going to wait for another 3 month to official end 8.x series&#39; life.&lt;/p&gt;
-&lt;p&gt;Notice, this could be changed if there are at least 3 committers supporting to work on further 8.x releases officially, and provide a release plan.&lt;/p&gt;
-
-      </description>
-    </item>
-    
-    <item>
-      <title>Events: Release Apache SkyWalking APM 9.2.0</title>
-      <link>/events/release-apache-skywalking-apm-9.2.0/</link>
-      <pubDate>Thu, 01 Sep 2022 00:00:00 +0000</pubDate>
-      
-      <guid>/events/release-apache-skywalking-apm-9.2.0/</guid>
-      <description>
-        
-        
-        &lt;p&gt;SkyWalking 9.2.0 is released. Go to &lt;a href=&#34;/downloads&#34;&gt;downloads&lt;/a&gt; page to find release tars.&lt;/p&gt;
-&lt;h4 id=&#34;ebpf-network-profiling-for-k8s-pod&#34;&gt;eBPF Network Profiling for K8s Pod&lt;/h4&gt;
-&lt;img src=&#34;ebpf.png&#34;&gt;
-&lt;h4 id=&#34;event-and-metrics-association&#34;&gt;Event and Metrics Association&lt;/h4&gt;
-&lt;img src=&#34;event-association.png&#34;&gt;
-&lt;h4 id=&#34;mysql-server-monitoring&#34;&gt;MySQL Server Monitoring&lt;/h4&gt;
-&lt;img src=&#34;mysql.png&#34;&gt;
-&lt;h4 id=&#34;postgresql-server-monitoring&#34;&gt;PostgreSQL Server Monitoring&lt;/h4&gt;
-&lt;img src=&#34;pg.png&#34;&gt;
-&lt;h4 id=&#34;project&#34;&gt;Project&lt;/h4&gt;
-&lt;ul&gt;
-&lt;li&gt;[Critical] Fix a low performance issue of metrics persistent in the ElasticSearch storage implementation. One single
-metric could have to wait for an unnecessary 7~10s(System Env Variable &lt;code&gt;SW_STORAGE_ES_FLUSH_INTERVAL&lt;/code&gt;) since 8.8.0 -
-9.1.0 releases.&lt;/li&gt;
-&lt;li&gt;Upgrade Armeria to 1.16.0, Kubernetes Java client to 15.0.1.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&#34;oap-server&#34;&gt;OAP Server&lt;/h4&gt;
-&lt;ul&gt;
-&lt;li&gt;Add more entities for Zipkin to improve performance.&lt;/li&gt;
-&lt;li&gt;ElasticSearch: scroll id should be updated when scrolling as it may change.&lt;/li&gt;
-&lt;li&gt;Mesh: fix only last rule works when multiple rules are defined in metadata-service-mapping.yaml.&lt;/li&gt;
-&lt;li&gt;Support sending alarm messages to PagerDuty.&lt;/li&gt;
-&lt;li&gt;Support Zipkin kafka collector.&lt;/li&gt;
-&lt;li&gt;Add &lt;code&gt;VIRTUAL&lt;/code&gt; detect type to Process for Network Profiling.&lt;/li&gt;
-&lt;li&gt;Add component ID(128) for Java Hutool plugin.&lt;/li&gt;
-&lt;li&gt;Add Zipkin query exception handler, response error message for illegal arguments.&lt;/li&gt;
-&lt;li&gt;Fix a NullPointerException in the endpoint analysis, which would cause missing MQ-related &lt;code&gt;LocalSpan&lt;/code&gt; in the trace.&lt;/li&gt;
-&lt;li&gt;Add &lt;code&gt;forEach&lt;/code&gt;, &lt;code&gt;processRelation&lt;/code&gt; function to MAL expression.&lt;/li&gt;
-&lt;li&gt;Add &lt;code&gt;expPrefix&lt;/code&gt;, &lt;code&gt;initExp&lt;/code&gt; in MAL config.&lt;/li&gt;
-&lt;li&gt;Add component ID(7015) for Python Bottle plugin.&lt;/li&gt;
-&lt;li&gt;Remove legacy OAL &lt;code&gt;percentile&lt;/code&gt; functions, &lt;code&gt;p99&lt;/code&gt;, &lt;code&gt;p95&lt;/code&gt;, &lt;code&gt;p90&lt;/code&gt;, &lt;code&gt;p75&lt;/code&gt;, &lt;code&gt;p50&lt;/code&gt; func(s).&lt;/li&gt;
-&lt;li&gt;Revert &lt;a href=&#34;https://github.com/apache/skywalking/pull/8066&#34;&gt;#8066&lt;/a&gt;. Keep all metrics persistent even it is default value.&lt;/li&gt;
-&lt;li&gt;Skip loading UI templates if folder is empty or doesn&amp;rsquo;t exist.&lt;/li&gt;
-&lt;li&gt;Optimize ElasticSearch query performance by using &lt;code&gt;_mGet&lt;/code&gt; and physical index name rather than alias in these
-scenarios,  (a) Metrics aggregation (b) Zipkin query (c) Metrics query (d) Log query&lt;/li&gt;
-&lt;li&gt;Support the &lt;code&gt;NETWORK&lt;/code&gt; type of eBPF Profiling task.&lt;/li&gt;
-&lt;li&gt;Support &lt;code&gt;sumHistogram&lt;/code&gt; in &lt;code&gt;MAL&lt;/code&gt;.&lt;/li&gt;
-&lt;li&gt;[Breaking Change] Make the eBPF Profiling task support to the service instance level,
-index/table &lt;code&gt;ebpf_profiling_task&lt;/code&gt; is required to be re-created when bump up from previous releases.&lt;/li&gt;
-&lt;li&gt;Fix race condition in Banyandb storage&lt;/li&gt;
-&lt;li&gt;Support &lt;code&gt;SUM_PER_MIN&lt;/code&gt; downsampling in &lt;code&gt;MAL&lt;/code&gt;.&lt;/li&gt;
-&lt;li&gt;Support &lt;code&gt;sumHistogramPercentile&lt;/code&gt; in &lt;code&gt;MAL&lt;/code&gt;.&lt;/li&gt;
-&lt;li&gt;Add &lt;code&gt;VIRTUAL_CACHE&lt;/code&gt; to Layer, to fix conjectured Redis server, which icon can&amp;rsquo;t show on the topology.&lt;/li&gt;
-&lt;li&gt;[Breaking Change] Elasticsearch storage merge all metrics/meter and records(without super datasets) indices into one
-physical index template &lt;code&gt;metrics-all&lt;/code&gt; and &lt;code&gt;records-all&lt;/code&gt; on the default setting.
-Provide system environment variable(&lt;code&gt;SW_STORAGE_ES_LOGIC_SHARDING&lt;/code&gt;) to shard metrics/meter indices into
-multi-physical indices as the previous versions(one index template per metric/meter aggregation function).
-In the current one index mode, users still could choose to adjust ElasticSearch&amp;rsquo;s shard
-number(&lt;code&gt;SW_STORAGE_ES_INDEX_SHARDS_NUMBER&lt;/code&gt;) to scale out.
-More details please refer to &lt;a href=&#34;../FAQ/New-ElasticSearch-storage-option-explanation-in-9.2.0.md&#34;&gt;New ElasticSearch storage option explanation in 9.2.0&lt;/a&gt;
-and &lt;a href=&#34;../setup/backend/backend-storage.md&#34;&gt;backend-storage.md&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;[Breaking Change] Index/table &lt;code&gt;ebpf_profiling_schedule&lt;/code&gt; added a new column &lt;code&gt;ebpf_profiling_schedule_id&lt;/code&gt;,
-the H2/Mysql/Tidb/Postgres storage users are required to re-created it when bump up from previous releases.&lt;/li&gt;
-&lt;li&gt;Fix Zipkin trace query the max size of spans.&lt;/li&gt;
-&lt;li&gt;Add &lt;code&gt;tls&lt;/code&gt; and &lt;code&gt;https&lt;/code&gt; component IDs for Network Profiling.&lt;/li&gt;
-&lt;li&gt;Support Elasticsearch column alias for the compatibility between storage logicSharding model and no-logicSharding model.&lt;/li&gt;
-&lt;li&gt;Support MySQL monitoring.&lt;/li&gt;
-&lt;li&gt;Support PostgreSQL monitoring.&lt;/li&gt;
-&lt;li&gt;Fix query services by serviceId error when Elasticsearch storage &lt;code&gt;SW_STORAGE_ES_QUERY_MAX_SIZE&lt;/code&gt; &amp;gt; 10000.&lt;/li&gt;
-&lt;li&gt;Support sending alarm messages to Discord.&lt;/li&gt;
-&lt;li&gt;Fix query history process data failure.&lt;/li&gt;
-&lt;li&gt;Optimize TTL mechanism for Elasticsearch storage, skip executed indices in one TTL rotation.&lt;/li&gt;
-&lt;li&gt;Add Kubernetes support module to share codes between modules and reduce calls to Kubernetes API server.&lt;/li&gt;
-&lt;li&gt;Bump up Kubernetes Java client to fix cve.&lt;/li&gt;
-&lt;li&gt;Adapt OpenTelemetry native metrics protocol.&lt;/li&gt;
-&lt;li&gt;[Breaking Change] rename configuration folder from &lt;code&gt;otel-oc-rules&lt;/code&gt; to &lt;code&gt;otel-rules&lt;/code&gt;.&lt;/li&gt;
-&lt;li&gt;[Breaking Change] rename configuration field from &lt;code&gt;enabledOcRules&lt;/code&gt; to &lt;code&gt;enabledOtelRules&lt;/code&gt; and
-environment variable name from &lt;code&gt;SW_OTEL_RECEIVER_ENABLED_OC_RULES&lt;/code&gt; to &lt;code&gt;SW_OTEL_RECEIVER_ENABLED_OTEL_RULES&lt;/code&gt;.&lt;/li&gt;
-&lt;li&gt;[Breaking Change] Fix JDBC TTL to delete additional tables data.
-SQL Database requires removing &lt;code&gt;segment&lt;/code&gt;,&lt;code&gt;segment_tag&lt;/code&gt;, &lt;code&gt;logs&lt;/code&gt;, &lt;code&gt;logs_tag&lt;/code&gt;, &lt;code&gt;alarms&lt;/code&gt;, &lt;code&gt;alarms_tag&lt;/code&gt;, &lt;code&gt;zipkin_span&lt;/code&gt;, &lt;code&gt;zipkin_query&lt;/code&gt; before OAP starts.&lt;/li&gt;
-&lt;li&gt;SQL Database: add &lt;code&gt;@SQLDatabase.ExtraColumn4AdditionalEntity&lt;/code&gt; to support add an extra column from parent to an additional table.&lt;/li&gt;
-&lt;li&gt;Add component ID(131) for Java Micronaut plugin&lt;/li&gt;
-&lt;li&gt;Add component ID(132) for Nats java client plugin&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&#34;ui&#34;&gt;UI&lt;/h4&gt;
-&lt;ul&gt;
-&lt;li&gt;Fix query conditions for the browser logs.&lt;/li&gt;
-&lt;li&gt;Implement a URL parameter to activate tab index.&lt;/li&gt;
-&lt;li&gt;Fix clear interval fail when switch autoRefresh to off.&lt;/li&gt;
-&lt;li&gt;Optimize log tables.&lt;/li&gt;
-&lt;li&gt;Fix log detail pop-up page doesn&amp;rsquo;t work.&lt;/li&gt;
-&lt;li&gt;Optimize table widget to hide the whole metric column when no metric is set.&lt;/li&gt;
-&lt;li&gt;Implement the Event widget. Remove &lt;code&gt;event&lt;/code&gt; menu.&lt;/li&gt;
-&lt;li&gt;Fix span detail text overlap.&lt;/li&gt;
-&lt;li&gt;Add Python Bottle Plugin Logo.&lt;/li&gt;
-&lt;li&gt;Implement an association between widgets(line, bar, area graphs) with time.&lt;/li&gt;
-&lt;li&gt;Fix tag dropdown style.&lt;/li&gt;
-&lt;li&gt;Hide the copy button when db.statement is empty.&lt;/li&gt;
-&lt;li&gt;Fix legend metrics for topology.&lt;/li&gt;
-&lt;li&gt;Dashboard: Add metrics association.&lt;/li&gt;
-&lt;li&gt;Dashboard: Fix &lt;code&gt;FaaS-Root&lt;/code&gt; document link and topology service relation dashboard link.&lt;/li&gt;
-&lt;li&gt;Dashboard: Fix &lt;code&gt;Mesh-Instance&lt;/code&gt; metric &lt;code&gt;Throughput&lt;/code&gt;.&lt;/li&gt;
-&lt;li&gt;Dashboard: Fix &lt;code&gt;Mesh-Service-Relation&lt;/code&gt; metric &lt;code&gt;Throughput&lt;/code&gt;
-and &lt;code&gt;Proxy Sidecar Internal Latency in Nanoseconds (Client Response)&lt;/code&gt;.&lt;/li&gt;
-&lt;li&gt;Dashboard: Fix &lt;code&gt;Mesh-Instance-Relation&lt;/code&gt; metric &lt;code&gt;Throughput&lt;/code&gt;.&lt;/li&gt;
-&lt;li&gt;Enhance associations for the Event widget.&lt;/li&gt;
-&lt;li&gt;Add event widgets in dashboard where applicable.&lt;/li&gt;
-&lt;li&gt;Fix dashboard list search box not work.&lt;/li&gt;
-&lt;li&gt;Fix short time range.&lt;/li&gt;
-&lt;li&gt;Fix event widget incompatibility in Safari.&lt;/li&gt;
-&lt;li&gt;Refactor the tags component to support searching for tag keys and values.&lt;/li&gt;
-&lt;li&gt;Implement the log widget and the trace widget associate with each other, remove log tables on the trace widget.&lt;/li&gt;
-&lt;li&gt;Add log widget to general service root.&lt;/li&gt;
-&lt;li&gt;Associate the event widget with the trace and log widget.&lt;/li&gt;
-&lt;li&gt;Add the MySQL layer and update layer routers.&lt;/li&gt;
-&lt;li&gt;Fix query order for trace list.&lt;/li&gt;
-&lt;li&gt;Add a calculation to convert seconds to days.
-q* Add Spring Sleuth dashboard to general service instance.&lt;/li&gt;
-&lt;li&gt;Support the process dashboard and create the time range text widget.&lt;/li&gt;
-&lt;li&gt;Fix picking calendar with a wrong time range and setting a unique value for dashboard grid key.&lt;/li&gt;
-&lt;li&gt;Add PostgreSQL to Database sub-menu.&lt;/li&gt;
-&lt;li&gt;Implement the network profiling widget.&lt;/li&gt;
-&lt;li&gt;Add Micronaut icon for Java plugin.&lt;/li&gt;
-&lt;li&gt;Add Nats icon for Java plugin.&lt;/li&gt;
-&lt;li&gt;Bump moment and @vue/cli-plugin-e2e-cypress.&lt;/li&gt;
-&lt;li&gt;Add Network Profiling for Service Mesh DP instance and K8s pod panels.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&#34;documentation&#34;&gt;Documentation&lt;/h4&gt;
-&lt;ul&gt;
-&lt;li&gt;Fix invalid links in release docs.&lt;/li&gt;
-&lt;li&gt;Clean up doc about event metrics.&lt;/li&gt;
-&lt;li&gt;Add a table for metric calculations in the UI doc.&lt;/li&gt;
-&lt;li&gt;Add an explanation for alerting kernel and its in-memory window mechanism.&lt;/li&gt;
-&lt;li&gt;Add more docs for widget details.&lt;/li&gt;
-&lt;li&gt;Update alarm doc introduce configuration property key&lt;/li&gt;
-&lt;li&gt;Fix dependency license&amp;rsquo;s NOTICE and binary jar included issues in the source release.&lt;/li&gt;
-&lt;li&gt;Add eBPF CPU profiling doc.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;All issues and pull requests are &lt;a href=&#34;https://github.com/apache/skywalking/milestone/136?closed=1&#34;&gt;here&lt;/a&gt;&lt;/p&gt;
-
-      </description>
-    </item>
-    
-    <item>
-      <title>Events: Release Apache SkyWalking Rust 0.4.0</title>
-      <link>/events/release-apache-skywalking-rust-0-4-0/</link>
-      <pubDate>Wed, 31 Aug 2022 00:00:00 +0000</pubDate>
-      
-      <guid>/events/release-apache-skywalking-rust-0-4-0/</guid>
-      <description>
-        
-        
-        &lt;p&gt;SkyWalking Rust 0.4.0 is released. Go to &lt;a href=&#34;/downloads&#34;&gt;downloads&lt;/a&gt; page to find release tars.&lt;/p&gt;
-&lt;h2 id=&#34;whats-changed&#34;&gt;What&amp;rsquo;s Changed&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;Publish release doc. by @wu-sheng in &lt;a href=&#34;https://github.com/apache/skywalking-rust/pull/31&#34;&gt;https://github.com/apache/skywalking-rust/pull/31&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Set up CI and approval requirements by @wu-sheng in &lt;a href=&#34;https://github.com/apache/skywalking-rust/pull/32&#34;&gt;https://github.com/apache/skywalking-rust/pull/32&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Move skywalking_proto mod to single files. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-rust/pull/33&#34;&gt;https://github.com/apache/skywalking-rust/pull/33&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Polish the release doc. by @wu-sheng in &lt;a href=&#34;https://github.com/apache/skywalking-rust/pull/34&#34;&gt;https://github.com/apache/skywalking-rust/pull/34&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Add serde support for protobuf generated struct. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-rust/pull/35&#34;&gt;https://github.com/apache/skywalking-rust/pull/35&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Improve LogReporter and fix tests. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-rust/pull/36&#34;&gt;https://github.com/apache/skywalking-rust/pull/36&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Split tracer inner segment sender and receiver into traits. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-rust/pull/37&#34;&gt;https://github.com/apache/skywalking-rust/pull/37&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Switch to use nightly rustfmt. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-rust/pull/38&#34;&gt;https://github.com/apache/skywalking-rust/pull/38&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Change Span to refer to SpanStack, rather than TracingContext. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-rust/pull/39&#34;&gt;https://github.com/apache/skywalking-rust/pull/39&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Adjust the trace structure. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-rust/pull/40&#34;&gt;https://github.com/apache/skywalking-rust/pull/40&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Add logging. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-rust/pull/41&#34;&gt;https://github.com/apache/skywalking-rust/pull/41&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Upgrade dependencies. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-rust/pull/42&#34;&gt;https://github.com/apache/skywalking-rust/pull/42&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Add feature vendored, to auto build protoc. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-rust/pull/43&#34;&gt;https://github.com/apache/skywalking-rust/pull/43&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Add metrics. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-rust/pull/44&#34;&gt;https://github.com/apache/skywalking-rust/pull/44&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Add more GH labels as new supports by @wu-sheng in &lt;a href=&#34;https://github.com/apache/skywalking-rust/pull/45&#34;&gt;https://github.com/apache/skywalking-rust/pull/45&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Bump to 0.4.0. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-rust/pull/46&#34;&gt;https://github.com/apache/skywalking-rust/pull/46&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Fix trace id is not transmitted. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-rust/pull/47&#34;&gt;https://github.com/apache/skywalking-rust/pull/47&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-      </description>
-    </item>
-    
-    <item>
-      <title>Events: Release Apache SkyWalking Rust 0.3.0</title>
-      <link>/events/release-apache-skywalking-rust-0-3-0/</link>
-      <pubDate>Thu, 21 Jul 2022 00:00:00 +0000</pubDate>
-      
-      <guid>/events/release-apache-skywalking-rust-0-3-0/</guid>
-      <description>
-        
-        
-        &lt;p&gt;SkyWalking Rust 0.3.0 is released. Go to &lt;a href=&#34;/downloads&#34;&gt;downloads&lt;/a&gt; page to find release tars.&lt;/p&gt;
-&lt;h2 id=&#34;whats-changed&#34;&gt;What&amp;rsquo;s Changed&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;Update README.md by @wu-sheng in &lt;a href=&#34;https://github.com/apache/skywalking-rust/pull/24&#34;&gt;https://github.com/apache/skywalking-rust/pull/24&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Improve errors. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-rust/pull/25&#34;&gt;https://github.com/apache/skywalking-rust/pull/25&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Add tracer. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-rust/pull/26&#34;&gt;https://github.com/apache/skywalking-rust/pull/26&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Move e2e to workspace. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-rust/pull/27&#34;&gt;https://github.com/apache/skywalking-rust/pull/27&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Auto finalize context and span when dropped. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-rust/pull/28&#34;&gt;https://github.com/apache/skywalking-rust/pull/28&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Add context capture and continued methods. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-rust/pull/29&#34;&gt;https://github.com/apache/skywalking-rust/pull/29&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Bump to 0.3.0. by @jmjoy in &lt;a href=&#34;https://github.com/apache/skywalking-rust/pull/30&#34;&gt;https://github.com/apache/skywalking-rust/pull/30&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-      </description>
-    </item>
-    
-    <item>
-      <title>Events: [CVE-2022-36127] Release Apache SkyWalking for NodeJS 0.5.1</title>
-      <link>/events/release-apache-skywalking-nodejs-0-5-1/</link>
-      <pubDate>Mon, 18 Jul 2022 00:00:00 +0000</pubDate>
-      
-      <guid>/events/release-apache-skywalking-nodejs-0-5-1/</guid>
-      <description>
-        
-        
-        &lt;p&gt;SkyWalking NodeJS 0.5.1 is released. Go to &lt;a href=&#34;/downloads&#34;&gt;downloads&lt;/a&gt; page to find release tars.&lt;/p&gt;
-&lt;p&gt;SkyWalking NodeJS 0.5.1 is a patch release that fixed a vulnerability(&lt;a href=&#34;https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-36127&#34;&gt;CVE-2022-36127&lt;/a&gt;) in all previous
-versions &amp;lt;=0.5.0, we recommend all users who are using versions &amp;lt;=0.5.0 should upgrade to this version.&lt;/p&gt;
-&lt;p&gt;The vulnerability could cause NodeJS services that has this agent installed to be unavailable
-if the header includes an illegal SkyWalking header, such as&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;OAP is unhealthy and the downstream service&amp;rsquo;s agent can&amp;rsquo;t establish the connection.&lt;/li&gt;
-&lt;li&gt;Some sampling mechanism is activated in downstream agents.&lt;/li&gt;
-&lt;/ul&gt;
-
-      </description>
-    </item>
-    
-    <item>
-      <title>Events: Release Apache SkyWalking Eyes 0.4.0</title>
-      <link>/events/release-apache-skywalking-eyes-0-4-0/</link>
-      <pubDate>Mon, 11 Jul 2022 00:00:00 +0000</pubDate>
-      
-      <guid>/events/release-apache-skywalking-eyes-0-4-0/</guid>
-      <description>
-        
-        
-        &lt;p&gt;SkyWalking Eyes 0.4.0 is released. Go to &lt;a href=&#34;/downloads&#34;&gt;downloads&lt;/a&gt; page to find release tars.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Reorganize GHA by header and dependency. (#123)&lt;/li&gt;
-&lt;li&gt;Add rust cargo support for dep command. (#121)&lt;/li&gt;
-&lt;li&gt;Support license expression in dep check. (#120)&lt;/li&gt;
-&lt;li&gt;Prune npm packages before listing all dependencies (#119)&lt;/li&gt;
-&lt;li&gt;Add support for multiple licenses in the header config section (#118)&lt;/li&gt;
-&lt;li&gt;Add &lt;code&gt;excludes&lt;/code&gt; to &lt;code&gt;license resolve&lt;/code&gt; config (#117)&lt;/li&gt;
-&lt;li&gt;maven: set &lt;code&gt;group:artifact&lt;/code&gt; as dependency name and extend functions in summary template (#116)&lt;/li&gt;
-&lt;li&gt;Stablize summary context to perform consistant output (#115)&lt;/li&gt;
-&lt;li&gt;Add custom license urls for identification (#114)&lt;/li&gt;
-&lt;li&gt;Lazy initialize GitHub client for comment (#111)&lt;/li&gt;
-&lt;li&gt;Make license identifying threshold configurable (#110)&lt;/li&gt;
-&lt;li&gt;Use Google&amp;rsquo;s licensecheck to identify licenses (#107)&lt;/li&gt;
-&lt;li&gt;dep: short circuit if user declare dep license (#108)&lt;/li&gt;
-&lt;/ul&gt;
-
-      </description>
-    </item>
-    
-    <item>
-      <title>Events: Release Apache SkyWalking for NodeJS 0.5.0</title>
-      <link>/events/release-apache-skywalking-nodejs-0-5-0/</link>
-      <pubDate>Sun, 10 Jul 2022 00:00:00 +0000</pubDate>
-      
-      <guid>/events/release-apache-skywalking-nodejs-0-5-0/</guid>
-      <description>
-        
-        
-        &lt;p&gt;SkyWalking NodeJS 0.5.0 is released. Go to &lt;a href=&#34;/downloads&#34;&gt;downloads&lt;/a&gt; page to find release tars.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Bump up grpc-node to 1.6.7 to fix CVE-2022-25878 (#85)&lt;/li&gt;
-&lt;li&gt;Fix issue #9165 express router entry duplicated (#84)&lt;/li&gt;
-&lt;li&gt;Fix skywalking s3 upload error #8824 (#82)&lt;/li&gt;
-&lt;li&gt;Improved ignore path regex (#81)&lt;/li&gt;
-&lt;li&gt;Upgrade data collect protocol (#78)&lt;/li&gt;
-&lt;li&gt;Fix wrong instance properties (#77)&lt;/li&gt;
-&lt;li&gt;Fix wrong command in release doc (#76)&lt;/li&gt;
-&lt;/ul&gt;
-
-      </description>
-    </item>
-    
-    <item>
-      <title>Events: Release Apache SkyWalking Infra E2E 1.2.0</title>
-      <link>/events/release-apache-skywalking-infra-e2e-1-2-0/</link>
-      <pubDate>Sun, 10 Jul 2022 00:00:00 +0000</pubDate>
-      
-      <guid>/events/release-apache-skywalking-infra-e2e-1-2-0/</guid>
-      <description>
-        
-        
-        &lt;p&gt;SkyWalking Infra E2E 1.2.0 is released. Go to &lt;a href=&#34;https://skywalking.apache.org/downloads&#34;&gt;downloads&lt;/a&gt; page to find release tars.&lt;/p&gt;
-&lt;h4 id=&#34;features&#34;&gt;Features&lt;/h4&gt;
-&lt;ul&gt;
-&lt;li&gt;Expand kind file path with system environment.&lt;/li&gt;
-&lt;li&gt;Support shutdown service during setup phase in compose mode.&lt;/li&gt;
-&lt;li&gt;Expand kind file path with system environment.&lt;/li&gt;
-&lt;li&gt;Support arbitrary os and arch.&lt;/li&gt;
-&lt;li&gt;Support &lt;code&gt;docker-compose&lt;/code&gt; v2 container naming.&lt;/li&gt;
-&lt;li&gt;Support installing via &lt;code&gt;go install&lt;/code&gt; and add install doc.&lt;/li&gt;
-&lt;li&gt;Add retry when delete kind cluster.&lt;/li&gt;
-&lt;li&gt;Upgrade to go1.18.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&#34;bug-fixes&#34;&gt;Bug Fixes&lt;/h4&gt;
-&lt;ul&gt;
-&lt;li&gt;Fix the problem of parsing &lt;code&gt;verify.retry.interval&lt;/code&gt; without setting value.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&#34;documentation&#34;&gt;Documentation&lt;/h4&gt;
-&lt;ul&gt;
-&lt;li&gt;Make &lt;code&gt;trigger.times&lt;/code&gt; parameter doc more clear.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&#34;issues-and-pr&#34;&gt;Issues and PR&lt;/h4&gt;
-&lt;ul&gt;
-&lt;li&gt;All issues are &lt;a href=&#34;https://github.com/apache/skywalking/milestone/111?closed=1&#34;&gt;here&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;All and pull requests are &lt;a href=&#34;https://github.com/apache/skywalking-infra-e2e/pulls?q=is%3Apr+is%3Aclosed+milestone%3A1.2.0&#34;&gt;here&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-      </description>
-    </item>
-    
-    <item>
-      <title>Events: Release Apache SkyWalking Python 0.8.0</title>
-      <link>/events/release-apache-skywalking-python-0-8-0/</link>
-      <pubDate>Sun, 10 Jul 2022 00:00:00 +0000</pubDate>
-      
-      <guid>/events/release-apache-skywalking-python-0-8-0/</guid>
-      <description>
-        
-        
-        &lt;p&gt;SkyWalking Python 0.8.0 is released. Go to &lt;a href=&#34;/downloads&#34;&gt;downloads&lt;/a&gt; page to find release tars.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;Feature:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Update mySQL plugin to support two different parameter keys. (#186)&lt;/li&gt;
-&lt;li&gt;Add a &lt;code&gt;SW_AGENT_LOG_REPORTER_SAFE_MODE&lt;/code&gt; option to control the HTTP basic auth credential filter (#200)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Plugins:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Add Psycopg(3.x) support (#168)&lt;/li&gt;
-&lt;li&gt;Add MySQL support (#178)&lt;/li&gt;
-&lt;li&gt;Add FastAPI support (#181)&lt;/li&gt;
-&lt;li&gt;Drop support for flask 1.x due to dependency issue in Jinja2 and EOL (#195)&lt;/li&gt;
-&lt;li&gt;Add Bottle support (#214)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Fixes:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Spans now correctly reference finished parents (#161)&lt;/li&gt;
-&lt;li&gt;Remove potential password leak from Aiohttp outgoing url (#175)&lt;/li&gt;
-&lt;li&gt;Handle error when REMOTE_PORT is missing in Flask (#176)&lt;/li&gt;
-&lt;li&gt;Fix sw-rabbitmq TypeError when there are no headers (#182)&lt;/li&gt;
-&lt;li&gt;Fix agent bootstrap traceback not shown in sw-python CLI (#183)&lt;/li&gt;
-&lt;li&gt;Fix local log stack depth overridden by agent log formatter (#192)&lt;/li&gt;
-&lt;li&gt;Fix typo that cause user sitecustomize.py not loaded (#193)&lt;/li&gt;
-&lt;li&gt;Fix instance property wrongly shown as UNKNOWN in OAP (#194)&lt;/li&gt;
-&lt;li&gt;Fix multiple components inconsistently named on SkyWalking UI (#199)&lt;/li&gt;
-&lt;li&gt;Fix SW_AGENT_LOGGING_LEVEL not properly set during startup (#196)&lt;/li&gt;
-&lt;li&gt;Unify the http tag name with other agents (#208)&lt;/li&gt;
-&lt;li&gt;Remove namespace to instance properties and add pid property (#205)&lt;/li&gt;
-&lt;li&gt;Fix the properties are not set correctly (#198)&lt;/li&gt;
-&lt;li&gt;Improved ignore path regex (#210)&lt;/li&gt;
-&lt;li&gt;Fix sw_psycopg2 register_type() (#211)&lt;/li&gt;
-&lt;li&gt;Fix psycopg2 register_type() second arg default (#212)&lt;/li&gt;
-&lt;li&gt;Enhance Traceback depth (#206)&lt;/li&gt;
-&lt;li&gt;Set spans whose http code &amp;gt; 400 to error (#187)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Docs:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Add a FAQ doc on &lt;code&gt;how to use with uwsgi&lt;/code&gt; (#188)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Others:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Refactor current Python agent docs to serve on SkyWalking official website (#162)&lt;/li&gt;
-&lt;li&gt;Refactor SkyWalking Python to use the CLI for CI instead of legacy setup (#165)&lt;/li&gt;
-&lt;li&gt;Add support for Python 3.10 (#167)&lt;/li&gt;
-&lt;li&gt;Move flake configs all together (#169)&lt;/li&gt;
-&lt;li&gt;Introduce another set of flake8 extensions (#174)&lt;/li&gt;
-&lt;li&gt;Add E2E test coverage for trace and logging (#199)&lt;/li&gt;
-&lt;li&gt;Now Log reporter &lt;code&gt;cause_exception_depth&lt;/code&gt; traceback limit defaults to 10&lt;/li&gt;
-&lt;li&gt;Enable faster CI by categorical parallelism (#170)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
 &lt;/ul&gt;
 
       </description>

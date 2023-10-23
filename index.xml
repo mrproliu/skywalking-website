@@ -13,6 +13,223 @@
     
     
     <item>
+      <title>Blog: The Statement for SkyWalking users on HashiCorp license changes</title>
+      <link>/blog/2023-08-13-hashicorp-bsl/</link>
+      <pubDate>Sun, 13 Aug 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2023-08-13-hashicorp-bsl/</guid>
+      <description>
+        
+        
+        &lt;p&gt;On Aug. 10th, 2023, HashiCorp announced to adopt the Business Source License (BSL) from Mozilla Public License v2.0 (MPL 2.0), here is their &lt;a href=&#34;https://www.hashicorp.com/blog/hashicorp-adopts-business-source-license&#34;&gt;post&lt;/a&gt;.
+They officially annouced they have changed the license for the &lt;strong&gt;ALL&lt;/strong&gt; of their open-source products from the previous MPL 2.0 to a source-available license, BSL 1.1.
+Meanwhile, HashiCorp APIs, SDKs, and almost all other libraries will remain MPL 2.0.&lt;/p&gt;
+&lt;p&gt;HashiCorp Inc. is one of the most important vendors in the cloud-native landscape, as well as Golang ecosystem. This kind of changes would have potential implications for
+SkyWalking, which is closely integrated with cloud-native technology stacks.&lt;/p&gt;
+&lt;h1 id=&#34;conclusion-first&#34;&gt;Conclusion First&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;What does that mean for SkyWalking users?&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;SkyWalking community has evaluated our dependencies from HashiCorp products and libraries, the current conclusion is&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;SkyWalking users would NOT suffer any implication. All components of SkyWalking don&amp;rsquo;t have hard-dependency on BSL license affected codes.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;SkyWalking community have found out all following dependencies of all relative repositories, all licenses are TRUELY stayed unchanged, and compatible with Apache 2.0 License.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; OAP Server @kezhenxu94 @wu-sheng
+&lt;ul&gt;
+&lt;li&gt;consul-client Apache 2.0 Repo archived on Jul 27, 2023&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; BanyanDB @hanahmily @lujiajing1126
+&lt;ul&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Server @hanahmily
+&lt;ul&gt;
+&lt;li&gt;hashicorp/golang-lru MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/hcl MPL-2.0&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; CLI @hanahmily &lt;strong&gt;No HashiCorp Dependency&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; SkyWalking OAP CLI @kezhenxu94
+&lt;ul&gt;
+&lt;li&gt;github.com/hashicorp/hcl v1.0.0 MPL-2.0&lt;/li&gt;
+&lt;li&gt;All under swck as transitive dependencies&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; SWCK @hanahmily
+&lt;ul&gt;
+&lt;li&gt;hashicorp/consul/api MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/consul/sdk MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/errwrap MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/go-cleanhttp MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/go-immutable-radix MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/go-msgpack MIT&lt;/li&gt;
+&lt;li&gt;hashicorp/go-multierror MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/go-rootcerts MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/go-sockaddr MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/go-syslog MIT&lt;/li&gt;
+&lt;li&gt;hashicorp/go-uuid MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/go.net BSD-3&lt;/li&gt;
+&lt;li&gt;hashicorp/golang-lru MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/hcl MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/logutils MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/mdns MIT&lt;/li&gt;
+&lt;li&gt;hashicorp/memberlist MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/serf MPL-2.0&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Go agent @mrproliu
+&lt;ul&gt;
+&lt;li&gt;hashicorp/consul/api MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/consul/sdk MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/errwrap MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/go-cleanhttp MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/go-hclog MIT&lt;/li&gt;
+&lt;li&gt;hashicorp/go-immutable-radix MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/go-kms-wrapping/entropy MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/go-kms-wrapping/entropy/v2 MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/go-msgpack MIT&lt;/li&gt;
+&lt;li&gt;hashicorp/go-multierror MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/go-plugin MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/go-retryablehttp MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/go-rootcerts MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/go-secure-stdlib/base62 MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/go-secure-stdlib/mlock MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/go-secure-stdlib/parseutil MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/go-secure-stdlib/password MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/go-secure-stdlib/tlsutil MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/go-sockaddr MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/go-syslog MIT&lt;/li&gt;
+&lt;li&gt;hashicorp/go-uuid MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/go-version MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/go.net BSD-3-Clause&lt;/li&gt;
+&lt;li&gt;hashicorp/golang-lru MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/logutils MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/mdns MIT&lt;/li&gt;
+&lt;li&gt;hashicorp/memberlist MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/serf MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/vault/api MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/vault/sdk MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/yamux MPL-2.0&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; SkyWalking eyes @kezhenxu94
+&lt;ul&gt;
+&lt;li&gt;none&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; SkyWalking Infra e2e @kezhenxu94
+&lt;ul&gt;
+&lt;li&gt;all under swck as transitive dependencies&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; SkyWalking rover(ebpf agent) @mrproliu
+&lt;ul&gt;
+&lt;li&gt;hashicorp/consul/api MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/consul/sdk MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/errwrap MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/go-cleanhttp MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/go-hclog MIT&lt;/li&gt;
+&lt;li&gt;hashicorp/go-immutable-radix MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/go-msgpack MIT&lt;/li&gt;
+&lt;li&gt;hashicorp/go-multierror MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/go-retryablehttp MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/go-rootcerts MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/go-sockaddr MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/go-syslog MIT&lt;/li&gt;
+&lt;li&gt;hashicorp/go-uuid MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/golang-lru MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/hcl MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/logutils MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/mdns MIT&lt;/li&gt;
+&lt;li&gt;hashicorp/memberlist MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/serf MPL-2.0&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; SkyWalking satellite @mrproliu
+&lt;ul&gt;
+&lt;li&gt;hashicorp/consul/api MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/consul/sdk MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/errwrap MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/go-cleanhttp MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/go-immutable-radix MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/go-msgpack MIT&lt;/li&gt;
+&lt;li&gt;hashicorp/go-multierror MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/go-rootcerts MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/go-sockaddr MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/go-syslog MIT&lt;/li&gt;
+&lt;li&gt;hashicorp/go-uuid MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/go.net BSD-3-Clause&lt;/li&gt;
+&lt;li&gt;hashicorp/golang-lru MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/hcl MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/logutils MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/mdns MIT&lt;/li&gt;
+&lt;li&gt;hashicorp/memberlist MPL-2.0&lt;/li&gt;
+&lt;li&gt;hashicorp/serf MPL-2.0&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; SkyWalking Terraform (scripts) @kezhenxu94
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;No HashiCorp Dependency&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;The scripts for Terraform users only. No hard requirement.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;em&gt;The GitHub ID is listed about the PMC members did the evaluations.&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id=&#34;faq&#34;&gt;FAQ&lt;/h2&gt;
+&lt;h3 id=&#34;if-i-am-using-consul-to-manage-skywalking-cluster-or-configurations-does-this-license-change-bring-an-implication&#34;&gt;If I am using Consul to manage SkyWalking Cluster or configurations, does this license change bring an implication?&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;YES&lt;/strong&gt;, anyone using their server sides would be affected once you upgrade to later released versions after Aug. 10th, 2023.&lt;/p&gt;
+&lt;p&gt;This is HashiCorp&amp;rsquo;s statement&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;End users can continue to copy, modify, and redistribute the code for all non-commercial and commercial use, except where providing a competitive offering to HashiCorp. Partners can continue to build integrations for our joint customers. We will continue to work closely with the cloud service providers to ensure deep support for our mutual technologies. Customers of enterprise and cloud-managed HashiCorp products will see no change as well.
+Vendors who provide competitive services built on our community products will no longer be able to incorporate future releases, bug fixes, or security patches contributed to our products.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;So, notice that, the implication about whether voilating BSL 1.1 is determined by the HashiCorp Inc about the status of the identified competitive relationship. We can&amp;rsquo;t provide any suggestions.
+Please refer to &lt;a href=&#34;https://www.hashicorp.com/license-faq&#34;&gt;FAQs and contacts&lt;/a&gt; for the official explanations.&lt;/p&gt;
+&lt;h3 id=&#34;will-skywalking-continoue-to-use-hashicorp-consul-as-an-optional-cluster-coordinator-andor-an-optional-dynamic-configuration-server&#34;&gt;Will SkyWalking continoue to use HashiCorp Consul as an optional cluster coordinator and/or an optional dynamic configuration server?&lt;/h3&gt;
+&lt;p&gt;For short term, &lt;strong&gt;YES&lt;/strong&gt;, we will keep that part of codes, as the licenses of the SDK and the APIs are still in the MPL 2.0.&lt;/p&gt;
+&lt;p&gt;But, during the evaluation, we noticed the consul client we are using is &lt;a href=&#34;https://github.com/rickfast/consul-client&#34;&gt;rickfast/consul-client&lt;/a&gt; which had been archived by the owner on Jul 27, 2023. So, we are facing the issues that no maintaining and no version to upgrade.
+If there is not a new consul Java client lib available, we may have to remove this to avoid CVEs or version incompatible with new released servers.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Blog: New Features of SkyWalking Go 0.2.0</title>
+      <link>/blog/2023-07-31-skywalking-go-0.2.0-release/</link>
+      <pubDate>Mon, 31 Jul 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2023-07-31-skywalking-go-0.2.0-release/</guid>
+      <description>
+        
+        
+        &lt;h1 id=&#34;announcing-apache-skywalking-go-020&#34;&gt;Announcing Apache SkyWalking Go 0.2.0&lt;/h1&gt;
+&lt;p&gt;I&amp;rsquo;m excited to announce the release of Apache SkyWalking Go 0.2.0! This version packs several awesome new features that I&amp;rsquo;ll overview below.&lt;/p&gt;
+&lt;h1 id=&#34;log-reporting&#34;&gt;Log Reporting&lt;/h1&gt;
+&lt;p&gt;The log reporting feature allows the Go agent to automatically collect log content from supported logging frameworks like &lt;a href=&#34;https://github.com/sirupsen/logrus&#34;&gt;logrus&lt;/a&gt; and &lt;a href=&#34;https://pkg.go.dev/go.uber.org/zap&#34;&gt;zap&lt;/a&gt;.
+The logs are organized and sent to the SkyWalking backend for visualization. You can see how the logs appear for each service in the SkyWalking UI:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;reported_logging.png&#34; alt=&#34;Reported Logging&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;making-logs-searchable&#34;&gt;Making Logs Searchable&lt;/h2&gt;
+&lt;p&gt;You can configure certain log fields to make them searchable in SkyWalking. Set the &lt;code&gt;SW_AGENT_LOG_REPORTER_LABEL_KEYS&lt;/code&gt; environment variable to include additional fields beyond the default log level.&lt;/p&gt;
+&lt;p&gt;For example, with logrus:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#a61717;background-color:#e3d2d2&#34;&gt;#&lt;/span&gt; define log with fields
+logrus.&lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;WithField&lt;/span&gt;(&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;module&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;test-service&amp;#34;&lt;/span&gt;).&lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;Info&lt;/span&gt;(&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;test log&amp;#34;&lt;/span&gt;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;metrics-reporting&#34;&gt;Metrics Reporting&lt;/h2&gt;
+&lt;p&gt;The agent can now collect and report custom metrics data from &lt;code&gt;runtime/metrics&lt;/code&gt; to the backend. Supported metrics are documented &lt;a href=&#34;https://pkg.go.dev/runtime/metrics#hdr-Metric_key_format&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;metrics.png&#34; alt=&#34;Runtime Metrics&#34;&gt;&lt;/p&gt;
+&lt;h1 id=&#34;automatic-instrumentation&#34;&gt;Automatic Instrumentation&lt;/h1&gt;
+&lt;p&gt;In 0.1.0, you had to manually integrate the agent into your apps. Now, the new commands can automatically analyze and instrument projects at a specified path, no code changes needed!
+Try using the following command to import &lt;code&gt;skywalking-go&lt;/code&gt; into your project:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# inject to project at current path&lt;/span&gt;
+skywalking-go-agent -inject&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;./ -all
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Or you can still use the original manual &lt;a href=&#34;https://github.com/apache/skywalking-go/blob/main/docs/en/setup/gobuild.md#22-code-dependency&#34;&gt;approach&lt;/a&gt; if preferred.&lt;/p&gt;
+&lt;h1 id=&#34;get-it-now&#34;&gt;Get It Now!&lt;/h1&gt;
+&lt;p&gt;Check out the &lt;a href=&#34;https://skywalking.apache.org/events/release-apache-skwaylking-go-0.2.0/&#34;&gt;CHANGELOG&lt;/a&gt; for the full list of additions and fixes. I encourage you to try out SkyWalking Go 0.2.0 today! Let me know if you have any feedback.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
       <title>Blog: Activating Automatical Performance Analysis -- Continuous Profiling</title>
       <link>/blog/2023-06-25-intruducing-continuous-profiling-skywalking-with-ebpf/</link>
       <pubDate>Sun, 25 Jun 2023 00:00:00 +0000</pubDate>
@@ -7907,148 +8124,6 @@ Many developers have joined the ASF as new contributors, committers, foundation 
   &lt;iframe src=&#34;https://www.youtube.com/embed/26aFGdbZvac&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;&#34; allowfullscreen title=&#34;YouTube Video&#34;&gt;&lt;/iframe&gt;
 &lt;/div&gt;
 
-
-      </description>
-    </item>
-    
-    <item>
-      <title>Blog: Features in SkyWalking 8.2: Browser Side Monitoring; Query Traces by Tags; Meter Analysis Language</title>
-      <link>/blog/2020-10-29-skywalking8-2-release/</link>
-      <pubDate>Thu, 29 Oct 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/blog/2020-10-29-skywalking8-2-release/</guid>
-      <description>
-        
-        
-        &lt;p&gt;&lt;img src=&#34;0081Kckwly1gkl5m6kv3uj31lb0u0jum.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Author: Zhenxu Ke, Sheng Wu, Hongtao Gao, and Tevah Platt. tetrate.io&lt;/li&gt;
-&lt;li&gt;Original link, &lt;a href=&#34;https://tetrate.io/blog/whats-new-with-apache-skywalking-8-2-browser-monitoring-and-more/&#34;&gt;Tetrate.io blog&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Oct. 29th, 2020&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Apache SkyWalking, the observability platform, and open-source application performance monitor (APM) project, today announced the general availability of its 8.2 release. The release extends Apache SkyWalking’s functionalities and monitoring boundary to the browser side.&lt;/p&gt;
-&lt;h2 id=&#34;background&#34;&gt;Background&lt;/h2&gt;
-&lt;p&gt;SkyWalking is an observability platform and APM tool that works with or without a service mesh, providing automatic instrumentation for microservices, cloud-native and container-based applications. The top-level Apache project is supported by a global community and is used by Alibaba, Huawei, Tencent, Baidu, ByteDance, and scores of others.&lt;/p&gt;
-&lt;h2 id=&#34;browser-side-monitoring&#34;&gt;Browser side monitoring&lt;/h2&gt;
-&lt;p&gt;APM helps SRE and Engineering teams to diagnose system failures, or optimize the systems before they become intolerably slow. But is it enough to always make the users happy?&lt;/p&gt;
-&lt;p&gt;In 8.2.0, SkyWalking extends its monitoring boundary to the browser side, e.g., Chrome, or the network between Chrome and the backend service, or the codes running in the browser. With this, not only can we monitor the backend services and requests sent by the browser as usual, but also the front end rendering speed, error logs, etc., which are the most efficient metrics for capturing the experiences of our end users. (This does not currently extend to IoT devices, but this feature moves SkyWalking a step in that direction).&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;0081Kckwly1gkl5m71k6bj30zk0m8tdb.jpg&#34; alt=&#34;SkyWalking 8.2.0 Browser Side Monitoring: Overview&#34;&gt;&lt;/p&gt;
-&lt;p&gt;What&amp;rsquo;s more, SkyWalking browser monitoring also provides data about how the users use products, such as PV(page views), UV(unique visitors), top N PV(page views), etc., which can give a product team clues for optimizing their products.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;0081Kckwly1gkl5m5tld9j30zk0m843n.jpg&#34; alt=&#34;SkyWalking 8.2.0 Browser Side Monitoring: Pages&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;query-traces-by-tags&#34;&gt;Query traces by tags&lt;/h2&gt;
-&lt;p&gt;In SkyWalking&amp;rsquo;s Span data model, there are many important fields that are already indexed and can be queried by the users, but for the sake of performance, querying by Span tags was not supported until now. In SkyWalking 8.2.0, we allow users to query traces by specified tags, which is extremely useful. For example, SRE engineers running tests on the product environment can tag the synthetic traffic and query by this tag later.&lt;/p&gt;
-&lt;h2 id=&#34;meter-analysis-language&#34;&gt;Meter Analysis Language&lt;/h2&gt;
-&lt;p&gt;In 8.2.0, the meter system provides a functional analysis language called MAL(Meter Analysis Language) that allows users to analyze and aggregate meter data in the OAP streaming system. The result of an expression can be ingested by either the agent analyzer or OpenTelemetry/Prometheus analyzer.&lt;/p&gt;
-&lt;h2 id=&#34;composite-alert-rules&#34;&gt;Composite Alert Rules&lt;/h2&gt;
-&lt;p&gt;Alerting is a good way to discover system failures in time. A common problem is that we configure too many triggers just to avoid missing any possible issue. Nobody likes to be woken up by alert messages at midnight, only to find out that the trigger is too sensitive. These kinds of alerts become noisy and don&amp;rsquo;t help at all.&lt;/p&gt;
-&lt;p&gt;In 8.2.0, users can now configure composite alert rules, where composite rules take multiple metrics dimensions into account. With composite alert rules, we can leverage as many metrics as needed to more accurately determine whether there’s a real problem or just an occasional glitch.&lt;/p&gt;
-&lt;p&gt;Common scenarios like &lt;code&gt;successful rate &amp;lt; 90% but there are only 1~2 requests&lt;/code&gt; can now be resolved by a composite rule, such as &lt;code&gt;traffic(calls per minute) &amp;gt; n &amp;amp;&amp;amp; successful rate &amp;lt; m%&lt;/code&gt;.&lt;/p&gt;
-&lt;h2 id=&#34;other-notable-enhancements&#34;&gt;Other Notable Enhancements&lt;/h2&gt;
-&lt;ol&gt;
-&lt;li&gt;The agent toolkit exposes some APIs for users to send customizable metrics.&lt;/li&gt;
-&lt;li&gt;The agent &lt;code&gt;exclude_plugins&lt;/code&gt; allows you to exclude some plugins; &lt;code&gt;mount&lt;/code&gt; enables you to load a new set of plugins.&lt;/li&gt;
-&lt;li&gt;More than 10 new plugins have been contributed to the agent.&lt;/li&gt;
-&lt;li&gt;The alert system natively supports sending alert messages to Slack, WeChat, DingTalk.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id=&#34;additional-resources&#34;&gt;Additional Resources&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;Read more about the &lt;a href=&#34;https://github.com/apache/skywalking/blob/v8.2.0/CHANGES.md&#34;&gt;SkyWalking 8.2 release highlights&lt;/a&gt;.&lt;/li&gt;
-&lt;li&gt;Get more SkyWalking updates on &lt;a href=&#34;https://twitter.com/ASFSkyWalking&#34;&gt;Twitter&lt;/a&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-      </description>
-    </item>
-    
-    <item>
-      <title>Blog: Observability at Scale: SkyWalking it is</title>
-      <link>/blog/2020-08-11-observability-at-scale/</link>
-      <pubDate>Tue, 11 Aug 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/blog/2020-08-11-observability-at-scale/</guid>
-      <description>
-        
-        
-        &lt;ul&gt;
-&lt;li&gt;Author: Sheng Wu&lt;/li&gt;
-&lt;li&gt;Original link, &lt;a href=&#34;https://www.tetrate.io/blog/observability-at-scale-skywalking-it-is/&#34;&gt;Tetrate.io blog&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;SkyWalking, a top-level Apache project, is the open source APM and observability analysis platform that is solving the problems of 21st-century systems that are increasingly large, distributed, and heterogenous. It&amp;rsquo;s built for the struggles system admins face today: To identify and locate needles in a haystack of interdependent services, to get apples-to-apples metrics across polyglot apps, and to get a complete and meaningful view of performance.&lt;/p&gt;
-&lt;p&gt;SkyWalking is a holistic platform that can observe microservices on or off a mesh, and can provide consistent monitoring with a lightweight payload.&lt;/p&gt;
-&lt;p&gt;Let&amp;rsquo;s take a look at how SkyWalking evolved to address the problem of observability at scale, and grew from a pure tracing system to a feature-rich observability platform that is now used to analyze deployments that collect tens of billions of traces per day.&lt;/p&gt;
-&lt;h3 id=&#34;designing-for-scale&#34;&gt;Designing for scale&lt;/h3&gt;
-&lt;p&gt;When SkyWalking was first initialized back in 2015, its primary use case was monitoring the first-generation distributed core system of China Top Telecom companies, China Unicom and China Mobile. In 2013-2014, the telecom companies planned to replace their old traditional monolithic applications with a distributed system. Supporting a super-large distributed system and scaleablity were the high-priority design goals from Day one. So, what matters at scale?&lt;/p&gt;
-&lt;h3 id=&#34;pull-vs-push&#34;&gt;Pull vs. push&lt;/h3&gt;
-&lt;p&gt;Pull and push modes relate to the direction of data flow. If the agent collects data and pushes them to the backend for further analysis, we call it &amp;ldquo;push&amp;rdquo; mode. Debate over pull vs. push has gone on for a long time. The key for an observability system is to minimize the cost of the agent, and to be generally suitable for different kinds of observability data.&lt;/p&gt;
-&lt;p&gt;The agent would send the data out a short period after it is collected. Then, we would have less concern about overloading the local cache. One typical case would be endpoint (URI of HTTP, service of gRPC) metrics. Any service could easily have hundreds, even thousands of endpoints. An APM system must have these metrics analysis capabilities.&lt;/p&gt;
-&lt;p&gt;Furthermore, metrics aren&amp;rsquo;t the only thing in the observability landscape; traces and logs are important too. SkyWalking is designed to provide a 100% sampling rate tracing capability in the production environment. Clearly, push mode is the only solution.&lt;/p&gt;
-&lt;p&gt;At the same time, using push mode natively doesn&amp;rsquo;t mean SkyWalking can&amp;rsquo;t do data pulling. In recent 8.x releases, SkyWalking supports fetching data from Prometheus-instrumented services for reducing the Non-Recurring Engineering of the end users. Also, pull mode is popular in the MQ based transport, typically as a Kafka consumer. The SkyWalking agent side uses the push mode, and the OAP server uses the pull mode.&lt;/p&gt;
-&lt;p&gt;The conclusion: push mode is the native way, but pull mode works in some special cases too.&lt;/p&gt;
-&lt;h3 id=&#34;metrics-analysis-isnt-just-mathematical-calculation&#34;&gt;Metrics analysis isn&amp;rsquo;t just mathematical calculation&lt;/h3&gt;
-&lt;p&gt;Metrics rely on mathematical theories and calculations. Percentile is a good measure for identifying the long tail issue, and reasonable average response time and successful rate are good SLO(s). But those are not all. Distributed tracing provides not just traces with detailed information, but high values metrics that can be analyzed.&lt;/p&gt;
-&lt;p&gt;The service topology map is required from Ops and SRE teams for the NOC dashboard and confirmation of system data flow. SkyWalking uses the &lt;a href=&#34;https://wu-sheng.github.io/STAM/&#34;&gt;STAM (Streaming Topology Analysis Method)&lt;/a&gt; to analyze topology from the traces, or based on ALS (Envoy Access Log Service) in the service mesh environment. This topology and metrics of nodes (services) and lines (service relationships) can&amp;rsquo;t be pulled from simple metrics SDKs.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;topology-v8.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;As with fixing the limitation of endpoint metrics collection, SkyWalking needs to do endpoint dependency analysis from trace data too. Endpoint dependency analysis provides more important and specific information, including upstream and downstream. Those dependency relationships and metrics help the developer team to locate the boundaries of a performance issue, to specific code blocks.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;endpoint-dependency-v8.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;pre-calculation-vs-query-stage-calculation&#34;&gt;Pre-calculation vs. query stage calculation?&lt;/h3&gt;
-&lt;p&gt;Query stage calculation provides flexibility. Pre-calculation, in the analysis stage, provides better and much more stable performance. Recall our design principle: SkyWalking targets a large-scale distributed system. Query stage calculation was very limited in scope, and most metrics calculations need to be pre-defined and pre-calculated. The key of supporting large datasets is reducing the size of datasets in the design level. Pre-calculation allows the original data to be merged into aggregated results downstream, to be used in a query or even for an alert check.&lt;/p&gt;
-&lt;p&gt;TTL of metrics is another important business enabler. With the near linear performance offered by queries because of pre-calculation, with a similar query infrastructure, organizations can offer higher TTL, thereby providing extended visibility of performance.&lt;/p&gt;
-&lt;p&gt;Speaking of alerts, query-stage calculation also means the alerting query is required to be based on the query engine. But in this case, when the dataset increasing, the query performance could be inconsistent. The same thing happens in a different metrics query.&lt;/p&gt;
-&lt;h3 id=&#34;cases-today&#34;&gt;Cases today&lt;/h3&gt;
-&lt;p&gt;Today, SkyWalking is monitoring super large-scale distributed systems in many large enterprises, including Alibaba, Huawei, Tencent, Baidu, China Telecom, and various banks and insurance companies. The online service companies have more traffic than the traditional companies, like banks and telecom suppliers.&lt;/p&gt;
-&lt;p&gt;SkyWalking is the observability platform used for a variety of use cases for distributed systems that are super-large by many measures:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Lagou.com, an online job recruitment platform
-&lt;ul&gt;
-&lt;li&gt;SkyWalking is observing &amp;gt;100 services, 500+ JVM instances&lt;/li&gt;
-&lt;li&gt;SkyWalking collects and analyzes 4+ billion traces per day to analyze performance data, including metrics of 300k+ endpoints and dependencies&lt;/li&gt;
-&lt;li&gt;Monitoring &amp;gt;50k traffic per second in the whole cluster&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Yonghui SuperMarket, online service
-&lt;ul&gt;
-&lt;li&gt;SkyWalking analyzes at least 10+ billion (3B) traces with metrics per day&lt;/li&gt;
-&lt;li&gt;SkyWalking&amp;rsquo;s second, smaller deployment, analyzes 200+ million traces per day&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Baidu, internet and AI company, Kubernetes deployment
-&lt;ul&gt;
-&lt;li&gt;SkyWalking collects 1T+ traces a day from 1,400+ pods of 120+ services&lt;/li&gt;
-&lt;li&gt;Continues to scale out as more services are added&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Beike Zhaofang(ke.com), a Chinese online property brokerage backed by Tencent Holdings and SoftBank Group
-&lt;ul&gt;
-&lt;li&gt;Has used SkyWalking from its very beginning, and has two members in the PMC team.&lt;/li&gt;
-&lt;li&gt;Deployments collect 16+ billion traces per day&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Ali Yunxiao, DevOps service on the Alibaba Cloud,
-&lt;ul&gt;
-&lt;li&gt;SkyWalking collects and analyzes billions of spans per day&lt;/li&gt;
-&lt;li&gt;SkyWalking keeps AliCloud&amp;rsquo;s 45 services and ~300 instances stable&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;A department of Alibaba TMall, one of the largest business-to-consumer online retailers, spun off from Taobao
-&lt;ul&gt;
-&lt;li&gt;A customized version of SkyWalking monitors billions of traces per day&lt;/li&gt;
-&lt;li&gt;At the same time, they are building a load testing platform based on SkyWalking&amp;rsquo;s agent tech stack, leveraging its tracing and context propagation cabilities&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h3&gt;
-&lt;p&gt;SkyWalking&amp;rsquo;s approach to observability follows these principles:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Understand the logic model: don&amp;rsquo;t treat observability as a mathematical tool.&lt;/li&gt;
-&lt;li&gt;Identify dependencies first, then their metrics.&lt;/li&gt;
-&lt;li&gt;Scaling should be accomplished easily and natively.&lt;/li&gt;
-&lt;li&gt;Maintain consistency across different architectures, and in the performance of APM itself.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h3 id=&#34;resources&#34;&gt;Resources&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;Read about the &lt;a href=&#34;https://github.com/apache/skywalking/blob/master/CHANGES.md&#34;&gt;SkyWalking 8.1 release highlights&lt;/a&gt;.&lt;/li&gt;
-&lt;li&gt;Get more SkyWalking updates on &lt;a href=&#34;https://twitter.com/asfskywalking?lang=en&#34;&gt;Twitter&lt;/a&gt;.&lt;/li&gt;
-&lt;li&gt;Sign up to hear more about SkyWalking and observability from &lt;a href=&#34;https://www.tetrate.io/contact-us/&#34;&gt;Tetrate&lt;/a&gt;.&lt;/li&gt;
-&lt;/ul&gt;
 
       </description>
     </item>
