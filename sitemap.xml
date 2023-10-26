@@ -3931,6 +3931,12 @@
   </url>
   
   <url>
+    <loc>/docs/main/next/en/concepts-and-designs/oal/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/</loc>
     <lastmod>2023-10-23T09:15:42+08:00</lastmod>
     <changefreq>daily</changefreq>
@@ -8971,12 +8977,6 @@
   
   <url>
     <loc>/docs/skywalking-banyandb/v0.5.0/observability/</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>/docs/main/next/en/concepts-and-designs/oal/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
