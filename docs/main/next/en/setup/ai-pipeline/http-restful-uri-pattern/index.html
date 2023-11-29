@@ -1862,7 +1862,7 @@ if (!doNotTrack) {
 
     <li>
         
-            <a href="/docs/main/nexten/debugging/config_dump">Scratch The OAP Config Dump</a>
+            <a href="/docs/main/next/en/debugging/config_dump">Scratch The OAP Config Dump</a>
         
     </li>
 
@@ -2119,6 +2119,17 @@ if (!doNotTrack) {
 
     <li>
         
+
+            
+            <a href="#">9.x Releases<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
             <a href="/docs/main/next/en/changes/changes-9.6.0">9.6.0</a>
         
     </li>
@@ -2168,6 +2179,13 @@ if (!doNotTrack) {
     <li>
         
             <a href="/docs/main/next/en/changes/changes-9.0.0">9.0.0</a>
+        
+    </li>
+
+    
+
+</ul>
+
         
     </li>
 
@@ -2346,7 +2364,7 @@ if (!doNotTrack) {
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 5e97709</div>
+                  <div class="commit-id">Commit Id: 33e3f28</div>
                 
 
 
@@ -2404,7 +2422,7 @@ and push the data to 3rd party for further analysis. Then OAP would pull the ana
 processing the further telemetry traffic.</p>
 <h2 id="set-up-oap-to-connect-remote-uri-recognition-server">Set up OAP to connect remote URI recognition server</h2>
 <p><code>uriRecognitionServerAddr</code> and <code>uriRecognitionServerPort</code> are the configurations to set up the remote URI recognition server.</p>
-<p>The URI recognition server is a gRPC server, which is defined in <a href="https://github.com/apache/skywalking/tree/5e97709c30b2439605284c532a50fdcebae8a44b/oap-server/ai-pipeline/src/main/proto/ai_http_uri_recognition.proto">URIRecognition.proto</a>.</p>
+<p>The URI recognition server is a gRPC server, which is defined in <a href="https://github.com/apache/skywalking/tree/33e3f28fcf13683895737ea5551af5b6a16df219/oap-server/ai-pipeline/src/main/proto/ai_http_uri_recognition.proto">URIRecognition.proto</a>.</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-protobuf" data-lang="protobuf"><span style="color:#000;font-weight:bold">service</span> HttpUriRecognitionService {<span style="color:#a61717;background-color:#e3d2d2">
 </span><span style="color:#a61717;background-color:#e3d2d2"></span>    <span style="color:#998;font-style:italic">// Sync for the pattern recognition dictionary.
 </span><span style="color:#998;font-style:italic"></span>    <span style="color:#000;font-weight:bold">rpc</span> fetchAllPatterns(HttpUriRecognitionSyncRequest) <span style="color:#000;font-weight:bold">returns</span> (HttpUriRecognitionResponse) {}<span style="color:#a61717;background-color:#e3d2d2">
@@ -2590,6 +2608,8 @@ recognition, and natively supports <code>URIRecognition.proto</code> defined in 
 
     </div>
     
+
+
 
 
 
