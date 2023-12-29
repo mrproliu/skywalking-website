@@ -28,28 +28,31 @@
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
 
-<title>Linux Process Detector | Apache SkyWalking</title><meta property="og:title" content="Linux Process Detector" />
-<meta property="og:description" content="Linux Process Detector The Linux process scanner could detect any process in Linux with finders. It has two modes:
- REGEX: could define a regex to filter which processes declare to monitor. AGENT_SENSOR: scan recent active agents which have process status hook.  After finding the process, it would collect the metadata of the process when the report to the backend.
-Configuration    Name Default Environment Key Description     process_discovery." />
+<title>Deploy on Kubernetes | Apache SkyWalking</title><meta property="og:title" content="Deploy on Kubernetes" />
+<meta property="og:description" content="Deploy on Kubernetes This documentation helps you to set up the rover in the Kubernetes environment.
+Startup Kubernetes Make sure that you already have a Kubernetes cluster.
+If you don&rsquo;t have a running cluster, you can also leverage KinD (Kubernetes in Docker) or minikube to create a cluster.
+Deploy Rover Please follow the rover-daemonset.yml to deploy the rover in your Kubernetes cluster. Update the comment in the file, which includes two configs:" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/docs/skywalking-rover/next/en/setup/configuration/process_discovery/scanner/" />
+<meta property="og:url" content="/docs/skywalking-rover/next/en/setup/examples/deploy/kubernetes/readme/" />
 
-<meta itemprop="name" content="Linux Process Detector">
-<meta itemprop="description" content="Linux Process Detector The Linux process scanner could detect any process in Linux with finders. It has two modes:
- REGEX: could define a regex to filter which processes declare to monitor. AGENT_SENSOR: scan recent active agents which have process status hook.  After finding the process, it would collect the metadata of the process when the report to the backend.
-Configuration    Name Default Environment Key Description     process_discovery.">
+<meta itemprop="name" content="Deploy on Kubernetes">
+<meta itemprop="description" content="Deploy on Kubernetes This documentation helps you to set up the rover in the Kubernetes environment.
+Startup Kubernetes Make sure that you already have a Kubernetes cluster.
+If you don&rsquo;t have a running cluster, you can also leverage KinD (Kubernetes in Docker) or minikube to create a cluster.
+Deploy Rover Please follow the rover-daemonset.yml to deploy the rover in your Kubernetes cluster. Update the comment in the file, which includes two configs:">
 
-<meta itemprop="wordCount" content="694">
+<meta itemprop="wordCount" content="127">
 
 
 
 <meta itemprop="keywords" content="" />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Linux Process Detector"/>
-<meta name="twitter:description" content="Linux Process Detector The Linux process scanner could detect any process in Linux with finders. It has two modes:
- REGEX: could define a regex to filter which processes declare to monitor. AGENT_SENSOR: scan recent active agents which have process status hook.  After finding the process, it would collect the metadata of the process when the report to the backend.
-Configuration    Name Default Environment Key Description     process_discovery."/>
+<meta name="twitter:title" content="Deploy on Kubernetes"/>
+<meta name="twitter:description" content="Deploy on Kubernetes This documentation helps you to set up the rover in the Kubernetes environment.
+Startup Kubernetes Make sure that you already have a Kubernetes cluster.
+If you don&rsquo;t have a running cluster, you can also leverage KinD (Kubernetes in Docker) or minikube to create a cluster.
+Deploy Rover Please follow the rover-daemonset.yml to deploy the rover in your Kubernetes cluster. Update the comment in the file, which includes two configs:"/>
 
 
 
@@ -67,7 +70,7 @@ Configuration    Name Default Environment Key Description     process_discovery.
 
 
 
-    <title>Linux Process Detector | Apache SkyWalking</title>
+    <title>Deploy on Kubernetes | Apache SkyWalking</title>
   </head>
   <body class="td-page  project-doc">
     <header>
@@ -403,41 +406,7 @@ Configuration    Name Default Environment Key Description     process_discovery.
 
     <li>
         
-
-            
-            <a href="#">Process Discovery Module<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-            <a href="/docs/skywalking-rover/next/en/setup/configuration/process_discovery/overview">Overview</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/skywalking-rover/next/en/setup/configuration/process_discovery/scanner">Linux Process Scanner</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/skywalking-rover/next/en/setup/configuration/process_discovery/kubernetes">Kubernetes Process Detector</a>
-        
-    </li>
-
-    
-
-</ul>
-
+            <a href="/docs/skywalking-rover/next/en/setup/configuration/process-discovery">Process Discovery Module</a>
         
     </li>
 
@@ -446,6 +415,14 @@ Configuration    Name Default Environment Key Description     process_discovery.
     <li>
         
             <a href="/docs/skywalking-rover/next/en/setup/configuration/profiling">Profiling Module</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-rover/next/en/setup/configuration/accesslog">Access Log Module</a>
         
     </li>
 
@@ -482,49 +459,7 @@ Configuration    Name Default Environment Key Description     process_discovery.
 
     <li>
         
-            <a href="/docs/skywalking-rover/next/en/setup/examples/deploy/linux/readme">Deploy on Linux</a>
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-
-    
-
-    <li>
-        
-
-            
-            <a href="#">Use Cases<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-            <a href="/docs/skywalking-rover/next/en/setup/examples/cases/profiling-process/readme">Profiling a Golang/C/C&#43;&#43;/Rust service on Linux</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/skywalking-rover/next/en/setup/examples/cases/agent-sensor/readme">Detect Process by Agent Sensor</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/skywalking-rover/next/en/setup/examples/cases/kubernetes-process/readme">Detect Process in Kubernetes Environemnt</a>
+            <a href="/docs/skywalking-rover/next/en/setup/examples/deploy/kubernetes/readme">Deploy on Kubernetes</a>
         
     </li>
 
@@ -646,7 +581,7 @@ Configuration    Name Default Environment Key Description     process_discovery.
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: c979bbf</div>
+                  <div class="commit-id">Commit Id: 8cd7adc</div>
                 
 
 
@@ -672,267 +607,21 @@ Configuration    Name Default Environment Key Description     process_discovery.
 
 
 
-	<h1 id="linux-process-detector">Linux Process Detector</h1>
-<p>The Linux process scanner could detect any process in Linux with finders. It has two modes:</p>
+	<h1 id="deploy-on-kubernetes">Deploy on Kubernetes</h1>
+<p>This documentation helps you to set up the rover in the Kubernetes environment.</p>
+<h2 id="startup-kubernetes">Startup Kubernetes</h2>
+<p>Make sure that you already have a Kubernetes cluster.</p>
+<p>If you don&rsquo;t have a running cluster, you can also leverage <a href="https://kind.sigs.k8s.io">KinD (Kubernetes in Docker)</a>
+or <a href="https://minikube.sigs.k8s.io">minikube</a> to create a cluster.</p>
+<h2 id="deploy-rover">Deploy Rover</h2>
+<p>Please follow the <a href="./../rover-daemonset.yml">rover-daemonset.yml</a> to deploy the rover in your Kubernetes cluster.
+Update the comment in the file, which includes two configs:</p>
 <ol>
-<li><strong>REGEX</strong>: could define a regex to filter which processes declare to monitor.</li>
-<li><strong>AGENT_SENSOR</strong>: scan recent active agents which have process status hook.</li>
+<li><strong>Rover docker image</strong>: You could use <code>make docker</code> to build an image and upload it to your private registry, or update from the public image.</li>
+<li><strong>OAP address</strong>: Update the OAP address.</li>
 </ol>
-<p>After finding the process, it would collect the metadata of the process when the report to the backend.</p>
-<h2 id="configuration">Configuration</h2>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Default</th>
-<th>Environment Key</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>process_discovery.scanner.period</td>
-<td>3s</td>
-<td>ROVER_PROCESS_DISCOVERY_SCAN_PERIOD</td>
-<td>The period to detect the process.</td>
-</tr>
-<tr>
-<td>process_discovery.scanner.mode</td>
-<td>AGENT_SENSOR</td>
-<td>ROVER_PROCESS_DISCOVERY_SCAN_MODE</td>
-<td>The process detection modes of the scanner. Support &ldquo;REGEX&rdquo;, &ldquo;AGENT_SENSOR&rdquo;.</td>
-</tr>
-<tr>
-<td>process_discovery.scanner.agent</td>
-<td></td>
-<td></td>
-<td>Active when using the &ldquo;AGENT_SENSOR&rdquo; mode scanner.</td>
-</tr>
-<tr>
-<td>process_discovery.scanner.agent.process_status_refresh_period</td>
-<td>1m</td>
-<td>ROVER_PROCESS_DISCOVERY_AGENT_PROCESS_STATUS_REFRESH_PERIOD</td>
-<td>Set the agent refresh period.</td>
-</tr>
-<tr>
-<td>process_discovery.scanner.regex</td>
-<td></td>
-<td></td>
-<td>Active when using the &ldquo;REGEX&rdquo; mode scanner, it supports using multiple regex to matches difference processes.</td>
-</tr>
-<tr>
-<td>process_discovery.scanner.regex.match_cmd</td>
-<td></td>
-<td>ROVER_PROCESS_DISCOVERY_REGEX_SCANNER_MATCH_CMD</td>
-<td>Use regex string to locate the process from the command line of the process.</td>
-</tr>
-<tr>
-<td>process_discovery.scanner.regex.layer</td>
-<td>OS_LINUX</td>
-<td>ROVER_PROCESS_DISCOVERY_REGEX_SCANNER_LAYER</td>
-<td>The Layer of the process entity</td>
-</tr>
-<tr>
-<td>process_discovery.scanner.regex.service_name</td>
-<td></td>
-<td>ROVER_PROCESS_DISCOVERY_REGEX_SCANNER_SERVICE_NAME</td>
-<td>The Service Name of the process entity.</td>
-</tr>
-<tr>
-<td>process_discovery.scanner.regex.instance_name</td>
-<td>{{.Rover.HostIPV4 &ldquo;en0&rdquo;}}</td>
-<td>ROVER_PROCESS_DISCOVERY_REGEX_SCANNER_INSTANCE_NAME</td>
-<td>The Service Instance Name of the process entity, by default, the instance name is the host IP v4 address from &ldquo;en0&rdquo; net interface.</td>
-</tr>
-<tr>
-<td>process_discovery.scanner.regex.process_name</td>
-<td>{{.Process.ExeName}}</td>
-<td>ROVER_PROCESS_DISCOVERY_REGEX_SCANNER_PROCESS_NAME</td>
-<td>The Process Name of the process entity, by default, the process name is the executable name of the process.</td>
-</tr>
-<tr>
-<td>process_discovery.scanner.regex.labels</td>
-<td></td>
-<td>ROVER_PROCESS_DISCOVERY_REGEX_SCANNER_LABELS</td>
-<td>The Process Labels, used to aggregate similar process from service entity. Multiple labels split by &ldquo;,&rdquo;.</td>
-</tr>
-</tbody>
-</table>
-<h2 id="agent-sensor-mode">Agent Sensor Mode</h2>
-<p>Agent Sensor mode scanner could scan processes that have installed the skywalking agent and report them.</p>
-<h3 id="process-status-hook-file-protocol">Process Status Hook File Protocol</h3>
-<p>The agent must be implemented the process status hook file protocol, then the rover could be collected the information on the process.</p>
-<p>This protocol is mainly a metadata file, which contains the metadata of the process.
-It should be saved in: <code>{TMPDIR}/apache_skywalking/process/{pid}/metadata.properties</code>, and update modify time with the interval to keep alive, the content in the <code>properties</code> format as below:</p>
-<table>
-<thead>
-<tr>
-<th>Key</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>layer</td>
-<td>string</td>
-<td>this process layer.</td>
-</tr>
-<tr>
-<td>service_name</td>
-<td>string</td>
-<td>this process service name.</td>
-</tr>
-<tr>
-<td>instance_name</td>
-<td>string</td>
-<td>this process instance name.</td>
-</tr>
-<tr>
-<td>process_name</td>
-<td>string</td>
-<td>this process process name, it&rsquo;s same with the instance name.</td>
-</tr>
-<tr>
-<td>properties</td>
-<td>json</td>
-<td>the properties in instance, the process labels also in the properties value.</td>
-</tr>
-<tr>
-<td>labels</td>
-<td>string</td>
-<td>the process labels, multiple labels split by &ldquo;,&rdquo;.</td>
-</tr>
-<tr>
-<td>language</td>
-<td>string</td>
-<td>current process language, which is <code>golang</code>.</td>
-</tr>
-</tbody>
-</table>
-<h2 id="regex-mode">Regex Mode</h2>
-<p>Regex mode scanner could define a regex to filter which process declare to monitor by command line.
-Multiple regexes can be defined to match different types of processes.</p>
-<p>Note, that the duplicate processes entities cannot be reported. If multiple entities are generated, only one process will be reported.
-If the multiple finders could match the same process, only the first finder could be selected and reported.</p>
-<h3 id="entity-builder">Entity Builder</h3>
-<p>The metadata of the process could build by the Go Template to help dynamically build them, also, you could just configure it as the string value, and it still works.</p>
-<p>These fields are supported using the template to build:</p>
-<ol>
-<li>Service Name</li>
-<li>Service Instance Name</li>
-<li>Process NAme</li>
-</ol>
-<h4 id="context">Context</h4>
-<p>The context provides multiple functions for helping you build the process metadata.</p>
-<h5 id="rover">Rover</h5>
-<p>Rover context provides the context of the rover process instance and VM data.</p>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Argument</th>
-<th>Example</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>InstanceID</td>
-<td>None</td>
-<td><code>{{.Rover.InstanceID}}</code></td>
-<td>Get the Instance ID of the rover.</td>
-</tr>
-<tr>
-<td>HostIPV4</td>
-<td>The Interface name</td>
-<td><code>{{.Rover.HostIPV4 &quot;en0&quot;}}</code></td>
-<td>Get the ipv4 address from the appointed network interface name.</td>
-</tr>
-<tr>
-<td>HostIPV6</td>
-<td>The Interface name</td>
-<td><code>{{.Rover.HostIPV6 &quot;en0&quot;}}</code></td>
-<td>Get the ipv6 address from the appointed network interface name.</td>
-</tr>
-<tr>
-<td>HostName</td>
-<td>None</td>
-<td><code>{{.Rover.HostName}}</code></td>
-<td>Get the host name of current machine.</td>
-</tr>
-</tbody>
-</table>
-<h5 id="finder">Finder</h5>
-<p>Finder context provides the context of the current process finder.</p>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Argument</th>
-<th>Example</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Layer</td>
-<td>None</td>
-<td><code>{{.Finder.Layer}}</code></td>
-<td>The layer of the current process which defines in the configuration</td>
-</tr>
-<tr>
-<td>RegexMatchGroup</td>
-<td>The index of the regex pattern</td>
-<td><code>{{.Finder.RegexMatchGroup 1}}</code></td>
-<td>When using the regex to match the process command line, it could use the group concept in the regex. This function could help you get the group value from it.</td>
-</tr>
-</tbody>
-</table>
-<h5 id="process">Process</h5>
-<p>Process context provides the context relate to which process is matched.</p>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Argument</th>
-<th>Example</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>ExeFilePath</td>
-<td>None</td>
-<td><code>{{.Process.ExeFilePath}}</code></td>
-<td>The execute file path of process.</td>
-</tr>
-<tr>
-<td>ExeName</td>
-<td>None</td>
-<td><code>{{.Process.ExeName}}</code></td>
-<td>The execute file name.</td>
-</tr>
-<tr>
-<td>CommandLine</td>
-<td>None</td>
-<td><code>{{.Process.CommandLine}}</code></td>
-<td>The command line of process.</td>
-</tr>
-<tr>
-<td>Pid</td>
-<td>None</td>
-<td><code>{{.Process.Pid}}</code></td>
-<td>The id of the process.</td>
-</tr>
-<tr>
-<td>WorkDir</td>
-<td>None</td>
-<td><code>{{.Process.WorkDir}}</code></td>
-<td>The work directory path of the process.</td>
-</tr>
-</tbody>
-</table>
+<p>Then, you could use <code>kuberctl apply -f rover-daemonset.yml</code> to deploy the skywalking-rover into your cluster.
+It would deploy in each node as a DaemonSet.</p>
 
 
 
@@ -968,19 +657,10 @@ If the multiple finders could match the same process, only the first finder coul
 
 <nav id="TableOfContents">
   <ul>
-    <li><a href="#linux-process-detector">Linux Process Detector</a>
+    <li><a href="#deploy-on-kubernetes">Deploy on Kubernetes</a>
       <ul>
-        <li><a href="#configuration">Configuration</a></li>
-        <li><a href="#agent-sensor-mode">Agent Sensor Mode</a>
-          <ul>
-            <li><a href="#process-status-hook-file-protocol">Process Status Hook File Protocol</a></li>
-          </ul>
-        </li>
-        <li><a href="#regex-mode">Regex Mode</a>
-          <ul>
-            <li><a href="#entity-builder">Entity Builder</a></li>
-          </ul>
-        </li>
+        <li><a href="#startup-kubernetes">Startup Kubernetes</a></li>
+        <li><a href="#deploy-rover">Deploy Rover</a></li>
       </ul>
     </li>
   </ul>
@@ -6127,14 +5807,6 @@ If the multiple finders could match the same process, only the first finder coul
 
 
 
-
-
-
-
-
-
-
-
 <div class="sky-event-popup">
 
     <div class="sky-pop-modal">
@@ -6171,14 +5843,6 @@ If the multiple finders could match the same process, only the first finder coul
                     
                 </a>
             </div>
-            
-            
-            
-            
-            
-            
-            
-            
             
             
             
