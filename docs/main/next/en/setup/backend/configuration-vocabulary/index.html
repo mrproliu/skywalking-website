@@ -620,7 +620,7 @@
 
     <li>
         
-            <a href="/docs/main/next/en/setup/backend/backend-load-balancer">Setup Native Load Balancer</a>
+            <a href="/docs/main/next/en/setup/backend/backend-load-balancer">Setup Load Balancer</a>
         
     </li>
 
@@ -2346,7 +2346,7 @@
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: e50a46b</div>
+                  <div class="commit-id">Commit Id: 593bd05</div>
                 
 
 
@@ -3894,7 +3894,7 @@
 <td>k8sServiceNameRule</td>
 <td><code>k8sServiceNameRule</code> allows you to customize the service name in ALS via Kubernetes metadata. The available variables are <code>pod</code> and <code>service</code>. E.g. you can use <code>${service.metadata.name}-${pod.metadata.labels.version}</code> to append the version number to the service name. Note that when using environment variables to pass this configuration, use single quotes(<code>''</code>) to avoid being evaluated by the shell.</td>
 <td>K8S_SERVICE_NAME_RULE</td>
-<td>${pod.metadata.labels.(service.istio.io/canonical-name)}</td>
+<td>${pod.metadata.labels.(service.istio.io/canonical-name)}.${pod.metadata.namespace}</td>
 </tr>
 <tr>
 <td>-</td>
@@ -3902,7 +3902,7 @@
 <td>istioServiceNameRule</td>
 <td><code>istioServiceNameRule</code> allows you to customize the service name in ALS via Kubernetes metadata. The available variables are <code>serviceEntry</code>. E.g. you can use <code>${serviceEntry.metadata.name}-${serviceEntry.metadata.labels.version}</code> to append the version number to the service name. Note that when using environment variables to pass this configuration, use single quotes(<code>''</code>) to avoid being evaluated by the shell.</td>
 <td>ISTIO_SERVICE_NAME_RULE</td>
-<td>${serviceEntry.metadata.name}</td>
+<td>${serviceEntry.metadata.name}.${serviceEntry.metadata.namespace}</td>
 </tr>
 <tr>
 <td>-</td>
