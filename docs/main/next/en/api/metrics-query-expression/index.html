@@ -1468,6 +1468,14 @@ Common Value Metrics Expression:"/>
 
     
 
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/backend-clickhouse-monitoring">ClickHouse</a>
+        
+    </li>
+
+    
+
 </ul>
 
         
@@ -2401,7 +2409,7 @@ Common Value Metrics Expression:"/>
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 6d8524f</div>
+                  <div class="commit-id">Commit Id: 8c16fdd</div>
                 
 
 
@@ -2816,7 +2824,7 @@ If we want to query the <code>service_percentile</code> metric with the label va
 </table>
 <p>For example:
 If we want to query all Redis command total rates, we can use the following expression(<code>total_commands_rate</code> is a metric which recorded every command rate in labeled value):</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">aggregate_labels(total_commands_rate, SUM)
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">aggregate_labels(total_commands_rate, sum)
 </code></pre></div><h3 id="result-type-7">Result Type</h3>
 <p>The ExpressionResultType of the aggregateLabels operation is TIME_SERIES_VALUES.</p>
 <h2 id="logical-operation">Logical Operation</h2>
@@ -2844,7 +2852,7 @@ However, if the metrics list contains meter with values, it would return <code>1
 <p>Trend Operation takes an expression and performs a trend calculation on its results.</p>
 <p>Expression:</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">&lt;Trend-Operator&gt;(Metrics Expression, time_range)
-</code></pre></div><p><code>time_range</code> is the positive int of the calculated range. The unit will automatically align with to the query <a href="https://github.com/apache/skywalking/tree/6d8524f39ea0c3e5794d3528cac612af695106c2/oap-server/server-core/src/main/java/org/apache/skywalking/oap/server/core/query/enumeration/Step.java">Step</a>,
+</code></pre></div><p><code>time_range</code> is the positive int of the calculated range. The unit will automatically align with to the query <a href="https://github.com/apache/skywalking/tree/8c16fdd816aca63db305208796db9591c57a7a1a/oap-server/server-core/src/main/java/org/apache/skywalking/oap/server/core/query/enumeration/Step.java">Step</a>,
 for example, if the query Step is <code>MINUTE</code>, the unit of <code>time_range</code> is <code>minute</code>.</p>
 <table>
 <thead>
@@ -3232,6 +3240,10 @@ we can use the following expression:</p>
 
     </div>
     
+
+
+
+
 
 
 
