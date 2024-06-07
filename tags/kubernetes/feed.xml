@@ -1,0 +1,264 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Apache SkyWalking – Kubernetes</title>
+    <link>/tags/kubernetes/</link>
+    <description>Recent content in Kubernetes on Apache SkyWalking</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Mon, 13 May 2024 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/kubernetes/feed.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Blog: SkyWalking 10 Release: Service Hierarchy, Kubernetes Network Monitoring by eBPF, BanyanDB, and More</title>
+      <link>/blog/2024-05-13-skywalking-10-release/</link>
+      <pubDate>Mon, 13 May 2024 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2024-05-13-skywalking-10-release/</guid>
+      <description>
+        
+        
+        &lt;p&gt;The Apache SkyWalking team today announced the 10 release. SkyWalking 10 provides a host of groundbreaking features and enhancements.
+The introduction of Layer and Service Hierarchy streamlines monitoring by organizing services and metrics into distinct layers and providing seamless navigation across them.
+Leveraging eBPF technology, Kubernetes Network Monitoring delivers granular insights into network traffic, topology, and TCP/HTTP metrics.
+BanyanDB emerges as a high-performance native storage solution, while expanded monitoring support encompasses Apache RocketMQ, ClickHouse,
+and Apache ActiveMQ Classic. Support for Multiple Labels Names enhances flexibility in metrics analysis,
+while enhanced exporting and querying capabilities streamline data dissemination and processing.&lt;/p&gt;
+&lt;p&gt;This release blog briefly introduces these new features and enhancements as well as some other notable changes.&lt;/p&gt;
+&lt;h2 id=&#34;layer-and-service-hierarchy&#34;&gt;Layer and Service Hierarchy&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;Layer&lt;/code&gt; concept was introduced in SkyWalking 9.0.0, it represents an abstract framework in computer science,
+such as Operating System(OS_LINUX layer), Kubernetes(k8s layer). It organizes services and metrics into different layers based on their roles
+and responsibilities in the system. SkyWalking provides a suite of monitoring and diagnostic tools for each layer, but there is a gap between the layers,
+which can not easily bridge the data across different layers.&lt;/p&gt;
+&lt;p&gt;In SkyWalking 10, SkyWalking provides new abilities to jump/connect across different layers and provide a seamless monitoring experience for users.&lt;/p&gt;
+&lt;h3 id=&#34;layer-jump&#34;&gt;Layer Jump&lt;/h3&gt;
+&lt;p&gt;In the topology graph, users can click on a service node to jump to the dashboard of the service in another layer.
+The following figures show the jump from the &lt;code&gt;GENERAL&lt;/code&gt; layer service topology to the &lt;code&gt;VIRTUAL_DATABASE&lt;/code&gt; service layer dashboard by clicking the topology node.
+&lt;img src=&#34;layer_jump.jpg&#34; alt=&#34;Figure 1: Layer Jump&#34;&gt;
+Figure 1: Layer Jump&lt;/br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;layer_jump2.jpg&#34; alt=&#34;Figure 2: Layer jump Dashboard&#34;&gt;
+Figure 2: Layer jump Dashboard&lt;/p&gt;
+&lt;h3 id=&#34;service-hierarchy&#34;&gt;Service Hierarchy&lt;/h3&gt;
+&lt;p&gt;SkyWalking 10 introduces a new concept called &lt;code&gt;Service Hierarchy&lt;/code&gt;, which defines the relationships of existing logically same services in various layers.
+OAP will detect the services from different layers, and try to build the connections.
+Users can click the &lt;code&gt;Hierarchy Services&lt;/code&gt; in any layer&amp;rsquo;s service topology node or service dashboard to get the &lt;code&gt;Hierarchy Topology&lt;/code&gt;.
+In this topology graph, users can see the relationships between the services in different layers and the summary of the metrics and also can jump to the service dashboard in the layer.
+When a service occurs performance issue, users can easily analyze the metrics from different layers and track down the root cause:&lt;/p&gt;
+&lt;p&gt;The examples of the &lt;code&gt;Service Hierarchy&lt;/code&gt; relationships:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;The application &lt;code&gt;song&lt;/code&gt; deployed in the Kubernetes cluster with SkyWalking agent and Service Mesh at the same time.
+So the application &lt;code&gt;song&lt;/code&gt; across the &lt;code&gt;GENERAL&lt;/code&gt;, &lt;code&gt;MESH&lt;/code&gt;, &lt;code&gt;MESH_DP&lt;/code&gt; and &lt;code&gt;K8S_SERVICE&lt;/code&gt; layers which could be monitored by SkyWalking,
+the &lt;code&gt;Service Hierarchy&lt;/code&gt; topology as below:
+&lt;img src=&#34;song.jpg&#34; alt=&#34;Figure 3: Service Hierarchy Agent With K8s Service And Mesh With K8s Service&#34;&gt;
+Figure 3: Service Hierarchy Agent With K8s Service And Mesh With K8s Service.&lt;/br&gt;
+&lt;/br&gt;
+And can also have the &lt;code&gt;Service Instance Hierarchy&lt;/code&gt; topology to get the single instance status across the layers as below:
+&lt;img src=&#34;song_instance.jpg&#34; alt=&#34;Figure 4: Instance Hierarchy Agent With K8s Service(Pod)&#34;&gt;
+Figure 4: Instance Hierarchy Agent With K8s Service(Pod)&lt;/br&gt;
+&lt;/br&gt;&lt;/li&gt;
+&lt;li&gt;The PostgreSQL database &lt;code&gt;psql&lt;/code&gt; deployed in the Kubernetes cluster and used by the application &lt;code&gt;song&lt;/code&gt;.
+So the database &lt;code&gt;psql&lt;/code&gt; across the &lt;code&gt;VIRTUAL_DATABASE&lt;/code&gt;, &lt;code&gt;POSTGRESQL&lt;/code&gt; and &lt;code&gt;K8S_SERVICE&lt;/code&gt; layers which could be monitored by SkyWalking,
+the &lt;code&gt;Service Hierarchy&lt;/code&gt; topology as below:
+&lt;img src=&#34;postgre.jpg&#34; alt=&#34;Figure 5: Service Hierarchy Agent(Virtual Database) With Real Database And K8s Service&#34;&gt;
+Figure 5: Service Hierarchy Agent(Virtual Database) With Real Database And K8s Service&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;For more supported layers and how to detect the relationships between services in different layers please refer to the &lt;a href=&#34;https://skywalking.apache.org/docs/main/latest/en/concepts-and-designs/service-hierarchy/#service-hierarchy&#34;&gt;Service Hierarchy&lt;/a&gt;.
+how to configure the &lt;code&gt;Service Hierarchy&lt;/code&gt; in SkyWalking, please refer to the &lt;a href=&#34;https://skywalking.apache.org/docs/main/latest/en/concepts-and-designs/service-hierarchy-configuration/&#34;&gt;Service Hierarchy Configuration&lt;/a&gt; section.&lt;/p&gt;
+&lt;h2 id=&#34;monitoring-kubernetes-network-traffic-by-using-ebpf&#34;&gt;Monitoring Kubernetes Network Traffic by using eBPF&lt;/h2&gt;
+&lt;p&gt;In the previous version, skyWalking provides &lt;a href=&#34;https://skywalking.apache.org/docs/main/latest/en/setup/backend/backend-k8s-monitoring-metrics-cadvisor/&#34;&gt;Kubernetes (K8s) monitoring from kube-state-metrics and cAdvisor&lt;/a&gt;,
+which can monitor the Kubernetes cluster status and the metrics of the Kubernetes resources.&lt;/p&gt;
+&lt;p&gt;In SkyWalking 10, by leverage &lt;a href=&#34;https://skywalking.apache.org/docs/skywalking-rover/latest/readme/&#34;&gt;Apache SkyWalking Rover&lt;/a&gt; 0.6+,
+SkyWalking has the ability to monitor the Kubernetes network traffic by using eBPF, which can collect and map access logs from applications in Kubernetes environments.
+Through these data, SkyWalking can analyze and provide the Service Traffic, Topology, TCP/HTTP level metrics from the Kubernetes aspect.&lt;/p&gt;
+&lt;p&gt;The following figures show the Topology and TCP Dashboard of the Kubernetes network traffic:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;k8s_topology.jpg&#34; alt=&#34;Figure 6: Kubernetes Network Traffic Topology&#34;&gt;
+Figure 6: Kubernetes Network Traffic Topology&lt;/br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;k8s_dashboard.jpg&#34; alt=&#34;Figure 7: Kubernetes Network Traffic TCP Dashboard&#34;&gt;
+Figure 7: Kubernetes Network Traffic TCP Dashboard&lt;/br&gt;&lt;/p&gt;
+&lt;p&gt;More details about how to monitor the Kubernetes network traffic by using eBPF, please refer to the &lt;a href=&#34;https://skywalking.apache.org/blog/2024-03-18-monitor-kubernetes-network-by-ebpf/&#34;&gt;Monitoring Kubernetes Network Traffic by using eBPF&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;banyandb---native-apm-database&#34;&gt;BanyanDB - Native APM Database&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://skywalking.apache.org/docs/skywalking-banyandb/latest/readme/&#34;&gt;BanyanDB&lt;/a&gt; 0.6.0 and &lt;a href=&#34;https://github.com/apache/skywalking-banyandb-java-client&#34;&gt;BanyanDB Java client&lt;/a&gt; 0.6.0 are released with SkyWalking 10,
+As a native storage solution for SkyWalking, BanyanDB is going to be SkyWalking&amp;rsquo;s next-generation storage solution. This is recommended to use for medium-scale deployments from 0.6 until 1.0.&lt;br&gt;
+It has shown high potential performance improvement. Less than 50% CPU usage and 50% memory usage with 40% disk volume compared to Elasticsearch in the same scale.&lt;/p&gt;
+&lt;h2 id=&#34;apache-rocketmq-server-monitoring&#34;&gt;Apache RocketMQ Server Monitoring&lt;/h2&gt;
+&lt;p&gt;Apache RocketMQ is an open-source distributed messaging and streaming platform, which is widely used in various scenarios including Internet, big data, mobile Internet, IoT, and other fields.
+SkyWalking provides a basic monitoring dashboard for RocketMQ, which includes the following metrics:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Cluster Metrics: including messages produced/consumed today, total producer/consumer TPS, producer/consumer message size, messages produced/consumed until yesterday, max consumer latency, max commitLog disk ratio, commitLog disk ratio, pull/send threadPool queue head wait time, topic count, and broker count.&lt;/li&gt;
+&lt;li&gt;Broker Metrics: including produce/consume TPS, producer/consumer message size.&lt;/li&gt;
+&lt;li&gt;Topic Metrics: including max producer/consumer message size, consumer latency, producer/consumer TPS, producer/consumer offset, producer/consumer message size, consumer group count, and broker count.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The following figure shows the RocketMQ Cluster Metrics dashboard:
+&lt;img src=&#34;rocket_mq.jpg&#34; alt=&#34;Figure 8: Apache RocketMQ Server Monitoring&#34;&gt;
+Figure 8: Apache RocketMQ Server Monitoring&lt;/br&gt;&lt;/p&gt;
+&lt;p&gt;For more metrics and details about the RocketMQ monitoring, please refer to the &lt;a href=&#34;https://skywalking.apache.org/docs/main/latest/en/setup/backend/backend-rocketmq-monitoring/&#34;&gt;Apache RocketMQ Server Monitoring&lt;/a&gt;,&lt;/p&gt;
+&lt;h2 id=&#34;clickhouse-server-monitoring&#34;&gt;ClickHouse Server Monitoring&lt;/h2&gt;
+&lt;p&gt;ClickHouse is an open-source column-oriented database management system that allows generating analytical data reports in real-time, it is widely used for online analytical processing (OLAP).
+ClickHouse monitoring provides monitoring of the metrics 、events and asynchronous metrics of the ClickHouse server, which includes the following parts of metrics:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Server Metrics&lt;/li&gt;
+&lt;li&gt;Query Metrics&lt;/li&gt;
+&lt;li&gt;Network Metrics&lt;/li&gt;
+&lt;li&gt;Insert Metrics&lt;/li&gt;
+&lt;li&gt;Replica Metrics&lt;/li&gt;
+&lt;li&gt;MergeTree Metrics&lt;/li&gt;
+&lt;li&gt;ZooKeeper Metrics&lt;/li&gt;
+&lt;li&gt;Embedded ClickHouse Keeper Metrics&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The following figure shows the ClickHouse Cluster Metrics dashboard:
+&lt;img src=&#34;clickhouse.jpg&#34; alt=&#34;Figure 9: ClickHouse Server Monitoring&#34;&gt;
+Figure 9: ClickHouse Server Monitoring&lt;/br&gt;&lt;/p&gt;
+&lt;p&gt;For more metrics and details about the ClickHouse monitoring, please refer to the &lt;a href=&#34;https://skywalking.apache.org/docs/main/latest/en/setup/backend/backend-clickhouse-monitoring/&#34;&gt;ClickHouse Server Monitoring&lt;/a&gt;,
+and here is a blog that can help for a quick start &lt;a href=&#34;https://skywalking.apache.org/blog/2024-03-12-monitoring-clickhouse-through-skywalking/&#34;&gt;Monitoring ClickHouse through SkyWalking&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;apache-activemq-server-monitoring&#34;&gt;Apache ActiveMQ Server Monitoring&lt;/h2&gt;
+&lt;p&gt;Apache ActiveMQ Classic is a popular and powerful open-source messaging and integration pattern server.
+SkyWalking provides a basic monitoring dashboard for ActiveMQ, which includes the following metrics:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Cluster Metrics: including memory usage, rates of write/read, and average/max duration of write.&lt;/li&gt;
+&lt;li&gt;Broker Metrics: including node state, number of connections, number of producers/consumers, and rate of write/read under the broker. Depending on the cluster mode, one cluster may include one or more brokers.&lt;/li&gt;
+&lt;li&gt;Destination Metrics: including number of producers/consumers, messages in different states, queues, and enqueue duration in a queue/topic.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The following figure shows the ActiveMQ Cluster Metrics dashboard:
+&lt;img src=&#34;active_mq.jpg&#34; alt=&#34;Figure 10: Apache ActiveMQ Server Monitoring&#34;&gt;
+Figure 10: Apache ActiveMQ Server Monitoring&lt;/br&gt;&lt;/p&gt;
+&lt;p&gt;For more metrics and details about the ActiveMQ monitoring, please refer to the &lt;a href=&#34;https://skywalking.apache.org/docs/main/latest/en/setup/backend/backend-activemq-monitoring/&#34;&gt;Apache ActiveMQ Server Monitoring&lt;/a&gt;,
+and here is a blog that can help for a quick start &lt;a href=&#34;https://skywalking.apache.org/blog/2024-04-19-monitoring-activemq-through-skywalking/&#34;&gt;Monitoring ActiveMQ through SkyWalking&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;support-multiple-labels-names&#34;&gt;Support Multiple Labels Names&lt;/h2&gt;
+&lt;p&gt;Before SkyWalking 10, SkyWalking does not store the labels names in the metrics data, which makes MQE have to use &lt;code&gt;_&lt;/code&gt; as the generic label name,
+it can&amp;rsquo;t query the metrics data with multiple labels names.&lt;/p&gt;
+&lt;p&gt;SkyWalking 10 supports storing the labels names in the metrics data, and MQE can query or calculate the metrics data with multiple labels names.
+For example:
+The &lt;code&gt;k8s_cluster_deployment_status&lt;/code&gt; metric has labels &lt;code&gt;namespace&lt;/code&gt;, &lt;code&gt;deployment&lt;/code&gt; and &lt;code&gt;status&lt;/code&gt;.
+If we want to query all deployment metric values with &lt;code&gt;namespace=skywalking-showcase&lt;/code&gt; and &lt;code&gt;status=true&lt;/code&gt;, we can use the following expression:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;k8s_cluster_deployment_status{namespace=&amp;#39;skywalking-showcase&amp;#39;, status=&amp;#39;true&amp;#39;}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;related enhancement:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Since Alarm rule configuration had migrated to the MQE in SkyWalking 9.6.0, the alarm rule also supports multiple labels names.&lt;/li&gt;
+&lt;li&gt;PromeQL service supports multiple labels names query.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;metrics-grpc-exporter&#34;&gt;Metrics gRPC exporter&lt;/h2&gt;
+&lt;p&gt;SkyWalking 10 enhanced the &lt;a href=&#34;https://skywalking.apache.org/docs/main/latest/en/setup/backend/exporter/#grpc-exporter&#34;&gt;metrics gPRC exporter&lt;/a&gt;,
+it supports exporting all types of metrics data to the gRPC server.&lt;/p&gt;
+&lt;h2 id=&#34;skywalking-native-ui-metrics-query-switch-to-v3-apis&#34;&gt;SkyWalking Native UI Metrics Query Switch to V3 APIs&lt;/h2&gt;
+&lt;p&gt;SkyWalking Native UI metrics query deprecate the V2 APIs, and all migrated to &lt;a href=&#34;https://skywalking.apache.org/docs/main/latest/en/api/query-protocol/#v3-apis&#34;&gt;V3 APIs&lt;/a&gt;
+and &lt;a href=&#34;https://skywalking.apache.org/docs/main/next/en/api/metrics-query-expression/#metrics-query-expressionmqe-syntax&#34;&gt;MQE&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;other-notable-enhancements&#34;&gt;Other Notable Enhancements&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;Support Java 21 runtime and oap-java21 image for Java 21 runtime.&lt;/li&gt;
+&lt;li&gt;Remove CLI(&lt;code&gt;swctl&lt;/code&gt;) from the image.&lt;/li&gt;
+&lt;li&gt;More MQE functions and operators supported.&lt;/li&gt;
+&lt;li&gt;Enhance the native UI and improve the user experience.&lt;/li&gt;
+&lt;li&gt;Several bugs and CVEs fixed.&lt;/li&gt;
+&lt;/ol&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Zh: SkyWalking 10 发布：服务层次结构、基于 eBPF 的 Kubernetes 网络监控、BanyanDB 等</title>
+      <link>/zh/2024-05-13-skywalking-10-release/</link>
+      <pubDate>Mon, 13 May 2024 00:00:00 +0000</pubDate>
+      
+      <guid>/zh/2024-05-13-skywalking-10-release/</guid>
+      <description>
+        
+        
+        &lt;p&gt;Apache SkyWalking 团队今天宣布发布 SkyWalking 10。SkyWalking 10 提供了一系列突破性的功能和增强功能。Layer 和 Service Hierarchy 的引入通过将服务和指标组织成不同的层次，并提供跨层无缝导航，从而简化了监控。利用 eBPF 技术，Kubernetes 网络监控提供了对网络流量、拓扑和 TCP/HTTP 指标的详细洞察。BanyanDB 作为高性能的原生存储解决方案出现，同时扩展的监控支持包括 Apache RocketMQ、ClickHouse 和 Apache ActiveMQ Classic。对多标签名称的支持增强了指标分析的灵活性，而增强的导出和查询功能简化了数据分发和处理。&lt;/p&gt;
+&lt;p&gt;本文简要介绍了这些新功能和增强功能以及其他一些值得注意的变化。&lt;/p&gt;
+&lt;h2 id=&#34;layer-和-service-hierarchy&#34;&gt;Layer 和 Service Hierarchy&lt;/h2&gt;
+&lt;p&gt;Layer 概念是在 SkyWalking 9.0.0 中引入的，它代表计算机科学中的一个抽象框架，例如操作系统（OS_LINUX layer）、Kubernetes（k8s layer）。它根据系统中服务和指标的角色和职责将其组织到不同的层次。SkyWalking 为每个层提供了一套监控和诊断工具，但层之间存在 gap，无法轻松跨层桥接数据。&lt;/p&gt;
+&lt;p&gt;在 SkyWalking 10 中，SkyWalking 提供了跨层跳转/连接的新功能，为用户提供无缝的监控体验。&lt;/p&gt;
+&lt;h3 id=&#34;layer-jump&#34;&gt;Layer Jump&lt;/h3&gt;
+&lt;p&gt;在拓扑图中，用户可以点击服务节点跳转到另一层服务的仪表板。下图显示了通过点击拓扑节点从 GENERAL 层服务拓扑跳转到 VIRTUAL_DATABASE 服务层仪表板的过程。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;layer_jump.jpg&#34; alt=&#34;图 1: Layer Jump&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;layer_jump2.jpg&#34; alt=&#34;图 2: Layer jump Dashboard&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;service-hierarchy&#34;&gt;Service Hierarchy&lt;/h3&gt;
+&lt;p&gt;SkyWalking 10 引入了一个新概念，称为 Service Hierarchy，它定义了各层中现有逻辑相同服务的关系。OAP 将检测不同层次的服务，并尝试建立连接。用户可以点击任何层的服务拓扑节点或服务仪表板中的 Hierarchy Services 获取 Hierarchy Topology。在此拓扑图中，用户可以看到不同层次服务之间的关系和指标摘要，并且可以跳转到该层的服务仪表板。当服务发生性能问题时，用户可以轻松分析不同层次的指标并找出根本原因：&lt;/p&gt;
+&lt;p&gt;以下是 Service Hierarchy 关系的示例：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;应用程序 &lt;code&gt;song&lt;/code&gt; 同时在 Kubernetes 集群中部署了 SkyWalking agent 和 Service Mesh。因此，应用程序 &lt;code&gt;song&lt;/code&gt; 跨越了 GENERAL、MESH、MESH_DP 和 K8S_SERVICE 层，SkyWalking 可以监控这些层次，Service Hierarchy 拓扑如下：&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;song.jpg&#34; alt=&#34;图 3: Service Hierarchy Agent With K8s Service And Mesh With K8s Service&#34;&gt;&lt;/p&gt;
+&lt;p&gt;还可以有 Service Instance Hierarchy 拓扑来获取跨层的单实例状态，如下所示：    &lt;img src=&#34;song_instance.jpg&#34; alt=&#34;图 4: Instance Hierarchy Agent With K8s Service(Pod)&#34;&gt;&lt;/p&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;在 Kubernetes 集群中部署并由应用程序 &lt;code&gt;song&lt;/code&gt; 使用的 PostgreSQL 数据库 &lt;code&gt;psql&lt;/code&gt;。因此，数据库 &lt;code&gt;psql&lt;/code&gt; 跨越 &lt;code&gt;VIRTUAL_DATABASE&lt;/code&gt;、&lt;code&gt;POSTGRESQL&lt;/code&gt; 和 &lt;code&gt;K8S_SERVICE&lt;/code&gt; 层，SkyWalking 可以监控这些层次，Service Hierarchy 拓扑如下：&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;postgre.jpg&#34; alt=&#34;图 5: Service Hierarchy Agent(Virtual Database) With Real Database And K8s Service&#34;&gt;&lt;/p&gt;
+&lt;p&gt;有关更多支持的层次以及如何检测不同层次服务之间的关系，请参阅 &lt;a href=&#34;https://skywalking.apache.org/docs/main/latest/en/concepts-and-designs/service-hierarchy/#service-hierarchy&#34;&gt;Service Hierarchy&lt;/a&gt;。有关如何在 SkyWalking 中配置 Service Hierarchy，请参阅 &lt;a href=&#34;https://skywalking.apache.org/docs/main/latest/en/concepts-and-designs/service-hierarchy-configuration/&#34;&gt;Service Hierarchy Configuration&lt;/a&gt; 部分。&lt;/p&gt;
+&lt;h2 id=&#34;使用-ebpf-监控-kubernetes-网络流量&#34;&gt;使用 eBPF 监控 Kubernetes 网络流量&lt;/h2&gt;
+&lt;p&gt;在之前的版本中，SkyWalking 提供了 &lt;a href=&#34;https://skywalking.apache.org/docs/main/latest/en/setup/backend/backend-k8s-monitoring-metrics-cadvisor/&#34;&gt;来自 kube-state-metrics 和 cAdvisor 的 Kubernetes (K8s) 监控&lt;/a&gt;，它可以监控 Kubernetes 集群状态和 Kubernetes 资源的指标。&lt;/p&gt;
+&lt;p&gt;在 SkyWalking 10 中，通过利用 &lt;a href=&#34;https://skywalking.apache.org/docs/skywalking-rover/latest/readme/&#34;&gt;Apache SkyWalking Rover&lt;/a&gt; 0.6+，SkyWalking 具有使用 eBPF 监控 Kubernetes 网络流量的能力，可以收集和映射 Kubernetes 环境中应用程序的访问日志。通过这些数据，SkyWalking 可以从 Kubernetes 角度分析和提供服务流量、拓扑、TCP/HTTP 级别指标。&lt;/p&gt;
+&lt;p&gt;下图显示了 Kubernetes 网络流量的拓扑和 TCP 仪表板：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;k8s_topology.jpg&#34; alt=&#34;图 6: Kubernetes Network Traffic Topology&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;k8s_dashboard.jpg&#34; alt=&#34;图 7: Kubernetes Network Traffic TCP Dashboard&#34;&gt;&lt;/p&gt;
+&lt;p&gt;有关如何使用 eBPF 监控 Kubernetes 网络流量的更多详细信息，请参阅 &lt;a href=&#34;https://skywalking.apache.org/blog/2024-03-18-monitor-kubernetes-network-by-ebpf/&#34;&gt;使用 eBPF 监控 Kubernetes 网络流量&lt;/a&gt;。&lt;/p&gt;
+&lt;h2 id=&#34;banyandb---原生-apm-数据库&#34;&gt;BanyanDB - 原生 APM 数据库&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://skywalking.apache.org/docs/skywalking-banyandb/latest/readme/&#34;&gt;BanyanDB&lt;/a&gt; 0.6.0 和 &lt;a href=&#34;https://github.com/apache/skywalking-banyandb-java-client&#34;&gt;BanyanDB Java 客户端&lt;/a&gt; 0.6.0 随 SkyWalking 10 一起发布。作为 SkyWalking 的原生存储解决方案，BanyanDB 将成为 SkyWalking 的下一代存储解决方案。推荐在 0.6 到 1.0 期间用于中等规模的部署。
+它展示了高性能改进的潜力。与 Elasticsearch 在同一规模下相比，CPU 使用率降低 50%，内存使用率降低 50%，磁盘使用量减少 40%。&lt;/p&gt;
+&lt;h2 id=&#34;apache-rocketmq-服务器监控&#34;&gt;Apache RocketMQ 服务器监控&lt;/h2&gt;
+&lt;p&gt;Apache RocketMQ 是一个开源的分布式消息和流平台，广泛应用于互联网、大数据、移动互联网、物联网等领域。SkyWalking 为 RocketMQ 提供了一个基本的监控仪表板，包括以下指标：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Cluster Metrics：包括当天产生/消费的消息数、总生产者/消费者 TPS、生产者/消费者消息大小、截至昨天产生/消费的消息数、最大消费者延迟、最大 commitLog 磁盘比、commitLog 磁盘比、拉取/发送线程池队列头等待时间、topic count 和 broker count。&lt;/li&gt;
+&lt;li&gt;Broker Metrics：包括生产/消费 TPS、生产者/消费者消息大小。&lt;/li&gt;
+&lt;li&gt;Topic Metrics：包括最大生产者/消费者消息大小、消费者延迟、生产/消费 TPS、生产/消费偏移、生产/消费消息大小、消费者组数和代理数。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;下图显示了 RocketMQ Cluster Metrics 仪表板：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;rocket_mq.jpg&#34; alt=&#34;图 8: Apache RocketMQ 服务器监控&#34;&gt;&lt;/p&gt;
+&lt;p&gt;有关 RocketMQ 监控的更多指标和详细信息，请参阅 &lt;a href=&#34;https://skywalking.apache.org/docs/main/latest/en/setup/backend/backend-rocketmq-monitoring/&#34;&gt;Apache RocketMQ 服务器监控&lt;/a&gt;。&lt;/p&gt;
+&lt;h2 id=&#34;clickhouse-server-监控&#34;&gt;ClickHouse Server 监控&lt;/h2&gt;
+&lt;p&gt;ClickHouse 是一个开源的列式数据库管理系统，可以实时生成分析数据报告，广泛用于在线分析处理 (OLAP)。ClickHouse 监控提供了 ClickHouse 服务器的指标、事件和异步指标的监控，包括以下部分的指标：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Server Metrics&lt;/li&gt;
+&lt;li&gt;Query Metrics&lt;/li&gt;
+&lt;li&gt;Network Metrics&lt;/li&gt;
+&lt;li&gt;Insert Metrics&lt;/li&gt;
+&lt;li&gt;Replica Metrics&lt;/li&gt;
+&lt;li&gt;MergeTree Metrics&lt;/li&gt;
+&lt;li&gt;ZooKeeper Metrics&lt;/li&gt;
+&lt;li&gt;Embedded ClickHouse Keeper Metrics&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;下图显示了 ClickHouse Cluster Metrics 仪表板：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;clickhouse.jpg&#34; alt=&#34;图 9: ClickHouse 服务器监控&#34;&gt;&lt;/p&gt;
+&lt;p&gt;有关 ClickHouse 监控的更多指标和详细信息，请参阅 &lt;a href=&#34;https://skywalking.apache.org/docs/main/latest/en/setup/backend/backend-clickhouse-monitoring/&#34;&gt;ClickHouse 服务器监控&lt;/a&gt;，以及一篇可以帮助快速入门的博客 &lt;a href=&#34;https://skywalking.apache.org/blog/2024-03-12-monitoring-clickhouse-through-skywalking/&#34;&gt;通过 SkyWalking 监控 ClickHouse&lt;/a&gt;。&lt;/p&gt;
+&lt;h2 id=&#34;apache-activemq-服务器监控&#34;&gt;Apache ActiveMQ 服务器监控&lt;/h2&gt;
+&lt;p&gt;Apache ActiveMQ Classic 是一个流行且强大的开源消息和集成模式服务器。SkyWalking 为 ActiveMQ 提供了一个基本的监控仪表板，包括以下指标：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Cluster Metrics：包括内存使用率、写入/读取速率和平均/最大写入持续时间。&lt;/li&gt;
+&lt;li&gt;Broker Metrics：包括节点状态、连接数、生产者/消费者数和代理下的写入/读取速率。根据集群模式，一个集群可以包含一个或多个代理。&lt;/li&gt;
+&lt;li&gt;Destination Metrics：包括生产者/消费者数、不同状态的消息、队列和队列/主题中的入队持续时间。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;下图显示了 ActiveMQ Cluster Metrics 仪表板：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;active_mq.jpg&#34; alt=&#34;图 10: Apache ActiveMQ 服务器监控&#34;&gt;&lt;/p&gt;
+&lt;p&gt;有关 ActiveMQ 监控的更多指标和详细信息，请参阅 &lt;a href=&#34;https://skywalking.apache.org/docs/main/latest/en/setup/backend/backend-activemq-monitoring/&#34;&gt;Apache ActiveMQ 服务器监控&lt;/a&gt;，以及一篇可以帮助快速入门的博客 &lt;a href=&#34;https://skywalking.apache.org/blog/2024-04-19-monitoring-activemq-through-skywalking/&#34;&gt;通过 SkyWalking 监控 ActiveMQ&lt;/a&gt;。&lt;/p&gt;
+&lt;h2 id=&#34;支持多标签名称&#34;&gt;支持多标签名称&lt;/h2&gt;
+&lt;p&gt;在 SkyWalking 10 之前，SkyWalking 不会在指标数据中存储标签名称，这使得 MQE 必须使用 &lt;code&gt;_&lt;/code&gt; 作为通用标签名称，无法使用多个标签名称查询指标数据。&lt;/p&gt;
+&lt;p&gt;SkyWalking 10 支持在指标数据中存储标签名称，MQE 可以使用多个标签名称查询或计算指标数据。例如：&lt;code&gt;k8s_cluster_deployment_status&lt;/code&gt; 指标具有 &lt;code&gt;namespace&lt;/code&gt;、&lt;code&gt;deployment&lt;/code&gt; 和 &lt;code&gt;status&lt;/code&gt; 标签。如果我们想查询所有 &lt;code&gt;namespace=skywalking-showcase&lt;/code&gt; 和 &lt;code&gt;status=true&lt;/code&gt; 的部署指标值，可以使用以下表达式：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;k8s_cluster_deployment_status{namespace=&amp;#39;skywalking-showcase&amp;#39;, status=&amp;#39;true&amp;#39;}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;相关增强：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;由于在 SkyWalking 9.6.0 中告警规则配置已迁移到 MQE，因此告警规则也支持多标签名称。&lt;/li&gt;
+&lt;li&gt;PromeQL 服务支持多标签名称查询。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;metrics-grpc-导出器&#34;&gt;Metrics gRPC 导出器&lt;/h2&gt;
+&lt;p&gt;SkyWalking 10 增强了 &lt;a href=&#34;https://skywalking.apache.org/docs/main/latest/en/setup/backend/exporter/#grpc-exporter&#34;&gt;metrics gPRC exporter&lt;/a&gt;，支持将所有类型的指标数据导出到 gRPC 服务器。&lt;/p&gt;
+&lt;h2 id=&#34;skywalking-原生-ui-指标查询切换到-v3-api&#34;&gt;SkyWalking 原生 UI 指标查询切换到 V3 API&lt;/h2&gt;
+&lt;p&gt;SkyWalking 原生 UI 指标查询弃用 V2 API，全部迁移到 &lt;a href=&#34;https://skywalking.apache.org/docs/main/latest/en/api/query-protocol/#v3-apis&#34;&gt;V3 API&lt;/a&gt; 和 &lt;a href=&#34;https://skywalking.apache.org/docs/main/next/en/api/metrics-query-expression/#metrics-query-expressionmqe-syntax&#34;&gt;MQE&lt;/a&gt;。&lt;/p&gt;
+&lt;h2 id=&#34;其他值得注意的增强功能&#34;&gt;其他值得注意的增强功能&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;支持 Java 21 运行时和 oap-java21 镜像用于 Java 21 运行时。&lt;/li&gt;
+&lt;li&gt;从镜像中删除 CLI（&lt;code&gt;swctl&lt;/code&gt;）。&lt;/li&gt;
+&lt;li&gt;支持更多的 MQE 函数和操作。&lt;/li&gt;
+&lt;li&gt;增强原生 UI 并改善用户体验。&lt;/li&gt;
+&lt;li&gt;修复了一些 Bug 和 CVE。&lt;/li&gt;
+&lt;/ol&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

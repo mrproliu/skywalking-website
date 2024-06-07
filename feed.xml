@@ -13,6 +13,639 @@
     
     
     <item>
+      <title>Blog: BanyanDB 0.6 Release: Enhanced Performance and Efficiency</title>
+      <link>/blog/2024-06-04-banyandb-0.6-release/</link>
+      <pubDate>Tue, 04 Jun 2024 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2024-06-04-banyandb-0.6-release/</guid>
+      <description>
+        
+        
+        &lt;h1 id=&#34;introduction&#34;&gt;Introduction&lt;/h1&gt;
+&lt;p&gt;We are excited to announce the release of BanyanDB v0.6, a significant milestone in the evolution of our database technology. This latest version introduces a groundbreaking column-based file system that enhances performance and improves efficiency in handling large datasets. After extensive testing, we can confirm that this new file system is ready for production. BanyanDB is now production-ready.&lt;/p&gt;
+&lt;p&gt;In this blog post, we’ll dive deep into the new architecture and the performance improvements observed and provide a step-by-step guide on installing and getting started with BanyanDB v0.6.&lt;/p&gt;
+&lt;h1 id=&#34;understanding-banyandb-architecture&#34;&gt;Understanding BanyanDB Architecture&lt;/h1&gt;
+&lt;p&gt;BanyanDB is designed as a highly scalable, multi-model database. The architecture of BanyanDB is modular, allowing for flexibility in storage and indexing strategies, which makes it an ideal choice for complex data environments.&lt;/p&gt;
+&lt;h3 id=&#34;key-features&#34;&gt;Key Features:&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Multi-Model Support:&lt;/strong&gt; Seamlessly handles various data types.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Scalability:&lt;/strong&gt; Designed to scale horizontally across multiple nodes.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;High Performance:&lt;/strong&gt; Optimized for quick data retrieval and high data ingestion rates.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;data-model&#34;&gt;Data Model&lt;/h2&gt;
+&lt;p&gt;BanyanDB is a multi-model database engineered to support diverse data types, including time series and key-value data. This flexibility is essential for modern APM systems that require versatile data handling capabilities.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;data_models.png&#34; alt=&#34;BanyanDB Models&#34;&gt;&lt;/p&gt;
+&lt;p&gt;BanyanDB Models&lt;/p&gt;
+&lt;h3 id=&#34;time-series-data&#34;&gt;Time-Series Data:&lt;/h3&gt;
+&lt;p&gt;BanyanDB manages time-series data, which are data points indexed in time order, typically logged at successive, equally spaced points in time. This makes it ideal for a sequence of discrete-time data. In BanyanDB, you can store time-series data through two structures:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Stream&lt;/strong&gt;: This type of data is suitable for logging, such as logs, traces, and events. Streams help manage data that are continuously generated and sequentially recorded.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Measure&lt;/strong&gt;: Designed for ingesting metrics and profiles. Measures are useful for statistical representations over intervals of time.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;key-value-data&#34;&gt;Key-Value Data:&lt;/h3&gt;
+&lt;p&gt;The key-value model in BanyanDB is a subset of the Property model. Each property is identified by a unique key formatted as &lt;code&gt;&amp;lt;group&amp;gt;/&amp;lt;name&amp;gt;/&amp;lt;id&amp;gt;&lt;/code&gt;, which acts as a primary key for retrieving data. This key is immutable once set, ensuring data consistency and integrity.&lt;/p&gt;
+&lt;p&gt;Properties consist of several key-value pairs, referred to as Tags. You can dynamically add, update, or drop tags based on the tag&amp;rsquo;s key, offering flexibility in managing and storing data. For example, SkyWalking UI templates utilize this model to store configuration data efficiently.&lt;/p&gt;
+&lt;h2 id=&#34;clustering-in-banyandb&#34;&gt;Clustering in BanyanDB&lt;/h2&gt;
+&lt;p&gt;BanyanDB&amp;rsquo;s architecture not only ensures efficient data management and high availability but also emphasizes scalability across its clustered environment. The system includes three distinct node types, each capable of scaling independently to meet varying workload demands.&lt;/p&gt;
+&lt;h3 id=&#34;data-nodes&#34;&gt;Data Nodes&lt;/h3&gt;
+&lt;p&gt;Data Nodes are central to storing and managing all raw time series data, metadata, and indexed data. Operating under a shared-nothing architecture, these nodes do not communicate directly with each other nor share any data, enhancing cluster availability and simplifying maintenance and scaling. This design prioritizes availability, allowing the system to remain operational for data ingestion and querying even if some nodes are temporarily unavailable.&lt;/p&gt;
+&lt;h3 id=&#34;meta-nodes&#34;&gt;Meta Nodes&lt;/h3&gt;
+&lt;p&gt;Implemented using etcd, Meta Nodes manage the overarching cluster metadata and ensure consistency across the system. They maintain a global view of the node states and database schemas, facilitating coordinated operations within the cluster.&lt;/p&gt;
+&lt;h3 id=&#34;liaison-nodes&#34;&gt;Liaison Nodes&lt;/h3&gt;
+&lt;p&gt;Liaison Nodes serve as the communication bridge, routing queries and data to the appropriate Data Nodes. They handle security functions like authentication and TTL enforcement, and manage distributed query execution to optimize performance. They play a crucial role in maintaining service availability; as long as at least one Data Node is operational, Liaison Nodes can continue to serve queries. In scenarios where some Data Nodes are unavailable, Liaison Nodes reroute traffic to the remaining healthy nodes, which may lead to increased resource use on these nodes.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;cluster.png&#34; alt=&#34;BanyanDB Cluster&#34;&gt;&lt;/p&gt;
+&lt;p&gt;BanyanDB Cluster&lt;/p&gt;
+&lt;h3 id=&#34;communication&#34;&gt;Communication&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Meta Nodes&lt;/strong&gt; synchronize metadata across the cluster.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Data Nodes&lt;/strong&gt; interact with Meta Nodes to update and fetch metadata.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Liaison Nodes&lt;/strong&gt; route data to Data Nodes and coordinate query processes, leveraging metadata from Meta Nodes for efficient distribution and execution.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;scalability-and-fault-tolerance&#34;&gt;Scalability and Fault Tolerance&lt;/h3&gt;
+&lt;p&gt;Each node type within the BanyanDB cluster can be scaled independently based on the specific needs of the deployment:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Scaling Data Nodes&lt;/strong&gt; increases data handling capacity and improves performance under heavier loads.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Scaling Meta Nodes&lt;/strong&gt; enhances the management capabilities and resiliency of cluster metadata operations. The number of such nodes should be odd.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Scaling Liaison Nodes&lt;/strong&gt; improves the throughput of query processing and data routing capabilities.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This flexibility allows BanyanDB to adapt to changes in demand without compromising performance or availability. If some components become temporarily unavailable, the system is designed to continue operations, prioritizing availability over strict consistency. However, during such events, if the active nodes do not have sufficient resources to handle the current workload, users may experience delays or failures in data ingestion and query processing.&lt;/p&gt;
+&lt;h1 id=&#34;installation-on-kubernetes&#34;&gt;Installation On Kubernetes&lt;/h1&gt;
+&lt;p&gt;To install BanyanDB on Kubernetes, you can use our Helm chart, which simplifies the deployment process.  You can find detailed installation instructions in &lt;a href=&#34;https://github.com/apache/skywalking-helm/tree/v4.6.0&#34;&gt;our official documentation&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;This step-by-step guide assumes you have a basic understanding of Kubernetes and Helm, the package manager for Kubernetes. If you&amp;rsquo;re new to Helm, you might want to familiarize yourself with Helm basics before proceeding.&lt;/p&gt;
+&lt;h2 id=&#34;prerequisites&#34;&gt;Prerequisites&lt;/h2&gt;
+&lt;p&gt;Before we begin, ensure you have the following:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;A Kubernetes Cluster&lt;/strong&gt;: You can use Minikube for a local setup, or any cloud provider like AWS, GCP, or Azure that supports Kubernetes.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Helm 3&lt;/strong&gt;: Ensure Helm 3 is installed and configured on your machine. You can download it from &lt;a href=&#34;https://helm.sh/&#34;&gt;Helm&amp;rsquo;s official website&lt;/a&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;step-1-configure-helm-to-use-oci&#34;&gt;Step 1: Configure Helm to Use OCI&lt;/h2&gt;
+&lt;p&gt;Since the BanyanDB Helm chart is hosted as an OCI chart in Docker Hub, you need to ensure your Helm is configured to handle OCI artifacts.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;helm registry login registry-1.docker.io
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;You will be prompted to enter your Docker Hub username and password. This step is necessary to pull Helm charts from Docker Hub.&lt;/p&gt;
+&lt;h2 id=&#34;step-2-setup-env-variables&#34;&gt;Step 2: Setup Env Variables&lt;/h2&gt;
+&lt;p&gt;Next, set up the environment variables for the SkyWalking release version, name, and namespace. These variables will be used in subsequent commands.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#008080&#34;&gt;SKYWALKING_RELEASE_VERSION&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;4.6.0
+&lt;span style=&#34;color:#0086b3&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#008080&#34;&gt;SKYWALKING_RELEASE_NAME&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;skywalking
+&lt;span style=&#34;color:#0086b3&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#008080&#34;&gt;SKYWALKING_RELEASE_NAMESPACE&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;default
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;step-3-install-banyandbskywalking-using-helm&#34;&gt;Step 3: Install BanyanDB+SkyWalking Using Helm&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;helm install &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;SKYWALKING_RELEASE_NAME&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#d14&#34;&gt;\
+&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&lt;/span&gt;  oci://registry-1.docker.io/apache/skywalking-helm &lt;span style=&#34;color:#d14&#34;&gt;\
+&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&lt;/span&gt;  --version &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;SKYWALKING_RELEASE_VERSION&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#d14&#34;&gt;\
+&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&lt;/span&gt;  -n &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;SKYWALKING_RELEASE_NAMESPACE&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#d14&#34;&gt;\
+&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&lt;/span&gt;  --set oap.image.tag&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;10.0.1 &lt;span style=&#34;color:#d14&#34;&gt;\
+&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&lt;/span&gt;  --set oap.storageType&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;banyandb &lt;span style=&#34;color:#d14&#34;&gt;\
+&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&lt;/span&gt;  --set ui.image.tag&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;10.0.1 &lt;span style=&#34;color:#d14&#34;&gt;\
+&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&lt;/span&gt;  --set elasticsearch.enabled&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;false&lt;/span&gt; &lt;span style=&#34;color:#d14&#34;&gt;\
+&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&lt;/span&gt;  --set banyandb.enabled&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;true&lt;/span&gt; &lt;span style=&#34;color:#d14&#34;&gt;\
+&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&lt;/span&gt;  --set banyandb.image.tag&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;0.6.1 &lt;span style=&#34;color:#d14&#34;&gt;\
+&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&lt;/span&gt;  --set banyandb.standalone.enabled&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;false&lt;/span&gt; &lt;span style=&#34;color:#d14&#34;&gt;\
+&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&lt;/span&gt;  --set banyandb.cluster.enabled&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;true&lt;/span&gt; &lt;span style=&#34;color:#d14&#34;&gt;\
+&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&lt;/span&gt;  --set banyandb.etcd.enabled&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;true&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;This command will deploy the SkyWalking OAP cluster and BanyanDB cluster to your Kubernetes environment.&lt;/p&gt;
+&lt;h2 id=&#34;step-4-verify-the-installation&#34;&gt;Step 4: Verify the Installation&lt;/h2&gt;
+&lt;p&gt;Check the status of the pods to ensure they are running properly:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;kubectl get pods -l &lt;span style=&#34;color:#008080&#34;&gt;release&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;skywalking
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;You should see the following pods in a &lt;code&gt;Running&lt;/code&gt; or &lt;code&gt;Completed&lt;/code&gt; state if everything is configured correctly.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;pods.png&#34; alt=&#34;Pods in BanyanDB Cluster&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Pods in BanyanDB Cluster&lt;/p&gt;
+&lt;h2 id=&#34;step-5-access-skywalking-ui&#34;&gt;Step 5: Access SkyWalking UI&lt;/h2&gt;
+&lt;p&gt;To access the SkyWalking UI, you can check the service by :&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;kubectl get svc
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;You should select the service &lt;code&gt;skywalkin-skywalking-helm-ui&lt;/code&gt; to access the UI.&lt;/p&gt;
+&lt;h1 id=&#34;performance-test&#34;&gt;Performance Test&lt;/h1&gt;
+&lt;p&gt;We benchmarked BanyanDB v0.6.1 against Elasticsearch 8.13.2, SkyWalking’s recommended database. The new BanyanDB outperformed Elasticsearch in several key areas, particularly in memory usage and disk space.&lt;/p&gt;
+&lt;h2 id=&#34;data-generation-tool&#34;&gt;Data Generation Tool&lt;/h2&gt;
+&lt;p&gt;For this test, we used a custom data generation tool designed to create data that mimics a typical real-world scenario for trace and metrics data.&lt;/p&gt;
+&lt;h3 id=&#34;services-instances-and-endpoints&#34;&gt;Services, Instances, and Endpoints&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Total Services:&lt;/strong&gt; 20&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Groups of Services:&lt;/strong&gt; Each of the 3 generator instances runs two groups, contributing to the total count of services.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Instances per Service:&lt;/strong&gt; Each service is represented by 20 instances, leading to 400 instances across all services.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Endpoints per Service:&lt;/strong&gt; Each service instance hosts 100 endpoints.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Total Endpoints:&lt;/strong&gt; With 20 services, the total number of endpoints is 2000.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;trace-and-segment-generation&#34;&gt;Trace and Segment Generation&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Trace Generation Rate:&lt;/strong&gt; Each group of services generates 1000 traces per second, effectively simulating a high-load scenario typical in large-scale microservice environments.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Spans per Trace:&lt;/strong&gt; Each trace comprises five segments, detailing the simulated interactions between various services and instances.&lt;/li&gt;
+&lt;li&gt;Total Writes per Second: 2 groups * 3 data-generators * 1000 traces * 5 segments = 30k segments.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The additional query types were designed to represent typical read operations performed in a production environment monitoring microservice architectures by SkyWalking. Each query type targets a different aspect of service data:&lt;/p&gt;
+&lt;h3 id=&#34;1service-dashboard-queries&#34;&gt;1. &lt;strong&gt;Service Dashboard Queries&lt;/strong&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Purpose:&lt;/strong&gt; Fetch 5 service-level metrics over the last 30 minutes.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Frequency:&lt;/strong&gt; 1 query per second&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;2top-n-list-queries&#34;&gt;2. &lt;strong&gt;Top-N List Queries&lt;/strong&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Purpose:&lt;/strong&gt; Retrieve the top 5 metrics for 2 specific services over the last 30 minutes.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Frequency:&lt;/strong&gt; 1 query per second.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;3segment-list-queries&#34;&gt;3. &lt;strong&gt;Segment List Queries&lt;/strong&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Purpose:&lt;/strong&gt; Fetch a list of service segments ordered by descending latency within the last 30 minutes.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Frequency:&lt;/strong&gt; 1 query per second.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;4trace-detail-queries&#34;&gt;4. &lt;strong&gt;Trace Detail Queries&lt;/strong&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Purpose:&lt;/strong&gt; Retrieve all trace details from the segment list.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Frequency:&lt;/strong&gt; 2 queries per second.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;setup&#34;&gt;Setup&lt;/h2&gt;
+&lt;p&gt;Below is a detailed table that outlines the specifications of each component within the clusters, allowing for an easy comparison of hardware resources allocated to each system. This provides a clear and structured comparison of the deployment configurations used for Elasticsearch 8.13.2 and BanyanDB v0.6.1 in our performance tests.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;test_setup.png&#34; alt=&#34;Performance Test Setup&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Performance Test Setup&lt;/p&gt;
+&lt;h2 id=&#34;cluster-configuration-table&#34;&gt;Cluster Configuration Table&lt;/h2&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Component&lt;/th&gt;
+&lt;th&gt;System&lt;/th&gt;
+&lt;th&gt;Quantity&lt;/th&gt;
+&lt;th&gt;CPU Cores&lt;/th&gt;
+&lt;th&gt;RAM (GB)&lt;/th&gt;
+&lt;th&gt;Storage (GB)&lt;/th&gt;
+&lt;th&gt;Role Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Master Nodes&lt;/td&gt;
+&lt;td&gt;Elasticsearch&lt;/td&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;6&lt;/td&gt;
+&lt;td&gt;N/A&lt;/td&gt;
+&lt;td&gt;Cluster coordination and management&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Data Nodes&lt;/td&gt;
+&lt;td&gt;Elasticsearch&lt;/td&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;8&lt;/td&gt;
+&lt;td&gt;50 (Premium RWO)&lt;/td&gt;
+&lt;td&gt;Data storage, indexing, and query processing&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ETCD Nodes&lt;/td&gt;
+&lt;td&gt;BanyanDB&lt;/td&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;N/A&lt;/td&gt;
+&lt;td&gt;Metadata and cluster state storage&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Data Nodes&lt;/td&gt;
+&lt;td&gt;BanyanDB&lt;/td&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;8&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;50 (Premium RWO)&lt;/td&gt;
+&lt;td&gt;Data storage and processing&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Liaison Nodes&lt;/td&gt;
+&lt;td&gt;BanyanDB&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;N/A&lt;/td&gt;
+&lt;td&gt;Coordination between client applications and data nodes&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&#34;result&#34;&gt;Result&lt;/h2&gt;
+&lt;p&gt;Here we consolidate the performance test results for Elasticsearch 8.13.2 and BanyanDB v0.6.1, focusing on resource usage comparisons. The results are organized into two tables for better clarity—one detailing CPU and memory usage, and the other focusing on disk-related metrics.&lt;/p&gt;
+&lt;h2 id=&#34;cpu-and-memory-usage&#34;&gt;CPU and Memory Usage&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;cpu.png&#34; alt=&#34;CPU&#34;&gt;
+&lt;img src=&#34;memory.png&#34; alt=&#34;Memory&#34;&gt;&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;System&lt;/th&gt;
+&lt;th&gt;Mean CPU Usage (cores)&lt;/th&gt;
+&lt;th&gt;Mean Memory Usage (MB)&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Elasticsearch Data&lt;/td&gt;
+&lt;td&gt;3.2&lt;/td&gt;
+&lt;td&gt;4147&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;BanyanDB Data&lt;/td&gt;
+&lt;td&gt;3.6&lt;/td&gt;
+&lt;td&gt;738&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;BanyanDB Liaison&lt;/td&gt;
+&lt;td&gt;1.9&lt;/td&gt;
+&lt;td&gt;62&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id=&#34;observations&#34;&gt;Observations:&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;CPU Usage:&lt;/strong&gt; BanyanDB data nodes have slightly higher CPU usage due to their operations on compressing and decompressing data files. However, BanyanDB liaison nodes use significantly less CPU.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Memory Usage:&lt;/strong&gt; BanyanDB shows markedly lower memory usage for both data and liaison nodes, using nearly 5x less memory than Elasticsearch data nodes, highlighting its efficiency in memory utilization.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;disk-usage-iops-and-throughput&#34;&gt;Disk Usage, IOPS, and Throughput&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;disk_usage.png&#34; alt=&#34;Disk Usage&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Disk Usage&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;disk_iops.png&#34; alt=&#34;Disk IOPS&#34;&gt;
+&lt;img src=&#34;disk_throughput.png&#34; alt=&#34;Disk Throughput&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Disk IOPS &amp;amp; Throughput&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;System&lt;/th&gt;
+&lt;th&gt;Mean Disk Usage (GB)&lt;/th&gt;
+&lt;th&gt;IOPS (k)&lt;/th&gt;
+&lt;th&gt;Disk Throughput (GB/s)&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Elasticsearch Data&lt;/td&gt;
+&lt;td&gt;29.6&lt;/td&gt;
+&lt;td&gt;115.5&lt;/td&gt;
+&lt;td&gt;12.8&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;BanyanDB Data&lt;/td&gt;
+&lt;td&gt;21.6&lt;/td&gt;
+&lt;td&gt;21.4&lt;/td&gt;
+&lt;td&gt;3.3&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id=&#34;observations-1&#34;&gt;Observations:&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Disk Space Usage:&lt;/strong&gt; BanyanDB utilizes about 30% less disk space than Elasticsearch, which can translate into lower storage costs.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;IOPS and Throughput:&lt;/strong&gt; BanyanDB&amp;rsquo;s IOPS and disk throughput are significantly lower, indicating less strain on disk resources. This could be beneficial for reducing operational costs and extending the lifespan of physical storage devices.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h1&gt;
+&lt;p&gt;The release of BanyanDB v0.6 marks a significant advancement in database technology with its new column-based file system. This version demonstrates substantial improvements in both performance and efficiency, particularly in memory usage and disk space compared to Elasticsearch. BanyanDB&amp;rsquo;s ability to handle various data types, its scalable architecture, and its high performance in data retrieval and ingestion make it a robust solution for complex data environments. The introduction of a flexible clustering system allows for independent scaling of node types, ensuring adaptability to changing demands without compromising on performance or availability. Overall, BanyanDB v0.6 positions itself as a cost-effective and reliable choice for modern application performance management (APM) systems.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Blog: SkyWalking 10 Release: Service Hierarchy, Kubernetes Network Monitoring by eBPF, BanyanDB, and More</title>
+      <link>/blog/2024-05-13-skywalking-10-release/</link>
+      <pubDate>Mon, 13 May 2024 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2024-05-13-skywalking-10-release/</guid>
+      <description>
+        
+        
+        &lt;p&gt;The Apache SkyWalking team today announced the 10 release. SkyWalking 10 provides a host of groundbreaking features and enhancements.
+The introduction of Layer and Service Hierarchy streamlines monitoring by organizing services and metrics into distinct layers and providing seamless navigation across them.
+Leveraging eBPF technology, Kubernetes Network Monitoring delivers granular insights into network traffic, topology, and TCP/HTTP metrics.
+BanyanDB emerges as a high-performance native storage solution, while expanded monitoring support encompasses Apache RocketMQ, ClickHouse,
+and Apache ActiveMQ Classic. Support for Multiple Labels Names enhances flexibility in metrics analysis,
+while enhanced exporting and querying capabilities streamline data dissemination and processing.&lt;/p&gt;
+&lt;p&gt;This release blog briefly introduces these new features and enhancements as well as some other notable changes.&lt;/p&gt;
+&lt;h2 id=&#34;layer-and-service-hierarchy&#34;&gt;Layer and Service Hierarchy&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;Layer&lt;/code&gt; concept was introduced in SkyWalking 9.0.0, it represents an abstract framework in computer science,
+such as Operating System(OS_LINUX layer), Kubernetes(k8s layer). It organizes services and metrics into different layers based on their roles
+and responsibilities in the system. SkyWalking provides a suite of monitoring and diagnostic tools for each layer, but there is a gap between the layers,
+which can not easily bridge the data across different layers.&lt;/p&gt;
+&lt;p&gt;In SkyWalking 10, SkyWalking provides new abilities to jump/connect across different layers and provide a seamless monitoring experience for users.&lt;/p&gt;
+&lt;h3 id=&#34;layer-jump&#34;&gt;Layer Jump&lt;/h3&gt;
+&lt;p&gt;In the topology graph, users can click on a service node to jump to the dashboard of the service in another layer.
+The following figures show the jump from the &lt;code&gt;GENERAL&lt;/code&gt; layer service topology to the &lt;code&gt;VIRTUAL_DATABASE&lt;/code&gt; service layer dashboard by clicking the topology node.
+&lt;img src=&#34;layer_jump.jpg&#34; alt=&#34;Figure 1: Layer Jump&#34;&gt;
+Figure 1: Layer Jump&lt;/br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;layer_jump2.jpg&#34; alt=&#34;Figure 2: Layer jump Dashboard&#34;&gt;
+Figure 2: Layer jump Dashboard&lt;/p&gt;
+&lt;h3 id=&#34;service-hierarchy&#34;&gt;Service Hierarchy&lt;/h3&gt;
+&lt;p&gt;SkyWalking 10 introduces a new concept called &lt;code&gt;Service Hierarchy&lt;/code&gt;, which defines the relationships of existing logically same services in various layers.
+OAP will detect the services from different layers, and try to build the connections.
+Users can click the &lt;code&gt;Hierarchy Services&lt;/code&gt; in any layer&amp;rsquo;s service topology node or service dashboard to get the &lt;code&gt;Hierarchy Topology&lt;/code&gt;.
+In this topology graph, users can see the relationships between the services in different layers and the summary of the metrics and also can jump to the service dashboard in the layer.
+When a service occurs performance issue, users can easily analyze the metrics from different layers and track down the root cause:&lt;/p&gt;
+&lt;p&gt;The examples of the &lt;code&gt;Service Hierarchy&lt;/code&gt; relationships:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;The application &lt;code&gt;song&lt;/code&gt; deployed in the Kubernetes cluster with SkyWalking agent and Service Mesh at the same time.
+So the application &lt;code&gt;song&lt;/code&gt; across the &lt;code&gt;GENERAL&lt;/code&gt;, &lt;code&gt;MESH&lt;/code&gt;, &lt;code&gt;MESH_DP&lt;/code&gt; and &lt;code&gt;K8S_SERVICE&lt;/code&gt; layers which could be monitored by SkyWalking,
+the &lt;code&gt;Service Hierarchy&lt;/code&gt; topology as below:
+&lt;img src=&#34;song.jpg&#34; alt=&#34;Figure 3: Service Hierarchy Agent With K8s Service And Mesh With K8s Service&#34;&gt;
+Figure 3: Service Hierarchy Agent With K8s Service And Mesh With K8s Service.&lt;/br&gt;
+&lt;/br&gt;
+And can also have the &lt;code&gt;Service Instance Hierarchy&lt;/code&gt; topology to get the single instance status across the layers as below:
+&lt;img src=&#34;song_instance.jpg&#34; alt=&#34;Figure 4: Instance Hierarchy Agent With K8s Service(Pod)&#34;&gt;
+Figure 4: Instance Hierarchy Agent With K8s Service(Pod)&lt;/br&gt;
+&lt;/br&gt;&lt;/li&gt;
+&lt;li&gt;The PostgreSQL database &lt;code&gt;psql&lt;/code&gt; deployed in the Kubernetes cluster and used by the application &lt;code&gt;song&lt;/code&gt;.
+So the database &lt;code&gt;psql&lt;/code&gt; across the &lt;code&gt;VIRTUAL_DATABASE&lt;/code&gt;, &lt;code&gt;POSTGRESQL&lt;/code&gt; and &lt;code&gt;K8S_SERVICE&lt;/code&gt; layers which could be monitored by SkyWalking,
+the &lt;code&gt;Service Hierarchy&lt;/code&gt; topology as below:
+&lt;img src=&#34;postgre.jpg&#34; alt=&#34;Figure 5: Service Hierarchy Agent(Virtual Database) With Real Database And K8s Service&#34;&gt;
+Figure 5: Service Hierarchy Agent(Virtual Database) With Real Database And K8s Service&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;For more supported layers and how to detect the relationships between services in different layers please refer to the &lt;a href=&#34;https://skywalking.apache.org/docs/main/latest/en/concepts-and-designs/service-hierarchy/#service-hierarchy&#34;&gt;Service Hierarchy&lt;/a&gt;.
+how to configure the &lt;code&gt;Service Hierarchy&lt;/code&gt; in SkyWalking, please refer to the &lt;a href=&#34;https://skywalking.apache.org/docs/main/latest/en/concepts-and-designs/service-hierarchy-configuration/&#34;&gt;Service Hierarchy Configuration&lt;/a&gt; section.&lt;/p&gt;
+&lt;h2 id=&#34;monitoring-kubernetes-network-traffic-by-using-ebpf&#34;&gt;Monitoring Kubernetes Network Traffic by using eBPF&lt;/h2&gt;
+&lt;p&gt;In the previous version, skyWalking provides &lt;a href=&#34;https://skywalking.apache.org/docs/main/latest/en/setup/backend/backend-k8s-monitoring-metrics-cadvisor/&#34;&gt;Kubernetes (K8s) monitoring from kube-state-metrics and cAdvisor&lt;/a&gt;,
+which can monitor the Kubernetes cluster status and the metrics of the Kubernetes resources.&lt;/p&gt;
+&lt;p&gt;In SkyWalking 10, by leverage &lt;a href=&#34;https://skywalking.apache.org/docs/skywalking-rover/latest/readme/&#34;&gt;Apache SkyWalking Rover&lt;/a&gt; 0.6+,
+SkyWalking has the ability to monitor the Kubernetes network traffic by using eBPF, which can collect and map access logs from applications in Kubernetes environments.
+Through these data, SkyWalking can analyze and provide the Service Traffic, Topology, TCP/HTTP level metrics from the Kubernetes aspect.&lt;/p&gt;
+&lt;p&gt;The following figures show the Topology and TCP Dashboard of the Kubernetes network traffic:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;k8s_topology.jpg&#34; alt=&#34;Figure 6: Kubernetes Network Traffic Topology&#34;&gt;
+Figure 6: Kubernetes Network Traffic Topology&lt;/br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;k8s_dashboard.jpg&#34; alt=&#34;Figure 7: Kubernetes Network Traffic TCP Dashboard&#34;&gt;
+Figure 7: Kubernetes Network Traffic TCP Dashboard&lt;/br&gt;&lt;/p&gt;
+&lt;p&gt;More details about how to monitor the Kubernetes network traffic by using eBPF, please refer to the &lt;a href=&#34;https://skywalking.apache.org/blog/2024-03-18-monitor-kubernetes-network-by-ebpf/&#34;&gt;Monitoring Kubernetes Network Traffic by using eBPF&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;banyandb---native-apm-database&#34;&gt;BanyanDB - Native APM Database&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://skywalking.apache.org/docs/skywalking-banyandb/latest/readme/&#34;&gt;BanyanDB&lt;/a&gt; 0.6.0 and &lt;a href=&#34;https://github.com/apache/skywalking-banyandb-java-client&#34;&gt;BanyanDB Java client&lt;/a&gt; 0.6.0 are released with SkyWalking 10,
+As a native storage solution for SkyWalking, BanyanDB is going to be SkyWalking&amp;rsquo;s next-generation storage solution. This is recommended to use for medium-scale deployments from 0.6 until 1.0.&lt;br&gt;
+It has shown high potential performance improvement. Less than 50% CPU usage and 50% memory usage with 40% disk volume compared to Elasticsearch in the same scale.&lt;/p&gt;
+&lt;h2 id=&#34;apache-rocketmq-server-monitoring&#34;&gt;Apache RocketMQ Server Monitoring&lt;/h2&gt;
+&lt;p&gt;Apache RocketMQ is an open-source distributed messaging and streaming platform, which is widely used in various scenarios including Internet, big data, mobile Internet, IoT, and other fields.
+SkyWalking provides a basic monitoring dashboard for RocketMQ, which includes the following metrics:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Cluster Metrics: including messages produced/consumed today, total producer/consumer TPS, producer/consumer message size, messages produced/consumed until yesterday, max consumer latency, max commitLog disk ratio, commitLog disk ratio, pull/send threadPool queue head wait time, topic count, and broker count.&lt;/li&gt;
+&lt;li&gt;Broker Metrics: including produce/consume TPS, producer/consumer message size.&lt;/li&gt;
+&lt;li&gt;Topic Metrics: including max producer/consumer message size, consumer latency, producer/consumer TPS, producer/consumer offset, producer/consumer message size, consumer group count, and broker count.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The following figure shows the RocketMQ Cluster Metrics dashboard:
+&lt;img src=&#34;rocket_mq.jpg&#34; alt=&#34;Figure 8: Apache RocketMQ Server Monitoring&#34;&gt;
+Figure 8: Apache RocketMQ Server Monitoring&lt;/br&gt;&lt;/p&gt;
+&lt;p&gt;For more metrics and details about the RocketMQ monitoring, please refer to the &lt;a href=&#34;https://skywalking.apache.org/docs/main/latest/en/setup/backend/backend-rocketmq-monitoring/&#34;&gt;Apache RocketMQ Server Monitoring&lt;/a&gt;,&lt;/p&gt;
+&lt;h2 id=&#34;clickhouse-server-monitoring&#34;&gt;ClickHouse Server Monitoring&lt;/h2&gt;
+&lt;p&gt;ClickHouse is an open-source column-oriented database management system that allows generating analytical data reports in real-time, it is widely used for online analytical processing (OLAP).
+ClickHouse monitoring provides monitoring of the metrics 、events and asynchronous metrics of the ClickHouse server, which includes the following parts of metrics:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Server Metrics&lt;/li&gt;
+&lt;li&gt;Query Metrics&lt;/li&gt;
+&lt;li&gt;Network Metrics&lt;/li&gt;
+&lt;li&gt;Insert Metrics&lt;/li&gt;
+&lt;li&gt;Replica Metrics&lt;/li&gt;
+&lt;li&gt;MergeTree Metrics&lt;/li&gt;
+&lt;li&gt;ZooKeeper Metrics&lt;/li&gt;
+&lt;li&gt;Embedded ClickHouse Keeper Metrics&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The following figure shows the ClickHouse Cluster Metrics dashboard:
+&lt;img src=&#34;clickhouse.jpg&#34; alt=&#34;Figure 9: ClickHouse Server Monitoring&#34;&gt;
+Figure 9: ClickHouse Server Monitoring&lt;/br&gt;&lt;/p&gt;
+&lt;p&gt;For more metrics and details about the ClickHouse monitoring, please refer to the &lt;a href=&#34;https://skywalking.apache.org/docs/main/latest/en/setup/backend/backend-clickhouse-monitoring/&#34;&gt;ClickHouse Server Monitoring&lt;/a&gt;,
+and here is a blog that can help for a quick start &lt;a href=&#34;https://skywalking.apache.org/blog/2024-03-12-monitoring-clickhouse-through-skywalking/&#34;&gt;Monitoring ClickHouse through SkyWalking&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;apache-activemq-server-monitoring&#34;&gt;Apache ActiveMQ Server Monitoring&lt;/h2&gt;
+&lt;p&gt;Apache ActiveMQ Classic is a popular and powerful open-source messaging and integration pattern server.
+SkyWalking provides a basic monitoring dashboard for ActiveMQ, which includes the following metrics:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Cluster Metrics: including memory usage, rates of write/read, and average/max duration of write.&lt;/li&gt;
+&lt;li&gt;Broker Metrics: including node state, number of connections, number of producers/consumers, and rate of write/read under the broker. Depending on the cluster mode, one cluster may include one or more brokers.&lt;/li&gt;
+&lt;li&gt;Destination Metrics: including number of producers/consumers, messages in different states, queues, and enqueue duration in a queue/topic.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The following figure shows the ActiveMQ Cluster Metrics dashboard:
+&lt;img src=&#34;active_mq.jpg&#34; alt=&#34;Figure 10: Apache ActiveMQ Server Monitoring&#34;&gt;
+Figure 10: Apache ActiveMQ Server Monitoring&lt;/br&gt;&lt;/p&gt;
+&lt;p&gt;For more metrics and details about the ActiveMQ monitoring, please refer to the &lt;a href=&#34;https://skywalking.apache.org/docs/main/latest/en/setup/backend/backend-activemq-monitoring/&#34;&gt;Apache ActiveMQ Server Monitoring&lt;/a&gt;,
+and here is a blog that can help for a quick start &lt;a href=&#34;https://skywalking.apache.org/blog/2024-04-19-monitoring-activemq-through-skywalking/&#34;&gt;Monitoring ActiveMQ through SkyWalking&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;support-multiple-labels-names&#34;&gt;Support Multiple Labels Names&lt;/h2&gt;
+&lt;p&gt;Before SkyWalking 10, SkyWalking does not store the labels names in the metrics data, which makes MQE have to use &lt;code&gt;_&lt;/code&gt; as the generic label name,
+it can&amp;rsquo;t query the metrics data with multiple labels names.&lt;/p&gt;
+&lt;p&gt;SkyWalking 10 supports storing the labels names in the metrics data, and MQE can query or calculate the metrics data with multiple labels names.
+For example:
+The &lt;code&gt;k8s_cluster_deployment_status&lt;/code&gt; metric has labels &lt;code&gt;namespace&lt;/code&gt;, &lt;code&gt;deployment&lt;/code&gt; and &lt;code&gt;status&lt;/code&gt;.
+If we want to query all deployment metric values with &lt;code&gt;namespace=skywalking-showcase&lt;/code&gt; and &lt;code&gt;status=true&lt;/code&gt;, we can use the following expression:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;k8s_cluster_deployment_status{namespace=&amp;#39;skywalking-showcase&amp;#39;, status=&amp;#39;true&amp;#39;}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;related enhancement:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Since Alarm rule configuration had migrated to the MQE in SkyWalking 9.6.0, the alarm rule also supports multiple labels names.&lt;/li&gt;
+&lt;li&gt;PromeQL service supports multiple labels names query.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;metrics-grpc-exporter&#34;&gt;Metrics gRPC exporter&lt;/h2&gt;
+&lt;p&gt;SkyWalking 10 enhanced the &lt;a href=&#34;https://skywalking.apache.org/docs/main/latest/en/setup/backend/exporter/#grpc-exporter&#34;&gt;metrics gPRC exporter&lt;/a&gt;,
+it supports exporting all types of metrics data to the gRPC server.&lt;/p&gt;
+&lt;h2 id=&#34;skywalking-native-ui-metrics-query-switch-to-v3-apis&#34;&gt;SkyWalking Native UI Metrics Query Switch to V3 APIs&lt;/h2&gt;
+&lt;p&gt;SkyWalking Native UI metrics query deprecate the V2 APIs, and all migrated to &lt;a href=&#34;https://skywalking.apache.org/docs/main/latest/en/api/query-protocol/#v3-apis&#34;&gt;V3 APIs&lt;/a&gt;
+and &lt;a href=&#34;https://skywalking.apache.org/docs/main/next/en/api/metrics-query-expression/#metrics-query-expressionmqe-syntax&#34;&gt;MQE&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;other-notable-enhancements&#34;&gt;Other Notable Enhancements&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;Support Java 21 runtime and oap-java21 image for Java 21 runtime.&lt;/li&gt;
+&lt;li&gt;Remove CLI(&lt;code&gt;swctl&lt;/code&gt;) from the image.&lt;/li&gt;
+&lt;li&gt;More MQE functions and operators supported.&lt;/li&gt;
+&lt;li&gt;Enhance the native UI and improve the user experience.&lt;/li&gt;
+&lt;li&gt;Several bugs and CVEs fixed.&lt;/li&gt;
+&lt;/ol&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Blog: Monitoring ActiveMQ through SkyWalking</title>
+      <link>/blog/2024-04-19-monitoring-activemq-through-skywalking/</link>
+      <pubDate>Fri, 19 Apr 2024 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2024-04-19-monitoring-activemq-through-skywalking/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;img src=&#34;activemq_logo.png&#34; alt=&#34;icon&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://activemq.apache.org/components/classic/&#34;&gt;Apache ActiveMQ Classic&lt;/a&gt; is a popular and powerful open-source messaging and integration pattern server. Founded in 2004, it has evolved into a mature and widely used open-source messaging middleware that complies with the &lt;code&gt;Java Message Service (JMS)&lt;/code&gt;.
+Today, with its stability and wide range of feature support, it still has a certain number of users of &lt;code&gt;small and medium-sized&lt;/code&gt; enterprises. It‘s high-performance version &lt;a href=&#34;https://activemq.apache.org/components/artemis/&#34;&gt;Apache Artemis&lt;/a&gt; is developing rapidly and is also attracting attention from users of ActiveMQ.&lt;/p&gt;
+&lt;p&gt;ActiveMQ has broad support for &lt;a href=&#34;https://docs.oracle.com/javase/tutorial/jmx/overview/index.html&#34;&gt;JMX (Java Management Extensions)&lt;/a&gt;, allowing to be monitored through &lt;code&gt;JMX MBean&lt;/code&gt;.
+After enabling JMX, you can use JAVA&amp;rsquo;s built-in &lt;code&gt;jconsole&lt;/code&gt; or &lt;code&gt;VisualVM&lt;/code&gt; to view the metrics. In addition, some Collector components can also be used to convert &lt;code&gt;JMX-style&lt;/code&gt; data into &lt;code&gt;Prometheus-style&lt;/code&gt; data, which is suitable for more tools.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://opentelemetry.io/&#34;&gt;OpenTelemetry&lt;/a&gt; as an industry-recognized, standardized solution that provides consistent and interoperable telemetry data collection, transmission, and analysis capabilities for distributed systems, and is also used here for data collection and transmission.
+Although it can directly accept &lt;code&gt;JMX&lt;/code&gt; type data, the JMX indicators for collecting ActiveMQ are not in the standard library, and some versions are incompatible, so this article adopts two steps: convert &lt;code&gt;JMX data&lt;/code&gt; into &lt;code&gt;Prometheus-style&lt;/code&gt; indicator data, and then use OpenTelemetry to scrape &lt;code&gt;HTTP&lt;/code&gt; endpoint data.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://skywalking.apache.org/&#34;&gt;SkyWalking&lt;/a&gt; as a one-stop distributed system monitoring solution, it accepts metrics from &lt;code&gt;ActiveMQ&lt;/code&gt; and provides a basic monitoring dashboard.&lt;/p&gt;
+&lt;h2 id=&#34;deployment&#34;&gt;Deployment&lt;/h2&gt;
+&lt;p&gt;Please set up the following services:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/apache/skywalking&#34;&gt;SkyWalking OAP, v10.0+&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://activemq.apache.org/components/classic/download/&#34;&gt;ActiveMQ v6.0.X+&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/prometheus/jmx_exporter/releases&#34;&gt;JMX Exporter v0.20.0&lt;/a&gt;. If using docker, refer &lt;a href=&#34;https://github.com/bitnami/containers/tree/main/bitnami/jmx-exporter&#34;&gt;bitnami/jmx-exporter&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/open-telemetry/opentelemetry-collector-contrib&#34;&gt;OpenTelmetry-Collector v0.92.0&lt;/a&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;preparation&#34;&gt;Preparation&lt;/h3&gt;
+&lt;p&gt;The following describes how to deploy ActiveMQ with 2 single-node brokers and SkyWalking OAP with one single node. JMX Exporter runs in agent mode (recommended).&lt;/p&gt;
+&lt;h3 id=&#34;configuration&#34;&gt;Configuration&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;https://activemq.apache.org/components/classic/documentation/jmx&#34;&gt;Enable JMX&lt;/a&gt; in ActiveMQ, the JMX remote port defaults to &lt;code&gt;1616&lt;/code&gt;, you can change it through &lt;code&gt;ACTIVEMQ_SUNJMX_START&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Set up the exporter:
+&lt;ol&gt;
+&lt;li&gt;[Recommended] If run exporter in &lt;code&gt;agent mode&lt;/code&gt;, need to append the startup parameter &lt;code&gt;-DACTIVEMQ_OPTS=-javaagent:{activemqPath}/bin/jmx_prometheus_javaagent-0.20.0.jar=2345:{activemqPath}/conf/config.yaml&lt;/code&gt; in ActiveMQ env, then exporter server starts at the same time.&lt;/li&gt;
+&lt;li&gt;If run exporter in &lt;code&gt;single server&lt;/code&gt;, &lt;a href=&#34;https://github.com/prometheus/jmx_exporter/tree/release-0.20.0?tab=readme-ov-file#running-the-standalone-http-server&#34;&gt;refer here&lt;/a&gt; to deploy the server alone.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;2345&lt;/code&gt; is open HTTP port that can be customized. JMX&amp;rsquo;s metrics can be queried through &lt;code&gt;http://localhost:2345/metrics&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;example of &lt;code&gt;docker-compose.yml&lt;/code&gt; with agent exporter for ActiveMQ:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yml&#34; data-lang=&#34;yml&#34;&gt;&lt;span style=&#34;color:#000080&#34;&gt;version&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#39;3.8&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;services&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; 
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;amq1&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;image&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;apache/activemq-classic:latest&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;container_name&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;amq1&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;hostname&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;amq1&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;volumes&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;- ~/activemq1/conf/activemq.xml:/opt/apache-activemq/conf/activemq.xml&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;- ~/activemq1/bin/jmx_prometheus_javaagent-0.20.0.jar:/opt/apache-activemq/bin/jmx_prometheus_javaagent-0.20.0.jar&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;- ~/activemq1/conf/config.yaml:/opt/apache-activemq/conf/config.yaml&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;ports&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;- &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;61616:61616&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;- &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;8161:8161&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;- &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;2345:2345&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;environment&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;ACTIVEMQ_OPTS&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;-javaagent:/opt/apache-activemq/bin/jmx_prometheus_javaagent-0.20.0.jar=2345:/opt/apache-activemq/conf/config.yaml&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;ACTIVEMQ_BROKER_NAME&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;broker-1&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;networks&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;- amqtest    &lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;amq2&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;image&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;apache/activemq-classic:latest&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;container_name&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;amq2&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;hostname&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;amq2&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;volumes&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;- ~/activemq2/conf/activemq.xml:/opt/apache-activemq/conf/activemq.xml&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;- ~/activemq2/bin/jmx_prometheus_javaagent-0.20.0.jar:/opt/apache-activemq/bin/jmx_prometheus_javaagent-0.20.0.jar&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;- ~/activemq2/conf/config.yaml:/opt/apache-activemq/conf/config.yaml      &lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;ports&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;- &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;61617:61616&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt; 
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;- &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;8162:8161&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;- &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;2346:2346&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;environment&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;ACTIVEMQ_OPTS&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;-javaagent:/opt/apache-activemq/bin/jmx_prometheus_javaagent-0.20.0.jar=2346:/opt/apache-activemq/conf/config.yaml&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;ACTIVEMQ_BROKER_NAME&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;broker-2 &lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;networks&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;- amqtest&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;otel-collector1&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;image&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;otel/opentelemetry-collector:latest&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;container_name&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;otel-collector1&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;command&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;[&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;--config=/etc/otel-collector-config.yaml&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;]&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;volumes&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;- ./otel-collector-config1.yaml:/etc/otel-collector-config.yaml&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;depends_on&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;- amq1&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;networks&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;- amqtest &lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;otel-collector2&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;image&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;otel/opentelemetry-collector:latest&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;container_name&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;otel-collector2&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;command&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;[&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;--config=/etc/otel-collector-config.yaml&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;]&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;volumes&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;- ./otel-collector-config2.yaml:/etc/otel-collector-config.yaml&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;depends_on&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;- amq2&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;networks&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;- amqtest            &lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;networks&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;amqtest&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;example of &lt;code&gt;otel-collector-config.yaml&lt;/code&gt; for OpenTelemetry:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#000080&#34;&gt;receivers&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;prometheus&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;config&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;     &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;scrape_configs&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;       &lt;/span&gt;- &lt;span style=&#34;color:#000080&#34;&gt;job_name&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#39;activemq-monitoring&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;         &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;scrape_interval&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;30s&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;         &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;static_configs&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;           &lt;/span&gt;- &lt;span style=&#34;color:#000080&#34;&gt;targets&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;[&lt;span style=&#34;color:#d14&#34;&gt;&amp;#39;amq1:2345&amp;#39;&lt;/span&gt;]&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;             &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;labels&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;               &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;cluster&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;activemq-broker1&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;processors&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;batch&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt; 
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;exporters&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;otlp&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;endpoint&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;oap:11800&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;tls&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;insecure&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;true&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;service&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;pipelines&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;metrics&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;receivers&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;- prometheus&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;processors&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;- batch&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;exporters&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;- otlp&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;example of &lt;code&gt;config.yaml&lt;/code&gt; for ActiveMQ Exporter:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#555&#34;&gt;---&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;startDelaySeconds&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#099&#34;&gt;10&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;username&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;admin&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;password&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;activemq&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;ssl&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;false&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;lowercaseOutputName&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;false&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;lowercaseOutputLabelNames&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;false&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;includeObjectNames&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;[&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;org.apache.activemq:*&amp;#34;&lt;/span&gt;,&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;java.lang:type=OperatingSystem&amp;#34;&lt;/span&gt;,&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;java.lang:type=GarbageCollector,*&amp;#34;&lt;/span&gt;,&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;java.lang:type=Threading&amp;#34;&lt;/span&gt;,&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;java.lang:type=Runtime&amp;#34;&lt;/span&gt;,&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;java.lang:type=Memory&amp;#34;&lt;/span&gt;,&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;java.lang:name=*&amp;#34;&lt;/span&gt;]&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;excludeObjectNames&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;[&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;org.apache.activemq:type=ColumnFamily,*&amp;#34;&lt;/span&gt;]&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;autoExcludeObjectNameAttributes&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;true&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;excludeObjectNameAttributes&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;java.lang:type=OperatingSystem&amp;#34;&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;- &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;ObjectName&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;java.lang:type=Runtime&amp;#34;&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;- &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;ClassPath&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;- &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;SystemProperties&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;rules&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;- &lt;span style=&#34;color:#000080&#34;&gt;pattern&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;.*&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;steps&#34;&gt;Steps&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Start &lt;code&gt;ActiveMQ&lt;/code&gt;, and the Exporter(agent) and the service start at the same time.&lt;/li&gt;
+&lt;li&gt;Start &lt;code&gt;SkyWalking OAP&lt;/code&gt; and &lt;code&gt;SkyWalking UI&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Start &lt;code&gt;OpenTelmetry-Collector&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;After completed, node metrics will be captured and pushed to SkyWalking.&lt;/p&gt;
+&lt;h2 id=&#34;metrics&#34;&gt;Metrics&lt;/h2&gt;
+&lt;p&gt;Monitoring metrics involve in &lt;code&gt;Cluster Metrics&lt;/code&gt;, &lt;code&gt;Broker Metrics&lt;/code&gt;, and &lt;code&gt;Destination Metrics&lt;/code&gt;.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Cluster Metrics: including memory usage, rates of write/read, and average/max duration of write.&lt;/li&gt;
+&lt;li&gt;Broker Metrics: including node state, number of connections, number of producers/consumers, and rate of write/read under the broker. Depending on the cluster mode, one cluster may include one or more brokers.&lt;/li&gt;
+&lt;li&gt;Destination Metrics: including number of producers/consumers, messages in different states, queues, and enqueue duration in a queue/topic.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;cluster-metrics&#34;&gt;Cluster Metrics&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&#34;./activemq_cluster_panel.png&#34; alt=&#34;activemq_cluster_panel&#34;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;System Load: range in [0, 100].&lt;/li&gt;
+&lt;li&gt;Thread Count: the number of threads currently used by the JVM.&lt;/li&gt;
+&lt;li&gt;Heap Memory: capacity of heap memory.&lt;/li&gt;
+&lt;li&gt;GC: memory of ActiveMQ is managed by Java&amp;rsquo;s garbage collection (GC) process.&lt;/li&gt;
+&lt;li&gt;Enqueue/Dequeue/Dispatch/Expired Rate: growth rate of messages in different states.&lt;/li&gt;
+&lt;li&gt;Average/Max Enqueue Time: time taken to join the queue.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;broker-metrics&#34;&gt;Broker Metrics&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&#34;./activemq_broker_panel.png&#34; alt=&#34;activemq_broker_panel&#34;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Uptime: duration of the node.&lt;/li&gt;
+&lt;li&gt;State: 1 = slave node, 0 = master node.&lt;/li&gt;
+&lt;li&gt;Current Connentions: number of connections.&lt;/li&gt;
+&lt;li&gt;Current Producer/Consumer Count: number of current producers/consumers.&lt;/li&gt;
+&lt;li&gt;Increased Producer/Consumer Count: number of increased producers/consumers.&lt;/li&gt;
+&lt;li&gt;Enqueue/Dequeue Count: number of enqueue and dequeue.&lt;/li&gt;
+&lt;li&gt;Enqueue/Dequeue Rate: rate of enqueue and dequeue.&lt;/li&gt;
+&lt;li&gt;Memory Percent Usage: amount of memory space used by undelivered messages.&lt;/li&gt;
+&lt;li&gt;Store Percent Usage: space used by pending persistent messages.&lt;/li&gt;
+&lt;li&gt;Temp Percent Usage: space used by non-persistent messages.&lt;/li&gt;
+&lt;li&gt;Average/Max Message Size: number of messages.&lt;/li&gt;
+&lt;li&gt;Queue Size: number of messages in the queue.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;destination-metrics&#34;&gt;Destination Metrics&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&#34;./activemq_destination_panel.png&#34; alt=&#34;activemq_destination_panel&#34;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Produser/Consumer Count: number of producers/Consumers.&lt;/li&gt;
+&lt;li&gt;Queue Size: unacknowledged messages of the queue.&lt;/li&gt;
+&lt;li&gt;Memory usage: usage of memory.&lt;/li&gt;
+&lt;li&gt;Enqueue/Dequeue/Dispatch/Expired/Inflight Count: number of messages in different states.&lt;/li&gt;
+&lt;li&gt;Average/Max Message Size: number of messages.&lt;/li&gt;
+&lt;li&gt;Average/Max Enqueue Time: time taken to join the queue.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;reference&#34;&gt;Reference&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://activemq.apache.org/components/classic/documentation/clustering&#34;&gt;ActiveMQ Classic clustering&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/prometheus/jmx_exporter/tree/release-0.20.0#Configuration&#34;&gt;JMX Exporter Configuration&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/prometheus/jmx_exporter/tree/release-0.20.0&#34;&gt;JMX Exporter-Running the Standalone HTTP Server&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/receiver/jmxreceiver&#34;&gt;OpenTelemetry Collector Contrib Jmxreceiver&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
       <title>Blog: Monitoring Kubernetes network traffic by using eBPF</title>
       <link>/blog/2024-03-18-monitor-kubernetes-network-by-ebpf/</link>
       <pubDate>Mon, 18 Mar 2024 00:00:00 +0000</pubDate>
@@ -8270,640 +8903,6 @@ quicker than before, like why we named the project as SkyWalking, we will have a
 &lt;li&gt;zxbu&lt;/li&gt;
 &lt;li&gt;zygfengyuwuzu&lt;/li&gt;
 &lt;/ul&gt;
-
-      </description>
-    </item>
-    
-    <item>
-      <title>Blog: [Design] NGE2E - Next Generation End-to-End Testing Framework</title>
-      <link>/blog/e2e-design/</link>
-      <pubDate>Mon, 14 Dec 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/blog/e2e-design/</guid>
-      <description>
-        
-        
-        &lt;p&gt;NGE2E is the next generation End-to-End Testing framework that aims to help developers to set up, debug, and verify E2E tests with ease. It&amp;rsquo;s built based on the lessons learnt from tens of hundreds of test cases in the SkyWalking main repo.&lt;/p&gt;
-&lt;h1 id=&#34;goal&#34;&gt;Goal&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;Keep the feature parity with the existing E2E framework in SkyWalking main repo;&lt;/li&gt;
-&lt;li&gt;Support both &lt;a href=&#34;https://docs.docker.com/compose/&#34;&gt;docker-compose&lt;/a&gt; and &lt;a href=&#34;https://kind.sigs.k8s.io&#34;&gt;KinD&lt;/a&gt; to orchestrate the tested services under different environments;&lt;/li&gt;
-&lt;li&gt;Get rid of the heavy &lt;code&gt;Java/Maven&lt;/code&gt; stack, which exists in the current E2E; be language independent as much as possible, users only need to configure YAMLs and run commands, without writing codes;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id=&#34;non-goal&#34;&gt;Non-Goal&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;This framework is not involved with the build process, i.e. it won&amp;rsquo;t do something like &lt;code&gt;mvn package&lt;/code&gt; or &lt;code&gt;docker build&lt;/code&gt;, the artifacts (&lt;code&gt;.tar&lt;/code&gt;, docker images) should be ready in an earlier process before this;&lt;/li&gt;
-&lt;li&gt;This project doesn&amp;rsquo;t take the plugin tests into account, at least for now;&lt;/li&gt;
-&lt;li&gt;This project doesn&amp;rsquo;t mean to add/remove any new/existing test case to/from the main repo;&lt;/li&gt;
-&lt;li&gt;This documentation won&amp;rsquo;t cover too much technical details of how to implement the framework, that should go into an individual documentation;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id=&#34;design&#34;&gt;Design&lt;/h1&gt;
-&lt;p&gt;Before diving into the design details, let&amp;rsquo;s take a quick look at how the end user might use NGE2E.&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;All the following commands are mock, and are open to debate.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;To run a test case in a directory &lt;code&gt;/path/to/the/case/directory&lt;/code&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;e2e run /path/to/the/case/directory
-
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# or&lt;/span&gt;
-
-&lt;span style=&#34;color:#0086b3&#34;&gt;cd&lt;/span&gt; /path/to/the/case/directory &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; e2e run
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;This will run the test case in the specified directory, this command is a wrapper that glues all the following commands, which can be executed separately, for example, to debug the case:&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;: because all the options can be loaded from a configuration file, so as long as a configuration file (say &lt;code&gt;e2e.yaml&lt;/code&gt;) is given in the directory, every command should be able to run in bare mode (without any option explicitly specified in the command line);&lt;/p&gt;
-&lt;h3 id=&#34;set-up&#34;&gt;Set Up&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;e2e setup --env&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;compose --file&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;docker-compose.yaml --wait-for&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;service/health
-e2e setup --env&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;kind --file&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;kind.yaml --manifests&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;bookinfo.yaml,gateway.yaml --wait-for&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;pod/ready
-e2e setup &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# If configuration file e2e.yaml is present&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;--env&lt;/code&gt;: the environment, may be &lt;code&gt;compose&lt;/code&gt; or &lt;code&gt;kind&lt;/code&gt;, represents docker-compose and KinD respectively;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;--file&lt;/code&gt;: the &lt;code&gt;docker-compose.yaml&lt;/code&gt; or &lt;code&gt;kind.yaml&lt;/code&gt; file that declares how to set up the environment;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;--manifests&lt;/code&gt;: for KinD, the resources files/directories to apply (using &lt;code&gt;kubectl apply -f&lt;/code&gt;);&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;--command&lt;/code&gt;: a command to run after the environment is started, this may be useful when users need to install some extra tools or apply resources from command line, like &lt;code&gt;istioctl install --profile=demo&lt;/code&gt;;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;--wait-for&lt;/code&gt;: can be specified multiple times to give a list of conditions to be met; wait until the given conditions are met; the most frequently-used strategy should be &lt;code&gt;--wait-for=service/health&lt;/code&gt;, &lt;code&gt;--wait-for=deployments/available&lt;/code&gt;, etc. that make the &lt;code&gt;e2e setup&lt;/code&gt; command to wait for all conditions to be met; other possible strategies may be something like &lt;code&gt;--wait-for=&amp;quot;log:Started Successfully&amp;quot;&lt;/code&gt;, &lt;code&gt;--wait-for=&amp;quot;http:localhost:8080/healthcheck&amp;quot;&lt;/code&gt;, etc. if really needed;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;trigger-inputs&#34;&gt;Trigger Inputs&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;e2e trigger --interval&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;3s --times&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#099&#34;&gt;0&lt;/span&gt; --action&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;http --url&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;localhost:8080/users&amp;#34;&lt;/span&gt;
-e2e trigger --interval&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;3s --times&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#099&#34;&gt;0&lt;/span&gt; --action&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;cmd --cmd&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;curl localhost:8080/users&amp;#34;&lt;/span&gt;
-e2e trigger &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# If configuration file e2e.yaml is present&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;--interval=3s&lt;/code&gt;: trigger the action every 3 seconds;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;--times=0&lt;/code&gt;: how many times to trigger the action, &lt;code&gt;0=infinite&lt;/code&gt;;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;--action=http&lt;/code&gt;: the action of the trigger, i.e. &amp;ldquo;perform an http request as an input&amp;rdquo;;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;--action=cmd&lt;/code&gt;: the action of the trigger, i.e. &amp;ldquo;execute the &lt;code&gt;cmd&lt;/code&gt; as an input&amp;rdquo;;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;query-output&#34;&gt;Query Output&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;swctl service ls
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;this is a project-specific step, different project may use different tools to query the actual output, for SkyWalking, it uses &lt;code&gt;swctl&lt;/code&gt; to query the actual output.&lt;/p&gt;
-&lt;h3 id=&#34;verify&#34;&gt;Verify&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;e2e verify --actual&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;actual.data.yaml --expected&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;expected.data.yaml
-e2e verify --query&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;swctl service ls&amp;#34;&lt;/span&gt; --expected&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;expected.data.yaml
-e2e verify &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# If configuration file e2e.yaml is present&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;code&gt;--actual&lt;/code&gt;: the actual data file, only YAML file format is supported;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;code&gt;--expected&lt;/code&gt;: the expected data file, only YAML file format is supported;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;code&gt;--query&lt;/code&gt;: the query to get the actual data, the query result must have the same format as &lt;code&gt;--actual&lt;/code&gt; and &lt;code&gt;--expected&lt;/code&gt;;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;The &lt;code&gt;--query&lt;/code&gt; option will get the output into a temporary file and use the &lt;code&gt;--actual&lt;/code&gt; under the hood;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;cleanup&#34;&gt;Cleanup&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;e2e cleanup --env&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;compose --file&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;docker-compose.yaml
-e2e cleanup --env&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;kind --file&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;kind.yaml --resources&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;bookinfo.yaml,gateway.yaml
-e2e cleanup &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# If configuration file e2e.yaml is present&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;This step requires the same options in the setup step so that it can clean up all things necessarily.&lt;/p&gt;
-&lt;h3 id=&#34;summarize&#34;&gt;Summarize&lt;/h3&gt;
-&lt;p&gt;To summarize, the directory structure of a test case might be&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;case-name
-├── agent-service        # optional, an arbitrary project that is used in the docker-compose.yaml if needed
-│   ├── Dockerfile
-│   ├── pom.xml
-│   └── src
-├── docker-compose.yaml
-├── e2e.yaml             # see a sample below
-└── testdata
-    ├── expected.endpoints.service1.yaml
-    ├── expected.endpoints.service2.yaml
-    └── expected.services.yaml
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;or&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;case-name
-├── kind.yaml
-├── bookinfo
-│   ├── bookinfo.yaml
-│   └── bookinfo-gateway.yaml
-├── e2e.yaml             # see a sample below
-└── testdata
-    ├── expected.endpoints.service1.yaml
-    ├── expected.endpoints.service2.yaml
-    └── expected.services.yaml
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;a sample of &lt;code&gt;e2e.yaml&lt;/code&gt; may be&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#000080&#34;&gt;setup&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;env&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;kind&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;file&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;kind.yaml&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;manifests&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;- &lt;span style=&#34;color:#000080&#34;&gt;path&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;bookinfo.yaml&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;wait&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# you can have multiple conditions to wait&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;        &lt;/span&gt;- &lt;span style=&#34;color:#000080&#34;&gt;namespace&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;bookinfo&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;          &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;label-selector&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;app=product&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;          &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;for&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;deployment/available&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;        &lt;/span&gt;- &lt;span style=&#34;color:#000080&#34;&gt;namespace&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;reviews&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;          &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;label-selector&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;app=product&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;          &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;for&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;deployment/available&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;        &lt;/span&gt;- &lt;span style=&#34;color:#000080&#34;&gt;namespace&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;ratings&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;          &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;label-selector&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;app=product&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;          &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;for&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;deployment/available&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;run&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;- &lt;span style=&#34;color:#000080&#34;&gt;command&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;|&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# it can be a shell script or anything executable&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;        &lt;/span&gt;istioctl install --profile=demo -y&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;        &lt;/span&gt;kubectl label namespace default istio-injection=enabled&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;      &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;wait&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;        &lt;/span&gt;- &lt;span style=&#34;color:#000080&#34;&gt;namespace&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;istio-system&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;          &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;label-selector&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;app=istiod&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;          &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;for&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;deployment/available&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# OR&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# env: compose&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# file: docker-compose.yaml&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;trigger&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;action&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;http&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;interval&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;3s&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;times&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#099&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;url&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;localhost:9090/users&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;verify&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;- &lt;span style=&#34;color:#000080&#34;&gt;query&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;swctl service ls&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;expected&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;expected.services.yaml&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;  &lt;/span&gt;- &lt;span style=&#34;color:#000080&#34;&gt;query&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;swctl endpoint ls --service=&amp;#34;YnVzaW5lc3Mtem9uZTo6cHJvamVjdEM=.1&amp;#34;&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#bbb&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#000080&#34;&gt;expected&lt;/span&gt;:&lt;span style=&#34;color:#bbb&#34;&gt; &lt;/span&gt;expected.projectC.endpoints.yaml&lt;span style=&#34;color:#bbb&#34;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;then a single command should do the trick.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;e2e run
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;modules&#34;&gt;Modules&lt;/h1&gt;
-&lt;p&gt;This project is divided into the following modules.&lt;/p&gt;
-&lt;h2 id=&#34;controller&#34;&gt;Controller&lt;/h2&gt;
-&lt;p&gt;A controller command (&lt;code&gt;e2e run&lt;/code&gt;) composes all the steps declared in the &lt;code&gt;e2e.yaml&lt;/code&gt;, it should be progressive and clearly display which step is currently running. If it failed in a step, the error message should be as much comprehensive as possible. An example of the output might be&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;e2e run
-✔ Started Kind Cluster - Cluster Name
-✔ Checked Pods Readiness - All pods are ready
-? Generating Traffic - http localhost:9090/users (progress spinner)
-✔ Verified Output - service ls
-(progress spinner) Verifying Output - endpoint ls
-✘ Failed to Verify Output Data - endpoint ls
-  &amp;lt;the diff content&amp;gt;
-✔ Clean Up
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Compared with running the steps one by one, the controller is also responsible for cleaning up env (by executing &lt;code&gt;cleanup&lt;/code&gt; command) no mater what status other commands are, even if they are failed, the controller has the following semantics in terms of &lt;code&gt;setup&lt;/code&gt; and &lt;code&gt;cleanup&lt;/code&gt;.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;// Java
-try {
-    setup();
-    // trigger step
-    // verify step
-    // ...
-} finally {
-    cleanup();
-}
-
-// GoLang
-func run() {
-    setup();
-    defer cleanup();
-    // trigger step
-    // verify step
-    // ...
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;initializer&#34;&gt;Initializer&lt;/h2&gt;
-&lt;p&gt;The initializer is responsible for&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;When &lt;code&gt;env==compose&lt;/code&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Start the &lt;code&gt;docker-compose&lt;/code&gt; services;&lt;/li&gt;
-&lt;li&gt;Check the services&#39; healthiness;&lt;/li&gt;
-&lt;li&gt;Wait until all services are ready according to the &lt;code&gt;interval&lt;/code&gt;, etc.;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;When &lt;code&gt;env==kind&lt;/code&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Start the KinD cluster according to the config files;&lt;/li&gt;
-&lt;li&gt;Apply the resources files (&lt;code&gt;--manifests&lt;/code&gt;) or/and run the custom init command (&lt;code&gt;--commands&lt;/code&gt;);&lt;/li&gt;
-&lt;li&gt;Check the pods&#39; readiness;&lt;/li&gt;
-&lt;li&gt;Wait until all pods are ready according to the &lt;code&gt;interval&lt;/code&gt;, etc.;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;verifier&#34;&gt;Verifier&lt;/h2&gt;
-&lt;p&gt;According to scenarios we have at the moment, the must-have features are:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;Matchers&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Exact match&lt;/li&gt;
-&lt;li&gt;Not null&lt;/li&gt;
-&lt;li&gt;Not empty&lt;/li&gt;
-&lt;li&gt;Greater than 0&lt;/li&gt;
-&lt;li&gt;Regexp match&lt;/li&gt;
-&lt;li&gt;At least one of list element match&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Functions&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Base64 encode/decode&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;in order to help to identify simple bugs from the GitHub Actions workflow, there are some &amp;ldquo;nice to have&amp;rdquo; features:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Printing the diff content when verification failed is a super helpful bonus proved in the Python agent repo;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id=&#34;logging&#34;&gt;Logging&lt;/h1&gt;
-&lt;p&gt;When a test case failed, all the necessary logs should be collected into a dedicated directory, which could be uploaded to the GitHub Artifacts for downloading and analysis;&lt;/p&gt;
-&lt;p&gt;Logs through the entire process of a test case are:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;KinD clusters logs;&lt;/li&gt;
-&lt;li&gt;Containers/pods logs;&lt;/li&gt;
-&lt;li&gt;The logs from the NGE2E itself;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id=&#34;more-planned&#34;&gt;More Planned&lt;/h1&gt;
-&lt;h2 id=&#34;debugging&#34;&gt;Debugging&lt;/h2&gt;
-&lt;p&gt;Debugging the E2E locally has been a strong requirement and time killer that we haven&amp;rsquo;t solve up to date, though we have enhancements like &lt;a href=&#34;https://github.com/apache/skywalking/pull/5198&#34;&gt;https://github.com/apache/skywalking/pull/5198&lt;/a&gt; , but in this framework, we will adopt a new method to &amp;ldquo;really&amp;rdquo; support debugging locally.&lt;/p&gt;
-&lt;p&gt;The most common case when debugging is to run the E2E tests, with one or more services forwarded into the host machine, where the services are run in the IDE or in debug mode.&lt;/p&gt;
-&lt;p&gt;For example, you may run the SkyWalking OAP server in an IDE and run &lt;code&gt;e2e run&lt;/code&gt;, expecting the other services (e.g. agent services, SkyWalking WebUI, etc.) inside the containers to connect to your local OAP, instead of the one declared in &lt;code&gt;docker-compose.yaml&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;For Docker Desktop Mac/Windows, we can access the services running on the host machine inside containers via &lt;code&gt;host.docker.internal&lt;/code&gt;, for Linux, it&amp;rsquo;s &lt;code&gt;172.17.0.1&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;One possible solution is to add an option &lt;code&gt;--debug-services=oap,other-service-name&lt;/code&gt; that rewrites all the router rules inside the containers from &lt;code&gt;oap&lt;/code&gt; to &lt;code&gt;host.docker.internal&lt;/code&gt;/&lt;code&gt;172.17.0.1&lt;/code&gt;.&lt;/p&gt;
-&lt;h2 id=&#34;codegen&#34;&gt;CodeGen&lt;/h2&gt;
-&lt;p&gt;When adding new test case, a code generator would be of great value to eliminate the repeated labor and copy-pasting issues.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;e2e new &amp;lt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;case&lt;/span&gt;-name&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-      </description>
-    </item>
-    
-    <item>
-      <title>Blog: Observe Service Mesh with SkyWalking and Envoy Access Log Service</title>
-      <link>/blog/2020-12-03-obs-service-mesh-with-sw-and-als/</link>
-      <pubDate>Thu, 03 Dec 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/blog/2020-12-03-obs-service-mesh-with-sw-and-als/</guid>
-      <description>
-        
-        
-        &lt;p&gt;&lt;img src=&#34;canyonhorseshoe.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Author: Zhenxu Ke, Sheng Wu, and Tevah Platt. tetrate.io&lt;/li&gt;
-&lt;li&gt;Original link, &lt;a href=&#34;https://www.tetrate.io/blog/observe-service-mesh-with-skywalking-and-envoy-access-log-service/&#34;&gt;Tetrate.io blog&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Dec. 03th, 2020&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;a href=&#34;https://github.com/apache/skywalking&#34;&gt;Apache SkyWalking&lt;/a&gt;: an APM (application performance monitor) system, especially designed for microservices, cloud native, and container-based (Docker, Kubernetes, Mesos) architectures.&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://www.envoyproxy.io/docs/envoy/latest/api-v2/service/accesslog/v2/als.proto&#34;&gt;Envoy Access Log Service&lt;/a&gt;: Access Log Service (ALS) is an Envoy extension that emits detailed access logs of all requests going through Envoy.&lt;/p&gt;
-&lt;h2 id=&#34;background&#34;&gt;Background&lt;/h2&gt;
-&lt;p&gt;Apache SkyWalking has long supported observability in service mesh with Istio Mixer adapter. But since v1.5, Istio began to deprecate Mixer due to its poor performance in large scale clusters. Mixer’s functionalities have been moved into the Envoy proxies, and is supported only through the 1.7 Istio release.
-On the other hand, &lt;a href=&#34;https://github.com/wu-sheng&#34;&gt;Sheng Wu&lt;/a&gt; and &lt;a href=&#34;https://github.com/lizan&#34;&gt;Lizan Zhou&lt;/a&gt; presented a better solution based on the Apache SkyWalking and Envoy ALS on &lt;a href=&#34;https://kccncosschn19eng.sched.com/event/NroB/observability-in-service-mesh-powered-by-envoy-and-apache-skywalking-sheng-wu-lizan-zhou-tetrate&#34;&gt;KubeCon China 2019&lt;/a&gt;,  to reduce the performance impact brought by Mixer, while retaining the same observability in service mesh. This solution was initially implemented by Sheng Wu, &lt;a href=&#34;https://github.com/hanahmily&#34;&gt;Hongtao Gao&lt;/a&gt;, Lizan Zhou, and &lt;a href=&#34;https://github.com/dio&#34;&gt;Dhi Aurrahman&lt;/a&gt; at Tetrate.io.
-If you are looking for a more efficient solution to observe your service mesh instead of using a Mixer-based solution, this is exactly what you need. In this tutorial, we will explain a little bit how the new solution works, and apply it to the bookinfo application in practice.&lt;/p&gt;
-&lt;h2 id=&#34;how-it-works&#34;&gt;How it works&lt;/h2&gt;
-&lt;p&gt;From a perspective of observability, Envoy can be typically deployed in 2 modes, sidecar, and router. As a sidecar, Envoy mostly represents a single service to receive and send requests (2 and 3 in the picture below). While as a proxy, Envoy may represent many services (1 in the picture below).&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;Screen-Shot-2020-12-02-at-2.25.17-PM.png&#34; alt=&#34;Example of Envoy deployment, as front proxy and sidecar&#34;&gt;&lt;/p&gt;
-&lt;p&gt;In both modes, the logs emitted by ALS include a node identifier. The identifier starts with &lt;code&gt;router~&lt;/code&gt; (or &lt;code&gt;ingress~&lt;/code&gt;) in router mode and &lt;code&gt;sidecar~&lt;/code&gt; in sidecar proxy mode.&lt;/p&gt;
-&lt;p&gt;Apart from the node identifier, there are &lt;a href=&#34;https://github.com/envoyproxy/envoy/blob/549164c42cae84b59154ca4c36009e408aa10b52/generated_api_shadow/envoy/data/accesslog/v2/accesslog.proto&#34;&gt;several noteworthy properties in the access logs&lt;/a&gt; that will be used in this solution:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;code&gt;downstream_direct_remote_address&lt;/code&gt;: This field is the downstream direct remote address on which the request from the user was received. Note: This is always the physical peer, even if the remote address is inferred from for example the &lt;code&gt;x-forwarded-for&lt;/code&gt; header, proxy protocol, etc.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;code&gt;downstream_remote_address&lt;/code&gt;: The remote/origin address on which the request from the user was received.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;code&gt;downstream_local_address&lt;/code&gt;: The local/destination address on which the request from the user was received.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;code&gt;upstream_remote_address&lt;/code&gt;: The upstream remote/destination address that handles this exchange.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;code&gt;upstream_local_address&lt;/code&gt;: The upstream local/origin address that handles this exchange.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;code&gt;upstream_cluster&lt;/code&gt;: The upstream cluster that &lt;em&gt;upstream_remote_address&lt;/em&gt; belongs to.&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;We will discuss more about the properties in the following sections.&lt;/p&gt;
-&lt;h3 id=&#34;sidecar&#34;&gt;Sidecar&lt;/h3&gt;
-&lt;p&gt;When serving as a sidecar, Envoy is deployed alongside a service, and delegates all the incoming/outgoing requests to/from the service.&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;Delegating incoming requests:&lt;/strong&gt; in this case, Envoy acts as a server side sidecar, and sets the &lt;code&gt;upstream_cluster&lt;/code&gt; in form of &lt;code&gt;inbound|portNumber|portName|Hostname[or]SidecarScopeID&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;Screen-Shot-2020-12-02-at-2.37.49-PM.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;The SkyWalking analyzer checks whether either &lt;code&gt;downstream_remote_address&lt;/code&gt; can be mapped to a Kubernetes service:&lt;/p&gt;
-&lt;p&gt;a. If there is a service (say &lt;code&gt;Service B&lt;/code&gt;) whose implementation is running in this IP(and port), then we have a service-to-service relation, &lt;code&gt;Service B -&amp;gt; Service A&lt;/code&gt;, which can be used to build the topology. Together with the &lt;code&gt;start_time&lt;/code&gt; and &lt;code&gt;duration&lt;/code&gt; fields in the access log, we have the latency metrics now.&lt;/p&gt;
-&lt;p&gt;b. If there is no service that can be mapped to &lt;code&gt;downstream_remote_address&lt;/code&gt;, then the request may come from a service out of the mesh. Since SkyWalking cannot identify the source service where the requests come from, it simply generates the metrics without source service, according to the &lt;a href=&#34;https://wu-sheng.github.io/STAM/&#34;&gt;topology analysis method&lt;/a&gt;. The topology can be built as accurately as possible, and the metrics detected from server side are still correct.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;Delegating outgoing requests:&lt;/strong&gt; in this case, Envoy acts as a client-side sidecar, and sets the &lt;code&gt;upstream_cluster&lt;/code&gt; in form of &lt;code&gt;outbound|&amp;lt;port&amp;gt;|&amp;lt;subset&amp;gt;|&amp;lt;serviceFQDN&amp;gt;&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;Screen-Shot-2020-12-02-at-2.43.16-PM.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;Client side detection is relatively simpler than (1. Delegating incoming requests). If &lt;code&gt;upstream_remote_address&lt;/code&gt; is another sidecar or proxy, we simply get the mapped service name and generate the topology and metrics. Otherwise, we have no idea what it is and consider it an &lt;code&gt;UNKNOWN&lt;/code&gt; service.&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h3 id=&#34;proxy-role&#34;&gt;Proxy role&lt;/h3&gt;
-&lt;p&gt;When Envoy is deployed as a proxy, it is an independent service itself and doesn&amp;rsquo;t represent any other service like a sidecar does. Therefore, we can build client-side metrics as well as server-side metrics.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;Screen-Shot-2020-12-02-at-2.46.56-PM.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;example&#34;&gt;Example&lt;/h2&gt;
-&lt;p&gt;In this section, we will use the typical &lt;a href=&#34;https://istio.io/latest/docs/examples/bookinfo/&#34;&gt;bookinfo application&lt;/a&gt; to demonstrate how  Apache SkyWalking 8.3.0+ (the latest version up to Nov. 30th, 2020) works together with Envoy ALS to observe a service mesh.&lt;/p&gt;
-&lt;h3 id=&#34;installing-kubernetes&#34;&gt;Installing Kubernetes&lt;/h3&gt;
-&lt;p&gt;SkyWalking 8.3.0 supports the Envoy ALS solution under both Kubernetes environment and virtual machines (VM) environment, in this tutorial, we’ll only focus on the Kubernetes scenario, for VM solution, please stay tuned for our next blog, so we need to install Kubernetes before taking further steps.&lt;/p&gt;
-&lt;p&gt;In this tutorial, we will use the &lt;a href=&#34;https://minikube.sigs.k8s.io/docs/&#34;&gt;Minikube&lt;/a&gt; tool to quickly set up a local Kubernetes(v1.17) cluster for testing. In order to run all the needed components, including the bookinfo application, the SkyWalking OAP and WebUI, the cluster may need up to 4GB RAM and 2 CPU cores.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;minikube start --memory&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#099&#34;&gt;4096&lt;/span&gt; --cpus&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#099&#34;&gt;2&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Next, run &lt;code&gt;kubectl get pods --namespace=kube-system --watch&lt;/code&gt; to check whether all the Kubernetes components are ready. If not, wait for the readiness before going on.&lt;/p&gt;
-&lt;h3 id=&#34;installing-istio&#34;&gt;Installing Istio&lt;/h3&gt;
-&lt;p&gt;Istio provides a very convenient way to configure the Envoy proxy and enable the access log service. The built-in configuration profiles free us from lots of manual operations. So, for demonstration purposes, we will use Istio through this tutorial.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#008080&#34;&gt;ISTIO_VERSION&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;1.7.1
-curl -L https://istio.io/downloadIstio | sh - 
-sudo mv &lt;span style=&#34;color:#008080&#34;&gt;$PWD&lt;/span&gt;/istio-&lt;span style=&#34;color:#008080&#34;&gt;$ISTIO_VERSION&lt;/span&gt;/bin/istioctl /usr/local/bin/
-istioctl  install --set &lt;span style=&#34;color:#008080&#34;&gt;profile&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;demo
-kubectl label namespace default istio-injection&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;enabled
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Run &lt;code&gt;kubectl get pods --namespace=istio-system --watch&lt;/code&gt; to check whether all the Istio components are ready. If not, wait for the readiness before going on.&lt;/p&gt;
-&lt;h3 id=&#34;enabling-als&#34;&gt;Enabling ALS&lt;/h3&gt;
-&lt;p&gt;The &lt;code&gt;demo&lt;/code&gt; profile doesn’t enable ALS by default. We need to reconfigure it to enable ALS via some configuration.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;istioctl  manifest install &lt;span style=&#34;color:#d14&#34;&gt;\
-&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&lt;/span&gt;               --set meshConfig.enableEnvoyAccessLogService&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;true&lt;/span&gt; &lt;span style=&#34;color:#d14&#34;&gt;\
-&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&lt;/span&gt;               --set meshConfig.defaultConfig.envoyAccessLogService.address&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;skywalking-oap.istio-system:11800
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The example command &lt;code&gt;--set meshConfig.enableEnvoyAccessLogService=true&lt;/code&gt; enables the Envoy access log service in the mesh. And as we said earlier, ALS is essentially a gRPC service that emits requests logs. The config &lt;code&gt;meshConfig.defaultConfig.envoyAccessLogService.address=skywalking-oap.istio-system:11800&lt;/code&gt; tells this gRPC service  where to emit the logs, say &lt;code&gt;skywalking-oap.istio-system:11800&lt;/code&gt;, where we will deploy the SkyWalking ALS receiver later.&lt;/p&gt;
-&lt;p&gt;NOTE:
-You can also enable the ALS when installing Istio so that you don’t need to restart Istio after installation:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;istioctl install --set &lt;span style=&#34;color:#008080&#34;&gt;profile&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;demo &lt;span style=&#34;color:#d14&#34;&gt;\
-&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&lt;/span&gt;               --set meshConfig.enableEnvoyAccessLogService&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;true&lt;/span&gt; &lt;span style=&#34;color:#d14&#34;&gt;\
-&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&lt;/span&gt;               --set meshConfig.defaultConfig.envoyAccessLogService.address&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;skywalking-oap.istio-system:11800
-kubectl label namespace default istio-injection&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;enabled
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;deploying-apache-skywalking&#34;&gt;Deploying Apache SkyWalking&lt;/h3&gt;
-&lt;p&gt;The SkyWalking community provides a &lt;a href=&#34;https://helm.sh&#34;&gt;Helm&lt;/a&gt; Chart to make it easier to deploy SkyWalking and its dependent services in Kubernetes. The Helm Chart can be found at the &lt;a href=&#34;https://github.com/apache/skywalking-kubernetes&#34;&gt;GitHub repository&lt;/a&gt;.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# Install Helm&lt;/span&gt;
-curl -sSLO https://get.helm.sh/helm-v3.0.0-linux-amd64.tar.gz
-sudo tar xz -C /usr/local/bin --strip-components&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#099&#34;&gt;1&lt;/span&gt; linux-amd64/helm -f helm-v3.0.0-linux-amd64.tar.gz
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# Clone SkyWalking Helm Chart&lt;/span&gt;
-git clone https://github.com/apache/skywalking-kubernetes
-&lt;span style=&#34;color:#0086b3&#34;&gt;cd&lt;/span&gt; skywalking-kubernetes/chart
-git reset --hard dd749f25913830c47a97430618cefc4167612e75
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# Update dependencies&lt;/span&gt;
-helm dep up skywalking
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# Deploy SkyWalking&lt;/span&gt;
-helm -n istio-system install skywalking skywalking &lt;span style=&#34;color:#d14&#34;&gt;\
-&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&lt;/span&gt;               --set oap.storageType&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#39;h2&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;\
-&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&lt;/span&gt;               --set ui.image.tag&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;8.3.0 &lt;span style=&#34;color:#d14&#34;&gt;\
-&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&lt;/span&gt;               --set oap.image.tag&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;8.3.0-es7 &lt;span style=&#34;color:#d14&#34;&gt;\
-&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&lt;/span&gt;               --set oap.replicas&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#099&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color:#d14&#34;&gt;\
-&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&lt;/span&gt;               --set oap.env.SW_ENVOY_METRIC_ALS_HTTP_ANALYSIS&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;k8s-mesh &lt;span style=&#34;color:#d14&#34;&gt;\
-&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&lt;/span&gt;               --set oap.env.JAVA_OPTS&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#39;-Dmode=&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#d14&#34;&gt;\
-&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&lt;/span&gt;               --set oap.envoy.als.enabled&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;true&lt;/span&gt; &lt;span style=&#34;color:#d14&#34;&gt;\
-&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&lt;/span&gt;               --set elasticsearch.enabled&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;false&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;We deploy SkyWalking to the namespace &lt;code&gt;istio-system&lt;/code&gt;, so that SkyWalking OAP service can be accessed by &lt;code&gt;skywalking-oap.istio-system:11800&lt;/code&gt;, to which we told ALS to emit their logs, in the previous step.&lt;/p&gt;
-&lt;p&gt;We also enable the ALS analyzer in the SkyWalking OAP: &lt;code&gt;oap.env.SW_ENVOY_METRIC_ALS_HTTP_ANALYSIS=k8s-mesh&lt;/code&gt;. The analyzer parses the access logs and maps the IP addresses in the logs to the real service names in the Kubernetes, to build a topology.&lt;/p&gt;
-&lt;p&gt;In order to retrieve the metadata (such as Pod IP and service names) from a Kubernetes cluster for IP mappings, we also set &lt;code&gt;oap.envoy.als.enabled=true&lt;/code&gt;, to apply for a &lt;code&gt;ClusterRole&lt;/code&gt; that has access to the metadata.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#008080&#34;&gt;POD_NAME&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;$(&lt;/span&gt;kubectl get pods -A -l &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;app=skywalking,release=skywalking,component=ui&amp;#34;&lt;/span&gt; -o name&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color:#0086b3&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color:#008080&#34;&gt;$POD_NAME&lt;/span&gt;
-kubectl -n istio-system port-forward &lt;span style=&#34;color:#008080&#34;&gt;$POD_NAME&lt;/span&gt; 8080:8080
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Now navigate your browser to http://localhost:8080 . You should be able to see the SkyWalking dashboard. The dashboard is empty for now, but after we deploy the demo application and generate traffic, it should be filled up later.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;Screen-Shot-2020-12-02-at-3.01.03-PM.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;deploying-bookinfo-application&#34;&gt;Deploying Bookinfo application&lt;/h3&gt;
-&lt;p&gt;Run:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#008080&#34;&gt;ISTIO_VERSION&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;1.7.1
-kubectl apply -f https://raw.githubusercontent.com/istio/istio/&lt;span style=&#34;color:#008080&#34;&gt;$ISTIO_VERSION&lt;/span&gt;/samples/bookinfo/platform/kube/bookinfo.yaml
-kubectl apply -f https://raw.githubusercontent.com/istio/istio/&lt;span style=&#34;color:#008080&#34;&gt;$ISTIO_VERSION&lt;/span&gt;/samples/bookinfo/networking/bookinfo-gateway.yaml
-kubectl &lt;span style=&#34;color:#0086b3&#34;&gt;wait&lt;/span&gt; --for&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;condition&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;Ready pods --all --timeout&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;1200s
-minikube tunnel
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Then navigate your browser to http://localhost/productpage. You should be able to see the typical bookinfo application. Refresh the webpage several times to generate enough access logs.&lt;/p&gt;
-&lt;h3 id=&#34;done&#34;&gt;Done!&lt;/h3&gt;
-&lt;p&gt;And you’re all done! Check out the SkyWalking WebUI again. You should see the topology of the bookinfo application, as well the metrics of each individual service of the bookinfo application.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;Screen-Shot-2020-12-02-at-3.05.24-PM.png&#34; alt=&#34;&#34;&gt;
-&lt;img src=&#34;Screen-Shot-2020-12-02-at-3.11.55-PM.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;troubleshooting&#34;&gt;Troubleshooting&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;Check all pods status: &lt;code&gt;kubectl get pods -A&lt;/code&gt;.&lt;/li&gt;
-&lt;li&gt;SkyWalking OAP logs: &lt;code&gt;kubectl -n istio-system logs -f $(kubectl get pod -A -l &amp;quot;app=skywalking,release=skywalking,component=oap&amp;quot; -o name)&lt;/code&gt;.&lt;/li&gt;
-&lt;li&gt;SkyWalking WebUI logs: &lt;code&gt;kubectl -n istio-system logs -f $(kubectl get pod -A -l &amp;quot;app=skywalking,release=skywalking,component=ui&amp;quot; -o name)&lt;/code&gt;.&lt;/li&gt;
-&lt;li&gt;Make sure the time zone at the bottom-right of the WebUI is set to &lt;code&gt;UTC +0&lt;/code&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;customizing-service-names&#34;&gt;Customizing Service Names&lt;/h2&gt;
-&lt;p&gt;The SkyWalking community brought more improvements to the ALS solution in the 8.3.0 version. You can decide how to compose the service names when mapping from the IP addresses, with variables &lt;code&gt;service&lt;/code&gt; and &lt;code&gt;pod&lt;/code&gt;. For instance, configuring &lt;code&gt;K8S_SERVICE_NAME_RULE&lt;/code&gt; to the expression &lt;code&gt;${service.metadata.name}-${pod.metadata.labels.version}&lt;/code&gt; gets service names with version label such as &lt;code&gt;reviews-v1&lt;/code&gt;, &lt;code&gt;reviews-v2&lt;/code&gt;, and &lt;code&gt;reviews-v3&lt;/code&gt;, instead of a single service &lt;code&gt;reviews&lt;/code&gt;, see &lt;a href=&#34;https://github.com/apache/skywalking/pull/5722&#34;&gt;the PR&lt;/a&gt;.&lt;/p&gt;
-&lt;h2 id=&#34;working-als-with-vm&#34;&gt;Working ALS with VM&lt;/h2&gt;
-&lt;p&gt;Kubernetes is popular, but what about VMs? From what we discussed above, in order to map the IPs to services, SkyWalking needs access to the Kubernetes cluster, fetching service metadata and Pod IPs. But in a VM environment, there is no source from which we can fetch those metadata.
-In the next post, we will introduce another ALS analyzer based on the Envoy metadata exchange mechanism. With this analyzer, you are able to observe a service mesh in the VM environment. Stay tuned!
-If you want to  have commercial support for the ALS solution or hybrid mesh observability, &lt;a href=&#34;https://www.tetrate.io/tetrate-service-bridge/&#34;&gt;Tetrate Service Bridge, TSB&lt;/a&gt; is another good option out there.&lt;/p&gt;
-&lt;h2 id=&#34;additional-resources&#34;&gt;Additional Resources&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;KubeCon 2019 Recorded &lt;a href=&#34;https://www.youtube.com/watch?v=tERm39ju9ew&#34;&gt;Video&lt;/a&gt;.&lt;/li&gt;
-&lt;li&gt;Get more SkyWalking updates on &lt;a href=&#34;https://skywalking.apache.org&#34;&gt;the official website&lt;/a&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;em&gt;Apache SkyWalking founder Sheng Wu, SkyWalking core maintainer Zhenxu Ke are Tetrate engineers, and Tevah Platt is a content writer for Tetrate. Tetrate helps organizations adopt open source service mesh tools, including Istio, Envoy, and Apache SkyWalking, so they can manage microservices, run service mesh on any infrastructure, and modernize their applications.&lt;/em&gt;&lt;/p&gt;
-
-      </description>
-    </item>
-    
-    <item>
-      <title>Blog: The first design of Satellite 0.1.0</title>
-      <link>/blog/2020-11-25-skywalking-satellite-0.1.0-design/</link>
-      <pubDate>Wed, 25 Nov 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/blog/2020-11-25-skywalking-satellite-0.1.0-design/</guid>
-      <description>
-        
-        
-        &lt;p&gt;&lt;img src=&#34;Satellite.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Author: &lt;a href=&#34;https://github.com/evanljp&#34;&gt;Jiapeng Liu&lt;/a&gt;. Baidu.&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/apache/skywalking-satellite&#34;&gt;skywalking-satellite&lt;/a&gt;: The Sidecar Project of Apache SkyWalking&lt;/li&gt;
-&lt;li&gt;Nov. 25th, 2020&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;A lightweight collector/sidecar which can be deployed close to the target monitored system, to collect metrics, traces, and logs. It also provides advanced features, such as local cache, format transformation, and sampling.&lt;/p&gt;
-&lt;h2 id=&#34;design-thinking&#34;&gt;Design Thinking&lt;/h2&gt;
-&lt;p&gt;Satellite is a 2 level system to collect observability data from other core systems. So, the core element of the design is to guarantee data stability during Pod startup all the way to Pod shutdown avoiding alarm loss. All modules are designed as plugins, and if you have other ideas, you can add them yourself.&lt;/p&gt;
-&lt;h2 id=&#34;slo&#34;&gt;SLO&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;Single gatherer supports &amp;gt; 1000 ops (Based 0.5 Core,50M)&lt;/li&gt;
-&lt;li&gt;At least once delivery.(Optional)&lt;/li&gt;
-&lt;li&gt;Data stability: 99.999%.(Optional)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;em&gt;Because they are influenced by the choice of plugins, some items in SLO are optional.&lt;/em&gt;&lt;/p&gt;
-&lt;h2 id=&#34;role&#34;&gt;Role&lt;/h2&gt;
-&lt;p&gt;Satellite would be running as a &lt;strong&gt;Sidecar&lt;/strong&gt;. Although Daemonset mode would take up fewer resources, it will cause more troubles to the forwarding of agents. So we also want to use Sidecar mode by reducing the costs. But Daemonset mode would be also supported in the future plan.&lt;/p&gt;
-&lt;h2 id=&#34;core-modules&#34;&gt;Core Modules&lt;/h2&gt;
-&lt;p&gt;The Satellite has 3 core modules which are Gatherer, Processor, and Sender.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;The Gatherer module is responsible for fetching or receiving data and pushing the data to Queue.&lt;/li&gt;
-&lt;li&gt;The Processor module is responsible for reading data from the queue and processing data by a series of filter chains.&lt;/li&gt;
-&lt;li&gt;The Sender module is responsible for async processing and forwarding the data to the external services in the batch mode. After sending success, Sender would also acknowledge the offset of Queue in Gatherer.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;core-modules.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;detailed-structure&#34;&gt;Detailed Structure&lt;/h2&gt;
-&lt;p&gt;The overall design is shown in detail in the figure below. We will explain the specific components one by one.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;detail-modules.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;gatherer&#34;&gt;Gatherer&lt;/h3&gt;
-&lt;h4 id=&#34;concepts&#34;&gt;Concepts&lt;/h4&gt;
-&lt;p&gt;The Gatherer has 4 components to support the data collection, which are Input, Collector, Worker, and Queue. There are 2 roles in the Worker, which are Fetcher and Receiver.&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;The Input is an abstraction of the input source, which is usually mapped to a configuration file.&lt;/li&gt;
-&lt;li&gt;The Collector is created by the Source, but many collectors could be created by the same Source. For example, when a log path has been configured as the /var/*.log in an Input, the number of collectors is the same as the file number in this path.&lt;/li&gt;
-&lt;li&gt;The Fetcher and Receiver is the real worker to collect data. The receiver interface is an abstraction, which has multiple implementations, such as gRPC receiver  and HTTP receiver.Here are some specific use cases:
-&lt;ul&gt;
-&lt;li&gt;Trace Receiver is a gRPC server for receiving trace data created by Skywalking agents.&lt;/li&gt;
-&lt;li&gt;Log Receiver is also a gRPC server for receiving log data which is collected by Skywalking agents. (In the future we want Skywalking Agent to support log sending, and RPC-based log sending is more efficient and needs fewer resources than file reading. For example, the way of file reading will bring IO pressure and performance cost under multi-line splicing.)&lt;/li&gt;
-&lt;li&gt;Log Fetcher is like Filebeat, which fits the common log collection scenario. This fetcher will have more responsibility than any other workers because it needs to record the offset and process the multi-line splicing. This feature will be implemented in the future.&lt;/li&gt;
-&lt;li&gt;Prometheus Fetcher supports a new way to fetch Prometheus data and push the data to the upstream.&lt;/li&gt;
-&lt;li&gt;&amp;hellip;&amp;hellip;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;The Queue is a buffer module to decouple collection and transmission. In the 1st release version, we will use persistent storage to ensure data stability. But the implementation is a plug-in design that can support pure memory queues later.
-&lt;img src=&#34;gatherer.jpg&#34; alt=&#34;&#34;&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h4 id=&#34;the-data-flow&#34;&gt;The data flow&lt;/h4&gt;
-&lt;p&gt;We use the Trace Receiver as an example to introduce the data flow.
-&lt;img src=&#34;DataFlow.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;h4 id=&#34;queue&#34;&gt;Queue&lt;/h4&gt;
-&lt;h5 id=&#34;mmapqueue&#34;&gt;MmapQueue&lt;/h5&gt;
-&lt;p&gt;We have simplified the design of MmapQueue to reduce the resources cost on the memory and disk.&lt;/p&gt;
-&lt;h6 id=&#34;concepts-1&#34;&gt;Concepts&lt;/h6&gt;
-&lt;p&gt;There are 2 core concepts in MmapQueue.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Segment: Segment is the real data store center, that provides large-space storage and does not reduce read and write performance as much as possible by using mmap. And we will avoid deleting files by reusing them.&lt;/li&gt;
-&lt;li&gt;Meta: The purpose of meta is to find the data that the consumer needs.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h6 id=&#34;segment&#34;&gt;Segment&lt;/h6&gt;
-&lt;p&gt;One MmapQueue has a directory to store the whole data. The Queue directory is made up with many segments and 1 meta file. The number of the segments would be computed by 2 params, which are the max cost of the Queue and the cost of each segment. For example, If the max cost is 512M and each segment cost is 256K, the directory can hold up to 2000 files. Once capacity is exceeded, an coverage policy is adopted that means the 2000th would override the first file.&lt;/p&gt;
-&lt;p&gt;Each segment in Queue will be N times the size of the page cache and will be read and written in an appended sequence rather than randomly. These would improve the performance of Queue. For example, each Segment is a 128k file, as shown in the figure below.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;segments.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;h6 id=&#34;meta&#34;&gt;Meta&lt;/h6&gt;
-&lt;p&gt;The Meta is a mmap file that only contains 56Bit. There are 5 concepts in the Meta.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Version: A version flag.&lt;/li&gt;
-&lt;li&gt;Watermark Offset: Point to the current writing space.
-&lt;ul&gt;
-&lt;li&gt;ID: SegmentID&lt;/li&gt;
-&lt;li&gt;Offset: The offset in Segment.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Writed Offset: Point to the latest refreshed data, that would be overridden by the write offset after period refresh.
-&lt;ul&gt;
-&lt;li&gt;ID: SegmentID&lt;/li&gt;
-&lt;li&gt;Offset: The offset in Segment.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Reading Offset: Point to the current reading space.
-&lt;ul&gt;
-&lt;li&gt;ID: SegmentID&lt;/li&gt;
-&lt;li&gt;Offset: The offset in Segment.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Committed Offset: Point to the latest committed offset , that is equal to the latest acked offset plus one.
-&lt;ul&gt;
-&lt;li&gt;ID: SegmentID&lt;/li&gt;
-&lt;li&gt;Offset: The offset in Segment.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;meta.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;The following diagram illustrates the transformation process.&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;The publisher receives data and wants to write to Queue.
-&lt;ul&gt;
-&lt;li&gt;The publisher would read Writing Offset to find a space and do plus one.&lt;/li&gt;
-&lt;li&gt;After this, the publisher will write the data to the space.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;The consumer wants to read the data from Queue.
-&lt;ul&gt;
-&lt;li&gt;The consumer would read Reading Offset to find the current read offset and do plus one.&lt;/li&gt;
-&lt;li&gt;After this, the consumer will read the data from the space.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;On period flush, the flusher would override Watermark Offset by using Writing Offset.&lt;/li&gt;
-&lt;li&gt;When the ack operation is triggered, Committed Offset would plus the batch size in the ack batch.&lt;/li&gt;
-&lt;li&gt;When facing crash, Writing Offset and Reading Offset would be overridden by Watermark Offset and Committed Offset. That is because the Reading Offset and Writing Offset cannot guarantee at least once delivery.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;img src=&#34;offset-convert.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;h6 id=&#34;mmap-performance-test&#34;&gt;Mmap Performance Test&lt;/h6&gt;
-&lt;p&gt;The test is to verify the efficiency of mmap in low memory cost.&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;The rate of data generation: 7.5K/item 1043 item/s (Based on Aifanfan online pod.)&lt;/li&gt;
-&lt;li&gt;The test structure is based on &lt;a href=&#34;https://github.com/grandecola/bigqueue&#34;&gt;Bigqueue&lt;/a&gt; because of similar structure.&lt;/li&gt;
-&lt;li&gt;Test tool: Go Benchmark Test&lt;/li&gt;
-&lt;li&gt;Command: go test -bench BenchmarkEnqueue  -run=none -cpu=1&lt;/li&gt;
-&lt;li&gt;Result On Mac(15-inch, 2018,16 GB 2400 MHz DDR4, 2.2 GHz Intel Core i7 SSD):
-&lt;ul&gt;
-&lt;li&gt;BenchmarkEnqueue/ArenaSize-128KB/MessageSize-8KB/MaxMem-384KB              66501             21606 ns/op              68 B/op          1 allocs/op&lt;/li&gt;
-&lt;li&gt;BenchmarkEnqueue/ArenaSize-128KB/MessageSize-8KB/MaxMem-1.25MB             72348             16649 ns/op              67 B/op          1 allocs/op&lt;/li&gt;
-&lt;li&gt;BenchmarkEnqueue/ArenaSize-128KB/MessageSize-16KB/MaxMem-1.25MB            39996             33199 ns/op             103 B/op          1 allocs/op&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Result On Linux(INTEL Xeon E5-2450 V2 8C 2.5GHZ&lt;em&gt;2,INVENTEC PC3L-10600 16G&lt;/em&gt;8,INVENTEC SATA 4T 7.2K*8):
-&lt;ul&gt;
-&lt;li&gt;BenchmarkEnqueue/ArenaSize-128KB/MessageSize-8KB/MaxMem-384KB         	  126662	     12070 ns/op	      62 B/op	       1 allocs/op&lt;/li&gt;
-&lt;li&gt;BenchmarkEnqueue/ArenaSize-128KB/MessageSize-8KB/MaxMem-1.25MB        	  127393	     12097 ns/op	      62 B/op	       1 allocs/op&lt;/li&gt;
-&lt;li&gt;BenchmarkEnqueue/ArenaSize-128KB/MessageSize-16KB/MaxMem-1.25MB       	   63292	     23806 ns/op	      92 B/op	       1 allocs/op&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Conclusion: Based on the above tests, mmap is both satisfied at the write speed and at little memory with very low consumption when running as a sidecar.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h3 id=&#34;processor&#34;&gt;Processor&lt;/h3&gt;
-&lt;p&gt;The Processor has 3 core components, which are Consumer, Filter, and Context.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;The Consumer is created by the downstream Queue. The consumer has its own read offset and committed offset, which is similar to the offset concept of Spark Streaming.&lt;/li&gt;
-&lt;li&gt;Due to the particularity of APM data preprocessing, Context is a unique concept in the Satellite filter chain, which supports storing the intermediate event because the intermediate state event also needs to be sent in sometimes.&lt;/li&gt;
-&lt;li&gt;The Filter is the core data processing part, which is similar to the processor of &lt;a href=&#34;https://github.com/elastic/beats&#34;&gt;beats&lt;/a&gt;. Due to the context, the upstream/downstream filters would be logically coupling.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;Processor.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;sender&#34;&gt;Sender&lt;/h3&gt;
-&lt;ol&gt;
-&lt;li&gt;BatchConverter decouples the Processor and Sender by staging the Buffer structure, providing parallelization. But if BatchBuffer is full, the downstream processors would be blocked.&lt;/li&gt;
-&lt;li&gt;Follower is a real send worker that has a client, such as a gRPC client or Kafka client, and a fallback strategy. Fallback strategy is an interface, we can add more strategies to resolve the abnormal conditions, such as Instability in the network, upgrade the oap cluster.&lt;/li&gt;
-&lt;li&gt;When sent success, Committed Offset in Queue would plus the number of this batch.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;img src=&#34;Sender.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;high-performance&#34;&gt;High Performance&lt;/h3&gt;
-&lt;p&gt;The scenario using Satellite is to collect a lot of APM data collection. We guarantee high performance by the following ways.&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Shorten transmission path, that means only join 2 components,which are Queue and Processor, between receiving and forwarding.&lt;/li&gt;
-&lt;li&gt;High Performance Queue. MmapQueue provides a big, fast and persistent queue based on memory mapped file and ring structure.&lt;/li&gt;
-&lt;li&gt;Processor maintains a linear design, that could be functional processed in one go-routine to avoid too much goroutines switching.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id=&#34;stability&#34;&gt;Stability&lt;/h2&gt;
-&lt;p&gt;Stability is a core point in Satellite. Stability can be considered in many ways, such as stable resources cost, stable running and crash recovery.&lt;/p&gt;
-&lt;h3 id=&#34;stable-resource-cost&#34;&gt;Stable resource cost&lt;/h3&gt;
-&lt;p&gt;In terms of resource cost,  Memory and CPU should be a concern.&lt;/p&gt;
-&lt;p&gt;In the aspect of the CPU, we keep a sequence structure to avoid a large number of retries occurring when facing network congestion. And Satellite avoids keep pulling when the Queue is empty based on the offset design of Queue.&lt;/p&gt;
-&lt;p&gt;In the aspect of the Memory, we have guaranteed only one data caching in Satellite, that is Queue. For the queue structure, we also keep the size fixed based on the ring structure to maintain stable Memory cost. Also, MmapQueue is designed for minimizing memory consumption and providing persistence while keeping speed as fast as possible. Maybe supports some strategy to dynamically control the size of MmapQueue to process more extreme conditions in the future.&lt;/p&gt;
-&lt;h3 id=&#34;stable-running&#34;&gt;Stable running&lt;/h3&gt;
-&lt;p&gt;There are many cases of network congestion, such as the network problem on the host node, OAP cluster is under upgrating, and Kafka cluster is unstable. When facing the above cases, Follower would process fallback strategy and block the downstream processes. Once the failure strategy is finished, such that send success or give up this batch, the Follower would process the next batch.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;Sender.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;crash-recovery&#34;&gt;Crash Recovery&lt;/h3&gt;
-&lt;p&gt;The crash recovery only works when the user selects MmapQueue in Gatherer because of persistent file system design. When facing a crash, Reading Offset would be overridden by Committed Offset that ensure the at least once delivery. And Writed Offset would override Writing Offset that ensures the consumer always works properly and avoid encountering uncrossable defective data blocks.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;offset-convert.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;buffer-pool&#34;&gt;Buffer pool&lt;/h2&gt;
-&lt;p&gt;The Queue is to store fixed structure objects, object buffer pool would be efficient to reuse memory to avoid GC.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;ackChan&lt;/li&gt;
-&lt;li&gt;batch convertor&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;some-metrics&#34;&gt;Some metrics&lt;/h2&gt;
-&lt;p&gt;In Satellite, we should also collect its own monitoring metrics. The following metrics are necessary for Satellite.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;cpu&lt;/li&gt;
-&lt;li&gt;memory&lt;/li&gt;
-&lt;li&gt;go routine number&lt;/li&gt;
-&lt;li&gt;gatherer_writing_offset&lt;/li&gt;
-&lt;li&gt;gatherer_watermark_offset&lt;/li&gt;
-&lt;li&gt;processor_reading_count&lt;/li&gt;
-&lt;li&gt;sender_committed_offset&lt;/li&gt;
-&lt;li&gt;sender_abandoned_count&lt;/li&gt;
-&lt;li&gt;sender_retry_count&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;input-and-output&#34;&gt;Input and Output&lt;/h2&gt;
-&lt;p&gt;We will reuse this diagram to explain the input and output.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Input
-&lt;ul&gt;
-&lt;li&gt;Because the push-pull mode is both supported, Queue is a core component.&lt;/li&gt;
-&lt;li&gt;Queue is designed to be a ring-shaped fixed capacity, that means the oldest data would be overridden by the latest data. If users find data loss, users should raise the ceiling of memory Queue. MmapQueue generally doesn&amp;rsquo;t face this problem unless the Sender transport is congested.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Ouput
-&lt;ul&gt;
-&lt;li&gt;If the BatchBuffer is full, the processor would be blocked.&lt;/li&gt;
-&lt;li&gt;If the Channel is full, the downstream components would be blocked, such as BatchConvertor and Processor.&lt;/li&gt;
-&lt;li&gt;When SenderWorker sends failure, the batch data would do a failure strategy that would block pulling data from the Channel. The strategy is a part of Sender,the operation mode is synchronous.&lt;/li&gt;
-&lt;li&gt;Once the failure strategy is finished, such that send success or give up this batch, the Sendworker would keep pulling data from the Channel.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;detail-modules.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;questions&#34;&gt;Questions&lt;/h2&gt;
-&lt;h3 id=&#34;how-to-avoid-keep-pulling-when-the-queue-is-empty&#34;&gt;How to avoid keep pulling when the Queue is empty?&lt;/h3&gt;
-&lt;p&gt;If Watermark Offset is less than or equal to Reading Offset, a signal would be sent to the consumer to avoid keep pulling.&lt;/p&gt;
-&lt;h3 id=&#34;why-reusing-files-in-queue&#34;&gt;Why reusing files in Queue?&lt;/h3&gt;
-&lt;p&gt;The unified model  is a ring in Queue, that limits fixed resources cost  in memory or disk.In Mmap Queue, reusing files turns the delete operations into an overwrite operations, effectively reducing the creation and deletion behavior in files.&lt;/p&gt;
-&lt;h3 id=&#34;what-are-the-strategies-for-file-creation-and-deletion-in-mmapqueue&#34;&gt;What are the strategies for file creation and deletion in MmapQueue?&lt;/h3&gt;
-&lt;p&gt;As Satellite running, the number of the files in MmapQueue would keep growing until up to the maximum capacity. After this, the old files will be overridden by the new data to avoid file deletion. When the Pod died, all resources were recycled.&lt;/p&gt;
 
       </description>
     </item>
