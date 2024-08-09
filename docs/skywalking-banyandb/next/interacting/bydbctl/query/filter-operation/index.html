@@ -29,31 +29,31 @@
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
 
-<title>Query Measures | Apache SkyWalking</title><meta property="og:title" content="Query Measures" />
-<meta property="og:description" content="Query Measures Query operation queries the data in a measure.
-bydbctl is the command line tool in examples.
-The input contains two parts:
- Request: a YAML-based text which is defined by the API Time Range: YAML and CLI&rsquo;s flags both support it.  Time Range The query specification contains time_range field. The request should set absolute times to it. bydbctl also provides start and end flags to support passing absolute and relative times." />
+<title>Filter Operation | Apache SkyWalking</title><meta property="og:title" content="Filter Operation" />
+<meta property="og:description" content="Filter Operation Filter operation is a part of the query configuration. It is used to filter the data based on the given condition for Stream and Measure queries.
+The condition is a combination of the tag name, operation, and value. The operation&rsquo;s root is Criteria which is defined in the API Reference.
+The following are the examples of filter operations:
+Condition.BinaryOp EQ, NE, LT, GT, LE and GE EQ, NE, LT, GT, LE and GE, only one operand should be given, i." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/docs/skywalking-banyandb/next/crud/measure/query/" />
+<meta property="og:url" content="/docs/skywalking-banyandb/next/interacting/bydbctl/query/filter-operation/" />
 
-<meta itemprop="name" content="Query Measures">
-<meta itemprop="description" content="Query Measures Query operation queries the data in a measure.
-bydbctl is the command line tool in examples.
-The input contains two parts:
- Request: a YAML-based text which is defined by the API Time Range: YAML and CLI&rsquo;s flags both support it.  Time Range The query specification contains time_range field. The request should set absolute times to it. bydbctl also provides start and end flags to support passing absolute and relative times.">
+<meta itemprop="name" content="Filter Operation">
+<meta itemprop="description" content="Filter Operation Filter operation is a part of the query configuration. It is used to filter the data based on the given condition for Stream and Measure queries.
+The condition is a combination of the tag name, operation, and value. The operation&rsquo;s root is Criteria which is defined in the API Reference.
+The following are the examples of filter operations:
+Condition.BinaryOp EQ, NE, LT, GT, LE and GE EQ, NE, LT, GT, LE and GE, only one operand should be given, i.">
 
-<meta itemprop="wordCount" content="302">
+<meta itemprop="wordCount" content="278">
 
 
 
 <meta itemprop="keywords" content="" />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Query Measures"/>
-<meta name="twitter:description" content="Query Measures Query operation queries the data in a measure.
-bydbctl is the command line tool in examples.
-The input contains two parts:
- Request: a YAML-based text which is defined by the API Time Range: YAML and CLI&rsquo;s flags both support it.  Time Range The query specification contains time_range field. The request should set absolute times to it. bydbctl also provides start and end flags to support passing absolute and relative times."/>
+<meta name="twitter:title" content="Filter Operation"/>
+<meta name="twitter:description" content="Filter Operation Filter operation is a part of the query configuration. It is used to filter the data based on the given condition for Stream and Measure queries.
+The condition is a combination of the tag name, operation, and value. The operation&rsquo;s root is Criteria which is defined in the API Reference.
+The following are the examples of filter operations:
+Condition.BinaryOp EQ, NE, LT, GT, LE and GE EQ, NE, LT, GT, LE and GE, only one operand should be given, i."/>
 
 
 
@@ -71,7 +71,7 @@ The input contains two parts:
 
 
 
-    <title>Query Measures | Apache SkyWalking</title>
+    <title>Filter Operation | Apache SkyWalking</title>
   </head>
   <body class="td-page  project-doc">
     <header>
@@ -421,41 +421,9 @@ The input contains two parts:
 
     <li>
         
-            <a href="/docs/skywalking-banyandb/next/clients">Clients</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="">Insert and Update Data</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="">Querying Data</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="">Deleting Data</a>
-        
-    </li>
-
-    
-
-    <li>
-        
 
             
-            <a href="#">CRUD Operations<i class="iconfont icon-arrow-right pull-right"></i></a>
+            <a href="#">CLI<i class="iconfont icon-arrow-right pull-right"></i></a>
             
 
             
@@ -464,7 +432,7 @@ The input contains two parts:
 
     <li>
         
-            <a href="/docs/skywalking-banyandb/next/crud/group">Group</a>
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/bydbctl">bydbctl</a>
         
     </li>
 
@@ -474,7 +442,7 @@ The input contains two parts:
         
 
             
-            <a href="#">Measure<i class="iconfont icon-arrow-right pull-right"></i></a>
+            <a href="#">CRUD Schema<i class="iconfont icon-arrow-right pull-right"></i></a>
             
 
             
@@ -483,7 +451,7 @@ The input contains two parts:
 
     <li>
         
-            <a href="/docs/skywalking-banyandb/next/crud/measure/schema">Schema</a>
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/schema/group">Group</a>
         
     </li>
 
@@ -491,7 +459,31 @@ The input contains two parts:
 
     <li>
         
-            <a href="/docs/skywalking-banyandb/next/crud/measure/query">Query</a>
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/schema/measure">Measure</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/schema/stream">Stream</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/schema/index-rule">IndexRule</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/schema/index-rule-binding">IndexRuleBinding</a>
         
     </li>
 
@@ -508,7 +500,7 @@ The input contains two parts:
         
 
             
-            <a href="#">Stream<i class="iconfont icon-arrow-right pull-right"></i></a>
+            <a href="#">Querying Data<i class="iconfont icon-arrow-right pull-right"></i></a>
             
 
             
@@ -517,7 +509,7 @@ The input contains two parts:
 
     <li>
         
-            <a href="/docs/skywalking-banyandb/next/crud/stream/schema">Schema</a>
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/query/measure">Measure</a>
         
     </li>
 
@@ -525,7 +517,15 @@ The input contains two parts:
 
     <li>
         
-            <a href="/docs/skywalking-banyandb/next/crud/stream/query">Query</a>
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/query/stream">Stream</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/query/filter-operation">Filter Operation</a>
         
     </li>
 
@@ -540,7 +540,14 @@ The input contains two parts:
 
     <li>
         
-            <a href="/docs/skywalking-banyandb/next/crud/index_rule">IndexRule</a>
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/property">CRUD Property</a>
+        
+    </li>
+
+    
+
+</ul>
+
         
     </li>
 
@@ -548,7 +555,7 @@ The input contains two parts:
 
     <li>
         
-            <a href="/docs/skywalking-banyandb/next/crud/index_rule_binding">IndexRuleBinding</a>
+            <a href="/docs/skywalking-banyandb/next/interacting/java-client">Java Client</a>
         
     </li>
 
@@ -556,7 +563,142 @@ The input contains two parts:
 
     <li>
         
-            <a href="/docs/skywalking-banyandb/next/crud/property">Property</a>
+
+            
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui">Web UI<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/dashboard">Dashboard</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
+            <a href="#">CRUD Schema<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/schema/group">Group</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/schema/measure">Measure</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/schema/stream">Stream</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/schema/index-rule">IndexRule</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/schema/index-rule-binding">IndexRuleBinding</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/schema/top-n-aggregation">Top N Aggregation</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
+            <a href="#">Querying Data<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/query/measure">Measure</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/query/stream">Stream</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/property">CRUD Property</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/java-client">Java Client</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="">Web UI</a>
         
     </li>
 
@@ -781,7 +923,7 @@ The input contains two parts:
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: f354d0a</div>
+                  <div class="commit-id">Commit Id: 4588b55</div>
                 
 
 
@@ -794,57 +936,73 @@ The input contains two parts:
               <i class="iconfont icon-menu-doc doc-menu-button"></i>
               
 <div class="td-content">
-	<h1 id="query-measures">Query Measures</h1>
-<p>Query operation queries the data in a measure.</p>
-<p><a href="../../../clients#command-line"><code>bydbctl</code></a> is the command line tool in examples.</p>
-<p>The input contains two parts:</p>
-<ul>
-<li>Request: a YAML-based text which is defined by the <a href="#api-reference">API</a></li>
-<li>Time Range: YAML and CLI&rsquo;s flags both support it.</li>
-</ul>
-<h2 id="time-range">Time Range</h2>
-<p>The query specification contains <code>time_range</code> field. The request should set absolute times to it.
-<code>bydbctl</code> also provides <code>start</code> and <code>end</code> flags to support passing absolute and relative times.</p>
-<p>&ldquo;start&rdquo; and &ldquo;end&rdquo; specify a time range during which the query is performed, they can be an absolute time like <a href="https://www.rfc-editor.org/rfc/rfc3339">&ldquo;2006-01-02T15:04:05Z07:00&rdquo;</a>,
-or relative time (to the current time) like &ldquo;-30m&rdquo;, or &ldquo;30m&rdquo;.
-They are both optional and their default values follow the rules below:</p>
-<ul>
-<li>when &ldquo;start&rdquo; and &ldquo;end&rdquo; are both absent, &ldquo;start = now - 30 minutes&rdquo; and &ldquo;end = now&rdquo;,
-namely past 30 minutes;</li>
-<li>when &ldquo;start&rdquo; is absent and &ldquo;end&rdquo; is present, this command calculates &ldquo;start&rdquo; (minus 30 units),
-e.g. &ldquo;end = 2022-11-09T12:34:00Z&rdquo;, so &ldquo;start = end - 30 minutes = 2022-11-09T12:04:00Z&rdquo;;</li>
-<li>when &ldquo;start&rdquo; is present and &ldquo;end&rdquo; is absent, this command calculates &ldquo;end&rdquo; (plus 30 units),
-e.g. &ldquo;start = 2022-11-09T12:04:00Z&rdquo;, so &ldquo;end = start + 30 minutes = 2022-11-09T12:34:00Z&rdquo;.</li>
-</ul>
-<h2 id="examples">Examples</h2>
-<p>To retrieve a series of data points between <code>2022-10-15T22:32:48Z</code> and <code>2022-10-15T23:32:48Z</code> could use the below command. These data points contain tags: <code>id</code> and <code>entity_id</code> that belong to a family <code>default</code>. They also choose fields: <code>total</code> and <code>value</code>.</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">bydbctl measure query -f - <span style="color:#d14">&lt;&lt;EOF
-</span><span style="color:#d14">name: &#34;service_cpm_minute&#34;
-</span><span style="color:#d14">groups: [&#34;measure-minute&#34;]
-</span><span style="color:#d14">tagProjection:
-</span><span style="color:#d14">  tagFamilies:
-</span><span style="color:#d14">    - name: &#34;default&#34;
-</span><span style="color:#d14">      tags: [&#34;entity_id&#34;]
-</span><span style="color:#d14">fieldProjection:
-</span><span style="color:#d14">  names: [&#34;total&#34;, &#34;value&#34;]
-</span><span style="color:#d14">timeRange:
-</span><span style="color:#d14">  begin: 2022-10-15T22:32:48Z
-</span><span style="color:#d14">  end: 2022-10-15T23:32:48Z
-</span><span style="color:#d14">EOF</span>
-</code></pre></div><p>The below command could query data in the last 10 minutes using relative time duration :</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">bydbctl measure query --start -10m -f - <span style="color:#d14">&lt;&lt;EOF
-</span><span style="color:#d14">name: &#34;service_cpm_minute&#34;
-</span><span style="color:#d14">groups: [&#34;measure-minute&#34;]
-</span><span style="color:#d14">tagProjection:
-</span><span style="color:#d14">  tagFamilies:
-</span><span style="color:#d14">    - name: &#34;default&#34;
-</span><span style="color:#d14">      tags: [&#34;entity_id&#34;]
-</span><span style="color:#d14">fieldProjection:
-</span><span style="color:#d14">  names: [&#34;total&#34;, &#34;value&#34;]
-</span><span style="color:#d14">EOF</span>
-</code></pre></div><h2 id="api-reference">API Reference</h2>
-<p><a href="../../../api-reference#measureservice">MeasureService v1</a></p>
-
+	<h1 id="filter-operation">Filter Operation</h1>
+<p>Filter operation is a part of the query configuration. It is used to filter the data based on the given condition for <a href="../stream">Stream</a> and <a href="../measure">Measure</a> queries.</p>
+<p>The condition is a combination of the tag name, operation, and value.
+The operation&rsquo;s root is Criteria which is defined in the <a href="../../../../api-reference#criteria">API Reference</a>.</p>
+<p>The following are the examples of filter operations:</p>
+<h2 id="conditionbinaryopapi-referenceconditionbinaryop"><a href="../../../../api-reference#conditionbinaryop">Condition.BinaryOp</a></h2>
+<h3 id="eq-ne-lt-gt-le-and-ge">EQ, NE, LT, GT, LE and GE</h3>
+<p>EQ, NE, LT, GT, LE and GE, only one operand should be given, i.e. one-to-one relationship.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">criteria:
+  condition:
+    name: <span style="color:#d14">&#34;entity_id&#34;</span>
+    op: <span style="color:#d14">&#34;BINARY_OP_EQ&#34;</span>
+    value:
+      str:
+        value: <span style="color:#d14">&#34;entity_1&#34;</span>
+</code></pre></div><h3 id="in-and-not_in">IN and NOT_IN</h3>
+<p>HAVING and NOT_HAVING allow multi-value to be the operand such as array/vector, i.e. one-to-many relationship.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">criteria:
+  condition:
+    name: <span style="color:#d14">&#34;entity_id&#34;</span>
+    op: <span style="color:#d14">&#34;BINARY_OP_IN&#34;</span>
+    value:
+      str_array:
+        value: <span style="color:#000;font-weight:bold">[</span><span style="color:#d14">&#34;entity_1&#34;</span>, <span style="color:#d14">&#34;entity_2&#34;</span>, <span style="color:#d14">&#34;unknown&#34;</span><span style="color:#000;font-weight:bold">]</span>
+</code></pre></div><h3 id="having-and-not_having">HAVING and NOT_HAVING</h3>
+<p>HAVING and NOT_HAVING allow multi-value to be the operand such as array/vector, i.e. one-to-many relationship. For example, &ldquo;keyA&rdquo; contains &ldquo;valueA&rdquo; and &ldquo;valueB&rdquo;</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">criteria:
+  condition:
+    name: <span style="color:#d14">&#34;extended_tags&#34;</span>
+    op: <span style="color:#d14">&#34;BINARY_OP_HAVING&#34;</span>
+    value:
+      strArray:
+        value: <span style="color:#000;font-weight:bold">[</span><span style="color:#d14">&#34;c&#34;</span>, <span style="color:#d14">&#34;b&#34;</span><span style="color:#000;font-weight:bold">]</span>
+</code></pre></div><h3 id="match">MATCH</h3>
+<p>MATCH performances a full-text search if the tag is analyzed.
+The string value applies to the same analyzer as the tag, but string array value does not.
+Each item in a string array is seen as a token instead of a query expression.</p>
+<p>How to set the analyzer for a tag can find in the <a href="../../schema/index-rule">IndexRules</a>.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">criteria:
+  condition:
+    name: <span style="color:#d14">&#34;name&#34;</span>
+    op: <span style="color:#d14">&#34;BINARY_OP_MATCH&#34;</span>
+    value:
+      str:
+        value: <span style="color:#d14">&#34;us&#34;</span>
+</code></pre></div><h2 id="logicalexpressionlogicalopapi-referencelogicalexpressionlogicalop"><a href="../../../../api-reference#logicalexpressionlogicalop">LogicalExpression.LogicalOp</a></h2>
+<p>Logical operation is used to combine multiple conditions.</p>
+<h3 id="and-or">AND, OR</h3>
+<p>The following example queries the data where the <code>id</code> is <code>1</code> and the <code>service_id</code> is <code>service_1</code></p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">criteria:
+  le:
+    op: <span style="color:#d14">&#34;LOGICAL_OP_AND&#34;</span>
+    right:
+      condition:
+        name: <span style="color:#d14">&#34;id&#34;</span>
+        op: <span style="color:#d14">&#34;BINARY_OP_EQ&#34;</span>
+        value:
+          str:
+            value: <span style="color:#d14">&#34;1&#34;</span>
+    left:
+      condition:
+        name: <span style="color:#d14">&#34;service_id&#34;</span>
+        op: <span style="color:#d14">&#34;BINARY_OP_EQ&#34;</span>
+        value:
+          str:
+            value: <span style="color:#d14">&#34;service_1&#34;</span>
+</code></pre></div>
 </div>
 <div>
   
@@ -926,11 +1084,21 @@ e.g. &ldquo;start = 2022-11-09T12:04:00Z&rdquo;, so &ldquo;end = start + 30 minu
 
 <nav id="TableOfContents">
   <ul>
-    <li><a href="#query-measures">Query Measures</a>
+    <li><a href="#filter-operation">Filter Operation</a>
       <ul>
-        <li><a href="#time-range">Time Range</a></li>
-        <li><a href="#examples">Examples</a></li>
-        <li><a href="#api-reference">API Reference</a></li>
+        <li><a href="#conditionbinaryopapi-referenceconditionbinaryop"><a href="../../../../api-reference#conditionbinaryop">Condition.BinaryOp</a></a>
+          <ul>
+            <li><a href="#eq-ne-lt-gt-le-and-ge">EQ, NE, LT, GT, LE and GE</a></li>
+            <li><a href="#in-and-not_in">IN and NOT_IN</a></li>
+            <li><a href="#having-and-not_having">HAVING and NOT_HAVING</a></li>
+            <li><a href="#match">MATCH</a></li>
+          </ul>
+        </li>
+        <li><a href="#logicalexpressionlogicalopapi-referencelogicalexpressionlogicalop"><a href="../../../../api-reference#logicalexpressionlogicalop">LogicalExpression.LogicalOp</a></a>
+          <ul>
+            <li><a href="#and-or">AND, OR</a></li>
+          </ul>
+        </li>
       </ul>
     </li>
   </ul>
@@ -1048,6 +1216,34 @@ e.g. &ldquo;start = 2022-11-09T12:04:00Z&rdquo;, so &ldquo;end = start + 30 minu
 
     </div>
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

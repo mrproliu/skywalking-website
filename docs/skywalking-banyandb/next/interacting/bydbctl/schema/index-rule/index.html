@@ -29,34 +29,31 @@
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
 
-<title>CRUD Groups | Apache SkyWalking</title><meta property="og:title" content="CRUD Groups" />
-<meta property="og:description" content="CRUD Groups CRUD operations create, read, update and delete groups.
-The group represents a collection of a class of resources. Each resource has a name unique to a group.
+<title>CRUD [IndexRules](../../../../concept/data-model#indexrule--indexrulebinding) | Apache SkyWalking</title><meta property="og:title" content="CRUD [IndexRules](../../../../concept/data-model#indexrule--indexrulebinding)" />
+<meta property="og:description" content="CRUD IndexRules CRUD operations create, read, update and delete index rules.
+IndexRule defines how to generate indices based on tags and the index type. IndexRule should bind to a subject(stream or measure) through an IndexRuleBinding to generate proper indices.
 bydbctl is the command line tool in examples.
-Create operation Create operation adds a new group to the database&rsquo;s metadata registry repository. If the group does not currently exist, create operation will create the schema.
-Examples of creating bydbctl group create -f - &lt;&lt;EOF metadata: name: sw_metric catalog: CATALOG_MEASURE resource_opts: shard_num: 2 segment_interval: unit: UNIT_DAY num: 1 ttl: unit: UNIT_DAY num: 7 EOF The group creates two shards to store group data points." />
+Create operation Create operation adds a new index rule to the database&rsquo;s metadata registry repository. If the index rule does not currently exist, create operation will create the schema." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/docs/skywalking-banyandb/next/crud/group/" />
+<meta property="og:url" content="/docs/skywalking-banyandb/next/interacting/bydbctl/schema/index-rule/" />
 
-<meta itemprop="name" content="CRUD Groups">
-<meta itemprop="description" content="CRUD Groups CRUD operations create, read, update and delete groups.
-The group represents a collection of a class of resources. Each resource has a name unique to a group.
+<meta itemprop="name" content="CRUD [IndexRules](../../../../concept/data-model#indexrule--indexrulebinding)">
+<meta itemprop="description" content="CRUD IndexRules CRUD operations create, read, update and delete index rules.
+IndexRule defines how to generate indices based on tags and the index type. IndexRule should bind to a subject(stream or measure) through an IndexRuleBinding to generate proper indices.
 bydbctl is the command line tool in examples.
-Create operation Create operation adds a new group to the database&rsquo;s metadata registry repository. If the group does not currently exist, create operation will create the schema.
-Examples of creating bydbctl group create -f - &lt;&lt;EOF metadata: name: sw_metric catalog: CATALOG_MEASURE resource_opts: shard_num: 2 segment_interval: unit: UNIT_DAY num: 1 ttl: unit: UNIT_DAY num: 7 EOF The group creates two shards to store group data points.">
+Create operation Create operation adds a new index rule to the database&rsquo;s metadata registry repository. If the index rule does not currently exist, create operation will create the schema.">
 
-<meta itemprop="wordCount" content="231">
+<meta itemprop="wordCount" content="372">
 
 
 
 <meta itemprop="keywords" content="" />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="CRUD Groups"/>
-<meta name="twitter:description" content="CRUD Groups CRUD operations create, read, update and delete groups.
-The group represents a collection of a class of resources. Each resource has a name unique to a group.
+<meta name="twitter:title" content="CRUD [IndexRules](../../../../concept/data-model#indexrule--indexrulebinding)"/>
+<meta name="twitter:description" content="CRUD IndexRules CRUD operations create, read, update and delete index rules.
+IndexRule defines how to generate indices based on tags and the index type. IndexRule should bind to a subject(stream or measure) through an IndexRuleBinding to generate proper indices.
 bydbctl is the command line tool in examples.
-Create operation Create operation adds a new group to the database&rsquo;s metadata registry repository. If the group does not currently exist, create operation will create the schema.
-Examples of creating bydbctl group create -f - &lt;&lt;EOF metadata: name: sw_metric catalog: CATALOG_MEASURE resource_opts: shard_num: 2 segment_interval: unit: UNIT_DAY num: 1 ttl: unit: UNIT_DAY num: 7 EOF The group creates two shards to store group data points."/>
+Create operation Create operation adds a new index rule to the database&rsquo;s metadata registry repository. If the index rule does not currently exist, create operation will create the schema."/>
 
 
 
@@ -74,7 +71,7 @@ Examples of creating bydbctl group create -f - &lt;&lt;EOF metadata: name: sw_me
 
 
 
-    <title>CRUD Groups | Apache SkyWalking</title>
+    <title>CRUD [IndexRules](../../../../concept/data-model#indexrule--indexrulebinding) | Apache SkyWalking</title>
   </head>
   <body class="td-page  project-doc">
     <header>
@@ -424,41 +421,9 @@ Examples of creating bydbctl group create -f - &lt;&lt;EOF metadata: name: sw_me
 
     <li>
         
-            <a href="/docs/skywalking-banyandb/next/clients">Clients</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="">Insert and Update Data</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="">Querying Data</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="">Deleting Data</a>
-        
-    </li>
-
-    
-
-    <li>
-        
 
             
-            <a href="#">CRUD Operations<i class="iconfont icon-arrow-right pull-right"></i></a>
+            <a href="#">CLI<i class="iconfont icon-arrow-right pull-right"></i></a>
             
 
             
@@ -467,7 +432,7 @@ Examples of creating bydbctl group create -f - &lt;&lt;EOF metadata: name: sw_me
 
     <li>
         
-            <a href="/docs/skywalking-banyandb/next/crud/group">Group</a>
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/bydbctl">bydbctl</a>
         
     </li>
 
@@ -477,7 +442,7 @@ Examples of creating bydbctl group create -f - &lt;&lt;EOF metadata: name: sw_me
         
 
             
-            <a href="#">Measure<i class="iconfont icon-arrow-right pull-right"></i></a>
+            <a href="#">CRUD Schema<i class="iconfont icon-arrow-right pull-right"></i></a>
             
 
             
@@ -486,7 +451,7 @@ Examples of creating bydbctl group create -f - &lt;&lt;EOF metadata: name: sw_me
 
     <li>
         
-            <a href="/docs/skywalking-banyandb/next/crud/measure/schema">Schema</a>
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/schema/group">Group</a>
         
     </li>
 
@@ -494,7 +459,31 @@ Examples of creating bydbctl group create -f - &lt;&lt;EOF metadata: name: sw_me
 
     <li>
         
-            <a href="/docs/skywalking-banyandb/next/crud/measure/query">Query</a>
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/schema/measure">Measure</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/schema/stream">Stream</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/schema/index-rule">IndexRule</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/schema/index-rule-binding">IndexRuleBinding</a>
         
     </li>
 
@@ -511,7 +500,7 @@ Examples of creating bydbctl group create -f - &lt;&lt;EOF metadata: name: sw_me
         
 
             
-            <a href="#">Stream<i class="iconfont icon-arrow-right pull-right"></i></a>
+            <a href="#">Querying Data<i class="iconfont icon-arrow-right pull-right"></i></a>
             
 
             
@@ -520,7 +509,7 @@ Examples of creating bydbctl group create -f - &lt;&lt;EOF metadata: name: sw_me
 
     <li>
         
-            <a href="/docs/skywalking-banyandb/next/crud/stream/schema">Schema</a>
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/query/measure">Measure</a>
         
     </li>
 
@@ -528,7 +517,15 @@ Examples of creating bydbctl group create -f - &lt;&lt;EOF metadata: name: sw_me
 
     <li>
         
-            <a href="/docs/skywalking-banyandb/next/crud/stream/query">Query</a>
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/query/stream">Stream</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/query/filter-operation">Filter Operation</a>
         
     </li>
 
@@ -543,7 +540,14 @@ Examples of creating bydbctl group create -f - &lt;&lt;EOF metadata: name: sw_me
 
     <li>
         
-            <a href="/docs/skywalking-banyandb/next/crud/index_rule">IndexRule</a>
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/property">CRUD Property</a>
+        
+    </li>
+
+    
+
+</ul>
+
         
     </li>
 
@@ -551,7 +555,7 @@ Examples of creating bydbctl group create -f - &lt;&lt;EOF metadata: name: sw_me
 
     <li>
         
-            <a href="/docs/skywalking-banyandb/next/crud/index_rule_binding">IndexRuleBinding</a>
+            <a href="/docs/skywalking-banyandb/next/interacting/java-client">Java Client</a>
         
     </li>
 
@@ -559,7 +563,142 @@ Examples of creating bydbctl group create -f - &lt;&lt;EOF metadata: name: sw_me
 
     <li>
         
-            <a href="/docs/skywalking-banyandb/next/crud/property">Property</a>
+
+            
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui">Web UI<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/dashboard">Dashboard</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
+            <a href="#">CRUD Schema<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/schema/group">Group</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/schema/measure">Measure</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/schema/stream">Stream</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/schema/index-rule">IndexRule</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/schema/index-rule-binding">IndexRuleBinding</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/schema/top-n-aggregation">Top N Aggregation</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
+            <a href="#">Querying Data<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/query/measure">Measure</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/query/stream">Stream</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/property">CRUD Property</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/java-client">Java Client</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="">Web UI</a>
         
     </li>
 
@@ -784,7 +923,7 @@ Examples of creating bydbctl group create -f - &lt;&lt;EOF metadata: name: sw_me
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: f354d0a</div>
+                  <div class="commit-id">Commit Id: 4588b55</div>
                 
 
 
@@ -797,17 +936,20 @@ Examples of creating bydbctl group create -f - &lt;&lt;EOF metadata: name: sw_me
               <i class="iconfont icon-menu-doc doc-menu-button"></i>
               
 <div class="td-content">
-	<h1 id="crud-groups">CRUD Groups</h1>
-<p>CRUD operations create, read, update and delete groups.</p>
-<p>The group represents a collection of a class of resources. Each resource has a name unique to a group.</p>
-<p><a href="../../clients#command-line"><code>bydbctl</code></a> is the command line tool in examples.</p>
+	<h1 id="crud-indexrulesconceptdata-modelindexrule--indexrulebinding">CRUD <a href="../../../../concept/data-model#indexrule--indexrulebinding">IndexRules</a></h1>
+<p>CRUD operations create, read, update and delete index rules.</p>
+<p>IndexRule defines how to generate indices based on tags and the index type.
+IndexRule should bind to a subject(stream or measure) through an IndexRuleBinding to generate proper indices.</p>
+<p><a href="../../bydbctl">bydbctl</a> is the command line tool in examples.</p>
 <h2 id="create-operation">Create operation</h2>
-<p>Create operation adds a new group to the database&rsquo;s metadata registry repository. If the group does not currently exist, create operation will create the schema.</p>
+<p>Create operation adds a new index rule to the database&rsquo;s metadata registry repository. If the index rule does not currently exist, create operation will create the schema.</p>
 <h3 id="examples-of-creating">Examples of creating</h3>
+<p>An index rule belongs to its subjects' group. We should create such a group if there is no such group.</p>
+<p>The command supposes that the index rule will bind to streams. So it creates a <code>CATALOG_STREAM</code> group here.</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">bydbctl group create -f - <span style="color:#d14">&lt;&lt;EOF
 </span><span style="color:#d14">metadata:
-</span><span style="color:#d14">  name: sw_metric
-</span><span style="color:#d14">catalog: CATALOG_MEASURE
+</span><span style="color:#d14">  name: sw_stream
+</span><span style="color:#d14">catalog: CATALOG_STREAM
 </span><span style="color:#d14">resource_opts:
 </span><span style="color:#d14">  shard_num: 2
 </span><span style="color:#d14">  segment_interval:
@@ -817,39 +959,57 @@ Examples of creating bydbctl group create -f - &lt;&lt;EOF metadata: name: sw_me
 </span><span style="color:#d14">    unit: UNIT_DAY
 </span><span style="color:#d14">    num: 7
 </span><span style="color:#d14">EOF</span>
-</code></pre></div><p>The group creates two shards to store group data points. Every day, it would create a segment that will generate a block every 2 hours.</p>
+</code></pre></div><p>The group creates two shards to store indexRule data points. Every day, it would create a
+segment that will generate a block every 2 hours.</p>
 <p>The data in this group will keep 7 days.</p>
-<h2 id="get-operation">Get operation</h2>
-<p>Get operation gets a group&rsquo;s schema.</p>
-<h3 id="examples-of-getting">Examples of getting</h3>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">bydbctl group get -g sw_metric
-</code></pre></div><h2 id="update-operation">Update operation</h2>
-<p>Update operation updates a group&rsquo;s schema.</p>
-<h3 id="examples-of-updating">Examples of updating</h3>
-<p>If we want to change the <code>ttl</code> of the data in this group to be 1 day, use the command:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">bydbctl group update -f - <span style="color:#d14">&lt;&lt;EOF
+<p>Then, the next command will create a new index rule:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">bydbctl indexRule create -f - <span style="color:#d14">&lt;&lt;EOF
 </span><span style="color:#d14">metadata:
-</span><span style="color:#d14">  name: sw_metric
-</span><span style="color:#d14">catalog: CATALOG_MEASURE
-</span><span style="color:#d14">resource_opts:
-</span><span style="color:#d14">  shard_num: 2
-</span><span style="color:#d14">  segment_interval:
-</span><span style="color:#d14">    unit: UNIT_DAY
-</span><span style="color:#d14">    num: 1
-</span><span style="color:#d14">  ttl:
-</span><span style="color:#d14">    unit: UNIT_DAY
-</span><span style="color:#d14">    num: 1
+</span><span style="color:#d14">  name: trace_id
+</span><span style="color:#d14">  group: sw_stream
+</span><span style="color:#d14">tags:
+</span><span style="color:#d14">- trace_id
+</span><span style="color:#d14">type: TYPE_INVERTED
 </span><span style="color:#d14">EOF</span>
+</code></pre></div><p>This YAML creates an index rule which uses the tag <code>trace_id</code> to generate a <code>TYPE_INVERTED</code> index.</p>
+<p>The <code>analyzer</code> field is optional. If it is not set, the default value is <code>ANALYZER_UNSPECIFIED</code>.
+We can set it to <code>ANALYZER_KEYWORD</code> to specify the analyzer. More analyzers can refer to the <a href="../../../../api-reference#indexruleanalyzer">API Reference</a>.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">bydbctl indexRule create -f - <span style="color:#d14">&lt;&lt;EOF
+</span><span style="color:#d14">metadata:
+</span><span style="color:#d14">  name: trace_id
+</span><span style="color:#d14">  group: sw_stream
+</span><span style="color:#d14">tags:
+</span><span style="color:#d14">- trace_id
+</span><span style="color:#d14">type: TYPE_INVERTED
+</span><span style="color:#d14">analyzer: ANALYZER_KEYWORD
+</span><span style="color:#d14">EOF</span>
+</code></pre></div><h2 id="get-operation">Get operation</h2>
+<p>Get(Read) operation gets an index rule&rsquo;s schema.</p>
+<h3 id="examples-of-getting">Examples of getting</h3>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">bydbctl indexRule get -g sw_stream -n trace_id
+</code></pre></div><h2 id="update-operation">Update operation</h2>
+<p>Update operation updates an index rule&rsquo;s schema.</p>
+<h3 id="examples-of-updating">Examples of updating</h3>
+<p>This example changes the type from <code>TREE</code> to <code>INVERTED</code>.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">bydbctl indexRule update -f - <span style="color:#d14">&lt;&lt;EOF
+</span><span style="color:#d14">metadata:
+</span><span style="color:#d14">  name: trace_id
+</span><span style="color:#d14">  group: sw_stream
+</span><span style="color:#d14">tags:
+</span><span style="color:#d14">- trace_id
+</span><span style="color:#d14">type: TYPE_INVERTED
+</span><span style="color:#d14">EOF</span>
+
 </code></pre></div><h2 id="delete-operation">Delete operation</h2>
-<p>Delete operation deletes a group&rsquo;s schema.</p>
+<p>Delete operation deletes an index rule&rsquo;s schema.</p>
 <h3 id="examples-of-deleting">Examples of deleting</h3>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">bydbctl group delete -g sw_metric
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">bydbctl indexRule delete -g sw_stream -n trace_id
 </code></pre></div><h2 id="list-operation">List operation</h2>
-<p>The list operation shows all groups' schema.</p>
-<h3 id="examples">Examples</h3>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">bydbctl group list
+<p>List operation list all index rules' schema in a group.</p>
+<h3 id="examples-of-listing">Examples of listing</h3>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">bydbctl indexRule list -g sw_stream
 </code></pre></div><h2 id="api-reference">API Reference</h2>
-<p><a href="../../api-reference#groupservice">GroupService v1</a></p>
+<p><a href="../../../../api-reference#indexruleregistryservice">IndexRule Registration Operations</a></p>
 
 </div>
 <div>
@@ -932,7 +1092,7 @@ Examples of creating bydbctl group create -f - &lt;&lt;EOF metadata: name: sw_me
 
 <nav id="TableOfContents">
   <ul>
-    <li><a href="#crud-groups">CRUD Groups</a>
+    <li><a href="#crud-indexrulesconceptdata-modelindexrule--indexrulebinding">CRUD <a href="../../../../concept/data-model#indexrule--indexrulebinding">IndexRules</a></a>
       <ul>
         <li><a href="#create-operation">Create operation</a>
           <ul>
@@ -956,7 +1116,7 @@ Examples of creating bydbctl group create -f - &lt;&lt;EOF metadata: name: sw_me
         </li>
         <li><a href="#list-operation">List operation</a>
           <ul>
-            <li><a href="#examples">Examples</a></li>
+            <li><a href="#examples-of-listing">Examples of listing</a></li>
           </ul>
         </li>
         <li><a href="#api-reference">API Reference</a></li>
@@ -1077,6 +1237,34 @@ Examples of creating bydbctl group create -f - &lt;&lt;EOF metadata: name: sw_me
 
     </div>
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

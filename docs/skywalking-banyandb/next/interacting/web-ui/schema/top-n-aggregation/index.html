@@ -29,34 +29,28 @@
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
 
-<title>CRUD Measures | Apache SkyWalking</title><meta property="og:title" content="CRUD Measures" />
-<meta property="og:description" content="CRUD Measures CRUD operations create, read, update and delete measures.
-bydbctl is the command line tool in examples.
-Create operation Create operation adds a new measure to the database&rsquo;s metadata registry repository. If the measure does not currently exist, create operation will create the schema.
-Examples of creating A measure belongs to a unique group. We should create such a group with a catalog CATALOG_MEASURE before creating a measure.
-bydbctl group create -f - &lt;&lt;EOF metadata: name: sw_metric catalog: CATALOG_MEASURE resource_opts: shard_num: 2 segment_interval: unit: UNIT_DAY num: 1 ttl: unit: UNIT_DAY num: 7 EOF The group creates two shards to store data points." />
+<title>CRUD [TopNAggregation](../../../../concept/data-model#topnaggregation) on the Web UI | Apache SkyWalking</title><meta property="og:title" content="CRUD [TopNAggregation](../../../../concept/data-model#topnaggregation) on the Web UI" />
+<meta property="og:description" content="CRUD TopNAggregation on the Web UI Get Top-N-Aggregation When you in the Measure tab, you can view the list of top-n-aggregations in the specific group.
+Create Top-N-Aggregation You can create a new top-n-aggregation by clicking the right button of the mouse on the Top-N-Aggregation category and select the new topn-agg button.
+Update/Delete Top-N-Aggregation You can click the edit topn-agg/delete button on a specific top-n-aggregation to modify/delete the top-n-aggregation:" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/docs/skywalking-banyandb/next/crud/measure/schema/" />
+<meta property="og:url" content="/docs/skywalking-banyandb/next/interacting/web-ui/schema/top-n-aggregation/" />
 
-<meta itemprop="name" content="CRUD Measures">
-<meta itemprop="description" content="CRUD Measures CRUD operations create, read, update and delete measures.
-bydbctl is the command line tool in examples.
-Create operation Create operation adds a new measure to the database&rsquo;s metadata registry repository. If the measure does not currently exist, create operation will create the schema.
-Examples of creating A measure belongs to a unique group. We should create such a group with a catalog CATALOG_MEASURE before creating a measure.
-bydbctl group create -f - &lt;&lt;EOF metadata: name: sw_metric catalog: CATALOG_MEASURE resource_opts: shard_num: 2 segment_interval: unit: UNIT_DAY num: 1 ttl: unit: UNIT_DAY num: 7 EOF The group creates two shards to store data points.">
+<meta itemprop="name" content="CRUD [TopNAggregation](../../../../concept/data-model#topnaggregation) on the Web UI">
+<meta itemprop="description" content="CRUD TopNAggregation on the Web UI Get Top-N-Aggregation When you in the Measure tab, you can view the list of top-n-aggregations in the specific group.
+Create Top-N-Aggregation You can create a new top-n-aggregation by clicking the right button of the mouse on the Top-N-Aggregation category and select the new topn-agg button.
+Update/Delete Top-N-Aggregation You can click the edit topn-agg/delete button on a specific top-n-aggregation to modify/delete the top-n-aggregation:">
 
-<meta itemprop="wordCount" content="298">
+<meta itemprop="wordCount" content="68">
 
 
 
 <meta itemprop="keywords" content="" />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="CRUD Measures"/>
-<meta name="twitter:description" content="CRUD Measures CRUD operations create, read, update and delete measures.
-bydbctl is the command line tool in examples.
-Create operation Create operation adds a new measure to the database&rsquo;s metadata registry repository. If the measure does not currently exist, create operation will create the schema.
-Examples of creating A measure belongs to a unique group. We should create such a group with a catalog CATALOG_MEASURE before creating a measure.
-bydbctl group create -f - &lt;&lt;EOF metadata: name: sw_metric catalog: CATALOG_MEASURE resource_opts: shard_num: 2 segment_interval: unit: UNIT_DAY num: 1 ttl: unit: UNIT_DAY num: 7 EOF The group creates two shards to store data points."/>
+<meta name="twitter:title" content="CRUD [TopNAggregation](../../../../concept/data-model#topnaggregation) on the Web UI"/>
+<meta name="twitter:description" content="CRUD TopNAggregation on the Web UI Get Top-N-Aggregation When you in the Measure tab, you can view the list of top-n-aggregations in the specific group.
+Create Top-N-Aggregation You can create a new top-n-aggregation by clicking the right button of the mouse on the Top-N-Aggregation category and select the new topn-agg button.
+Update/Delete Top-N-Aggregation You can click the edit topn-agg/delete button on a specific top-n-aggregation to modify/delete the top-n-aggregation:"/>
 
 
 
@@ -74,7 +68,7 @@ bydbctl group create -f - &lt;&lt;EOF metadata: name: sw_metric catalog: CATALOG
 
 
 
-    <title>CRUD Measures | Apache SkyWalking</title>
+    <title>CRUD [TopNAggregation](../../../../concept/data-model#topnaggregation) on the Web UI | Apache SkyWalking</title>
   </head>
   <body class="td-page  project-doc">
     <header>
@@ -424,41 +418,9 @@ bydbctl group create -f - &lt;&lt;EOF metadata: name: sw_metric catalog: CATALOG
 
     <li>
         
-            <a href="/docs/skywalking-banyandb/next/clients">Clients</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="">Insert and Update Data</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="">Querying Data</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="">Deleting Data</a>
-        
-    </li>
-
-    
-
-    <li>
-        
 
             
-            <a href="#">CRUD Operations<i class="iconfont icon-arrow-right pull-right"></i></a>
+            <a href="#">CLI<i class="iconfont icon-arrow-right pull-right"></i></a>
             
 
             
@@ -467,7 +429,7 @@ bydbctl group create -f - &lt;&lt;EOF metadata: name: sw_metric catalog: CATALOG
 
     <li>
         
-            <a href="/docs/skywalking-banyandb/next/crud/group">Group</a>
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/bydbctl">bydbctl</a>
         
     </li>
 
@@ -477,7 +439,7 @@ bydbctl group create -f - &lt;&lt;EOF metadata: name: sw_metric catalog: CATALOG
         
 
             
-            <a href="#">Measure<i class="iconfont icon-arrow-right pull-right"></i></a>
+            <a href="#">CRUD Schema<i class="iconfont icon-arrow-right pull-right"></i></a>
             
 
             
@@ -486,7 +448,7 @@ bydbctl group create -f - &lt;&lt;EOF metadata: name: sw_metric catalog: CATALOG
 
     <li>
         
-            <a href="/docs/skywalking-banyandb/next/crud/measure/schema">Schema</a>
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/schema/group">Group</a>
         
     </li>
 
@@ -494,7 +456,31 @@ bydbctl group create -f - &lt;&lt;EOF metadata: name: sw_metric catalog: CATALOG
 
     <li>
         
-            <a href="/docs/skywalking-banyandb/next/crud/measure/query">Query</a>
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/schema/measure">Measure</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/schema/stream">Stream</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/schema/index-rule">IndexRule</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/schema/index-rule-binding">IndexRuleBinding</a>
         
     </li>
 
@@ -511,7 +497,7 @@ bydbctl group create -f - &lt;&lt;EOF metadata: name: sw_metric catalog: CATALOG
         
 
             
-            <a href="#">Stream<i class="iconfont icon-arrow-right pull-right"></i></a>
+            <a href="#">Querying Data<i class="iconfont icon-arrow-right pull-right"></i></a>
             
 
             
@@ -520,7 +506,7 @@ bydbctl group create -f - &lt;&lt;EOF metadata: name: sw_metric catalog: CATALOG
 
     <li>
         
-            <a href="/docs/skywalking-banyandb/next/crud/stream/schema">Schema</a>
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/query/measure">Measure</a>
         
     </li>
 
@@ -528,7 +514,15 @@ bydbctl group create -f - &lt;&lt;EOF metadata: name: sw_metric catalog: CATALOG
 
     <li>
         
-            <a href="/docs/skywalking-banyandb/next/crud/stream/query">Query</a>
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/query/stream">Stream</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/query/filter-operation">Filter Operation</a>
         
     </li>
 
@@ -543,7 +537,14 @@ bydbctl group create -f - &lt;&lt;EOF metadata: name: sw_metric catalog: CATALOG
 
     <li>
         
-            <a href="/docs/skywalking-banyandb/next/crud/index_rule">IndexRule</a>
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/property">CRUD Property</a>
+        
+    </li>
+
+    
+
+</ul>
+
         
     </li>
 
@@ -551,7 +552,7 @@ bydbctl group create -f - &lt;&lt;EOF metadata: name: sw_metric catalog: CATALOG
 
     <li>
         
-            <a href="/docs/skywalking-banyandb/next/crud/index_rule_binding">IndexRuleBinding</a>
+            <a href="/docs/skywalking-banyandb/next/interacting/java-client">Java Client</a>
         
     </li>
 
@@ -559,7 +560,142 @@ bydbctl group create -f - &lt;&lt;EOF metadata: name: sw_metric catalog: CATALOG
 
     <li>
         
-            <a href="/docs/skywalking-banyandb/next/crud/property">Property</a>
+
+            
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui">Web UI<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/dashboard">Dashboard</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
+            <a href="#">CRUD Schema<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/schema/group">Group</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/schema/measure">Measure</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/schema/stream">Stream</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/schema/index-rule">IndexRule</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/schema/index-rule-binding">IndexRuleBinding</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/schema/top-n-aggregation">Top N Aggregation</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
+            <a href="#">Querying Data<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/query/measure">Measure</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/query/stream">Stream</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/property">CRUD Property</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/java-client">Java Client</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="">Web UI</a>
         
     </li>
 
@@ -784,7 +920,7 @@ bydbctl group create -f - &lt;&lt;EOF metadata: name: sw_metric catalog: CATALOG
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: f354d0a</div>
+                  <div class="commit-id">Commit Id: 4588b55</div>
                 
 
 
@@ -797,87 +933,16 @@ bydbctl group create -f - &lt;&lt;EOF metadata: name: sw_metric catalog: CATALOG
               <i class="iconfont icon-menu-doc doc-menu-button"></i>
               
 <div class="td-content">
-	<h1 id="crud-measures">CRUD Measures</h1>
-<p>CRUD operations create, read, update and delete measures.</p>
-<p><a href="../../../clients#command-line"><code>bydbctl</code></a> is the command line tool in examples.</p>
-<h2 id="create-operation">Create operation</h2>
-<p>Create operation adds a new measure to the database&rsquo;s metadata registry repository. If the measure does not currently exist, create operation will create the schema.</p>
-<h3 id="examples-of-creating">Examples of creating</h3>
-<p>A measure belongs to a unique group. We should create such a group with a catalog <code>CATALOG_MEASURE</code>
-before creating a measure.</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">bydbctl group create -f - <span style="color:#d14">&lt;&lt;EOF
-</span><span style="color:#d14">metadata:
-</span><span style="color:#d14">  name: sw_metric
-</span><span style="color:#d14">catalog: CATALOG_MEASURE
-</span><span style="color:#d14">resource_opts:
-</span><span style="color:#d14">  shard_num: 2
-</span><span style="color:#d14">  segment_interval:
-</span><span style="color:#d14">    unit: UNIT_DAY
-</span><span style="color:#d14">    num: 1
-</span><span style="color:#d14">  ttl:
-</span><span style="color:#d14">    unit: UNIT_DAY
-</span><span style="color:#d14">    num: 7
-</span><span style="color:#d14">EOF</span>
-</code></pre></div><p>The group creates two shards to store data points. Every day, it would create a
-segment that will generate a block every 2 hours.</p>
-<p>The data in this group will keep 7 days.</p>
-<p>Then, the below command will create a new measure:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">bydbctl measure create -f - <span style="color:#d14">&lt;&lt;EOF
-</span><span style="color:#d14">metadata:
-</span><span style="color:#d14">  name: service_cpm_minute
-</span><span style="color:#d14">  group: sw_metric
-</span><span style="color:#d14">tag_families:
-</span><span style="color:#d14">- name: default
-</span><span style="color:#d14">  tags:
-</span><span style="color:#d14">  - name: id
-</span><span style="color:#d14">    type: TAG_TYPE_STRING
-</span><span style="color:#d14">  - name: entity_id
-</span><span style="color:#d14">    type: TAG_TYPE_STRING
-</span><span style="color:#d14">fields:
-</span><span style="color:#d14">- name: total
-</span><span style="color:#d14">  field_type: FIELD_TYPE_INT
-</span><span style="color:#d14">  encoding_method: ENCODING_METHOD_GORILLA
-</span><span style="color:#d14">  compression_method: COMPRESSION_METHOD_ZSTD
-</span><span style="color:#d14">- name: value
-</span><span style="color:#d14">  field_type: FIELD_TYPE_INT
-</span><span style="color:#d14">  encoding_method: ENCODING_METHOD_GORILLA
-</span><span style="color:#d14">  compression_method: COMPRESSION_METHOD_ZSTD
-</span><span style="color:#d14">entity:
-</span><span style="color:#d14">  tag_names:
-</span><span style="color:#d14">  - entity_id
-</span><span style="color:#d14">interval: 1m
-</span><span style="color:#d14">EOF</span>
-</code></pre></div><p><code>service_cpm_minute</code> expects to ingest a series of data points with a minute interval.</p>
-<h2 id="get-operation">Get operation</h2>
-<p>Get(Read) operation gets a measure&rsquo;s schema.</p>
-<h3 id="examples-of-getting">Examples of getting</h3>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">bydbctl measure get -g sw_metric -n service_cpm_minute
-</code></pre></div><h2 id="update-operation">Update operation</h2>
-<p>Update operation changes a measure&rsquo;s schema.</p>
-<h3 id="examples-of-updating">Examples of updating</h3>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">bydbctl measure update -f - <span style="color:#d14">&lt;&lt;EOF
-</span><span style="color:#d14">metadata:
-</span><span style="color:#d14">  name: service_cpm_minute
-</span><span style="color:#d14">  group: sw_metric
-</span><span style="color:#d14">tagFamilies:
-</span><span style="color:#d14">  - name: searchable
-</span><span style="color:#d14">    tags: 
-</span><span style="color:#d14">      - name: trace_id
-</span><span style="color:#d14">        type: TAG_TYPE_STRING
-</span><span style="color:#d14">entity:
-</span><span style="color:#d14">  tag_names:
-</span><span style="color:#d14">    - entity_id
-</span><span style="color:#d14">EOF</span>
-</code></pre></div><h2 id="delete-operation">Delete operation</h2>
-<p>Delete operation removes a measure&rsquo;s schema.</p>
-<h3 id="examples-of-deleting">Examples of deleting</h3>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">bydbctl measure delete -g sw_metric -n service_cpm_minute
-</code></pre></div><h2 id="list-operation">List operation</h2>
-<p>The list operation shows all measures' schema in a group.</p>
-<h3 id="examples-of-listing">Examples of listing</h3>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">bydbctl measure list -g sw_metric
-</code></pre></div><h2 id="api-reference">API Reference</h2>
-<p><a href="../../../api-reference#measureservice">MeasureService v1</a></p>
+	<h1 id="crud-topnaggregationconceptdata-modeltopnaggregation-on-the-web-ui">CRUD <a href="../../../../concept/data-model#topnaggregation">TopNAggregation</a> on the Web UI</h1>
+<h2 id="get-top-n-aggregation">Get Top-N-Aggregation</h2>
+<p>When you in the <code>Measure</code> tab, you can view the list of top-n-aggregations in the specific group.</p>
+<p><img src="https://skywalking.apache.org/doc-graph/banyandb/v0.7.0/web-ui/top-n-get.png" alt="top-n-get.png"></p>
+<h2 id="create-top-n-aggregation">Create Top-N-Aggregation</h2>
+<p>You can create a new top-n-aggregation by clicking the right button of the mouse on the <code>Top-N-Aggregation</code> category and select the <code>new topn-agg</code> button.</p>
+<p><img src="https://skywalking.apache.org/doc-graph/banyandb/v0.7.0/web-ui/top-n-add.png" alt="img.png"></p>
+<h2 id="updatedelete-top-n-aggregation">Update/Delete Top-N-Aggregation</h2>
+<p>You can click the <code>edit topn-agg/delete</code> button on a specific top-n-aggregation to modify/delete the top-n-aggregation:</p>
+<p><img src="https://skywalking.apache.org/doc-graph/banyandb/v0.7.0/web-ui/top-n-edit.png" alt="top-n-edit.png"></p>
 
 </div>
 <div>
@@ -960,34 +1025,11 @@ segment that will generate a block every 2 hours.</p>
 
 <nav id="TableOfContents">
   <ul>
-    <li><a href="#crud-measures">CRUD Measures</a>
+    <li><a href="#crud-topnaggregationconceptdata-modeltopnaggregation-on-the-web-ui">CRUD <a href="../../../../concept/data-model#topnaggregation">TopNAggregation</a> on the Web UI</a>
       <ul>
-        <li><a href="#create-operation">Create operation</a>
-          <ul>
-            <li><a href="#examples-of-creating">Examples of creating</a></li>
-          </ul>
-        </li>
-        <li><a href="#get-operation">Get operation</a>
-          <ul>
-            <li><a href="#examples-of-getting">Examples of getting</a></li>
-          </ul>
-        </li>
-        <li><a href="#update-operation">Update operation</a>
-          <ul>
-            <li><a href="#examples-of-updating">Examples of updating</a></li>
-          </ul>
-        </li>
-        <li><a href="#delete-operation">Delete operation</a>
-          <ul>
-            <li><a href="#examples-of-deleting">Examples of deleting</a></li>
-          </ul>
-        </li>
-        <li><a href="#list-operation">List operation</a>
-          <ul>
-            <li><a href="#examples-of-listing">Examples of listing</a></li>
-          </ul>
-        </li>
-        <li><a href="#api-reference">API Reference</a></li>
+        <li><a href="#get-top-n-aggregation">Get Top-N-Aggregation</a></li>
+        <li><a href="#create-top-n-aggregation">Create Top-N-Aggregation</a></li>
+        <li><a href="#updatedelete-top-n-aggregation">Update/Delete Top-N-Aggregation</a></li>
       </ul>
     </li>
   </ul>
@@ -1105,6 +1147,34 @@ segment that will generate a block every 2 hours.</p>
 
     </div>
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
