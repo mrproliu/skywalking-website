@@ -39,7 +39,7 @@
 <meta itemprop="description" content="Configuration Vocabulary The Configuration Vocabulary lists all available configurations provided by application.yml.
    Module Provider Settings Value(s) and Explanation System Environment Variable¹ Default     core default role Option values: Mixed/Receiver/Aggregator. Receiver mode OAP opens the service to the agents, then analyzes and aggregates the results, and forwards the results for distributed aggregation. Aggregator mode OAP receives data from Mixer and Receiver role OAP nodes, and performs 2nd level aggregation.">
 
-<meta itemprop="wordCount" content="5254">
+<meta itemprop="wordCount" content="5262">
 
 
 
@@ -2469,7 +2469,7 @@
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 9e67130</div>
+                  <div class="commit-id">Commit Id: 0617a4b</div>
                 
 
 
@@ -3142,6 +3142,14 @@
 <td>The port registered in Nacos for internal communications of the OAP cluster.</td>
 <td>SW_CLUSTER_INTERNAL_COM_PORT</td>
 <td>-1</td>
+</tr>
+<tr>
+<td>-</td>
+<td>-</td>
+<td>contextPath</td>
+<td>Nacos set contextPath.</td>
+<td>SW_CLUSTER_NACOS_CONTEXT_PATH</td>
+<td>-</td>
 </tr>
 <tr>
 <td>-</td>
@@ -5219,7 +5227,7 @@
 <td>-</td>
 <td>-</td>
 <td>maxThreads</td>
-<td>Max Thtread number of HTTP server</td>
+<td>Max Thread number of HTTP server</td>
 <td>SW_RECEIVER_AWS_FIREHOSE_HTTP_MAX_THREADS</td>
 <td>200</td>
 </tr>
