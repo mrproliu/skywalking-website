@@ -9,13 +9,6 @@
 
 <meta name="generator" content="Hugo 0.80.0" />
 
-
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-GR8N6PGRJ3"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);};
-  gtag('js', new Date());gtag('config', 'G-GR8N6PGRJ3');
-</script>
 <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
 <link rel="stylesheet" href="//at.alicdn.com/t/c/font_3007530_pvozs1rz2wn.css">
 
@@ -43,7 +36,7 @@ The column of versions only indicates the set of library versions tested in a be
 If you find newer major versions that are missing from the following table, and it&rsquo;s not documented as a limitation, please PR to update the test matrix in the plugin.
 Versions marked as NOT SUPPORTED may be due to an incompatible version with Python in the original library or a limitation of SkyWalking auto-instrumentation (welcome to contribute!">
 
-<meta itemprop="wordCount" content="488">
+<meta itemprop="wordCount" content="517">
 
 
 
@@ -239,6 +232,7 @@ Versions marked as NOT SUPPORTED may be due to an incompatible version with Pyth
 
 
 
+
                   <div class="description-wrapper">
                     <h5>
                     <img width="26" height="26" src="/images/project/python-agent.svg">
@@ -268,9 +262,9 @@ Versions marked as NOT SUPPORTED may be due to an incompatible version with Pyth
                   
                     
                     
-                    <option ZgotmplZ value="v1.0.1">
+                    <option ZgotmplZ value="v1.1.0">
                     
-                      v1.0.1
+                      v1.1.0
                     
                     </option>
                   
@@ -363,6 +357,14 @@ Versions marked as NOT SUPPORTED may be due to an incompatible version with Pyth
     <li>
         
             <a href="/docs/skywalking-python/latest/en/setup/advanced/api">Manual Trace Instrumentation</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-python/latest/en/setup/advanced/asyncenhancement">Asynchronous Enhancement</a>
         
     </li>
 
@@ -557,7 +559,7 @@ Versions marked as NOT SUPPORTED may be due to an incompatible version with Pyth
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 4717e1b</div>
+                  <div class="commit-id">Commit Id: 28602ae</div>
                 
 
 
@@ -706,6 +708,11 @@ or a limitation of SkyWalking auto-instrumentation (welcome to contribute!)</p>
 <td style="text-align:left"><code>sw_mysqlclient</code></td>
 </tr>
 <tr>
+<td style="text-align:left"><a href="https://neo4j.com/docs/python-manual/5/">neo4j</a></td>
+<td style="text-align:left">Python &gt;=3.7 - [&lsquo;5.*'];</td>
+<td style="text-align:left"><code>sw_neo4j</code></td>
+</tr>
+<tr>
 <td style="text-align:left"><a href="https://www.psycopg.org/">psycopg[binary]</a></td>
 <td style="text-align:left">Python &gt;=3.11 - [&lsquo;3.1.<em>']; Python &gt;=3.7 - [&lsquo;3.0.18&rsquo;, &lsquo;3.1.</em>'];</td>
 <td style="text-align:left"><code>sw_psycopg</code></td>
@@ -714,6 +721,11 @@ or a limitation of SkyWalking auto-instrumentation (welcome to contribute!)</p>
 <td style="text-align:left"><a href="https://www.psycopg.org/">psycopg2-binary</a></td>
 <td style="text-align:left">Python &gt;=3.10 - NOT SUPPORTED YET; Python &gt;=3.7 - [&lsquo;2.9&rsquo;];</td>
 <td style="text-align:left"><code>sw_psycopg2</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="https://github.com/apache/pulsar-client-python">pulsar-client</a></td>
+<td style="text-align:left">Python &gt;=3.8 - [&lsquo;3.3.0&rsquo;];</td>
+<td style="text-align:left"><code>sw_pulsar</code></td>
 </tr>
 <tr>
 <td style="text-align:left"><a href="https://pymongo.readthedocs.io">pymongo</a></td>
@@ -780,6 +792,8 @@ in SkyWalking currently. Celery clients can use whatever protocol they want.</li
 <li>While Falcon is instrumented, only Hug is tested.
 Hug is believed to be abandoned project, use this plugin with a bit more caution.
 Instead of Hug, plugin test should move to test actual Falcon.</li>
+<li>The Neo4j plugin integrates neo4j python driver 5.x.x versions which
+support both Neo4j 5 and 4.4 DBMS.</li>
 <li>The websocket instrumentation only traces client side connection handshake,
 the actual message exchange (send/recv) is not traced since injecting headers to socket message
 body is the only way to propagate the trace context, which requires customization of message structure
@@ -6752,6 +6766,112 @@ by either injecting sw8 headers or propagate the trace context in a separate mes
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
 <div id="popup">
     <div class="mask">
@@ -6866,7 +6986,7 @@ by either injecting sw8 headers or propagate the trace context in a separate mes
 
 
 
-<script src="/js/main.min.dc00f5ca911ee5aa105ea6de6b3b7e8d8169ba5a3bf156b1fcfe23dfe3e62b0a.js" integrity="sha256-3AD1ypEe5aoQXqbeazt&#43;jYFpulo78Vax/P4j3&#43;PmKwo=" crossorigin="anonymous"></script>
+<script src="/js/main.min.d00d7a99f9e61382b1db35fac38e0e7bdd97f8d3c663a4c4b8d02c3f1d78d894.js" integrity="sha256-0A16mfnmE4Kx2zX6w44Oe92X&#43;NPGY6TEuNAsPx142JQ=" crossorigin="anonymous"></script>
 
 
 <script src="/js/mermaid.min.js"></script>
@@ -6874,23 +6994,6 @@ by either injecting sw8 headers or propagate the trace context in a separate mes
     window.onload = () => mermaid.init(undefined, ".language-mermaid");
 </script>
 
-
-<script defer
-src="https://widget.kapa.ai/kapa-widget.bundle.js"
-data-website-id="8a08392b-9c4d-4816-8bc4-f93e0ecdd2a7"
-data-project-name="SkyWalking"
-data-project-color="#2B74B8"
-data-button-text="Ask AI"
-data-search-mode-enabled="true"
-data-modal-open-on-command-k="true"
-data-modal-disclaimer="The AI supports multiple languages, but it may not be accessible in China, a proxy is required."
-data-project-logo="https://miro.medium.com/v2/resize:fit:2400/0*kmS-5BQ8ShAhZ_F4.jpg"
-data-modal-example-questions="What is Apache SkyWalking?,How to deploy SkyWalking?,How to inject agents non-intrusively?,How to setup trace sampling?"
-data-button-position-top=""
-data-button-position-right="20px"
-data-button-position-bottom="200px"
-data-button-position-left=""
-></script>
 
 
 

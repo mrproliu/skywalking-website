@@ -9,13 +9,6 @@
 
 <meta name="generator" content="Hugo 0.80.0" />
 
-
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-GR8N6PGRJ3"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);};
-  gtag('js', new Date());gtag('config', 'G-GR8N6PGRJ3');
-</script>
 <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
 <link rel="stylesheet" href="//at.alicdn.com/t/c/font_3007530_pvozs1rz2wn.css">
 
@@ -258,6 +251,14 @@ Because of that, security requirement is very obvious.
                     <option selected value="latest">
                     
                       latest
+                    
+                    </option>
+                  
+                    
+                    
+                    <option ZgotmplZ value="v9.3.0">
+                    
+                      v9.3.0
                     
                     </option>
                   
@@ -733,8 +734,9 @@ Because of that, security requirement is very obvious.
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 68b8521</div>
+                  <div class="commit-id">Commit Id: 8b9243c</div>
                 
+
 
 
 
@@ -779,7 +781,7 @@ at the same time, the SkyWalking backend is in another region (VPC).</p>
 <h2 id="creating-ssltls-certificates">Creating SSL/TLS Certificates</h2>
 <p>The first step is to generate certificates and key files for encrypting communication. This is
 fairly straightforward: use <code>openssl</code> from the command line.</p>
-<p>Use this <a href="https://github.com/apache/skywalking-java/tree/68b852120410ab76b21670e9687202e0e5b272f8/tools/TLS/tls_key_generate.sh">script</a> if you are not familiar with how to generate key files.</p>
+<p>Use this <a href="https://github.com/apache/skywalking-java/tree/8b9243cc7f5aa858c66ced1b54369b5c4b71bd4a/tools/TLS/tls_key_generate.sh">script</a> if you are not familiar with how to generate key files.</p>
 <p>We need the following files:</p>
 <ul>
 <li><code>client.pem</code>: A private RSA key to sign and authenticate the public key. It&rsquo;s either a PKCS#8(PEM) or PKCS#1(DER).</li>
@@ -6781,6 +6783,112 @@ collector.backend_service=${SW_AGENT_COLLECTOR_BACKEND_SERVICES:skywalking-oap:1
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
 <div id="popup">
     <div class="mask">
@@ -6895,7 +7003,7 @@ collector.backend_service=${SW_AGENT_COLLECTOR_BACKEND_SERVICES:skywalking-oap:1
 
 
 
-<script src="/js/main.min.dc00f5ca911ee5aa105ea6de6b3b7e8d8169ba5a3bf156b1fcfe23dfe3e62b0a.js" integrity="sha256-3AD1ypEe5aoQXqbeazt&#43;jYFpulo78Vax/P4j3&#43;PmKwo=" crossorigin="anonymous"></script>
+<script src="/js/main.min.d00d7a99f9e61382b1db35fac38e0e7bdd97f8d3c663a4c4b8d02c3f1d78d894.js" integrity="sha256-0A16mfnmE4Kx2zX6w44Oe92X&#43;NPGY6TEuNAsPx142JQ=" crossorigin="anonymous"></script>
 
 
 <script src="/js/mermaid.min.js"></script>
@@ -6903,23 +7011,6 @@ collector.backend_service=${SW_AGENT_COLLECTOR_BACKEND_SERVICES:skywalking-oap:1
     window.onload = () => mermaid.init(undefined, ".language-mermaid");
 </script>
 
-
-<script defer
-src="https://widget.kapa.ai/kapa-widget.bundle.js"
-data-website-id="8a08392b-9c4d-4816-8bc4-f93e0ecdd2a7"
-data-project-name="SkyWalking"
-data-project-color="#2B74B8"
-data-button-text="Ask AI"
-data-search-mode-enabled="true"
-data-modal-open-on-command-k="true"
-data-modal-disclaimer="The AI supports multiple languages, but it may not be accessible in China, a proxy is required."
-data-project-logo="https://miro.medium.com/v2/resize:fit:2400/0*kmS-5BQ8ShAhZ_F4.jpg"
-data-modal-example-questions="What is Apache SkyWalking?,How to deploy SkyWalking?,How to inject agents non-intrusively?,How to setup trace sampling?"
-data-button-position-top=""
-data-button-position-right="20px"
-data-button-position-bottom="200px"
-data-button-position-left=""
-></script>
 
 
 
