@@ -7365,6 +7365,12 @@
   </url>
   
   <url>
+    <loc>/docs/main/next/en/setup/backend/ttl/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/docs/skywalking-banyandb/latest/concept/data-model/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
@@ -7992,6 +7998,12 @@
   <url>
     <loc>/downloads/</loc>
     <lastmod>2024-10-21T09:16:19+08:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/docs/main/next/en/debugging/config_dump/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
@@ -9493,6 +9505,12 @@
   
   <url>
     <loc>/docs/skywalking-banyandb/v0.6.1/installation/binaries/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/docs/main/next/en/status/query_ttl_setup/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
@@ -15504,12 +15522,6 @@
   </url>
   
   <url>
-    <loc>/docs/main/next/en/debugging/config_dump/</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>/docs/main/v10.0.0/en/debugging/config_dump/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
@@ -17155,6 +17167,12 @@
   </url>
   
   <url>
+    <loc>/docs/main/next/en/status/status_apis/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/docs/skywalking-swck/latest/examples/storage/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
@@ -18429,12 +18447,6 @@
   
   <url>
     <loc>/docs/main/latest/en/setup/backend/ttl/</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>/docs/main/next/en/setup/backend/ttl/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
