@@ -24,17 +24,15 @@
 
 <title>Backend storage | Apache SkyWalking</title><meta property="og:title" content="Backend storage" />
 <meta property="og:description" content="Backend storage The SkyWalking storage is pluggable. We have provided the following storage solutions, which allow you to easily use one of them by specifying it as the selector in application.yml：
-storage:selector:${SW_STORAGE:elasticsearch}Natively supported storage:
-BanyanDB - Native APM Database  BanyanDB  This is recommended to use for medium scale deployments from 0.6 until 1.0. It has demonstrated significant potential in performance improvement. As of version 0.6.1, it achieves 5x less memory usage, 1/5 disk IOPS, 1/4 disk throughput, and 30% less disk space, albeit with a slightly higher CPU trade-off, compared to Elasticsearch." />
+storage:selector:${SW_STORAGE:banyandb}BanyanDB - Native APM Database  BanyanDB  BanyanDB is a native-built SkyWalking database, which can completely focus on SkyWalking use cases. It has demonstrated significant potential for performance improvement and reduced resource usage requirements. It indicates 5x less memory usage, 1/5 disk IOPS, 1/4 disk throughput, and 30% less disk space, albeit with a slightly higher CPU trade-off, compared to Elasticsearch." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/docs/main/next/en/setup/backend/backend-storage/" />
 
 <meta itemprop="name" content="Backend storage">
 <meta itemprop="description" content="Backend storage The SkyWalking storage is pluggable. We have provided the following storage solutions, which allow you to easily use one of them by specifying it as the selector in application.yml：
-storage:selector:${SW_STORAGE:elasticsearch}Natively supported storage:
-BanyanDB - Native APM Database  BanyanDB  This is recommended to use for medium scale deployments from 0.6 until 1.0. It has demonstrated significant potential in performance improvement. As of version 0.6.1, it achieves 5x less memory usage, 1/5 disk IOPS, 1/4 disk throughput, and 30% less disk space, albeit with a slightly higher CPU trade-off, compared to Elasticsearch.">
+storage:selector:${SW_STORAGE:banyandb}BanyanDB - Native APM Database  BanyanDB  BanyanDB is a native-built SkyWalking database, which can completely focus on SkyWalking use cases. It has demonstrated significant potential for performance improvement and reduced resource usage requirements. It indicates 5x less memory usage, 1/5 disk IOPS, 1/4 disk throughput, and 30% less disk space, albeit with a slightly higher CPU trade-off, compared to Elasticsearch.">
 
-<meta itemprop="wordCount" content="211">
+<meta itemprop="wordCount" content="215">
 
 
 
@@ -42,8 +40,7 @@ BanyanDB - Native APM Database  BanyanDB  This is recommended to use for medium 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Backend storage"/>
 <meta name="twitter:description" content="Backend storage The SkyWalking storage is pluggable. We have provided the following storage solutions, which allow you to easily use one of them by specifying it as the selector in application.yml：
-storage:selector:${SW_STORAGE:elasticsearch}Natively supported storage:
-BanyanDB - Native APM Database  BanyanDB  This is recommended to use for medium scale deployments from 0.6 until 1.0. It has demonstrated significant potential in performance improvement. As of version 0.6.1, it achieves 5x less memory usage, 1/5 disk IOPS, 1/4 disk throughput, and 30% less disk space, albeit with a slightly higher CPU trade-off, compared to Elasticsearch."/>
+storage:selector:${SW_STORAGE:banyandb}BanyanDB - Native APM Database  BanyanDB  BanyanDB is a native-built SkyWalking database, which can completely focus on SkyWalking use cases. It has demonstrated significant potential for performance improvement and reduced resource usage requirements. It indicates 5x less memory usage, 1/5 disk IOPS, 1/4 disk throughput, and 30% less disk space, albeit with a slightly higher CPU trade-off, compared to Elasticsearch."/>
 
 
 
@@ -1047,14 +1044,6 @@ BanyanDB - Native APM Database  BanyanDB  This is recommended to use for medium 
     <li>
         
             <a href="/docs/main/next/en/setup/backend/storages/banyandb">BanyanDB</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/storages/h2">H2</a>
         
     </li>
 
@@ -2558,7 +2547,7 @@ BanyanDB - Native APM Database  BanyanDB  This is recommended to use for medium 
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: d3d3ee8</div>
+                  <div class="commit-id">Commit Id: 6fbd9e7</div>
                 
 
 
@@ -2608,34 +2597,31 @@ BanyanDB - Native APM Database  BanyanDB  This is recommended to use for medium 
 <p>The SkyWalking storage is pluggable. We have provided the following storage solutions, which allow you to easily
 use one of them by specifying it as the <code>selector</code> in <code>application.yml</code>：</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#000080">storage</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span><span style="color:#000080">selector</span>:<span style="color:#bbb"> </span>${SW_STORAGE:elasticsearch}<span style="color:#bbb">
-</span></code></pre></div><p>Natively supported storage:</p>
-<h2 id="banyandb---native-apm-database">BanyanDB - Native APM Database</h2>
+</span><span style="color:#bbb">  </span><span style="color:#000080">selector</span>:<span style="color:#bbb"> </span>${SW_STORAGE:banyandb}<span style="color:#bbb">
+</span></code></pre></div><h2 id="banyandb---native-apm-database">BanyanDB - Native APM Database</h2>
 <ul>
 <li><a href="../storages/banyandb">BanyanDB</a></li>
 </ul>
-<p>This is recommended to use for medium scale deployments from 0.6 until 1.0.
-It has demonstrated significant potential in performance improvement. As of version 0.6.1, it achieves 5x less memory usage,
-1/5 disk IOPS, 1/4 disk throughput, and 30% less disk space, albeit with a slightly higher CPU trade-off, compared to Elasticsearch.
-We are looking for early adoption. Please contact us through Slack channels if you are interested in using BanyanDB.</p>
+<p>BanyanDB is a native-built SkyWalking database, which can completely focus on SkyWalking use cases.
+It has demonstrated significant potential for performance improvement and reduced resource usage requirements. It indicates 5x less memory usage,
+1/5 disk IOPS, 1/4 disk throughput, and 30% less disk space, albeit with a slightly higher CPU trade-off, compared to Elasticsearch.</p>
 <h2 id="sql-database">SQL database</h2>
-<ul>
-<li><a href="../storages/h2">H2</a></li>
-</ul>
-<p>H2 is the default storage option in the distribution package. It is recommended to use H2 for testing and development ONLY.</p>
 <ul>
 <li><a href="../storages/mysql">MySQL and its compatible databases</a></li>
 <li><a href="../storages/postgresql">PostgreSQL and its compatible databases</a></li>
 </ul>
-<p>MySQL and PostgreSQL are recommended for production environments for medium scale deployments, especially for low trace
-and log sampling rate. Some of their compatible databases may support larger scale better, such as TiDB and AWS Aurora.</p>
+<p>MySQL and PostgreSQL are recommended for production environments for medium-scale deployments, especially for low trace
+and log sampling rates. Some of their compatible databases may support larger scale better, such as TiDB and AWS Aurora.
+But the logs and traces performance could be significantly lower than BanyanDB and Elasticsearch, even more, their performance can&rsquo;t be improved linearly
+through scaling out nodes.</p>
 <h2 id="elasticsearch">Elasticsearch+</h2>
 <ul>
 <li><a href="../storages/elasticsearch#opensearch">OpenSearch</a></li>
 <li><a href="../storages/elasticsearch#elasticsearch">ElasticSearch 7 and 8</a></li>
 </ul>
-<p>Elasticsearch and OpenSearch are recommended for production environments, specially for large scale deployments.
-OpenSearch derived from Elasticsearch 7.10.2 and iterate by its own roadmap.</p>
+<p>Elasticsearch and OpenSearch are recommended for production environments, especially for large-scale deployments.
+OpenSearch derived from Elasticsearch 7.10.2 and iterates by its own roadmap. But notice, Elasticsearch cluster resource costs are high,
+due to its high requirement for memory and replication requirement to keep cluster robustness.</p>
 
 </div>
 <div>
@@ -2840,8 +2826,6 @@ OpenSearch derived from Elasticsearch 7.10.2 and iterate by its own roadmap.</p>
 
     </div>
     
-
-
 
 
 
