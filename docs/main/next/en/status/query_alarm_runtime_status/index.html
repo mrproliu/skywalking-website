@@ -22,34 +22,28 @@
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
 
-<title>HTTP API Protocol | Apache SkyWalking</title><meta property="og:title" content="HTTP API Protocol" />
-<meta property="og:description" content="HTTP API Protocol HTTP API Protocol defines the API data format, including API request and response data format. They use the HTTP1.1 wrapper of the official SkyWalking Browser Protocol. Read it for more details.
-Performance Data Report Detailed information about data format can be found in BrowserPerf.proto.
-POST http://localhost:12800/browser/perfData Send a performance data object in JSON format.
-Input:
-{ &#34;service&#34;: &#34;web&#34;, &#34;serviceVersion&#34;: &#34;v0.0.1&#34;, &#34;pagePath&#34;: &#34;/index.html&#34;, &#34;redirectTime&#34;: 10, &#34;dnsTime&#34;: 10, &#34;ttfbTime&#34;: 10, &#34;tcpTime&#34;: 10, &#34;transTime&#34;: 10, &#34;domAnalysisTime&#34;: 10, &#34;fptTime&#34;: 10, &#34;domReadyTime&#34;: 10, &#34;loadPageTime&#34;: 10, &#34;resTime&#34;: 10, &#34;sslTime&#34;: 10, &#34;ttlTime&#34;: 10, &#34;firstPackTime&#34;: 10, } OutPut:" />
+<title>Get Alarm Runtime Status | Apache SkyWalking</title><meta property="og:title" content="Get Alarm Runtime Status" />
+<meta property="og:description" content="Get Alarm Runtime Status OAP calculates the alarm conditions in the memory based on the alarm rules and the metrics data. The following APIs are exposed to make the alerting running kernel visible.
+Get Alarm Running Rules Return the list of alarm running rules.
+ URL, http://{core restHost}:{core restPort}/status/alarm/rules HTTP GET method.  { &#34;ruleNames&#34;: [ &#34;service_percentile_rule&#34;, &#34;service_resp_time_rule&#34; ] } Get Alarm Running Rule Info Return the detailed information of the alarm running rule." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/docs/main/next/en/api/browser-http-api-protocol/" />
+<meta property="og:url" content="/docs/main/next/en/status/query_alarm_runtime_status/" />
 
-<meta itemprop="name" content="HTTP API Protocol">
-<meta itemprop="description" content="HTTP API Protocol HTTP API Protocol defines the API data format, including API request and response data format. They use the HTTP1.1 wrapper of the official SkyWalking Browser Protocol. Read it for more details.
-Performance Data Report Detailed information about data format can be found in BrowserPerf.proto.
-POST http://localhost:12800/browser/perfData Send a performance data object in JSON format.
-Input:
-{ &#34;service&#34;: &#34;web&#34;, &#34;serviceVersion&#34;: &#34;v0.0.1&#34;, &#34;pagePath&#34;: &#34;/index.html&#34;, &#34;redirectTime&#34;: 10, &#34;dnsTime&#34;: 10, &#34;ttfbTime&#34;: 10, &#34;tcpTime&#34;: 10, &#34;transTime&#34;: 10, &#34;domAnalysisTime&#34;: 10, &#34;fptTime&#34;: 10, &#34;domReadyTime&#34;: 10, &#34;loadPageTime&#34;: 10, &#34;resTime&#34;: 10, &#34;sslTime&#34;: 10, &#34;ttlTime&#34;: 10, &#34;firstPackTime&#34;: 10, } OutPut:">
+<meta itemprop="name" content="Get Alarm Runtime Status">
+<meta itemprop="description" content="Get Alarm Runtime Status OAP calculates the alarm conditions in the memory based on the alarm rules and the metrics data. The following APIs are exposed to make the alerting running kernel visible.
+Get Alarm Running Rules Return the list of alarm running rules.
+ URL, http://{core restHost}:{core restPort}/status/alarm/rules HTTP GET method.  { &#34;ruleNames&#34;: [ &#34;service_percentile_rule&#34;, &#34;service_resp_time_rule&#34; ] } Get Alarm Running Rule Info Return the detailed information of the alarm running rule.">
 
-<meta itemprop="wordCount" content="328">
+<meta itemprop="wordCount" content="442">
 
 
 
 <meta itemprop="keywords" content="" />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="HTTP API Protocol"/>
-<meta name="twitter:description" content="HTTP API Protocol HTTP API Protocol defines the API data format, including API request and response data format. They use the HTTP1.1 wrapper of the official SkyWalking Browser Protocol. Read it for more details.
-Performance Data Report Detailed information about data format can be found in BrowserPerf.proto.
-POST http://localhost:12800/browser/perfData Send a performance data object in JSON format.
-Input:
-{ &#34;service&#34;: &#34;web&#34;, &#34;serviceVersion&#34;: &#34;v0.0.1&#34;, &#34;pagePath&#34;: &#34;/index.html&#34;, &#34;redirectTime&#34;: 10, &#34;dnsTime&#34;: 10, &#34;ttfbTime&#34;: 10, &#34;tcpTime&#34;: 10, &#34;transTime&#34;: 10, &#34;domAnalysisTime&#34;: 10, &#34;fptTime&#34;: 10, &#34;domReadyTime&#34;: 10, &#34;loadPageTime&#34;: 10, &#34;resTime&#34;: 10, &#34;sslTime&#34;: 10, &#34;ttlTime&#34;: 10, &#34;firstPackTime&#34;: 10, } OutPut:"/>
+<meta name="twitter:title" content="Get Alarm Runtime Status"/>
+<meta name="twitter:description" content="Get Alarm Runtime Status OAP calculates the alarm conditions in the memory based on the alarm rules and the metrics data. The following APIs are exposed to make the alerting running kernel visible.
+Get Alarm Running Rules Return the list of alarm running rules.
+ URL, http://{core restHost}:{core restPort}/status/alarm/rules HTTP GET method.  { &#34;ruleNames&#34;: [ &#34;service_percentile_rule&#34;, &#34;service_resp_time_rule&#34; ] } Get Alarm Running Rule Info Return the detailed information of the alarm running rule."/>
 
 
 
@@ -67,7 +61,7 @@ Input:
 
 
 
-    <title>HTTP API Protocol | Apache SkyWalking</title>
+    <title>Get Alarm Runtime Status | Apache SkyWalking</title>
   </head>
   <body class="td-page  project-doc">
     <header>
@@ -1741,7 +1735,7 @@ Input:
 
     <li>
         
-            <a href="/docs/main/next/en/api/browser-protocol">Browser performance APIs</a>
+            <a href="/docs/main/next/en/api/browser-protocol">Browser Performance APIs</a>
         
     </li>
 
@@ -1749,7 +1743,7 @@ Input:
 
     <li>
         
-            <a href="/docs/main/next/en/api/jvm-protocol">JVM metrics APIs</a>
+            <a href="/docs/main/next/en/api/jvm-protocol">JVM Metrics APIs</a>
         
     </li>
 
@@ -1924,6 +1918,14 @@ Input:
     <li>
         
             <a href="/docs/main/next/en/status/query_cluster_nodes">Get Node List in the Cluster</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/status/query_alarm_runtime_status">Get Alarm Runtime Status</a>
         
     </li>
 
@@ -2572,7 +2574,7 @@ Input:
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: b7e961b</div>
+                  <div class="commit-id">Commit Id: 68ab2ed</div>
                 
 
 
@@ -2618,127 +2620,155 @@ Input:
               <i class="iconfont icon-menu-doc doc-menu-button"></i>
               
 <div class="td-content">
-	<h1 id="http-api-protocol">HTTP API Protocol</h1>
-<p>HTTP API Protocol defines the API data format, including API request and response data format.
-They use the HTTP1.1 wrapper of the official <a href="../browser-protocol">SkyWalking Browser Protocol</a>. Read it for more details.</p>
-<h2 id="performance-data-report">Performance Data Report</h2>
-<p>Detailed information about data format can be found in <a href="https://github.com/apache/skywalking-data-collect-protocol/blob/master/browser/BrowserPerf.proto">BrowserPerf.proto</a>.</p>
-<h3 id="post-httplocalhost12800browserperfdata">POST http://localhost:12800/browser/perfData</h3>
-<p>Send a performance data object in JSON format.</p>
-<p>Input:</p>
+	<h1 id="get-alarm-runtime-status">Get Alarm Runtime Status</h1>
+<p>OAP calculates the alarm conditions in the memory based on the alarm rules and the metrics data.
+The following APIs are exposed to make the alerting running kernel visible.</p>
+<h2 id="get-alarm-running-rules">Get Alarm Running Rules</h2>
+<p>Return the list of alarm running rules.</p>
+<ul>
+<li>URL, <code>http://{core restHost}:{core restPort}/status/alarm/rules</code></li>
+<li>HTTP GET method.</li>
+</ul>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
-  <span style="color:#000080">&#34;service&#34;</span>: <span style="color:#d14">&#34;web&#34;</span>,
-  <span style="color:#000080">&#34;serviceVersion&#34;</span>: <span style="color:#d14">&#34;v0.0.1&#34;</span>,
-  <span style="color:#000080">&#34;pagePath&#34;</span>: <span style="color:#d14">&#34;/index.html&#34;</span>,
-  <span style="color:#000080">&#34;redirectTime&#34;</span>: <span style="color:#099">10</span>,
-  <span style="color:#000080">&#34;dnsTime&#34;</span>: <span style="color:#099">10</span>,
-  <span style="color:#000080">&#34;ttfbTime&#34;</span>: <span style="color:#099">10</span>,
-  <span style="color:#000080">&#34;tcpTime&#34;</span>: <span style="color:#099">10</span>,
-  <span style="color:#000080">&#34;transTime&#34;</span>: <span style="color:#099">10</span>,
-  <span style="color:#000080">&#34;domAnalysisTime&#34;</span>: <span style="color:#099">10</span>,
-  <span style="color:#000080">&#34;fptTime&#34;</span>: <span style="color:#099">10</span>,
-  <span style="color:#000080">&#34;domReadyTime&#34;</span>: <span style="color:#099">10</span>,
-  <span style="color:#000080">&#34;loadPageTime&#34;</span>: <span style="color:#099">10</span>,
-  <span style="color:#000080">&#34;resTime&#34;</span>: <span style="color:#099">10</span>,
-  <span style="color:#000080">&#34;sslTime&#34;</span>: <span style="color:#099">10</span>,
-  <span style="color:#000080">&#34;ttlTime&#34;</span>: <span style="color:#099">10</span>,
-  <span style="color:#000080">&#34;firstPackTime&#34;</span>: <span style="color:#099">10</span>,
+  <span style="color:#000080">&#34;ruleNames&#34;</span>: [
+    <span style="color:#d14">&#34;service_percentile_rule&#34;</span>,
+    <span style="color:#d14">&#34;service_resp_time_rule&#34;</span>
+  ]
 }
-</code></pre></div><p>OutPut:</p>
-<p>HTTP Status: 204</p>
-<h3 id="post-httplocalhost12800browserperfdatawebvitals">POST http://localhost:12800/browser/perfData/webVitals</h3>
-<p>Send a performance data object in JSON format. Since client-js 1.0.0, the following attached metrics are reported.</p>
-<p>Input:</p>
+</code></pre></div><h2 id="get-alarm-running-rule-info">Get Alarm Running Rule Info</h2>
+<p>Return the detailed information of the alarm running rule.</p>
+<ul>
+<li>URL, <code>http://{core restHost}:{core restPort}/status/alarm/rules/{ruleName}</code></li>
+<li>HTTP GET method.</li>
+</ul>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
-  <span style="color:#000080">&#34;service&#34;</span>: <span style="color:#d14">&#34;web&#34;</span>,
-  <span style="color:#000080">&#34;serviceVersion&#34;</span>: <span style="color:#d14">&#34;v0.0.1&#34;</span>,
-  <span style="color:#000080">&#34;pagePath&#34;</span>: <span style="color:#d14">&#34;/index.html&#34;</span>,
-  <span style="color:#000080">&#34;fmpTime&#34;</span>: <span style="color:#099">10</span>,
-  <span style="color:#000080">&#34;clsTime&#34;</span>: <span style="color:#099">10</span>,
-  <span style="color:#000080">&#34;lcpTime&#34;</span>: <span style="color:#099">10</span>,
-}
-</code></pre></div><p>OutPut:</p>
-<p>HTTP Status: 204</p>
-<h3 id="post-httplocalhost12800browserperfdatawebinteractions">POST http://localhost:12800/browser/perfData/webInteractions</h3>
-<p>Send a performance data object in JSON format. Since client-js 1.0.0, the following attached metrics are reported.</p>
-<p>Input:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">[
-  {
-    <span style="color:#000080">&#34;service&#34;</span>: <span style="color:#d14">&#34;web&#34;</span>,
-    <span style="color:#000080">&#34;serviceVersion&#34;</span>: <span style="color:#d14">&#34;v0.0.1&#34;</span>,
-    <span style="color:#000080">&#34;pagePath&#34;</span>: <span style="color:#d14">&#34;/index.html&#34;</span>,
-    <span style="color:#000080">&#34;inpTime&#34;</span>: <span style="color:#099">10</span>,
-  }
-]
-</code></pre></div><p>OutPut:</p>
-<p>HTTP Status: 204</p>
-<h3 id="post-httplocalhost12800browserperfdataresources">POST http://localhost:12800/browser/perfData/resources</h3>
-<p>Send a static resources data object in JSON format. Since client-js 1.0.0, the following attached metrics are reported.</p>
-<p>Input:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">[
-  {
-    <span style="color:#000080">&#34;service&#34;</span>: <span style="color:#d14">&#34;web&#34;</span>,
-    <span style="color:#000080">&#34;serviceVersion&#34;</span>: <span style="color:#d14">&#34;v0.0.1&#34;</span>,
-    <span style="color:#000080">&#34;pagePath&#34;</span>: <span style="color:#d14">&#34;/index.html&#34;</span>,
-    <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;vue.js&#34;</span>,
-    <span style="color:#000080">&#34;duration&#34;</span>: <span style="color:#099">600</span>,
-    <span style="color:#000080">&#34;size&#34;</span>: <span style="color:#099">100000</span>,
-    <span style="color:#000080">&#34;protocol&#34;</span>: <span style="color:#d14">&#34;h2&#34;</span>,
-    <span style="color:#000080">&#34;type&#34;</span>: <span style="color:#d14">&#34;script&#34;</span>,
-  }
-]
-</code></pre></div><p>OutPut:</p>
-<p>HTTP Status: 204</p>
-<h2 id="error-log-report">Error Log Report</h2>
-<p>Detailed information about data format can be found in <a href="https://github.com/apache/skywalking-data-collect-protocol/blob/master/browser/BrowserPerf.proto">BrowserPerf.proto</a>.</p>
-<h3 id="post-httplocalhost12800browsererrorlogs">POST http://localhost:12800/browser/errorLogs</h3>
-<p>Send an error log object list in JSON format.</p>
-<p>Input:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">[
+  <span style="color:#000080">&#34;ruleName&#34;</span>: <span style="color:#d14">&#34;service_resp_time_rule&#34;</span>,
+  <span style="color:#000080">&#34;expression&#34;</span>: <span style="color:#d14">&#34;sum(service_resp_time &gt; baseline(service_resp_time,upper)) &gt;= 1&#34;</span>,
+  <span style="color:#000080">&#34;period&#34;</span>: <span style="color:#099">10</span>,
+  <span style="color:#000080">&#34;silentPeriod&#34;</span>: <span style="color:#099">10</span>,
+  <span style="color:#000080">&#34;additonalPeriod&#34;</span>: <span style="color:#099">0</span>,
+  <span style="color:#000080">&#34;includeNames&#34;</span>: [
+    <span style="color:#d14">&#34;mock_a_service&#34;</span>,
+    <span style="color:#d14">&#34;mock_b_service&#34;</span>,
+    <span style="color:#d14">&#34;mock_c_service&#34;</span>
+  ],
+  <span style="color:#000080">&#34;excludeNames&#34;</span>: [],
+  <span style="color:#000080">&#34;includeNamesRegex&#34;</span>: <span style="color:#d14">&#34;&#34;</span>,
+  <span style="color:#000080">&#34;excludeNamesRegex&#34;</span>: <span style="color:#d14">&#34;&#34;</span>,
+  <span style="color:#000080">&#34;affectedEntities&#34;</span>: [
     {
-        <span style="color:#000080">&#34;uniqueId&#34;</span>: <span style="color:#d14">&#34;55ec6178-3fb7-43ef-899c-a26944407b01&#34;</span>,
-        <span style="color:#000080">&#34;service&#34;</span>: <span style="color:#d14">&#34;web&#34;</span>,
-        <span style="color:#000080">&#34;serviceVersion&#34;</span>: <span style="color:#d14">&#34;v0.0.1&#34;</span>,
-        <span style="color:#000080">&#34;pagePath&#34;</span>: <span style="color:#d14">&#34;/index.html&#34;</span>,
-        <span style="color:#000080">&#34;category&#34;</span>: <span style="color:#d14">&#34;ajax&#34;</span>,
-        <span style="color:#000080">&#34;message&#34;</span>: <span style="color:#d14">&#34;error&#34;</span>,
-        <span style="color:#000080">&#34;line&#34;</span>: <span style="color:#099">1</span>,
-        <span style="color:#000080">&#34;col&#34;</span>: <span style="color:#099">1</span>,
-        <span style="color:#000080">&#34;stack&#34;</span>: <span style="color:#d14">&#34;error&#34;</span>,
-        <span style="color:#000080">&#34;errorUrl&#34;</span>: <span style="color:#d14">&#34;/index.html&#34;</span>
+      <span style="color:#000080">&#34;scope&#34;</span>: <span style="color:#d14">&#34;SERVICE&#34;</span>,
+      <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;mock_b_service&#34;</span>
     },
     {
-        <span style="color:#000080">&#34;uniqueId&#34;</span>: <span style="color:#d14">&#34;55ec6178-3fb7-43ef-899c-a26944407b02&#34;</span>,
-        <span style="color:#000080">&#34;service&#34;</span>: <span style="color:#d14">&#34;web&#34;</span>,
-        <span style="color:#000080">&#34;serviceVersion&#34;</span>: <span style="color:#d14">&#34;v0.0.1&#34;</span>,
-        <span style="color:#000080">&#34;pagePath&#34;</span>: <span style="color:#d14">&#34;/index.html&#34;</span>,
-        <span style="color:#000080">&#34;category&#34;</span>: <span style="color:#d14">&#34;ajax&#34;</span>,
-        <span style="color:#000080">&#34;message&#34;</span>: <span style="color:#d14">&#34;error&#34;</span>,
-        <span style="color:#000080">&#34;line&#34;</span>: <span style="color:#099">1</span>,
-        <span style="color:#000080">&#34;col&#34;</span>: <span style="color:#099">1</span>,
-        <span style="color:#000080">&#34;stack&#34;</span>: <span style="color:#d14">&#34;error&#34;</span>,
-        <span style="color:#000080">&#34;errorUrl&#34;</span>: <span style="color:#d14">&#34;/index.html&#34;</span>
+      <span style="color:#000080">&#34;scope&#34;</span>: <span style="color:#d14">&#34;SERVICE&#34;</span>,
+      <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;mock_a_service&#34;</span>
+    },
+    {
+      <span style="color:#000080">&#34;scope&#34;</span>: <span style="color:#d14">&#34;SERVICE&#34;</span>,
+      <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;mock_c_service&#34;</span>
     }
-]
-</code></pre></div><p>OutPut:</p>
-<p>HTTP Status: 204</p>
-<h3 id="post-httplocalhost12800browsererrorlog">POST http://localhost:12800/browser/errorLog</h3>
-<p>Send a single error log object in JSON format.</p>
-<p>Input:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
-  <span style="color:#000080">&#34;uniqueId&#34;</span>: <span style="color:#d14">&#34;55ec6178-3fb7-43ef-899c-a26944407b01&#34;</span>,
-  <span style="color:#000080">&#34;service&#34;</span>: <span style="color:#d14">&#34;web&#34;</span>,
-  <span style="color:#000080">&#34;serviceVersion&#34;</span>: <span style="color:#d14">&#34;v0.0.1&#34;</span>,
-  <span style="color:#000080">&#34;pagePath&#34;</span>: <span style="color:#d14">&#34;/index.html&#34;</span>,
-  <span style="color:#000080">&#34;category&#34;</span>: <span style="color:#d14">&#34;ajax&#34;</span>,    
-  <span style="color:#000080">&#34;message&#34;</span>: <span style="color:#d14">&#34;error&#34;</span>,
-  <span style="color:#000080">&#34;line&#34;</span>: <span style="color:#099">1</span>,
-  <span style="color:#000080">&#34;col&#34;</span>: <span style="color:#099">1</span>,
-  <span style="color:#000080">&#34;stack&#34;</span>: <span style="color:#d14">&#34;error&#34;</span>,
-  <span style="color:#000080">&#34;errorUrl&#34;</span>: <span style="color:#d14">&#34;/index.html&#34;</span>
+  ],
+  <span style="color:#000080">&#34;tags&#34;</span>: [
+    {
+      <span style="color:#000080">&#34;key&#34;</span>: <span style="color:#d14">&#34;level&#34;</span>,
+      <span style="color:#000080">&#34;value&#34;</span>: <span style="color:#d14">&#34;WARNING&#34;</span>
+    }
+  ],
+  <span style="color:#000080">&#34;hooks&#34;</span>: [
+    <span style="color:#d14">&#34;webhook.default&#34;</span>,
+    <span style="color:#d14">&#34;wechat.default&#34;</span>
+  ],
+  <span style="color:#000080">&#34;includeMetrics&#34;</span>: [
+    <span style="color:#d14">&#34;service_resp_time&#34;</span>
+  ],
+  <span style="color:#000080">&#34;formattedMessages&#34;</span>: [
+    {
+      <span style="color:#000080">&#34;mock_b_service&#34;</span>: <span style="color:#d14">&#34;Response time of service mock_b_service is more than upper baseline in 1 minutes of last 10 minutes.&#34;</span>
+    },
+    {
+      <span style="color:#000080">&#34;mock_a_service&#34;</span>: <span style="color:#d14">&#34;Response time of service mock_a_service is more than upper baseline in 1 minutes of last 10 minutes.&#34;</span>
+    },
+    {
+      <span style="color:#000080">&#34;mock_c_service&#34;</span>: <span style="color:#d14">&#34;Response time of service mock_c_service is more than upper baseline in 1 minutes of last 10 minutes.&#34;</span>
+    }
+  ]
 }
-</code></pre></div><p>OutPut:</p>
-<p>HTTP Status: 204</p>
+</code></pre></div><ul>
+<li><code>additonalPeriod</code> is the additional period if the expression includes the <a href="../../api/metrics-query-expression#trend-operation">increase/rate function</a>.
+This additional period is used to enlarge window size for calculating the trend value.</li>
+<li><code>affectedEntities</code> is the entities that have metrics data and being calculated by the alarm rule.</li>
+<li><code>formattedMessages</code> is the result message according to the message template and the affected entities.</li>
+</ul>
+<h2 id="get-alarm-running-context">Get Alarm Running Context</h2>
+<p>Return the running context of the alarm rule.</p>
+<ul>
+<li>URL, <code>http://{core restHost}:{core restPort}/status/alarm/{ruleName}/{entityName}</code></li>
+<li>HTTP GET method.</li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+  <span style="color:#000080">&#34;expression&#34;</span>: <span style="color:#d14">&#34;sum(service_resp_time &gt; baseline(service_resp_time,upper)) &gt;= 1&#34;</span>,
+  <span style="color:#000080">&#34;endTime&#34;</span>: <span style="color:#d14">&#34;2025-02-12T13:39:00.000&#34;</span>,
+  <span style="color:#000080">&#34;additionalPeriod&#34;</span>: <span style="color:#099">0</span>,
+  <span style="color:#000080">&#34;size&#34;</span>: <span style="color:#099">10</span>,
+  <span style="color:#000080">&#34;silenceCountdown&#34;</span>: <span style="color:#099">10</span>,
+  <span style="color:#000080">&#34;windowValues&#34;</span>: [
+    {
+      <span style="color:#000080">&#34;index&#34;</span>: <span style="color:#099">0</span>,
+      <span style="color:#000080">&#34;metrics&#34;</span>: []
+    },
+    {
+      <span style="color:#000080">&#34;index&#34;</span>: <span style="color:#099">1</span>,
+      <span style="color:#000080">&#34;metrics&#34;</span>: []
+    },
+    {
+      <span style="color:#000080">&#34;index&#34;</span>: <span style="color:#099">2</span>,
+      <span style="color:#000080">&#34;metrics&#34;</span>: []
+    },
+    {
+      <span style="color:#000080">&#34;index&#34;</span>: <span style="color:#099">3</span>,
+      <span style="color:#000080">&#34;metrics&#34;</span>: []
+    },
+    {
+      <span style="color:#000080">&#34;index&#34;</span>: <span style="color:#099">4</span>,
+      <span style="color:#000080">&#34;metrics&#34;</span>: []
+    },
+    {
+      <span style="color:#000080">&#34;index&#34;</span>: <span style="color:#099">5</span>,
+      <span style="color:#000080">&#34;metrics&#34;</span>: []
+    },
+    {
+      <span style="color:#000080">&#34;index&#34;</span>: <span style="color:#099">6</span>,
+      <span style="color:#000080">&#34;metrics&#34;</span>: []
+    },
+    {
+      <span style="color:#000080">&#34;index&#34;</span>: <span style="color:#099">7</span>,
+      <span style="color:#000080">&#34;metrics&#34;</span>: [
+        {
+          <span style="color:#000080">&#34;timeBucket&#34;</span>: <span style="color:#099">202502121437</span>,
+          <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;service_resp_time&#34;</span>,
+          <span style="color:#000080">&#34;value&#34;</span>: <span style="color:#d14">&#34;6000&#34;</span>
+        }
+      ]
+    },
+    {
+      <span style="color:#000080">&#34;index&#34;</span>: <span style="color:#099">8</span>,
+      <span style="color:#000080">&#34;metrics&#34;</span>: []
+    },
+    {
+      <span style="color:#000080">&#34;index&#34;</span>: <span style="color:#099">9</span>,
+      <span style="color:#000080">&#34;metrics&#34;</span>: []
+    }
+  ],
+  <span style="color:#000080">&#34;mqeMetricsSnapshot&#34;</span>: {
+    <span style="color:#000080">&#34;service_resp_time&#34;</span>: <span style="color:#d14">&#34;[{\&#34;metric\&#34;:{\&#34;labels\&#34;:[]},\&#34;values\&#34;:[{\&#34;id\&#34;:\&#34;202502121430\&#34;,\&#34;doubleValue\&#34;:0.0,\&#34;isEmptyValue\&#34;:true},{\&#34;id\&#34;:\&#34;202502121431\&#34;,\&#34;doubleValue\&#34;:0.0,\&#34;isEmptyValue\&#34;:true},{\&#34;id\&#34;:\&#34;202502121432\&#34;,\&#34;doubleValue\&#34;:0.0,\&#34;isEmptyValue\&#34;:true},{\&#34;id\&#34;:\&#34;202502121433\&#34;,\&#34;doubleValue\&#34;:0.0,\&#34;isEmptyValue\&#34;:true},{\&#34;id\&#34;:\&#34;202502121434\&#34;,\&#34;doubleValue\&#34;:0.0,\&#34;isEmptyValue\&#34;:true},{\&#34;id\&#34;:\&#34;202502121435\&#34;,\&#34;doubleValue\&#34;:0.0,\&#34;isEmptyValue\&#34;:true},{\&#34;id\&#34;:\&#34;202502121436\&#34;,\&#34;doubleValue\&#34;:0.0,\&#34;isEmptyValue\&#34;:true},{\&#34;id\&#34;:\&#34;202502121437\&#34;,\&#34;doubleValue\&#34;:6000.0,\&#34;isEmptyValue\&#34;:false},{\&#34;id\&#34;:\&#34;202502121438\&#34;,\&#34;doubleValue\&#34;:0.0,\&#34;isEmptyValue\&#34;:true},{\&#34;id\&#34;:\&#34;202502121439\&#34;,\&#34;doubleValue\&#34;:0.0,\&#34;isEmptyValue\&#34;:true}]}]&#34;</span>,
+    <span style="color:#000080">&#34;baseline(service_resp_time,upper)&#34;</span>: <span style="color:#d14">&#34;[{\&#34;metric\&#34;:{\&#34;labels\&#34;:[]},\&#34;values\&#34;:[{\&#34;id\&#34;:\&#34;202502121430\&#34;,\&#34;doubleValue\&#34;:10.0,\&#34;isEmptyValue\&#34;:false},{\&#34;id\&#34;:\&#34;202502121431\&#34;,\&#34;doubleValue\&#34;:10.0,\&#34;isEmptyValue\&#34;:false},{\&#34;id\&#34;:\&#34;202502121432\&#34;,\&#34;doubleValue\&#34;:10.0,\&#34;isEmptyValue\&#34;:false},{\&#34;id\&#34;:\&#34;202502121433\&#34;,\&#34;doubleValue\&#34;:10.0,\&#34;isEmptyValue\&#34;:false},{\&#34;id\&#34;:\&#34;202502121434\&#34;,\&#34;doubleValue\&#34;:10.0,\&#34;isEmptyValue\&#34;:false},{\&#34;id\&#34;:\&#34;202502121435\&#34;,\&#34;doubleValue\&#34;:10.0,\&#34;isEmptyValue\&#34;:false},{\&#34;id\&#34;:\&#34;202502121436\&#34;,\&#34;doubleValue\&#34;:10.0,\&#34;isEmptyValue\&#34;:false},{\&#34;id\&#34;:\&#34;202502121437\&#34;,\&#34;doubleValue\&#34;:10.0,\&#34;isEmptyValue\&#34;:false},{\&#34;id\&#34;:\&#34;202502121438\&#34;,\&#34;doubleValue\&#34;:10.0,\&#34;isEmptyValue\&#34;:false},{\&#34;id\&#34;:\&#34;202502121439\&#34;,\&#34;doubleValue\&#34;:10.0,\&#34;isEmptyValue\&#34;:false}]}]&#34;</span>
+  }
+}
+</code></pre></div><p><code>size</code> is the window size. Equal to the <code>period + additionalPeriod</code>.
+<code>silenceCountdown</code> is the countdown of the silence period. -1 means silence countdown is not running.
+<code>windowValues</code> is the original metrics data. The <code>index</code> is the index of the window, starting from 0.
+<code>mqeMetricsSnapshot</code> is the metrics data in the MQE format. When checking conditions, these data will be calculated according to the expression.</p>
 
 </div>
 <div>
@@ -2821,22 +2851,11 @@ They use the HTTP1.1 wrapper of the official <a href="../browser-protocol">SkyWa
 
 <nav id="TableOfContents">
   <ul>
-    <li><a href="#http-api-protocol">HTTP API Protocol</a>
+    <li><a href="#get-alarm-runtime-status">Get Alarm Runtime Status</a>
       <ul>
-        <li><a href="#performance-data-report">Performance Data Report</a>
-          <ul>
-            <li><a href="#post-httplocalhost12800browserperfdata">POST http://localhost:12800/browser/perfData</a></li>
-            <li><a href="#post-httplocalhost12800browserperfdatawebvitals">POST http://localhost:12800/browser/perfData/webVitals</a></li>
-            <li><a href="#post-httplocalhost12800browserperfdatawebinteractions">POST http://localhost:12800/browser/perfData/webInteractions</a></li>
-            <li><a href="#post-httplocalhost12800browserperfdataresources">POST http://localhost:12800/browser/perfData/resources</a></li>
-          </ul>
-        </li>
-        <li><a href="#error-log-report">Error Log Report</a>
-          <ul>
-            <li><a href="#post-httplocalhost12800browsererrorlogs">POST http://localhost:12800/browser/errorLogs</a></li>
-            <li><a href="#post-httplocalhost12800browsererrorlog">POST http://localhost:12800/browser/errorLog</a></li>
-          </ul>
-        </li>
+        <li><a href="#get-alarm-running-rules">Get Alarm Running Rules</a></li>
+        <li><a href="#get-alarm-running-rule-info">Get Alarm Running Rule Info</a></li>
+        <li><a href="#get-alarm-running-context">Get Alarm Running Context</a></li>
       </ul>
     </li>
   </ul>

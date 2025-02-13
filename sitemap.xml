@@ -9504,6 +9504,12 @@
   </url>
   
   <url>
+    <loc>/docs/main/next/en/status/query_alarm_runtime_status/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/docs/skywalking-banyandb/latest/installation/binaries/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
@@ -10279,12 +10285,6 @@
   
   <url>
     <loc>/docs/main/latest/en/api/browser-http-api-protocol/</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>/docs/main/next/en/api/browser-http-api-protocol/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
