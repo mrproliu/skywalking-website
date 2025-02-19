@@ -30,7 +30,7 @@
 <meta itemprop="name" content="10.2.0">
 <meta itemprop="description" content="10.2.0 Project  Add doc_values for fields that need to be sorted or aggregated in Elasticsearch, and disable all others.  This change would not impact the existing deployment and its feature for our official release users. Warning If there are custom query plugins for our Elasticsearch indices, this change could break them as sort queries and aggregation queries which used the unexpected fields are being blocked.   [Breaking Change] Rename debugging-query module to status-query module.">
 
-<meta itemprop="wordCount" content="930">
+<meta itemprop="wordCount" content="925">
 
 
 
@@ -1550,6 +1550,14 @@
 
     
 
+    <li>
+        
+            <a href="/docs/main/next/en/setup/ai-pipeline/metrics-baseline-integration">Metrics Baseline Calculation and Alerting</a>
+        
+    </li>
+
+    
+
 </ul>
 
         
@@ -2568,7 +2576,7 @@
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 68ab2ed</div>
+                  <div class="commit-id">Commit Id: 028757f</div>
                 
 
 
@@ -2686,8 +2694,7 @@ versions. Please upgrade the BanyanDB server to 0.8.0 before upgrading OAP to 10
 <li>MQE: Support <code>&amp;&amp;(and)</code>, <code>||(or)</code> bool operators.</li>
 <li>OAP self observability: Add JVM heap and direct memory used metrics.</li>
 <li>OAP self observability: Add watermark circuit break/recover metrics.</li>
-<li>Add Baseline module for support alarm module query baseline data.</li>
-<li>BaseLine: Support query baseline metrics names.</li>
+<li>AI Pipeline: Support query baseline metrics names and predict metrics value.</li>
 <li>Add <code>Get Node List in the Cluster</code> API.</li>
 <li>Add type descriptor when converting Envoy logs to JSON for persistence, to avoid conversion error.</li>
 <li>Bseline: Support query baseline with MQE and use in the Alarm Rule.</li>
@@ -2928,6 +2935,8 @@ versions. Please upgrade the BanyanDB server to 0.8.0 before upgrading OAP to 10
 
     </div>
     
+
+
 
 
 

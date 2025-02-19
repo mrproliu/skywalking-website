@@ -32,7 +32,7 @@
 <meta itemprop="description" content="Configuration Vocabulary The Configuration Vocabulary lists all available configurations provided by application.yml.
    Module Provider Settings Value(s) and Explanation System Environment Variable¹ Default     core default role Option values: Mixed/Receiver/Aggregator. Receiver mode OAP opens the service to the agents, then analyzes and aggregates the results, and forwards the results for distributed aggregation. Aggregator mode OAP receives data from Mixer and Receiver role OAP nodes, and performs 2nd level aggregation.">
 
-<meta itemprop="wordCount" content="5449">
+<meta itemprop="wordCount" content="5471">
 
 
 
@@ -1553,6 +1553,14 @@
 
     
 
+    <li>
+        
+            <a href="/docs/main/next/en/setup/ai-pipeline/metrics-baseline-integration">Metrics Baseline Calculation and Alerting</a>
+        
+    </li>
+
+    
+
 </ul>
 
         
@@ -2571,7 +2579,7 @@
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 68ab2ed</div>
+                  <div class="commit-id">Commit Id: 028757f</div>
                 
 
 
@@ -5456,6 +5464,22 @@
 <td>17128</td>
 </tr>
 <tr>
+<td>-</td>
+<td>-</td>
+<td>baselineServerAddr</td>
+<td>The address of the Baseline server.</td>
+<td>SW_API_PIPELINE_BASELINE_SERVICE_HOST</td>
+<td>-</td>
+</tr>
+<tr>
+<td>-</td>
+<td>-</td>
+<td>baselineServerPort</td>
+<td>The port of the Baseline server.</td>
+<td>SW_API_PIPELINE_BASELINE_SERVICE_PORT</td>
+<td>17128</td>
+</tr>
+<tr>
 <td>receiver-async-profiler</td>
 <td>default</td>
 <td>gRPC services that accept async-profiler task status and data reporter.</td>
@@ -5676,6 +5700,8 @@ provided in the default <code>application.yml</code> file.</p>
 
     </div>
     
+
+
 
 
 
