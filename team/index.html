@@ -35,12 +35,13 @@
 
 
 
-<link rel="preload" href="/scss/main.min.592235942cb3c9f3dd697382a4e7a1fad8e1c182dad2841bdce6b43b4a346ae8.css" as="style">
-<link href="/scss/main.min.592235942cb3c9f3dd697382a4e7a1fad8e1c182dad2841bdce6b43b4a346ae8.css" rel="stylesheet" integrity="">
+<link rel="preload" href="/scss/main.min.1fe260c8ca23282a8c8a99d7aac14fce66676b2720ae8855a90668565b416088.css" as="style">
+<link href="/scss/main.min.1fe260c8ca23282a8c8a99d7aac14fce66676b2720ae8855a90668565b416088.css" rel="stylesheet" integrity="">
 
 
 
 <link rel="stylesheet" href="/css/docSearch.css" />
+<link rel="stylesheet" href="/css/highlight-github.css" />
 
 
 <script src="/js/jquery-3.6.0.min.js"></script>
@@ -314,6 +315,11 @@ The SkyWalking team is comprised of Members and Contributors, and the growth has
 <td>lilang</td>
 <td></td>
 </tr>
+<tr>
+<td>Michael Semb Wever</td>
+<td>mck</td>
+<td></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -327,11 +333,6 @@ The SkyWalking team is comprised of Members and Contributors, and the growth has
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>Michael Semb Wever</td>
-<td>mck</td>
-<td></td>
-</tr>
 <tr>
 <td>Qiuxia Fan</td>
 <td>qiuxiafan</td>
@@ -411,6 +412,11 @@ The SkyWalking team is comprised of Members and Contributors, and the growth has
 <td>Zhenxu Ke</td>
 <td>kezhenxu94</td>
 <td><i class="iconfont icon-twitter"></i> <a href="https://twitter.com/kezhenxu94">kezhenxu94</a></td>
+</tr>
+<tr>
+<td>Zixin Zhou</td>
+<td>zhouzixin</td>
+<td><i class="iconfont icon-twitter"></i> <a href="https://twitter.com/starry_loveee">starry_loveee</a></td>
 </tr>
 </tbody>
 </table>
@@ -565,11 +571,6 @@ The SkyWalking team is comprised of Members and Contributors, and the growth has
 <td>Zhusheng Xu</td>
 <td>aderm</td>
 <td></td>
-</tr>
-<tr>
-<td>Zixin Zhou</td>
-<td>zhouzixin</td>
-<td><a href="https://twitter.com/starry_loveee">starry_loveee</a></td>
 </tr>
 </tbody>
 </table>
@@ -13713,6 +13714,44 @@ The SkyWalking team is comprised of Members and Contributors, and the growth has
             <a class="link" href="https://github.com/airene" target="_blank">
               <i class="iconfont icon-github"></i>
               airene
+            </a>
+          </li>
+          
+          
+        </ul>
+      </div>
+
+      
+
+      
+      
+      
+      
+
+      <div class="item" data-name="Ruby Agent" data-icon="ruby-agent">
+        <div class="item-text">
+          
+          <img data-nolightbox="true" width="36" height="36" src="/images/project/ruby-agent.svg" alt="">
+          
+          <span class="name">
+            Ruby Agent
+          </span>
+        </div>
+        <div>
+          <span class="total">1</span>
+          <i class="iconfont icon-arrow-right"></i>
+        </div>
+      </div>
+
+      <div id="skywalking-ruby" class="hide">
+        <ul class="list-style-none d-flex flex-wrap mb-n2">
+          
+
+          <li class="mb-2 mr-2">
+            
+            <a class="link" href="https://github.com/CodePrometheus" target="_blank">
+              <i class="iconfont icon-github"></i>
+              CodePrometheus
             </a>
           </li>
           
@@ -26979,6 +27018,160 @@ The SkyWalking team is comprised of Members and Contributors, and the growth has
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
 <div id="popup">
     <div class="mask">
@@ -27096,9 +27289,26 @@ The SkyWalking team is comprised of Members and Contributors, and the growth has
 <script src="/js/main.min.d00d7a99f9e61382b1db35fac38e0e7bdd97f8d3c663a4c4b8d02c3f1d78d894.js" integrity="sha256-0A16mfnmE4Kx2zX6w44Oe92X&#43;NPGY6TEuNAsPx142JQ=" crossorigin="anonymous"></script>
 
 
+<script src="/js/highlight.min.js"></script>
 <script src="/js/mermaid.min.js"></script>
 <script>
     window.onload = () => mermaid.init(undefined, ".language-mermaid");
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('pre code.language-json5').forEach((block) => {
+      if (block.classList.contains('language-json5')) {
+        try {
+          hljs.registerLanguage('json5', function(hljs) {
+            return hljs.getLanguage('json');
+          });
+          hljs.highlightElement(block);
+        } catch (error) {
+          console.error("Error parsing JSON5:", error);
+        }
+      }
+    });
+  });
 </script>
 
 

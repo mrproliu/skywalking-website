@@ -32,7 +32,7 @@
 <meta itemprop="description" content="Table of Agent Configuration Properties This is the properties list supported in agent/config/agent.config.
    property key Description System Environment Variable Default     agent.service_name The service name to represent a logic group providing the same capabilities/logic. Suggestion: set a unique name for every logic service group, service instance nodes share the same code, Max length is 50(UTF-8 char). Optional, once service_name follows &lt;group name&gt;::&lt;logic name&gt; format, OAP server assigns the group name to the service metadata.">
 
-<meta itemprop="wordCount" content="2660">
+<meta itemprop="wordCount" content="2684">
 
 
 
@@ -44,12 +44,13 @@
 
 
 
-<link rel="preload" href="/scss/main.min.592235942cb3c9f3dd697382a4e7a1fad8e1c182dad2841bdce6b43b4a346ae8.css" as="style">
-<link href="/scss/main.min.592235942cb3c9f3dd697382a4e7a1fad8e1c182dad2841bdce6b43b4a346ae8.css" rel="stylesheet" integrity="">
+<link rel="preload" href="/scss/main.min.1fe260c8ca23282a8c8a99d7aac14fce66676b2720ae8855a90668565b416088.css" as="style">
+<link href="/scss/main.min.1fe260c8ca23282a8c8a99d7aac14fce66676b2720ae8855a90668565b416088.css" rel="stylesheet" integrity="">
 
 
 
 <link rel="stylesheet" href="/css/docSearch.css" />
+<link rel="stylesheet" href="/css/highlight-github.css" />
 
 
 <script src="/js/jquery-3.6.0.min.js"></script>
@@ -246,6 +247,14 @@
                     <option selected value="latest">
                     
                       latest
+                    
+                    </option>
+                  
+                    
+                    
+                    <option ZgotmplZ value="v9.4.0">
+                    
+                      v9.4.0
                     
                     </option>
                   
@@ -555,6 +564,14 @@
 
     
 
+    <li>
+        
+            <a href="/docs/skywalking-java/latest/en/setup/service-agent/java-agent/agent-self-observability">Agent Self Observability</a>
+        
+    </li>
+
+    
+
 </ul>
 
         
@@ -580,7 +597,57 @@
 
     <li>
         
-            <a href="/docs/skywalking-java/latest/en/setup/service-agent/java-agent/optional-plugins">Optional Plugins</a>
+
+            
+            <a href="#">Optional Plugins<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-java/latest/en/setup/service-agent/java-agent/optional-plugins">Plugin Manifest</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-java/latest/en/setup/service-agent/java-agent/agent-optional-plugins/spring-annotation-plugin">Spring Annotation Plugin</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-java/latest/en/setup/service-agent/java-agent/agent-optional-plugins/spring-gateway">Spring Gateway</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-java/latest/en/setup/service-agent/java-agent/agent-optional-plugins/trace-ignore-plugin">Custom Trace Ignoring</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-java/latest/en/setup/service-agent/java-agent/agent-optional-plugins/kotlin-coroutine-plugin">Kotlin Coroutine</a>
+        
+    </li>
+
+    
+
+</ul>
+
         
     </li>
 
@@ -620,7 +687,15 @@
 
     <li>
         
-            <a href="/docs/skywalking-java/latest/en/setup/service-agent/java-agent/java-plugin-development-guide/">Plugin development guide</a>
+            <a href="/docs/skywalking-java/latest/en/setup/service-agent/java-agent/plugin-test/">Plugin Test Guide</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-java/latest/en/setup/service-agent/java-agent/java-plugin-development-guide/">Plugin Development Guide</a>
         
     </li>
 
@@ -729,8 +804,11 @@
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 8b9243c</div>
+                  <div class="commit-id">Commit Id: e0de83f</div>
                 
+
+
+
 
 
 
@@ -1513,13 +1591,13 @@
 <td><code>plugin.guavacache.operation_mapping_write</code></td>
 <td>Specify which command should be converted to <code>write</code> operation</td>
 <td>SW_PLUGIN_GUAVACACHE_OPERATION_MAPPING_WRITE</td>
-<td><code>getIfPresent,get,getAllPresent,size</code></td>
+<td><code>put,putAll,invalidate,invalidateAll,invalidateAll,cleanUp</code></td>
 </tr>
 <tr>
 <td><code>plugin.guavacache.operation_mapping_read</code></td>
 <td>Specify which command should be converted to <code>read</code> operation</td>
 <td>SW_PLUGIN_GUAVACACHE_OPERATION_MAPPING_READ</td>
-<td><code>put,putAll,invalidate,invalidateAll,invalidateAll,cleanUp</code></td>
+<td><code>getIfPresent,get,getAllPresent,size</code></td>
 </tr>
 <tr>
 <td><code>plugin.nettyhttp.collect_request_body</code></td>
@@ -1561,13 +1639,25 @@
 <td><code>plugin.solon.include_http_headers</code></td>
 <td>It controls what header data should be collected, values must be in lower case, if empty, no header data will be collected. default is empty.</td>
 <td>SW_PLUGIN_SOLON_INCLUDE_HTTP_HEADERS</td>
-<td>``(No header would be collected)                                                                                                                                                                                                                                                                                                                                                                                                                                               |</td>
+<td>``(No header would be collected)                                                                                                                                                                                                                                                                                                                                                                                                                     |</td>
 </tr>
 <tr>
 <td><code>plugin.solon.http_body_length_threshold</code></td>
 <td>Define the max length of collected HTTP body. The default value(=0) means not collecting.</td>
 <td>SW_PLUGIN_SOLON_HTTP_BODY_LENGTH_THRESHOLD</td>
 <td><code>0</code></td>
+</tr>
+<tr>
+<td><code>plugin.caffeine.operation_mapping_write</code></td>
+<td>Specify which command should be converted to <code>write</code> operation</td>
+<td>SW_PLUGIN_EHCACHE_OPERATION_MAPPING_WRITE</td>
+<td><code>put,putAll,remove,clear</code></td>
+</tr>
+<tr>
+<td><code>plugin.caffeine.operation_mapping_read</code></td>
+<td>Specify which command should be converted to <code>read</code> operation</td>
+<td>SW_PLUGIN_EHCACHE_OPERATION_MAPPING_READ</td>
+<td><code>getIfPresent,getAllPresent,computeIfAbsent</code></td>
 </tr>
 </tbody>
 </table>
@@ -8300,6 +8390,160 @@ read <a href="../configuration-discovery">CDS - Configuration Discovery Service 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
 <div id="popup">
     <div class="mask">
@@ -8417,9 +8661,26 @@ read <a href="../configuration-discovery">CDS - Configuration Discovery Service 
 <script src="/js/main.min.d00d7a99f9e61382b1db35fac38e0e7bdd97f8d3c663a4c4b8d02c3f1d78d894.js" integrity="sha256-0A16mfnmE4Kx2zX6w44Oe92X&#43;NPGY6TEuNAsPx142JQ=" crossorigin="anonymous"></script>
 
 
+<script src="/js/highlight.min.js"></script>
 <script src="/js/mermaid.min.js"></script>
 <script>
     window.onload = () => mermaid.init(undefined, ".language-mermaid");
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('pre code.language-json5').forEach((block) => {
+      if (block.classList.contains('language-json5')) {
+        try {
+          hljs.registerLanguage('json5', function(hljs) {
+            return hljs.getLanguage('json');
+          });
+          hljs.highlightElement(block);
+        } catch (error) {
+          console.error("Error parsing JSON5:", error);
+        }
+      }
+    });
+  });
 </script>
 
 

@@ -44,12 +44,13 @@ Prerequisites  Close(if finished, or move to next milestone otherwise) all issue
 
 
 
-<link rel="preload" href="/scss/main.min.592235942cb3c9f3dd697382a4e7a1fad8e1c182dad2841bdce6b43b4a346ae8.css" as="style">
-<link href="/scss/main.min.592235942cb3c9f3dd697382a4e7a1fad8e1c182dad2841bdce6b43b4a346ae8.css" rel="stylesheet" integrity="">
+<link rel="preload" href="/scss/main.min.1fe260c8ca23282a8c8a99d7aac14fce66676b2720ae8855a90668565b416088.css" as="style">
+<link href="/scss/main.min.1fe260c8ca23282a8c8a99d7aac14fce66676b2720ae8855a90668565b416088.css" rel="stylesheet" integrity="">
 
 
 
 <link rel="stylesheet" href="/css/docSearch.css" />
+<link rel="stylesheet" href="/css/highlight-github.css" />
 
 
 <script src="/js/jquery-3.6.0.min.js"></script>
@@ -240,6 +241,9 @@ Prerequisites  Close(if finished, or move to next milestone otherwise) all issue
 
 
 
+
+
+
                   <div class="description-wrapper">
                     <h5>
                     <img width="26" height="26" src="/images/project/skywalking.svg">
@@ -269,9 +273,9 @@ Prerequisites  Close(if finished, or move to next milestone otherwise) all issue
                   
                     
                     
-                    <option ZgotmplZ value="v0.6.0">
+                    <option ZgotmplZ value="v0.7.0">
                     
-                      v0.6.0
+                      v0.7.0
                     
                     </option>
                   
@@ -505,7 +509,7 @@ Prerequisites  Close(if finished, or move to next milestone otherwise) all issue
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: dabe462</div>
+                  <div class="commit-id">Commit Id: e0fc8f7</div>
                 
 
 
@@ -528,8 +532,8 @@ Prerequisites  Close(if finished, or move to next milestone otherwise) all issue
 <h2 id="prerequisites">Prerequisites</h2>
 <ol>
 <li>Close(if finished, or move to next milestone otherwise) all issues in the current milestone from <a href="https://github.com/apache/skywalking-rover/milestones">skywalking-rover</a> and <a href="https://github.com/apache/skywalking/milestones">skywalking</a>, create a new milestone if needed.</li>
-<li>Update <a href="https://github.com/apache/skywalking-rover/tree/dabe46248d1f362856c6bd584ae928dd0924babe/CHANGES.md">CHANGES.md</a>.</li>
-<li>Check the <a href="https://github.com/apache/skywalking-rover/tree/dabe46248d1f362856c6bd584ae928dd0924babe/dist/LICENSE">dependency licenses</a> including all dependencies.</li>
+<li>Update <a href="https://github.com/apache/skywalking-rover/tree/e0fc8f7c72a8b57dab6ea9552d7be2b40b134fe8/CHANGES.md">CHANGES.md</a>.</li>
+<li>Check the <a href="https://github.com/apache/skywalking-rover/tree/e0fc8f7c72a8b57dab6ea9552d7be2b40b134fe8/dist/LICENSE">dependency licenses</a> including all dependencies.</li>
 </ol>
 <h2 id="add-your-gpg-public-key-to-apache-svn">Add your GPG public key to Apache svn</h2>
 <ol>
@@ -7418,6 +7422,160 @@ If they want old ones, the Archive repository has all of them.</p>
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
 <div id="popup">
     <div class="mask">
@@ -7535,9 +7693,26 @@ If they want old ones, the Archive repository has all of them.</p>
 <script src="/js/main.min.d00d7a99f9e61382b1db35fac38e0e7bdd97f8d3c663a4c4b8d02c3f1d78d894.js" integrity="sha256-0A16mfnmE4Kx2zX6w44Oe92X&#43;NPGY6TEuNAsPx142JQ=" crossorigin="anonymous"></script>
 
 
+<script src="/js/highlight.min.js"></script>
 <script src="/js/mermaid.min.js"></script>
 <script>
     window.onload = () => mermaid.init(undefined, ".language-mermaid");
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('pre code.language-json5').forEach((block) => {
+      if (block.classList.contains('language-json5')) {
+        try {
+          hljs.registerLanguage('json5', function(hljs) {
+            return hljs.getLanguage('json');
+          });
+          hljs.highlightElement(block);
+        } catch (error) {
+          console.error("Error parsing JSON5:", error);
+        }
+      }
+    });
+  });
 </script>
 
 
