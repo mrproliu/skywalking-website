@@ -15984,6 +15984,18 @@
   </url>
   
   <url>
+    <loc>/docs/skywalking-banyandb/next/operation/property-repair/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/docs/skywalking-banyandb/next/concept/property-repair/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/docs/skywalking-banyandb/latest/api-reference/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
