@@ -36,7 +36,7 @@ The left side menu lists all available supported stacks with default dashboards.
 Follow the Official Dashboards menu to explore all default dashboards on their ways to monitor different tech stacks.
 Sidebar Menu and Marketplace All available feature menu items are only listed in the marketplace(since 9.6.0). They are only visible on the Sidebar Menu when there are relative services being observed by various supported observation agents, such as installed language agents, service mesh platform, OTEL integration.">
 
-<meta itemprop="wordCount" content="699">
+<meta itemprop="wordCount" content="729">
 
 
 
@@ -2644,7 +2644,7 @@ Sidebar Menu and Marketplace All available feature menu items are only listed in
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 8a61edd</div>
+                  <div class="commit-id">Commit Id: f930830</div>
                 
 
 
@@ -2777,7 +2777,12 @@ About this link, there are several customizable options</p>
 <li><code>Auto Fresh</code> option is ON with 6s query period and last 30 mins time range. Query period and range are customizable.</li>
 </ol>
 <h2 id="settings">Settings</h2>
-<p>Settings provide language, server time zone, and auto-fresh options. These settings are stored in the browser&rsquo;s local storage. Unless you clear them manually, those will not change.</p>
+<p>Settings provide language, server time zone, and auto-fresh options.</p>
+<ul>
+<li>The language preference setting is stored in the browser&rsquo;s local storage. Unless you clear them manually, those will not change.</li>
+<li>The server timezone should be automatically loaded from server side, unless you need to set manually.</li>
+<li>Refresh time is temporary setup, it will be reset the next time.</li>
+</ul>
 <h2 id="faq">FAQ</h2>
 <h3 id="login-and-authentication">Login and Authentication</h3>
 <p>SkyWalking doesn&rsquo;t provide login and authentication as usual for years. If you need, a lot of Gateway solutions have
