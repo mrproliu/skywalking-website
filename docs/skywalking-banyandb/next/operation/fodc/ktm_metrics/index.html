@@ -22,22 +22,28 @@
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
 
-<title>Java Client | Apache SkyWalking</title><meta property="og:title" content="Java Client" />
-<meta property="og:description" content="Java Client The java native client is hosted at skywalking-banyandb-java-client." />
+<title>KTM Metrics — Semantics &amp; Workload Interpretation | Apache SkyWalking</title><meta property="og:title" content="KTM Metrics — Semantics &amp; Workload Interpretation" />
+<meta property="og:description" content="KTM Metrics — Semantics &amp; Workload Interpretation This document defines the semantic meaning of kernel-level metrics collected by the Kernel Telemetry Module (KTM) under different BanyanDB workloads.
+It serves as the authoritative interpretation guide for:
+ First Occurrence Data Capture (FODC) Automated analysis and reporting by LLM agents Self-healing and tuning recommendations  This document does not describe kernel attachment points or implementation details. Those are covered separately in the KTM design document." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/docs/skywalking-banyandb/next/interacting/java-client/" />
+<meta property="og:url" content="/docs/skywalking-banyandb/next/operation/fodc/ktm_metrics/" />
 
-<meta itemprop="name" content="Java Client">
-<meta itemprop="description" content="Java Client The java native client is hosted at skywalking-banyandb-java-client.">
+<meta itemprop="name" content="KTM Metrics — Semantics &amp; Workload Interpretation">
+<meta itemprop="description" content="KTM Metrics — Semantics &amp; Workload Interpretation This document defines the semantic meaning of kernel-level metrics collected by the Kernel Telemetry Module (KTM) under different BanyanDB workloads.
+It serves as the authoritative interpretation guide for:
+ First Occurrence Data Capture (FODC) Automated analysis and reporting by LLM agents Self-healing and tuning recommendations  This document does not describe kernel attachment points or implementation details. Those are covered separately in the KTM design document.">
 
-<meta itemprop="wordCount" content="10">
+<meta itemprop="wordCount" content="1246">
 
 
 
 <meta itemprop="keywords" content="" />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Java Client"/>
-<meta name="twitter:description" content="Java Client The java native client is hosted at skywalking-banyandb-java-client."/>
+<meta name="twitter:title" content="KTM Metrics — Semantics &amp; Workload Interpretation"/>
+<meta name="twitter:description" content="KTM Metrics — Semantics &amp; Workload Interpretation This document defines the semantic meaning of kernel-level metrics collected by the Kernel Telemetry Module (KTM) under different BanyanDB workloads.
+It serves as the authoritative interpretation guide for:
+ First Occurrence Data Capture (FODC) Automated analysis and reporting by LLM agents Self-healing and tuning recommendations  This document does not describe kernel attachment points or implementation details. Those are covered separately in the KTM design document."/>
 
 
 
@@ -56,7 +62,7 @@
 
 
 
-    <title>Java Client | Apache SkyWalking</title>
+    <title>KTM Metrics — Semantics &amp; Workload Interpretation | Apache SkyWalking</title>
   </head>
   <body class="td-page  project-doc">
     <header>
@@ -715,7 +721,7 @@
 
     <li>
         
-            <a href="/docs/skywalking-banyandb/next/interacting/java-client">Java Client</a>
+            <a href="/docs/skywalking-banyandb/next/interacting/client">Client APIs</a>
         
     </li>
 
@@ -959,6 +965,14 @@
 
     
 
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/operation/fodc/ktm_metrics">KTM Metrics</a>
+        
+    </li>
+
+    
+
 </ul>
 
         
@@ -1128,7 +1142,7 @@
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: f7ec0ef</div>
+                  <div class="commit-id">Commit Id: 518bf51</div>
                 
 
 
@@ -1141,8 +1155,305 @@
               <i class="iconfont icon-menu-doc doc-menu-button"></i>
               
 <div class="td-content">
-	<h1 id="java-client">Java Client</h1>
-<p>The java native client is hosted at <a href="https://github.com/apache/skywalking-banyandb-java-client">skywalking-banyandb-java-client</a>.</p>
+	<h1 id="ktm-metrics--semantics--workload-interpretation">KTM Metrics — Semantics &amp; Workload Interpretation</h1>
+<p>This document defines the <strong>semantic meaning</strong> of kernel-level metrics collected by the
+Kernel Telemetry Module (KTM) under different BanyanDB workloads.</p>
+<p>It serves as the <strong>authoritative interpretation guide</strong> for:</p>
+<ul>
+<li>First Occurrence Data Capture (FODC)</li>
+<li>Automated analysis and reporting by LLM agents</li>
+<li>Self-healing and tuning recommendations</li>
+</ul>
+<p>This document does <strong>not</strong> describe kernel attachment points or implementation details.
+Those are covered separately in the KTM design document.</p>
+<hr>
+<h2 id="1-scope-and-non-goals">1. Scope and Non-Goals</h2>
+<h3 id="in-scope">In Scope</h3>
+<ul>
+<li>Interpreting kernel metrics in the context of <strong>LSM-style read + compaction workloads</strong></li>
+<li>Distinguishing <strong>benign background activity</strong> from <strong>user-visible read-path impact</strong></li>
+<li>Providing <strong>actionable, explainable signals</strong> for automated analysis</li>
+</ul>
+<h3 id="out-of-scope">Out of Scope</h3>
+<ul>
+<li>Device-level I/O profiling or per-disk attribution</li>
+<li>SLA-grade performance accounting</li>
+<li>Precise block-layer root cause isolation</li>
+</ul>
+<p>SLA-grade performance accounting is explicitly out of scope because
+eBPF-based sampling and histogram bucketing introduce statistical
+approximation, and kernel-level telemetry cannot capture application-
+or network-level queuing delays.</p>
+<p>KTM focuses on <strong>user-visible impact first</strong>, followed by kernel-side explanations.</p>
+<hr>
+<h2 id="2-core-metrics-overview">2. Core Metrics Overview</h2>
+<h3 id="21-read--pread-syscall-latency-histogram">2.1 Read / Pread Syscall Latency (Histogram)</h3>
+<p><strong>Metric Type</strong></p>
+<ul>
+<li>Histogram (bucketed latency)</li>
+<li>Collected at syscall entry/exit for <code>read</code> and <code>pread64</code></li>
+</ul>
+<p><strong>Semantic Meaning</strong>
+This metric represents the <strong>time BanyanDB threads spend blocked in the read/pread syscall path</strong>.</p>
+<p>It is the <strong>primary impact signal</strong> in KTM.</p>
+<p><strong>Key Rule</strong></p>
+<blockquote>
+<p>If syscall-level read/pread latency does <strong>not</strong> increase, the situation is <strong>not considered an incident</strong>, regardless of background cache or reclaim activity.</p>
+</blockquote>
+<p><strong>Why Histogram</strong></p>
+<ul>
+<li>Captures long-tail latency (p95 / p99) reliably</li>
+<li>More representative of user experience than averages</li>
+<li>Suitable for LLM-based reasoning and reporting</li>
+</ul>
+<hr>
+<h3 id="22-fadvise-policy-actions">2.2 fadvise Policy Actions</h3>
+<p><strong>Metric Type</strong></p>
+<ul>
+<li>Counter</li>
+</ul>
+<p><strong>Semantic Meaning</strong>
+Records <strong>explicit page cache eviction hints</strong> issued by BanyanDB.</p>
+<p>This metric represents <strong>policy intent</strong>, not impact.</p>
+<p><strong>Interpretation Notes</strong></p>
+<ul>
+<li>fadvise activity alone is not an anomaly</li>
+<li>Must be correlated with read/pread latency to assess impact</li>
+</ul>
+<hr>
+<h3 id="23-page-cache-add--fill-activity">2.3 Page Cache Add / Fill Activity</h3>
+<p><strong>Metric Type</strong></p>
+<ul>
+<li>Counter</li>
+</ul>
+<p><strong>Semantic Meaning</strong>
+Represents pages being added to the OS page cache due to:</p>
+<ul>
+<li>Read misses</li>
+<li>Sequential scans</li>
+<li>Compaction activity</li>
+</ul>
+<p>High page cache add rates are <strong>expected</strong> under LSM workloads.</p>
+<p><strong>Note</strong>
+Page cache add activity does not necessarily imply disk I/O or cache miss.
+It may increase due to readahead, sequential scans, or compaction reads,
+and should be treated as a <strong>correlated signal</strong>, not a causal indicator,
+unless accompanied by read/pread latency degradation.</p>
+<hr>
+<h3 id="24-memory-reclaim-and-pressure-signals">2.4 Memory Reclaim and Pressure Signals</h3>
+<p><strong>Metrics</strong></p>
+<ul>
+<li>LRU shrink activity</li>
+<li>Direct reclaim entry events</li>
+</ul>
+<p><strong>Semantic Meaning</strong>
+Indicates <strong>kernel memory pressure</strong> that may destabilize page cache residency.</p>
+<p>These metrics act as <strong>root-cause hints</strong>, not incident triggers.</p>
+<hr>
+<h2 id="3-interpretation-principles">3. Interpretation Principles</h2>
+<h3 id="31-impact-first-gating">3.1 Impact-First Gating</h3>
+<p>All incident detection and analysis is gated on:</p>
+<blockquote>
+<p><strong>Syscall-level read/pread latency histogram</strong></p>
+</blockquote>
+<p>This refers to the combined read/pread syscall latency histograms.</p>
+<p>Other metrics are used <strong>only to explain why latency increased</strong>, not to decide whether an incident occurred.</p>
+<hr>
+<h3 id="32-cache-churn-is-not-an-incident">3.2 Cache Churn Is Not an Incident</h3>
+<p>High values of:</p>
+<ul>
+<li>page cache add</li>
+<li>reclaim</li>
+<li>background scans</li>
+</ul>
+<p>are <strong>normal</strong> under LSM-style workloads and <strong>must not</strong> be treated as incidents unless they result in read/pread latency degradation.</p>
+<hr>
+<h2 id="4-workload-semantics">4. Workload Semantics</h2>
+<p>This section defines canonical workload patterns and how KTM metrics should be interpreted.</p>
+<hr>
+<blockquote>
+<p><strong>Global Rule — Latency-Gated Evaluation</strong></p>
+<p>All workload patterns below are evaluated <strong>only after syscall-level
+read/pread latency degradation has been detected</strong> (e.g., p95/p99 bucket shift).
+Kernel signals such as page cache activity, reclaim, or fadvise <strong>must not</strong>
+be interpreted as incident triggers on their own.</p>
+</blockquote>
+<hr>
+<h3 id="workload-1--sequential-read--background-compaction-benign">Workload 1 — Sequential Read / Background Compaction (Benign)</h3>
+<p><strong>Typical Signals</strong></p>
+<ul>
+<li><code>page_cache_add ↑</code></li>
+<li><code>lru_shrink ↑</code> (optional)</li>
+<li><code>read/pread syscall latency stable</code></li>
+</ul>
+<p><strong>Interpretation</strong>
+Sequential scans and compaction naturally introduce cache churn.
+As long as read/pread latency remains stable, this workload is benign.</p>
+<p><strong>Operational Decision</strong></p>
+<ul>
+<li>Do not trigger FODC</li>
+<li>No self-healing action required</li>
+</ul>
+<hr>
+<h3 id="workload-2--high-page-cache-pressure-foreground-sustained">Workload 2 — High Page Cache Pressure, Foreground Sustained</h3>
+<p><strong>Typical Signals</strong></p>
+<ul>
+<li><code>page_cache_add ↑</code></li>
+<li><code>lru_shrink ↑</code></li>
+<li>occasional <code>direct_reclaim</code></li>
+<li><code>read/pread syscall latency stable</code></li>
+</ul>
+<p><strong>Interpretation</strong>
+System memory pressure exists, but foreground reads are not impacted.
+This indicates a tight but stable operating point.</p>
+<p><strong>Operational Decision</strong></p>
+<ul>
+<li>No incident</li>
+<li>Monitor trends only</li>
+</ul>
+<hr>
+<h3 id="workload-3--aggressive-cache-eviction-or-reclaim-impact">Workload 3 — Aggressive Cache Eviction or Reclaim Impact</h3>
+<p><strong>Typical Signals</strong></p>
+<ul>
+<li><code>fadvise_calls ↑</code> or early reclaim activity</li>
+<li><code>page_cache_add ↑</code> (repeated refills)</li>
+<li><code>read/pread syscall latency ↑</code> (long-tail buckets appear)</li>
+</ul>
+<p><strong>Interpretation</strong>
+Hot pages are evicted too aggressively, causing read amplification.
+Foreground reads are directly impacted.</p>
+<p><strong>Operational Decision</strong></p>
+<ul>
+<li>Trigger FODC</li>
+<li>Recommend tuning eviction thresholds or rate-limiting background activity</li>
+</ul>
+<p><strong>Discriminator</strong>
+Eviction-driven degradation is typically characterized by:</p>
+<ul>
+<li>
+<p>Elevated <code>fadvise</code> activity</p>
+</li>
+<li>
+<p>Repeated page cache refills</p>
+</li>
+<li>
+<p>Read latency degradation <strong>without sustained compaction throughput
+or disk I/O saturation</strong></p>
+</li>
+<li>
+<p><strong>Query pattern signal</strong> (optional): continuously scanning an extensive time range.</p>
+</li>
+</ul>
+<p>This pattern indicates policy-induced cache churn rather than workload contention.
+These discriminator signals are typically sourced from DB-level or system-level
+metrics outside KTM.</p>
+<hr>
+<h3 id="workload-4--io-contention-or-cold-data-access">Workload 4 — I/O Contention or Cold Data Access</h3>
+<p><strong>Typical Signals</strong></p>
+<ul>
+<li><code>page_cache_add ↑</code> (due to compaction OR new data reads)</li>
+<li><code>read/pread syscall latency ↑</code></li>
+<li>reclaim may or may not be present</li>
+</ul>
+<p><strong>Interpretation</strong>
+Latency degradation is caused by:</p>
+<ol>
+<li><strong>Resource Contention</strong>: Compaction threads competing with foreground reads for disk I/O.</li>
+<li><strong>Cold Data Access</strong>: The active working set exceeds resident memory, forcing frequent OS page cache misses (synchronous disk reads).</li>
+</ol>
+<p><strong>Operational Decision</strong></p>
+<ul>
+<li>Trigger FODC</li>
+<li>Suggest reducing compaction concurrency</li>
+<li>If compaction is idle but latency remains high, consider scaling up memory (Capacity Planning).</li>
+</ul>
+<p><strong>Discriminator</strong>
+This pattern is characterized by elevated read/pread syscall latency <strong>without</strong> the explicit eviction signals of W3 (fadvise) or the system-wide pressure of W5 (reclaim).
+It indicates that the system is physically bound by I/O limits due to contention or capacity cache misses.</p>
+<hr>
+<h3 id="workload-5--os-memory-pressuredriven-cache-drop">Workload 5 — OS Memory Pressure–Driven Cache Drop</h3>
+<p><strong>Typical Signals</strong></p>
+<ul>
+<li><code>direct_reclaim ↑</code></li>
+<li><code>lru_shrink ↑</code></li>
+<li><code>read/pread syscall latency ↑</code></li>
+<li><code>fadvise</code> may be absent</li>
+</ul>
+<p><strong>Interpretation</strong>
+Cache eviction is driven by OS memory pressure rather than DB policy.
+Foreground reads stall due to synchronous reclaim.</p>
+<p><strong>Operational Decision</strong></p>
+<ul>
+<li>Trigger FODC</li>
+<li>Recommend adjusting memory limits or reducing background memory usage</li>
+</ul>
+<hr>
+<h2 id="5-excluded-signals-and-rationale">5. Excluded Signals and Rationale</h2>
+<h3 id="51-page-fault-metrics">5.1 Page Fault Metrics</h3>
+<p>BanyanDB primarily uses <code>read()</code> with page cache access rather than mmap-based I/O.
+Major and minor page faults do not reliably represent read-path stalls and are therefore excluded from impact detection.</p>
+<h3 id="52-block-layer-latency">5.2 Block Layer Latency</h3>
+<p>Block-layer completion context does not reliably map to BanyanDB threads in containerized environments.
+Syscall-level latency already captures user-visible impact and is used as the primary signal.</p>
+<p>Block-layer metrics may be added later as an optional enhancement.</p>
+<hr>
+<h2 id="6-summary">6. Summary</h2>
+<p>KTM identifies read-path incidents by:</p>
+<ol>
+<li>Gating on <strong>syscall-level read/pread latency histograms</strong></li>
+<li>Explaining impact using:
+<ul>
+<li>eviction policy actions (fadvise)</li>
+<li>page cache behavior</li>
+<li>memory pressure signals</li>
+</ul>
+</li>
+</ol>
+<p>This separation ensures:</p>
+<ul>
+<li>Low false positives</li>
+<li>Clear causality</li>
+<li>Actionable and explainable self-healing decisions</li>
+</ul>
+<h2 id="7-decision-flow-overview">7. Decision Flow Overview</h2>
+<pre><code class="language-mermaid" data-lang="mermaid">graph TD
+    Start([Start: Metric Analysis]) --&gt; CheckLat{Read/Pread Syscall\nLatency Increased?}
+
+    %% Primary Gating Rule
+    CheckLat -- No --&gt; Benign[Benign State\nNo User Impact]
+    CheckLat -- Yes --&gt; Incident[Incident Detected\nTrigger FODC]
+
+    %% Benign Analysis
+    Benign --&gt; CheckPressure{Pressure Signals\nPresent?}
+    CheckPressure -- Yes --&gt; W2[W2: Stable State]
+    CheckPressure -- No --&gt; W1[W1: Background Scan/Compaction]
+
+    %% Incident Analysis (Root Cause)
+    Incident --&gt; CheckFadvise{High fadvise\ncalls?}
+    
+    %% Branch: Policy
+    CheckFadvise -- Yes --&gt; W3[W3: Policy-Driven Eviction\nAssociated with aggressive DONTNEED (policy signal)]
+    
+    %% Branch: Kernel/OS
+    CheckFadvise -- No --&gt; CheckReclaim{Direct Reclaim / \nLRU Shrink?}
+    
+    %% Branch: Pressure
+    CheckReclaim -- Yes --&gt; W5[W5: OS Memory Pressure\nCause: Sync Reclaim]
+    
+    %% Branch: Contention
+    CheckReclaim -- No --&gt; W4[W4: I/O Contention / Cold Read\nCause: Compaction or Working Set &gt; RAM]
+
+    %% Styling
+    style CheckLat fill:#f9f,stroke:#333,stroke-width:2px
+    style Incident fill:#f00,stroke:#333,stroke-width:2px,color:#fff
+    style Benign fill:#9f9,stroke:#333,stroke-width:2px
+</code></pre><hr>
+<h2 id="8-operational-prerequisites-and-observability">8. Operational Prerequisites and Observability</h2>
+<ul>
+<li>BTF availability and bpffs mounted are expected for fentry/fexit and map pinning where used.</li>
+<li>Kernel versions must support the chosen tracepoints/fentry paths; kprobe fallbacks apply otherwise.</li>
+<li>On failure to load/attach, KTM logs an error and disables itself (see Failure Modes in the design document).</li>
+</ul>
 
 </div>
 <div>
@@ -1222,6 +1533,53 @@
 
 
 
+
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#ktm-metrics--semantics--workload-interpretation">KTM Metrics — Semantics &amp; Workload Interpretation</a>
+      <ul>
+        <li><a href="#1-scope-and-non-goals">1. Scope and Non-Goals</a>
+          <ul>
+            <li><a href="#in-scope">In Scope</a></li>
+            <li><a href="#out-of-scope">Out of Scope</a></li>
+          </ul>
+        </li>
+        <li><a href="#2-core-metrics-overview">2. Core Metrics Overview</a>
+          <ul>
+            <li><a href="#21-read--pread-syscall-latency-histogram">2.1 Read / Pread Syscall Latency (Histogram)</a></li>
+            <li><a href="#22-fadvise-policy-actions">2.2 fadvise Policy Actions</a></li>
+            <li><a href="#23-page-cache-add--fill-activity">2.3 Page Cache Add / Fill Activity</a></li>
+            <li><a href="#24-memory-reclaim-and-pressure-signals">2.4 Memory Reclaim and Pressure Signals</a></li>
+          </ul>
+        </li>
+        <li><a href="#3-interpretation-principles">3. Interpretation Principles</a>
+          <ul>
+            <li><a href="#31-impact-first-gating">3.1 Impact-First Gating</a></li>
+            <li><a href="#32-cache-churn-is-not-an-incident">3.2 Cache Churn Is Not an Incident</a></li>
+          </ul>
+        </li>
+        <li><a href="#4-workload-semantics">4. Workload Semantics</a>
+          <ul>
+            <li><a href="#workload-1--sequential-read--background-compaction-benign">Workload 1 — Sequential Read / Background Compaction (Benign)</a></li>
+            <li><a href="#workload-2--high-page-cache-pressure-foreground-sustained">Workload 2 — High Page Cache Pressure, Foreground Sustained</a></li>
+            <li><a href="#workload-3--aggressive-cache-eviction-or-reclaim-impact">Workload 3 — Aggressive Cache Eviction or Reclaim Impact</a></li>
+            <li><a href="#workload-4--io-contention-or-cold-data-access">Workload 4 — I/O Contention or Cold Data Access</a></li>
+            <li><a href="#workload-5--os-memory-pressuredriven-cache-drop">Workload 5 — OS Memory Pressure–Driven Cache Drop</a></li>
+          </ul>
+        </li>
+        <li><a href="#5-excluded-signals-and-rationale">5. Excluded Signals and Rationale</a>
+          <ul>
+            <li><a href="#51-page-fault-metrics">5.1 Page Fault Metrics</a></li>
+            <li><a href="#52-block-layer-latency">5.2 Block Layer Latency</a></li>
+          </ul>
+        </li>
+        <li><a href="#6-summary">6. Summary</a></li>
+        <li><a href="#7-decision-flow-overview">7. Decision Flow Overview</a></li>
+        <li><a href="#8-operational-prerequisites-and-observability">8. Operational Prerequisites and Observability</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
 
 
 
@@ -1335,6 +1693,8 @@
 
     </div>
     
+
+
 
 
 
