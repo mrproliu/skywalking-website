@@ -7303,6 +7303,12 @@
   </url>
   
   <url>
+    <loc>/docs/main/next/en/guides/claude-code-skills/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/docs/main/latest/en/setup/backend/backend-clickhouse-monitoring/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
@@ -9532,6 +9538,12 @@
   </url>
   
   <url>
+    <loc>/docs/main/next/en/academy/dsl-compiler-design/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/docs/main/latest/en/debugging/config_dump/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
@@ -9551,6 +9563,12 @@
   
   <url>
     <loc>/docs/main/v10.3.0/en/debugging/config_dump/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/docs/main/next/en/operation/dynamic-code-generation-debugging/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
@@ -22172,6 +22190,12 @@
   
   <url>
     <loc>/docs/main/v9.7.0/en/setup/backend/trace-sampling/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/docs/main/next/en/api/traceql-service/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
