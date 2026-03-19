@@ -7711,6 +7711,12 @@
   </url>
   
   <url>
+    <loc>/docs/skywalking-banyandb/next/operation/troubleshooting/common-issues/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/docs/main/latest/en/setup/service-agent/agent-compatibility/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
