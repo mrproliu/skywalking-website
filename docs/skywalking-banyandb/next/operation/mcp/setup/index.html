@@ -32,7 +32,7 @@ Prerequisites  Node.js 20&#43; installed (for binary usage) BanyanDB running and
 <meta itemprop="description" content="Setup MCP Server This guide explains how to set up and use the BanyanDB MCP server from pre-built binaries or Docker images.
 Prerequisites  Node.js 20&#43; installed (for binary usage) BanyanDB running and accessible MCP client (e.g., Claude Desktop, MCP Inspector, or other MCP-compatible clients)  Using Pre-built Binary The MCP server binary is included in the BanyanDB release package. After extracting the release, you can find the MCP server in the mcp directory.">
 
-<meta itemprop="wordCount" content="480">
+<meta itemprop="wordCount" content="687">
 
 
 
@@ -1155,7 +1155,7 @@ Prerequisites  Node.js 20&#43; installed (for binary usage) BanyanDB running and
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: c55d137</div>
+                  <div class="commit-id">Commit Id: d2e5071</div>
                 
 
 
@@ -1180,13 +1180,12 @@ Prerequisites  Node.js 20&#43; installed (for binary usage) BanyanDB running and
 <p>The MCP server binary is included in the BanyanDB release package. After extracting the release, you can find the MCP server in the <code>mcp</code> directory.</p>
 <h3 id="1-verify-binary">1. Verify Binary</h3>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#0086b3">cd</span> mcp
-node dist/index.js --help
-</code></pre></div><h3 id="2-configure-environment-variables">2. Configure Environment Variables</h3>
+node dist/index.js
+</code></pre></div><p>The server starts in stdio mode by default and waits for MCP client connections. Verify BanyanDB is accessible before starting (see <a href="#verifying-banyandb-connection">Verifying BanyanDB Connection</a>).</p>
+<h3 id="2-configure-environment-variables">2. Configure Environment Variables</h3>
 <p>Set the following environment variables:</p>
 <ul>
 <li><code>BANYANDB_ADDRESS</code>: BanyanDB server address (default: <code>localhost:17900</code>). The server auto-converts gRPC port (17900) to HTTP port (17913).</li>
-<li><code>LLM_API_KEY</code>: (Optional) API key for LLM-powered query generation. Falls back to pattern-based if not set.</li>
-<li><code>LLM_BASE_URL</code>: (Optional) Base URL for the LLM API (default: <code>https://api.openai.com/v1</code>). Only used when <code>LLM_API_KEY</code> is set.</li>
 </ul>
 <p><strong>Address formats:</strong></p>
 <ul>
@@ -1198,13 +1197,12 @@ node dist/index.js --help
 <p>Create a configuration file for your MCP client. For example, for MCP Inspector, see <a href="../inspector">MCP client</a> - Basic Setup</p>
 <h2 id="using-docker-image">Using Docker Image</h2>
 <p>The MCP server is available as a Docker image for easy deployment.</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">docker pull apache/skywalking-banyandb-mcp:<span style="color:#000;font-weight:bold">{</span>COMMIT_ID<span style="color:#000;font-weight:bold">}</span>
+<h3 id="1-pull-docker-image">1. Pull Docker Image</h3>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">docker pull ghcr.io/apache/skywalking-banyandb-mcp:<span style="color:#000;font-weight:bold">{</span>COMMIT_ID<span style="color:#000;font-weight:bold">}</span>
 </code></pre></div><h3 id="2-run-the-container">2. Run the Container</h3>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">docker run -d <span style="color:#d14">\
 </span><span style="color:#d14"></span>  --name banyandb-mcp <span style="color:#d14">\
 </span><span style="color:#d14"></span>  -e <span style="color:#008080">BANYANDB_ADDRESS</span><span style="color:#000;font-weight:bold">=</span>banyandb:17900 <span style="color:#d14">\
-</span><span style="color:#d14"></span>  -e <span style="color:#008080">LLM_API_KEY</span><span style="color:#000;font-weight:bold">=</span>sk-your-key-here <span style="color:#d14">\
-</span><span style="color:#d14"></span>  -e <span style="color:#008080">LLM_BASE_URL</span><span style="color:#000;font-weight:bold">=</span>your-llm-base-url <span style="color:#d14">\
 </span><span style="color:#d14"></span>  ghcr.io/apache/skywalking-banyandb-mcp:<span style="color:#000;font-weight:bold">{</span>COMMIT_ID<span style="color:#000;font-weight:bold">}</span>
 </code></pre></div><h3 id="3-configure-mcp-client-for-docker">3. Configure MCP Client for Docker</h3>
 <p>When using Docker, configure your MCP client to connect to the container:</p>
@@ -1217,8 +1215,6 @@ node dist/index.js --help
         <span style="color:#d14">&#34;--rm&#34;</span>,
         <span style="color:#d14">&#34;-i&#34;</span>,
         <span style="color:#d14">&#34;-e&#34;</span>, <span style="color:#d14">&#34;BANYANDB_ADDRESS=banyandb:17900&#34;</span>,
-        <span style="color:#d14">&#34;-e&#34;</span>, <span style="color:#d14">&#34;LLM_API_KEY=sk-your-key-here&#34;</span>,
-        <span style="color:#d14">&#34;-e&#34;</span>, <span style="color:#d14">&#34;LLM_BASE_URL=your-llm-base-url&#34;</span>,
         <span style="color:#d14">&#34;--network&#34;</span>, <span style="color:#d14">&#34;host&#34;</span>,
         <span style="color:#d14">&#34;ghcr.io/apache/skywalking-banyandb-mcp:{COMMIT_ID}&#34;</span>
       ]
@@ -1243,8 +1239,6 @@ node dist/index.js --help
 </span><span style="color:#bbb">    </span><span style="color:#000080">container_name</span>:<span style="color:#bbb"> </span>banyandb-mcp<span style="color:#bbb">
 </span><span style="color:#bbb">    </span><span style="color:#000080">environment</span>:<span style="color:#bbb">
 </span><span style="color:#bbb">      </span>- BANYANDB_ADDRESS=banyandb:17900<span style="color:#bbb">
-</span><span style="color:#bbb">      </span>- LLM_API_KEY=${LLM_API_KEY}<span style="color:#bbb">
-</span><span style="color:#bbb">      </span>- LLM_BASE_URL=${LLM_BASE_URL:-https://api.openai.com/v1}<span style="color:#bbb">
 </span><span style="color:#bbb">    </span><span style="color:#000080">depends_on</span>:<span style="color:#bbb">
 </span><span style="color:#bbb">      </span>- banyandb<span style="color:#bbb">
 </span><span style="color:#bbb">    </span><span style="color:#000080">networks</span>:<span style="color:#bbb">
@@ -1268,16 +1262,16 @@ node dist/index.js --help
 <td>BanyanDB server address. Auto-converts gRPC port (17900) to HTTP port (17913).</td>
 </tr>
 <tr>
-<td><code>LLM_API_KEY</code></td>
+<td><code>TRANSPORT</code></td>
 <td>No</td>
-<td>-</td>
-<td>API key for LLM-powered query generation. Falls back to pattern-based if not set.</td>
+<td><code>stdio</code></td>
+<td>Transport mode: <code>stdio</code> for standard I/O (default), <code>http</code> for Streamable HTTP.</td>
 </tr>
 <tr>
-<td><code>LLM_BASE_URL</code></td>
+<td><code>MCP_PORT</code></td>
 <td>No</td>
-<td><code>https://api.openai.com/v1</code></td>
-<td>Base URL for the LLM API. Only used when <code>LLM_API_KEY</code> is set.</td>
+<td><code>3000</code></td>
+<td>HTTP port to listen on. Only used when <code>TRANSPORT=http</code>.</td>
 </tr>
 </tbody>
 </table>
@@ -1289,7 +1283,84 @@ curl http://localhost:17913/api/healthz
 
 <span style="color:#998;font-style:italic"># Check gRPC endpoint (if grpcurl is installed)</span>
 grpcurl -plaintext localhost:17912 list
-</code></pre></div><h2 id="troubleshooting">Troubleshooting</h2>
+</code></pre></div><h2 id="http-transport-mode">HTTP Transport Mode</h2>
+<p>By default the MCP server communicates over standard I/O (<code>TRANSPORT=stdio</code>), which is suitable for desktop clients such as Claude Desktop. Set <code>TRANSPORT=http</code> to expose the server as an HTTP endpoint instead. This mode uses the MCP <a href="https://modelcontextprotocol.io/specification/2025-11-25/basic/transports">Streamable HTTP</a> transport, which supports both streaming (SSE) and direct JSON responses.</p>
+<h3 id="start-in-http-mode">Start in HTTP Mode</h3>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#998;font-style:italic"># Default port 3000</span>
+<span style="color:#008080">TRANSPORT</span><span style="color:#000;font-weight:bold">=</span>http <span style="color:#008080">BANYANDB_ADDRESS</span><span style="color:#000;font-weight:bold">=</span>localhost:17900 node dist/index.js
+
+<span style="color:#998;font-style:italic"># Custom port</span>
+<span style="color:#008080">TRANSPORT</span><span style="color:#000;font-weight:bold">=</span>http <span style="color:#008080">MCP_PORT</span><span style="color:#000;font-weight:bold">=</span><span style="color:#099">8080</span> <span style="color:#008080">BANYANDB_ADDRESS</span><span style="color:#000;font-weight:bold">=</span>localhost:17900 node dist/index.js
+</code></pre></div><p>The server prints the listening address on startup:</p>
+<pre><code>BanyanDB MCP HTTP server listening on :3000/mcp
+</code></pre><p>The single endpoint is <code>POST /mcp</code>. Other HTTP methods on <code>/mcp</code> return <code>405 Method Not Allowed</code>, and all other paths return <code>404</code>.</p>
+<h3 id="configure-an-mcp-client-for-http">Configure an MCP Client for HTTP</h3>
+<p>MCP clients that support the Streamable HTTP transport (e.g. MCP Inspector, custom integrations) connect via a URL:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+  <span style="color:#000080">&#34;mcpServers&#34;</span>: {
+    <span style="color:#000080">&#34;banyandb&#34;</span>: {
+      <span style="color:#000080">&#34;url&#34;</span>: <span style="color:#d14">&#34;http://localhost:3000/mcp&#34;</span>
+    }
+  }
+}
+</code></pre></div><h3 id="docker-with-http-mode">Docker with HTTP Mode</h3>
+<p>When running in a container, expose the HTTP port and set the transport env var:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">docker run -d <span style="color:#d14">\
+</span><span style="color:#d14"></span>  --name banyandb-mcp <span style="color:#d14">\
+</span><span style="color:#d14"></span>  -p 3000:3000 <span style="color:#d14">\
+</span><span style="color:#d14"></span>  -e <span style="color:#008080">TRANSPORT</span><span style="color:#000;font-weight:bold">=</span>http <span style="color:#d14">\
+</span><span style="color:#d14"></span>  -e <span style="color:#008080">MCP_PORT</span><span style="color:#000;font-weight:bold">=</span><span style="color:#099">3000</span> <span style="color:#d14">\
+</span><span style="color:#d14"></span>  -e <span style="color:#008080">BANYANDB_ADDRESS</span><span style="color:#000;font-weight:bold">=</span>banyandb:17900 <span style="color:#d14">\
+</span><span style="color:#d14"></span>  ghcr.io/apache/skywalking-banyandb-mcp:<span style="color:#000;font-weight:bold">{</span>COMMIT_ID<span style="color:#000;font-weight:bold">}</span>
+</code></pre></div><p>Docker Compose example with HTTP mode:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#000080">services</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#000080">banyandb</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#000080">image</span>:<span style="color:#bbb"> </span>ghcr.io/apache/skywalking-banyandb:{COMMIT_ID}<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#000080">container_name</span>:<span style="color:#bbb"> </span>banyandb<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#000080">command</span>:<span style="color:#bbb"> </span>standalone<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#000080">ports</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#d14">&#34;17912:17912&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#d14">&#34;17913:17913&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#000080">mcp</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#000080">image</span>:<span style="color:#bbb"> </span>ghcr.io/apache/skywalking-banyandb-mcp:{COMMIT_ID}<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#000080">container_name</span>:<span style="color:#bbb"> </span>banyandb-mcp<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#000080">environment</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- TRANSPORT=http<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- MCP_PORT=3000<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- BANYANDB_ADDRESS=banyandb:17900<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#000080">ports</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#d14">&#34;3000:3000&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#000080">depends_on</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- banyandb<span style="color:#bbb">
+</span></code></pre></div><h3 id="choosing-a-transport">Choosing a Transport</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><code>stdio</code> (default)</th>
+<th><code>http</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Best for</strong></td>
+<td>Claude Desktop, local CLI clients</td>
+<td>Web integrations, remote clients, custom apps</td>
+</tr>
+<tr>
+<td><strong>Connection</strong></td>
+<td>Subprocess stdin/stdout</td>
+<td>HTTP <code>POST /mcp</code></td>
+</tr>
+<tr>
+<td><strong>Session state</strong></td>
+<td>Persistent (single process)</td>
+<td>Stateless (new context per request)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="troubleshooting">Troubleshooting</h2>
 <p><strong>Connection refused:</strong></p>
 <ul>
 <li>Verify BanyanDB is running: <code>curl http://localhost:17913/api/healthz</code></li>
@@ -1408,6 +1479,7 @@ grpcurl -plaintext localhost:17912 list
         </li>
         <li><a href="#using-docker-image">Using Docker Image</a>
           <ul>
+            <li><a href="#1-pull-docker-image">1. Pull Docker Image</a></li>
             <li><a href="#2-run-the-container">2. Run the Container</a></li>
             <li><a href="#3-configure-mcp-client-for-docker">3. Configure MCP Client for Docker</a></li>
             <li><a href="#4-docker-compose-example">4. Docker Compose Example</a></li>
@@ -1417,6 +1489,14 @@ grpcurl -plaintext localhost:17912 list
           <ul>
             <li><a href="#environment-variables">Environment Variables</a></li>
             <li><a href="#verifying-banyandb-connection">Verifying BanyanDB Connection</a></li>
+          </ul>
+        </li>
+        <li><a href="#http-transport-mode">HTTP Transport Mode</a>
+          <ul>
+            <li><a href="#start-in-http-mode">Start in HTTP Mode</a></li>
+            <li><a href="#configure-an-mcp-client-for-http">Configure an MCP Client for HTTP</a></li>
+            <li><a href="#docker-with-http-mode">Docker with HTTP Mode</a></li>
+            <li><a href="#choosing-a-transport">Choosing a Transport</a></li>
           </ul>
         </li>
         <li><a href="#troubleshooting">Troubleshooting</a></li>
@@ -1538,6 +1618,8 @@ grpcurl -plaintext localhost:17912 list
 
     </div>
     
+
+
 
 
 

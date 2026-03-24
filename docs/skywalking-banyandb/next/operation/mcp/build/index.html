@@ -24,15 +24,15 @@
 
 <title>Build and Package | Apache SkyWalking</title><meta property="og:title" content="Build and Package" />
 <meta property="og:description" content="Build and Package This guide is for developers who want to build the MCP server from source and create packages.
-Prerequisites  Node.js 20&#43; installed npm or yarn package manager TypeScript knowledge (for development)  Project Structure mcp/ ├── src/ │ ├── index.ts # MCP server implementation │ ├── banyandb-client.ts # BanyanDB HTTP client │ ├── query-generator.ts # Natural language to BydbQL translator │ ├── llm-prompt.ts # LLM prompt generation │ └── logger." />
+Prerequisites  Node.js 20&#43; installed npm or yarn package manager TypeScript knowledge (for development)  Project Structure mcp/ ├── src/ │ ├── index.ts # MCP server implementation │ ├── client/ │ │ ├── index.ts # BanyanDB HTTP client │ │ └── types.ts # Client type definitions │ ├── query/ │ │ ├── llm-prompt." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/docs/skywalking-banyandb/next/operation/mcp/build/" />
 
 <meta itemprop="name" content="Build and Package">
 <meta itemprop="description" content="Build and Package This guide is for developers who want to build the MCP server from source and create packages.
-Prerequisites  Node.js 20&#43; installed npm or yarn package manager TypeScript knowledge (for development)  Project Structure mcp/ ├── src/ │ ├── index.ts # MCP server implementation │ ├── banyandb-client.ts # BanyanDB HTTP client │ ├── query-generator.ts # Natural language to BydbQL translator │ ├── llm-prompt.ts # LLM prompt generation │ └── logger.">
+Prerequisites  Node.js 20&#43; installed npm or yarn package manager TypeScript knowledge (for development)  Project Structure mcp/ ├── src/ │ ├── index.ts # MCP server implementation │ ├── client/ │ │ ├── index.ts # BanyanDB HTTP client │ │ └── types.ts # Client type definitions │ ├── query/ │ │ ├── llm-prompt.">
 
-<meta itemprop="wordCount" content="932">
+<meta itemprop="wordCount" content="946">
 
 
 
@@ -40,7 +40,7 @@ Prerequisites  Node.js 20&#43; installed npm or yarn package manager TypeScript 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Build and Package"/>
 <meta name="twitter:description" content="Build and Package This guide is for developers who want to build the MCP server from source and create packages.
-Prerequisites  Node.js 20&#43; installed npm or yarn package manager TypeScript knowledge (for development)  Project Structure mcp/ ├── src/ │ ├── index.ts # MCP server implementation │ ├── banyandb-client.ts # BanyanDB HTTP client │ ├── query-generator.ts # Natural language to BydbQL translator │ ├── llm-prompt.ts # LLM prompt generation │ └── logger."/>
+Prerequisites  Node.js 20&#43; installed npm or yarn package manager TypeScript knowledge (for development)  Project Structure mcp/ ├── src/ │ ├── index.ts # MCP server implementation │ ├── client/ │ │ ├── index.ts # BanyanDB HTTP client │ │ └── types.ts # Client type definitions │ ├── query/ │ │ ├── llm-prompt."/>
 
 
 
@@ -1155,7 +1155,7 @@ Prerequisites  Node.js 20&#43; installed npm or yarn package manager TypeScript 
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: c55d137</div>
+                  <div class="commit-id">Commit Id: d2e5071</div>
                 
 
 
@@ -1180,10 +1180,15 @@ Prerequisites  Node.js 20&#43; installed npm or yarn package manager TypeScript 
 <pre><code>mcp/
 ├── src/
 │   ├── index.ts              # MCP server implementation
-│   ├── banyandb-client.ts    # BanyanDB HTTP client
-│   ├── query-generator.ts    # Natural language to BydbQL translator
-│   ├── llm-prompt.ts         # LLM prompt generation
-│   └── logger.ts             # Logging utilities
+│   ├── client/
+│   │   ├── index.ts            # BanyanDB HTTP client
+│   │   └── types.ts            # Client type definitions
+│   ├── query/
+│   │   ├── llm-prompt.ts       # BydbQL prompt generation
+│   │   └── types.ts            # Query type definitions
+│   └── utils/
+│       ├── http.ts             # HTTP utilities
+│       └── logger.ts           # Logging utilities
 ├── tools/
 │   └── checkversion.js        # Version checking utility
 ├── dist/                     # Compiled JavaScript (generated)
@@ -1250,9 +1255,7 @@ npx @modelcontextprotocol/inspector --config inspector-config.json
         <span style="color:#d14">&#34;${workspaceFolder}/inspector-config.json&#34;</span>
       ],
       <span style="color:#000080">&#34;env&#34;</span>: {
-        <span style="color:#000080">&#34;BANYANDB_ADDRESS&#34;</span>: <span style="color:#d14">&#34;localhost:17900&#34;</span>,
-        <span style="color:#000080">&#34;LLM_API_KEY&#34;</span>: <span style="color:#d14">&#34;${env:LLM_API_KEY}&#34;</span>,
-        <span style="color:#000080">&#34;LLM_BASE_URL&#34;</span>: <span style="color:#d14">&#34;${env:LLM_BASE_URL}&#34;</span>
+        <span style="color:#000080">&#34;BANYANDB_ADDRESS&#34;</span>: <span style="color:#d14">&#34;localhost:17900&#34;</span>
       },
       <span style="color:#000080">&#34;console&#34;</span>: <span style="color:#d14">&#34;integratedTerminal&#34;</span>,
       <span style="color:#000080">&#34;internalConsoleOptions&#34;</span>: <span style="color:#d14">&#34;neverOpen&#34;</span>,
@@ -1311,8 +1314,6 @@ make docker
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#998;font-style:italic"># Run the container</span>
 docker run --rm <span style="color:#d14">\
 </span><span style="color:#d14"></span>  -e <span style="color:#008080">BANYANDB_ADDRESS</span><span style="color:#000;font-weight:bold">=</span>localhost:17900 <span style="color:#d14">\
-</span><span style="color:#d14"></span>  -e <span style="color:#008080">LLM_API_KEY</span><span style="color:#000;font-weight:bold">=</span>your-api-key <span style="color:#d14">\
-</span><span style="color:#d14"></span>  -e <span style="color:#008080">LLM_BASE_URL</span><span style="color:#000;font-weight:bold">=</span>your-api-key <span style="color:#d14">\
 </span><span style="color:#d14"></span>  apache/skywalking-banyandb-mcp:latest
 </code></pre></div><h4 id="publishing-docker-image">Publishing Docker Image</h4>
 <p>To publish the image to a registry:</p>
@@ -1667,6 +1668,8 @@ npx @modelcontextprotocol/inspector --config inspector-config.json
 
     </div>
     
+
+
 
 
 
