@@ -2345,7 +2345,23 @@ Common Value Metrics Expression:"/>
 
     <li>
         
-            <a href="/docs/main/next/en/guides/source-extension">Extend An OAL Source</a>
+            <a href="/docs/main/next/en/guides/source-extension">OAL Source and Scope Extension</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/guides/mal-extension">MAL Extension Functions</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/guides/lal-extension">LAL Custom Input/Output Types</a>
         
     </li>
 
@@ -2757,7 +2773,7 @@ Common Value Metrics Expression:"/>
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: f7f2e97</div>
+                  <div class="commit-id">Commit Id: 5be7e79</div>
                 
 
 
@@ -3285,7 +3301,7 @@ However, if the metrics list contains meter with values, it would return <code>1
 <p>Trend Operation takes an expression and performs a trend calculation on its results.</p>
 <p>Expression:</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">&lt;Trend-Operator&gt;(Metrics Expression, time_range)
-</code></pre></div><p><code>time_range</code> is the positive int of the calculated range. The unit will automatically align with to the query <a href="https://github.com/apache/skywalking/tree/f7f2e97d7f7c2d9c356704b0f1b4ecd035062ea0/oap-server/server-core/src/main/java/org/apache/skywalking/oap/server/core/query/enumeration/Step.java">Step</a>,
+</code></pre></div><p><code>time_range</code> is the positive int of the calculated range. The unit will automatically align with to the query <a href="https://github.com/apache/skywalking/tree/5be7e79a9b2cea4e8ccafa5467522eb85bbbb1e1/oap-server/server-core/src/main/java/org/apache/skywalking/oap/server/core/query/enumeration/Step.java">Step</a>,
 for example, if the query Step is <code>MINUTE</code>, the unit of <code>time_range</code> is <code>minute</code>.</p>
 <table>
 <thead>
@@ -3811,6 +3827,10 @@ As a result, for CPM(calls per minute), when the query step is <code>MINUTE</cod
 
     </div>
     
+
+
+
+
 
 
 

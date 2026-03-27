@@ -36,7 +36,7 @@ There is a quick view about the configuration file, and using the yaml format.
 setup:# set up the environmentcleanup:# clean up the environmenttrigger:# generate trafficverify:# test casesSetup Support two kinds of the environment to set up the system.
 KinD setup:env:kindfile:path/to/kind.">
 
-<meta itemprop="wordCount" content="1488">
+<meta itemprop="wordCount" content="1696">
 
 
 
@@ -431,7 +431,7 @@ KinD setup:env:kindfile:path/to/kind."/>
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 8c21e43</div>
+                  <div class="commit-id">Commit Id: 36221fa</div>
                 
 
 
@@ -443,7 +443,7 @@ KinD setup:env:kindfile:path/to/kind."/>
 <div class="td-content">
 	<h1 id="skywalking-infra-e2e-configuration-guide">SkyWalking Infra E2E Configuration Guide</h1>
 <p>The configuration file is used to integrate all the step configuration content.
-You can see the sample configuration files for different environments in the <a href="https://github.com/apache/skywalking-infra-e2e/tree/8c21e43e241a32a54bdf8eeceb9099eb27e5e9b4/examples">examples directory</a>.</p>
+You can see the sample configuration files for different environments in the <a href="https://github.com/apache/skywalking-infra-e2e/tree/36221fa3e395c63fa68f1fc58efdd2c5e5d10c0f/examples">examples directory</a>.</p>
 <p>There is a quick view about the configuration file, and using the <code>yaml</code> format.</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#000080">setup</span>:<span style="color:#bbb">
 </span><span style="color:#bbb">  </span><span style="color:#998;font-style:italic"># set up the environment</span><span style="color:#bbb">
@@ -599,7 +599,7 @@ Each line of the file content is an environment variable, and the key value is s
 <h3 id="excepted-verify-template">Excepted verify template</h3>
 <p>After clarifying the content that needs to be verified, you need to write content to verify the real content and ensure that the data is correct.</p>
 <p>You need to use the form of <a href="https://pkg.go.dev/text/template#pkg-overview">Go Template</a> to write the verification file, and the data content to be rendered comes from the real data. By verifying whether the rendered data is consistent with the real data, it is verified whether the content is consistent.
-You could see <a href="https://github.com/apache/skywalking-infra-e2e/tree/8c21e43e241a32a54bdf8eeceb9099eb27e5e9b4/test/verify">many test cases in this directory</a>.</p>
+You could see <a href="https://github.com/apache/skywalking-infra-e2e/tree/36221fa3e395c63fa68f1fc58efdd2c5e5d10c0f/test/verify">many test cases in this directory</a>.</p>
 <p>We use <a href="https://pkg.go.dev/github.com/google/go-cmp/cmp#Diff">go-cmp</a> to show the parts where excepted do not match the actual data. <code>-</code> prefix represents the expected data content, <code>+</code> prefix represents the actual data content.</p>
 <p>We have done a lot of extension functions for verification functions on the original Go Template.</p>
 <h4 id="extension-functions">Extension functions</h4>
@@ -726,10 +726,50 @@ You could see <a href="https://github.com/apache/skywalking-infra-e2e/tree/8c21e
 <p>After the E2E finished, how to clean up the environment.</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#000080">cleanup</span>:<span style="color:#bbb">
 </span><span style="color:#bbb">   </span><span style="color:#000080">on</span>:<span style="color:#bbb"> </span>always    <span style="color:#bbb"> </span><span style="color:#998;font-style:italic"># Clean up strategy</span><span style="color:#bbb">
+</span><span style="color:#bbb">   </span><span style="color:#000080">collect</span>:<span style="color:#bbb">       </span><span style="color:#998;font-style:italic"># Collect files from pods/containers for debugging</span><span style="color:#bbb">
+</span><span style="color:#bbb">     </span><span style="color:#000080">on: failure  # When to collect: always|failure|never, default</span>:<span style="color:#bbb"> </span>failure<span style="color:#bbb">
+</span><span style="color:#bbb">     </span><span style="color:#000080">output-dir</span>:<span style="color:#bbb"> </span>/tmp/collect<span style="color:#bbb"> </span><span style="color:#998;font-style:italic"># Where to save the collected files (required)</span><span style="color:#bbb">
+</span><span style="color:#bbb">     </span><span style="color:#000080">items</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">       </span><span style="color:#998;font-style:italic"># For Kind environment</span><span style="color:#bbb">
+</span><span style="color:#bbb">       </span>- <span style="color:#000080">namespace</span>:<span style="color:#bbb"> </span>default     <span style="color:#bbb"> </span><span style="color:#998;font-style:italic"># Pod namespace</span><span style="color:#bbb">
+</span><span style="color:#bbb">         </span><span style="color:#000080">label-selector</span>:<span style="color:#bbb"> </span>app=oap<span style="color:#bbb"> </span><span style="color:#998;font-style:italic"># Label selector to find pods</span><span style="color:#bbb">
+</span><span style="color:#bbb">         </span><span style="color:#000080">resource</span>:<span style="color:#bbb"> </span>pod/oap-0    <span style="color:#bbb"> </span><span style="color:#998;font-style:italic"># Specific pod resource (optional, instead of label-selector)</span><span style="color:#bbb">
+</span><span style="color:#bbb">         </span><span style="color:#000080">container</span>:<span style="color:#bbb"> </span>oap         <span style="color:#bbb"> </span><span style="color:#998;font-style:italic"># Container name (optional, defaults to first container)</span><span style="color:#bbb">
+</span><span style="color:#bbb">         </span><span style="color:#000080">paths</span>:<span style="color:#bbb">                  </span><span style="color:#998;font-style:italic"># Paths in the container to collect</span><span style="color:#bbb">
+</span><span style="color:#bbb">           </span>- /skywalking/logs/<span style="color:#bbb">
+</span><span style="color:#bbb">       </span><span style="color:#998;font-style:italic"># For Compose environment</span><span style="color:#bbb">
+</span><span style="color:#bbb">       </span>- <span style="color:#000080">service</span>:<span style="color:#bbb"> </span>ui-service    <span style="color:#bbb"> </span><span style="color:#998;font-style:italic"># Compose service name</span><span style="color:#bbb">
+</span><span style="color:#bbb">         </span><span style="color:#000080">paths</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">           </span>- /var/log/nginx/<span style="color:#bbb">
 </span></code></pre></div><p>If the <code>on</code> option under <code>cleanup</code> is not set, it will be automatically set to <code>always</code> if there is environment
 variable <code>CI=true</code>, which is present on many popular CI services, such as GitHub Actions, CircleCI, etc., otherwise it
 will be set to <code>success</code>, so the testing environment can be preserved when tests failed in your local machine.</p>
-<p>All available strategies:</p>
+<h3 id="collect">Collect</h3>
+<p>The <code>collect</code> section allows you to copy files from containers to the local machine before the environment is destroyed. This is useful for debugging failures in CI.</p>
+<ul>
+<li><code>on</code>: When to trigger collection.
+<ul>
+<li><code>always</code>: Always collect.</li>
+<li><code>failure</code>: Only collect when any step (setup, trigger, verify) fails. Collection also attempts on setup failures — unreachable pods/containers are tolerated and logged.</li>
+<li><code>never</code>: Never collect.</li>
+</ul>
+</li>
+<li><code>output-dir</code>: <strong>Required.</strong> The local directory to save files. Supports environment variable expansion (e.g. <code>$SW_INFRA_E2E_LOG_DIR/collect</code>).</li>
+<li><code>items</code>: A list of collection tasks.
+<ul>
+<li>For <strong>Kind</strong>: Specify <code>namespace</code> and either <code>label-selector</code> or <code>resource</code>. <code>container</code> is optional.</li>
+<li>For <strong>Compose</strong>: Specify <code>service</code>.</li>
+<li><code>paths</code>: A list of file or directory paths inside the container.</li>
+</ul>
+</li>
+</ul>
+<p>Collected files are organized by the full source path to avoid collisions:</p>
+<ul>
+<li>Kind: <code>output-dir/&lt;namespace&gt;/&lt;pod-name&gt;/&lt;source-path&gt;</code></li>
+<li>Compose: <code>output-dir/&lt;service-name&gt;/&lt;source-path&gt;</code></li>
+</ul>
+<p>Additionally, <code>kubectl describe</code> (for Kind) or <code>docker inspect</code> (for Compose) output is saved automatically alongside collected files.</p>
+<p>All available strategies for <code>cleanup.on</code>:</p>
 <ol>
 <li><code>always</code>: No matter the execution result is success or failure, cleanup will be performed.</li>
 <li><code>success</code>: Only when the execution succeeds.</li>
@@ -835,7 +875,11 @@ will be set to <code>success</code>, so the testing environment can be preserved
             <li><a href="#reuse-cases">Reuse cases</a></li>
           </ul>
         </li>
-        <li><a href="#cleanup">Cleanup</a></li>
+        <li><a href="#cleanup">Cleanup</a>
+          <ul>
+            <li><a href="#collect">Collect</a></li>
+          </ul>
+        </li>
       </ul>
     </li>
   </ul>
@@ -953,6 +997,10 @@ will be set to <code>success</code>, so the testing environment can be preserved
 
     </div>
     
+
+
+
+
 
 
 

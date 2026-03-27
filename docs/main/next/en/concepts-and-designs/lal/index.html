@@ -32,7 +32,7 @@ The LAL config files are in YAML format, and are located under directory lal." /
 <meta itemprop="description" content="Log Analysis Language Log Analysis Language (LAL) in SkyWalking is essentially a Domain-Specific Language (DSL) to analyze logs. You can use LAL to parse, extract, and save the logs, as well as collaborate the logs with traces (by extracting the trace ID, segment ID and span ID) and metrics (by generating metrics from the logs and sending them to the meter system).
 The LAL config files are in YAML format, and are located under directory lal.">
 
-<meta itemprop="wordCount" content="3167">
+<meta itemprop="wordCount" content="3130">
 
 
 
@@ -2339,7 +2339,23 @@ The LAL config files are in YAML format, and are located under directory lal."/>
 
     <li>
         
-            <a href="/docs/main/next/en/guides/source-extension">Extend An OAL Source</a>
+            <a href="/docs/main/next/en/guides/source-extension">OAL Source and Scope Extension</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/guides/mal-extension">MAL Extension Functions</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/guides/lal-extension">LAL Custom Input/Output Types</a>
         
     </li>
 
@@ -2751,7 +2767,7 @@ The LAL config files are in YAML format, and are located under directory lal."/>
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: f7f2e97</div>
+                  <div class="commit-id">Commit Id: 5be7e79</div>
                 
 
 
@@ -3049,7 +3065,7 @@ not dropped) and is used to associate with traces / metrics.</p>
 </code></pre><ul>
 <li><code>layer</code></li>
 </ul>
-<p><code>layer</code> extracts the <a href="https://github.com/apache/skywalking/tree/f7f2e97d7f7c2d9c356704b0f1b4ecd035062ea0/oap-server/server-core/src/main/java/org/apache/skywalking/oap/server/core/analysis/Layer.java">layer</a> from the <code>parsed</code> result, and set it into the <code>LogData</code>, which will be persisted (if
+<p><code>layer</code> extracts the <a href="https://github.com/apache/skywalking/tree/5be7e79a9b2cea4e8ccafa5467522eb85bbbb1e1/oap-server/server-core/src/main/java/org/apache/skywalking/oap/server/core/analysis/Layer.java">layer</a> from the <code>parsed</code> result, and set it into the <code>LogData</code>, which will be persisted (if
 not dropped) and is used to associate with service.</p>
 <ul>
 <li><code>tag</code></li>
@@ -3282,107 +3298,130 @@ by the extractor as usual and pre-populated via <code>init()</code> from <code>L
 <p><strong>Note</strong>, slow SQL sampling would only flag this SQL in the candidate list. The OAP server would run statistic per service
 and only persistent the top 50 every 10(controlled by <code>topNReportPeriod: ${SW_CORE_TOPN_REPORT_PERIOD:10}</code>) minutes by default.</p>
 <p>See bundled LAL scripts for complete examples:
-<a href="https://github.com/apache/skywalking/tree/f7f2e97d7f7c2d9c356704b0f1b4ecd035062ea0/oap-server/server-starter/src/main/resources/lal/mysql-slowsql.yaml">mysql-slowsql.yaml</a>,
-<a href="https://github.com/apache/skywalking/tree/f7f2e97d7f7c2d9c356704b0f1b4ecd035062ea0/oap-server/server-starter/src/main/resources/lal/pgsql-slowsql.yaml">pgsql-slowsql.yaml</a>,
-<a href="https://github.com/apache/skywalking/tree/f7f2e97d7f7c2d9c356704b0f1b4ecd035062ea0/oap-server/server-starter/src/main/resources/lal/redis-slowsql.yaml">redis-slowsql.yaml</a>.</p>
+<a href="https://github.com/apache/skywalking/tree/5be7e79a9b2cea4e8ccafa5467522eb85bbbb1e1/oap-server/server-starter/src/main/resources/lal/mysql-slowsql.yaml">mysql-slowsql.yaml</a>,
+<a href="https://github.com/apache/skywalking/tree/5be7e79a9b2cea4e8ccafa5467522eb85bbbb1e1/oap-server/server-starter/src/main/resources/lal/pgsql-slowsql.yaml">pgsql-slowsql.yaml</a>,
+<a href="https://github.com/apache/skywalking/tree/5be7e79a9b2cea4e8ccafa5467522eb85bbbb1e1/oap-server/server-starter/src/main/resources/lal/redis-slowsql.yaml">redis-slowsql.yaml</a>.</p>
 <h4 id="sampled-trace-network-profiling">Sampled Trace (Network Profiling)</h4>
 <p>SkyWalking converts network profiling sampled trace logs into <code>SampledTraceRecord</code> for process-level network analysis.</p>
 <p>Use <code>outputType: SampledTrace</code> in your rule config.
 The available output fields are: <code>latency</code>, <code>uri</code>, <code>reason</code>, <code>processId</code>, <code>destProcessId</code>, <code>detectPoint</code>, <code>componentId</code>.</p>
 <p>We require a log tag <code>&quot;LOG_KIND&quot; = &quot;NET_PROFILING_SAMPLED_TRACE&quot;</code> to make OAP distinguish sampled trace logs from other log reports.</p>
 <p>See bundled LAL scripts for complete examples:
-<a href="https://github.com/apache/skywalking/tree/f7f2e97d7f7c2d9c356704b0f1b4ecd035062ea0/oap-server/server-starter/src/main/resources/lal/envoy-als.yaml">envoy-als.yaml</a>,
-<a href="https://github.com/apache/skywalking/tree/f7f2e97d7f7c2d9c356704b0f1b4ecd035062ea0/oap-server/server-starter/src/main/resources/lal/k8s-service.yaml">k8s-service.yaml</a>,
-<a href="https://github.com/apache/skywalking/tree/f7f2e97d7f7c2d9c356704b0f1b4ecd035062ea0/oap-server/server-starter/src/main/resources/lal/mesh-dp.yaml">mesh-dp.yaml</a>.</p>
+<a href="https://github.com/apache/skywalking/tree/5be7e79a9b2cea4e8ccafa5467522eb85bbbb1e1/oap-server/server-starter/src/main/resources/lal/envoy-als.yaml">envoy-als.yaml</a>,
+<a href="https://github.com/apache/skywalking/tree/5be7e79a9b2cea4e8ccafa5467522eb85bbbb1e1/oap-server/server-starter/src/main/resources/lal/k8s-service.yaml">k8s-service.yaml</a>,
+<a href="https://github.com/apache/skywalking/tree/5be7e79a9b2cea4e8ccafa5467522eb85bbbb1e1/oap-server/server-starter/src/main/resources/lal/mesh-dp.yaml">mesh-dp.yaml</a>.</p>
 <h3 id="extending-custom-output-types">Extending: custom output types</h3>
-<p>You can create custom output types to transform logs into any entity type for your own use cases. There are two approaches:</p>
-<h4 id="approach-1-implement-laloutputbuilder">Approach 1: Implement <code>LALOutputBuilder</code></h4>
-<p>Use this when you need full control over validation and dispatching, or when the output is not a simple <code>AbstractLog</code> subclass.</p>
-<ol>
-<li>Create a class that implements <code>org.apache.skywalking.oap.server.core.source.LALOutputBuilder</code>:</li>
-</ol>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">MyCustomBuilder</span> <span style="color:#000;font-weight:bold">implements</span> LALOutputBuilder <span style="color:#000;font-weight:bold">{</span>
-    <span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">static</span> <span style="color:#000;font-weight:bold">final</span> String NAME <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;MyCustom&#34;</span><span style="color:#000;font-weight:bold">;</span>
+<p>For developers who need to create custom output types (implementing <code>LALOutputBuilder</code>, extending
+<code>AbstractLog</code>, registering <code>LALSourceTypeProvider</code> SPI, or defining custom input types), see the
+<a href="../../guides/lal-extension">LAL Extension Developer Guide</a>.</p>
+<!--
+Developer-facing content below is kept for reference but the canonical guide is lal-extension.md.
+-->
+<!--
+#### Approach 1: Implement `LALOutputBuilder`
 
-    <span style="color:#3c5d5d;font-weight:bold">@Setter</span> <span style="color:#3c5d5d;font-weight:bold">@Getter</span>
-    <span style="color:#000;font-weight:bold">private</span> String myField<span style="color:#000;font-weight:bold">;</span>
-    <span style="color:#3c5d5d;font-weight:bold">@Setter</span> <span style="color:#3c5d5d;font-weight:bold">@Getter</span>
-    <span style="color:#000;font-weight:bold">private</span> <span style="color:#458;font-weight:bold">long</span> myMetric<span style="color:#000;font-weight:bold">;</span>
+Use this when you need full control over validation and dispatching, or when the output is not a simple `AbstractLog` subclass.
 
-    <span style="color:#000;font-weight:bold">public</span> <span style="color:#900;font-weight:bold">MyCustomBuilder</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{}</span> <span style="color:#998;font-style:italic">// no-arg constructor required
-</span><span style="color:#998;font-style:italic"></span>
-    <span style="color:#3c5d5d;font-weight:bold">@Override</span>
-    <span style="color:#000;font-weight:bold">public</span> String <span style="color:#900;font-weight:bold">name</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span> <span style="color:#000;font-weight:bold">return</span> NAME<span style="color:#000;font-weight:bold">;</span> <span style="color:#000;font-weight:bold">}</span>
+1. Create a class that implements `org.apache.skywalking.oap.server.core.source.LALOutputBuilder`:
 
-    <span style="color:#3c5d5d;font-weight:bold">@Override</span>
-    <span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">init</span><span style="color:#000;font-weight:bold">(</span>LogData logData<span style="color:#000;font-weight:bold">,</span> Optional<span style="color:#000;font-weight:bold">&lt;</span>Object<span style="color:#000;font-weight:bold">&gt;</span> extraLog<span style="color:#000;font-weight:bold">,</span> NamingControl namingControl<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
-        <span style="color:#998;font-style:italic">// Pre-populate from LogData (service, timestamp, traceId, etc.)
-</span><span style="color:#998;font-style:italic"></span>        <span style="color:#998;font-style:italic">// extraLog contains the typed input object (e.g., a protobuf message) if available
-</span><span style="color:#998;font-style:italic"></span>    <span style="color:#000;font-weight:bold">}</span>
+```java
+public class MyCustomBuilder implements LALOutputBuilder {
+    public static final String NAME = "MyCustom";
 
-    <span style="color:#3c5d5d;font-weight:bold">@Override</span>
-    <span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">complete</span><span style="color:#000;font-weight:bold">(</span>SourceReceiver sourceReceiver<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
-        <span style="color:#998;font-style:italic">// Validate, build final Source/Record, and dispatch
-</span><span style="color:#998;font-style:italic"></span>    <span style="color:#000;font-weight:bold">}</span>
-<span style="color:#000;font-weight:bold">}</span>
-</code></pre></div><ol start="2">
-<li>
-<p>Register it as a <code>ServiceLoader</code> provider so the short name can be used in YAML config.
-Create <code>META-INF/services/org.apache.skywalking.oap.server.core.source.LALOutputBuilder</code> containing:</p>
-<pre><code>com.example.MyCustomBuilder
-</code></pre></li>
-<li>
-<p>Reference it in your LAL YAML config by short name:</p>
-</li>
-</ol>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#000080">rules</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>- <span style="color:#000080">name</span>:<span style="color:#bbb"> </span>my-custom-rule<span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#000080">layer</span>:<span style="color:#bbb"> </span>GENERAL<span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#000080">outputType</span>:<span style="color:#bbb"> </span>MyCustom   <span style="color:#bbb"> </span><span style="color:#998;font-style:italic"># short name from name() method</span><span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#000080">dsl</span>:<span style="color:#bbb"> </span>|<span style="color:#d14">
-</span><span style="color:#d14">      filter {
-</span><span style="color:#d14">        json {}
-</span><span style="color:#d14">        extractor {
-</span><span style="color:#d14">          myField parsed.someField as String
-</span><span style="color:#d14">          myMetric parsed.someValue as Long
-</span><span style="color:#d14">        }
-</span><span style="color:#d14">        sink {}
-</span><span style="color:#d14">      }</span><span style="color:#bbb">      
-</span></code></pre></div><p>The LAL compiler validates at boot time that <code>setMyField(String)</code> and <code>setMyMetric(Long)</code> exist on <code>MyCustomBuilder</code>.
-Fully qualified class names (e.g., <code>outputType: com.example.MyCustomBuilder</code>) are also supported as a fallback.</p>
-<h4 id="approach-2-extend-abstractlog">Approach 2: Extend <code>AbstractLog</code></h4>
-<p>Use this for simpler cases where you want to produce a log-like record with additional fields:</p>
-<ol>
-<li>Create a subclass of <code>AbstractLog</code> with the extra fields.</li>
-<li>Set <code>outputType</code> to your subclass. Standard log fields are populated automatically.</li>
-</ol>
-<h4 id="custom-input-types">Custom input types</h4>
-<p>For rules that receive structured protobuf data (not JSON/YAML log bodies), you can configure the input type
-so that <code>parsed.*</code> generates optimized direct getter calls:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#000080">rules</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>- <span style="color:#000080">name</span>:<span style="color:#bbb"> </span>my-proto-rule<span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#000080">layer</span>:<span style="color:#bbb"> </span>MY_LAYER<span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#000080">inputType</span>:<span style="color:#bbb"> </span>com.example.MyProtoMessage<span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#000080">dsl</span>:<span style="color:#bbb"> </span>|<span style="color:#d14">
-</span><span style="color:#d14">      filter {
-</span><span style="color:#d14">        extractor {
-</span><span style="color:#d14">          service parsed.serviceName as String
-</span><span style="color:#d14">          endpoint parsed.requestPath as String
-</span><span style="color:#d14">        }
-</span><span style="color:#d14">      }</span><span style="color:#bbb">      
-</span></code></pre></div><p>Alternatively, register a <code>LALSourceTypeProvider</code> SPI implementation to set the default input and output types
-for an entire layer, so individual rules don&rsquo;t need to repeat the configuration:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">MyLayerSourceTypeProvider</span> <span style="color:#000;font-weight:bold">implements</span> LALSourceTypeProvider <span style="color:#000;font-weight:bold">{</span>
-    <span style="color:#3c5d5d;font-weight:bold">@Override</span>
-    <span style="color:#000;font-weight:bold">public</span> Layer <span style="color:#900;font-weight:bold">layer</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span> <span style="color:#000;font-weight:bold">return</span> Layer<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">MY_LAYER</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#000;font-weight:bold">}</span>
+    @Setter @Getter
+    private String myField;
+    @Setter @Getter
+    private long myMetric;
 
-    <span style="color:#3c5d5d;font-weight:bold">@Override</span>
-    <span style="color:#000;font-weight:bold">public</span> Class<span style="color:#000;font-weight:bold">&lt;?&gt;</span> inputType<span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span> <span style="color:#000;font-weight:bold">return</span> MyProtoMessage<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">class</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#000;font-weight:bold">}</span>
+    public MyCustomBuilder() {} // no-arg constructor required
 
-    <span style="color:#3c5d5d;font-weight:bold">@Override</span>
-    <span style="color:#000;font-weight:bold">public</span> Class<span style="color:#000;font-weight:bold">&lt;?</span> <span style="color:#000;font-weight:bold">extends</span> Source<span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#900;font-weight:bold">outputType</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span> <span style="color:#000;font-weight:bold">return</span> MyCustomBuilder<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">class</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#000;font-weight:bold">}</span>
-<span style="color:#000;font-weight:bold">}</span>
-</code></pre></div><p>Register it in <code>META-INF/services/org.apache.skywalking.oap.log.analyzer.v2.spi.LALSourceTypeProvider</code>.</p>
+    @Override
+    public String name() { return NAME; }
+
+    @Override
+    public void init(LogData logData, Optional<Object> extraLog, NamingControl namingControl) {
+        // Pre-populate from LogData (service, timestamp, traceId, etc.)
+        // extraLog contains the typed input object (e.g., a protobuf message) if available
+    }
+
+    @Override
+    public void complete(SourceReceiver sourceReceiver) {
+        // Validate, build final Source/Record, and dispatch
+    }
+}
+```
+
+2. Register it as a `ServiceLoader` provider so the short name can be used in YAML config.
+   Create `META-INF/services/org.apache.skywalking.oap.server.core.source.LALOutputBuilder` containing:
+   ```
+   com.example.MyCustomBuilder
+   ```
+
+3. Reference it in your LAL YAML config by short name:
+
+```yaml
+rules:
+  - name: my-custom-rule
+    layer: GENERAL
+    outputType: MyCustom    # short name from name() method
+    dsl: |
+      filter {
+        json {}
+        extractor {
+          myField parsed.someField as String
+          myMetric parsed.someValue as Long
+        }
+        sink {}
+      }
+```
+
+The LAL compiler validates at boot time that `setMyField(String)` and `setMyMetric(Long)` exist on `MyCustomBuilder`.
+Fully qualified class names (e.g., `outputType: com.example.MyCustomBuilder`) are also supported as a fallback.
+
+#### Approach 2: Extend `AbstractLog`
+
+Use this for simpler cases where you want to produce a log-like record with additional fields:
+
+1. Create a subclass of `AbstractLog` with the extra fields.
+2. Set `outputType` to your subclass. Standard log fields are populated automatically.
+
+#### Custom input types
+
+For rules that receive structured protobuf data (not JSON/YAML log bodies), you can configure the input type
+so that `parsed.*` generates optimized direct getter calls:
+
+```yaml
+rules:
+  - name: my-proto-rule
+    layer: MY_LAYER
+    inputType: com.example.MyProtoMessage
+    dsl: |
+      filter {
+        extractor {
+          service parsed.serviceName as String
+          endpoint parsed.requestPath as String
+        }
+      }
+```
+
+Alternatively, register a `LALSourceTypeProvider` SPI implementation to set the default input and output types
+for an entire layer, so individual rules don't need to repeat the configuration:
+
+```java
+public class MyLayerSourceTypeProvider implements LALSourceTypeProvider {
+    @Override
+    public Layer layer() { return Layer.MY_LAYER; }
+
+    @Override
+    public Class<?> inputType() { return MyProtoMessage.class; }
+
+    @Override
+    public Class<? extends Source> outputType() { return MyCustomBuilder.class; }
+}
+```
+
+Register it in `META-INF/services/org.apache.skywalking.oap.log.analyzer.v2.spi.LALSourceTypeProvider`.
+-->
 
 </div>
 <div>
@@ -3602,6 +3641,10 @@ for an entire layer, so individual rules don&rsquo;t need to repeat the configur
 
     </div>
     
+
+
+
+
 
 
 
