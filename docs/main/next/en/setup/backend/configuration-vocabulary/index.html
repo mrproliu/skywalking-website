@@ -34,7 +34,7 @@ Main Configuration The main configuration is provided by application.yml. It div
 Main Configuration The main configuration is provided by application.yml. It divided into several modules, each of which has its own settings. The following table lists the modules and their settings.
    Module Provider Settings Value(s) and Explanation System Environment Variable¹ Default     core default role Option values: Mixed/Receiver/Aggregator. Receiver mode OAP opens the service to the agents, then analyzes and aggregates the results, and forwards the results for distributed aggregation.">
 
-<meta itemprop="wordCount" content="7363">
+<meta itemprop="wordCount" content="7637">
 
 
 
@@ -2770,7 +2770,7 @@ Main Configuration The main configuration is provided by application.yml. It div
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 07543c4</div>
+                  <div class="commit-id">Commit Id: c6a07a2</div>
                 
 
 
@@ -4943,6 +4943,102 @@ It divided into several modules, each of which has its own settings. The followi
 <td>Mock go version for API buildInfo</td>
 <td>SW_PROMQL_BUILD_INFO_GO_VERSION</td>
 <td></td>
+</tr>
+<tr>
+<td>traceQL</td>
+<td>default</td>
+<td>-</td>
+<td>This module provides the Grafana Tempo-compatible TraceQL query API. It supports both Zipkin and SkyWalking native data sources. See <a href="../../../api/traceql-service">TraceQL Service</a> for more details.</td>
+<td>-</td>
+<td></td>
+</tr>
+<tr>
+<td>-</td>
+<td>-</td>
+<td>restHost</td>
+<td>Binding IP of RESTful services.</td>
+<td>SW_TRACEQL_REST_HOST</td>
+<td>0.0.0.0</td>
+</tr>
+<tr>
+<td>-</td>
+<td>-</td>
+<td>restPort</td>
+<td>Binding port of RESTful services. Default is Grafana Tempo&rsquo;s native port.</td>
+<td>SW_TRACEQL_REST_PORT</td>
+<td>3200</td>
+</tr>
+<tr>
+<td>-</td>
+<td>-</td>
+<td>enableDatasourceZipkin</td>
+<td>Enables the Zipkin data source for the TraceQL API. When <code>true</code>, the Zipkin-based handler is mounted at <code>restContextPathZipkin</code>. Requires the <code>receiver-zipkin</code> module to be enabled.</td>
+<td>SW_TRACEQL_ENABLE_DATASOURCE_ZIPKIN</td>
+<td>false</td>
+</tr>
+<tr>
+<td>-</td>
+<td>-</td>
+<td>enableDatasourceSkywalking</td>
+<td>Enables the SkyWalking native data source for the TraceQL API. When <code>true</code>, the SkyWalking-native handler is mounted at <code>restContextPathSkywalking</code>.</td>
+<td>SW_TRACEQL_ENABLE_DATASOURCE_SKYWALKING</td>
+<td>false</td>
+</tr>
+<tr>
+<td>-</td>
+<td>-</td>
+<td>restContextPathZipkin</td>
+<td>Web context path for the Zipkin data source endpoint.</td>
+<td>SW_TRACEQL_REST_CONTEXT_PATH_ZIPKIN</td>
+<td>/zipkin</td>
+</tr>
+<tr>
+<td>-</td>
+<td>-</td>
+<td>restContextPathSkywalking</td>
+<td>Web context path for the SkyWalking native data source endpoint.</td>
+<td>SW_TRACEQL_REST_CONTEXT_PATH_SKYWALKING</td>
+<td>/skywalking</td>
+</tr>
+<tr>
+<td>-</td>
+<td>-</td>
+<td>restIdleTimeOut</td>
+<td>Connector idle timeout of RESTful services (in milliseconds).</td>
+<td>SW_TRACEQL_REST_IDLE_TIMEOUT</td>
+<td>30000</td>
+</tr>
+<tr>
+<td>-</td>
+<td>-</td>
+<td>restAcceptQueueSize</td>
+<td>ServerSocketChannel Backlog of RESTful services.</td>
+<td>SW_TRACEQL_REST_QUEUE_SIZE</td>
+<td>0</td>
+</tr>
+<tr>
+<td>-</td>
+<td>-</td>
+<td>lookback</td>
+<td>If the query does not provide a start time (default end time is current), this is the default look-back duration for traces and autocomplete tag queries (in milliseconds).</td>
+<td>SW_TRACEQL_LOOKBACK</td>
+<td>86400000 (1 day)</td>
+</tr>
+<tr>
+<td>-</td>
+<td>-</td>
+<td>zipkinTracesListResultTags</td>
+<td>Span tag keys included in the trace list result for the Zipkin data source. These tags are used for trace grouping and shown in the trace list panel. Multiple values are separated by commas.</td>
+<td>SW_TRACEQL_ZIPKIN_TRACES_LIST_RESULT_TAGS</td>
+<td>http.method,error</td>
+</tr>
+<tr>
+<td>-</td>
+<td>-</td>
+<td>skywalkingTracesListResultTags</td>
+<td>Span tag keys included in the trace list result for the SkyWalking native data source. These tags are used for trace grouping and shown in the trace list panel. Multiple values are separated by commas.</td>
+<td>SW_TRACEQL_SKYWALKING_TRACES_LIST_RESULT_TAGS</td>
+<td>http.method,http.status_code,rpc.status_code,db.type,db.instance,mq.queue,mq.topic,mq.broker</td>
 </tr>
 <tr>
 <td>alarm</td>
