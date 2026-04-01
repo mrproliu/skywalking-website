@@ -3809,13 +3809,19 @@
   </url>
   
   <url>
-    <loc>/docs/main/next/en/changes/changes/</loc>
+    <loc>/docs/main/next/en/changes/changes-10.4.0/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/docs/main/v10.3.0/en/changes/changes/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/docs/main/next/en/changes/changes/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
@@ -10541,6 +10547,12 @@
   
   <url>
     <loc>/docs/main/v9.7.0/en/guides/e2e/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/docs/main/next/en/setup/backend/backend-envoy-ai-gateway-monitoring/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>

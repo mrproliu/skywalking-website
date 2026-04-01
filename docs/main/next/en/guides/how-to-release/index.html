@@ -34,7 +34,7 @@ Prerequisites Add your GPG public key into the SkyWalking GPG KEYS file.
 Prerequisites Add your GPG public key into the SkyWalking GPG KEYS file.
  If you are a PMC member, use your Apache ID and password to log in this svn, and update the file. Don&rsquo;t override the existing file. If you are a committer, please ask a PMC member to help you.">
 
-<meta itemprop="wordCount" content="768">
+<meta itemprop="wordCount" content="811">
 
 
 
@@ -982,6 +982,14 @@ Prerequisites Add your GPG public key into the SkyWalking GPG KEYS file.
     <li>
         
             <a href="/docs/main/next/en/setup/service-agent/virtual-genai">Virtual GenAI</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/backend-envoy-ai-gateway-monitoring">Envoy AI Gateway</a>
         
     </li>
 
@@ -2470,6 +2478,14 @@ Prerequisites Add your GPG public key into the SkyWalking GPG KEYS file.
 
     <li>
         
+            <a href="/docs/main/next/en/changes/changes-10.4.0">10.4.0</a>
+        
+    </li>
+
+    
+
+    <li>
+        
             <a href="/docs/main/next/en/changes/changes-10.3.0">10.3.0</a>
         
     </li>
@@ -2770,7 +2786,7 @@ Prerequisites Add your GPG public key into the SkyWalking GPG KEYS file.
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: c6a07a2</div>
+                  <div class="commit-id">Commit Id: 9221644</div>
                 
 
 
@@ -2834,18 +2850,20 @@ Prerequisites Add your GPG public key into the SkyWalking GPG KEYS file.
 <h2 id="run-the-release-script">Run the release script</h2>
 <p>The release script <a href="https://github.com/apache/skywalking/blob/master/tools/releasing/release.sh"><code>tools/releasing/release.sh</code></a> automates the following steps:</p>
 <ol>
-<li>Verify GPG signer (<code>@apache.org</code> email required)</li>
-<li>Check required tools (<code>gpg</code>, <code>svn</code>, <code>shasum</code>, <code>git</code>, <code>yq</code>)</li>
+<li>Verify GPG signer (<code>@apache.org</code> email required) and test GPG signing upfront</li>
+<li>Check required tools (<code>gpg</code>, <code>svn</code>, <code>shasum</code>, <code>git</code>, <code>yq</code>, <code>gh</code>)</li>
 <li>Detect current version from <code>pom.xml</code></li>
 <li>Calculate release version (strip <code>-SNAPSHOT</code>) and next version (bump minor)</li>
 <li>Clone the repository, build source and binary tarballs, GPG sign, SHA512 checksum</li>
 <li>Upload artifacts to SVN staging (<code>https://dist.apache.org/repos/dist/dev/skywalking/{version}</code>)</li>
-<li>Generate the vote email (with sha512 checksums and submodule commit IDs filled in)</li>
+<li>Generate the vote email (with sha512 checksums, submodule commit IDs, and release tag link filled in)</li>
 <li>Prepare next version PR (bump version, rotate changelog, update <code>menu.yml</code>, push branch)</li>
 </ol>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#0086b3">cd</span> tools/releasing
 bash release.sh
-</code></pre></div><p>The script is interactive — it confirms the GPG signer and version numbers before proceeding.</p>
+</code></pre></div><p>The script is interactive — it confirms the GPG signer and version numbers before proceeding.
+The GPG signing is verified before the build starts, so passphrase or agent issues are caught early.
+If the Maven build fails, the last 30 lines of the build log are printed for diagnosis.</p>
 <p>After the script completes, copy the generated vote email and send it to <code>dev@skywalking.apache.org</code>.</p>
 <h2 id="call-a-vote-in-dev">Call a vote in dev</h2>
 <p>The release script generates the vote email automatically. Send it to <code>dev@skywalking.apache.org</code>.</p>
@@ -2922,7 +2940,7 @@ SkyWalking Resources:
 
 - Apache SkyWalking Team
 </code></pre><h2 id="publish-the-docker-images">Publish the Docker images</h2>
-<p>We have a <a href="https://github.com/apache/skywalking/tree/c6a07a24c6adabaae99dad675a2b08676681c5a2/.github/workflows/publish-docker.yaml">GitHub workflow</a> to automatically publish the Docker images to
+<p>We have a <a href="https://github.com/apache/skywalking/tree/92216447cf26931a113b024e2ce3ec0a336b82f7/.github/workflows/publish-docker.yaml">GitHub workflow</a> to automatically publish the Docker images to
 Docker Hub after you set the version from <code>pre-release</code> to <code>release</code>, all you need to do is to watch that workflow and see
 whether it succeeds, if it fails, you can use the following steps to publish the Docker images in your local machine.</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#0086b3">export</span> <span style="color:#008080">SW_VERSION</span><span style="color:#000;font-weight:bold">=</span>x.y.z
@@ -3159,6 +3177,10 @@ The versions of OAP and BanyanDB are hard-coded in the script, so you need to up
 
     </div>
     
+
+
+
+
 
 
 
