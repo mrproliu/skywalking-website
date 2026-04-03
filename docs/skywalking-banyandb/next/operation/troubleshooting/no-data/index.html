@@ -32,7 +32,7 @@ Check Data Ingestion  Monitor Write Rate: Use the BanyanDB metrics write rateto 
 <meta itemprop="description" content="Troubleshooting No Data Issue If you encounter issues with missing data in BanyanDB, follow these troubleshooting steps to identify and resolve the problem.
 Check Data Ingestion  Monitor Write Rate: Use the BanyanDB metrics write rateto monitor the write rate and ensure that data is being ingested into the database. Monitor Write Errors: Monitor the write errors metric to identify any issues with data ingestion. High write errors can indicate problems with data ingestion.">
 
-<meta itemprop="wordCount" content="330">
+<meta itemprop="wordCount" content="332">
 
 
 
@@ -480,6 +480,14 @@ Check Data Ingestion  Monitor Write Rate: Use the BanyanDB metrics write rateto 
 
     <li>
         
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/schema/trace">Trace</a>
+        
+    </li>
+
+    
+
+    <li>
+        
             <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/schema/index-rule">IndexRule</a>
         
     </li>
@@ -531,6 +539,14 @@ Check Data Ingestion  Monitor Write Rate: Use the BanyanDB metrics write rateto 
     <li>
         
             <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/query/stream">Stream</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/query/trace">Trace</a>
         
     </li>
 
@@ -1155,7 +1171,7 @@ Check Data Ingestion  Monitor Write Rate: Use the BanyanDB metrics write rateto 
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 2890d8e</div>
+                  <div class="commit-id">Commit Id: 5dedaa1</div>
                 
 
 
@@ -1185,7 +1201,7 @@ Check Data Ingestion  Monitor Write Rate: Use the BanyanDB metrics write rateto 
 <h2 id="check-data-retention-policy">Check Data Retention Policy</h2>
 <p>Verify that the data retention policy is not deleting data prematurely. If the data retention policy is set to delete data after a certain period, it may result in missing data in query results. Please check the <a href="../../../interacting/data-lifecycle">Data Lifecycle</a> documentation for more information on data retention policies.</p>
 <h2 id="metadata-missing">Metadata Missing</h2>
-<p>If the metadata for a group, measure or stream is missing, it can result in missing data in query results. Ensure that the metadata for the group, measure or stream is correctly defined and available in the BanyanDB metadata registry.</p>
+<p>If the metadata for a group, measure, stream or trace is missing, it can result in missing data in query results. Ensure that the metadata for the group, measure, stream or trace is correctly defined and available in the BanyanDB metadata registry.</p>
 <p>If only the metadata is missing, you can recreate the metadata using the SkyWalking OAP, bydbctl or WebUI to restore the missing metadata. Refer to the <a href="../../../interacting/bydbctl/schema/">metadata management</a> documentation for more information.</p>
 
 </div>
@@ -1392,6 +1408,10 @@ Check Data Ingestion  Monitor Write Rate: Use the BanyanDB metrics write rateto 
 
     </div>
     
+
+
+
+
 
 
 

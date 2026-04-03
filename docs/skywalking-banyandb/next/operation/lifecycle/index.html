@@ -34,7 +34,7 @@ Overview A dedicated lifecycle agent (an independent Go process) is responsible 
 Overview A dedicated lifecycle agent (an independent Go process) is responsible for:
  Identifying data eligible for migration based on lifecycle stages. Extracting data from the source node. Migrating data to designated target nodes. Removing the original data after a successful migration.">
 
-<meta itemprop="wordCount" content="743">
+<meta itemprop="wordCount" content="760">
 
 
 
@@ -483,6 +483,14 @@ Overview A dedicated lifecycle agent (an independent Go process) is responsible 
 
     <li>
         
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/schema/trace">Trace</a>
+        
+    </li>
+
+    
+
+    <li>
+        
             <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/schema/index-rule">IndexRule</a>
         
     </li>
@@ -534,6 +542,14 @@ Overview A dedicated lifecycle agent (an independent Go process) is responsible 
     <li>
         
             <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/query/stream">Stream</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/query/trace">Trace</a>
         
     </li>
 
@@ -1158,7 +1174,7 @@ Overview A dedicated lifecycle agent (an independent Go process) is responsible 
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 2890d8e</div>
+                  <div class="commit-id">Commit Id: 5dedaa1</div>
                 
 
 
@@ -1197,13 +1213,13 @@ Overview A dedicated lifecycle agent (an independent Go process) is responsible 
 <p><strong>Take Snapshots:</strong></p>
 <ul>
 <li>Request a snapshot from the source data node.</li>
-<li>Retrieve the stream and measure data directory paths.</li>
+<li>Retrieve the stream, measure and trace data directory paths.</li>
 </ul>
 </li>
 <li>
 <p><strong>Setup Query Services:</strong></p>
 <ul>
-<li>Create read-only services for streams and measures using the snapshot paths.</li>
+<li>Create read-only services for streams, measures and traces using the snapshot paths.</li>
 </ul>
 </li>
 <li>
@@ -1211,7 +1227,7 @@ Overview A dedicated lifecycle agent (an independent Go process) is responsible 
 <ul>
 <li>Determine the current stage based on node labels.</li>
 <li>Identify target nodes for the next lifecycle stage.</li>
-<li>For each stream or measure:
+<li>For each stream, measure or trace:
 <ul>
 <li>Query data from the current stage.</li>
 <li>Transform data into write requests.</li>
@@ -1313,6 +1329,7 @@ Overview A dedicated lifecycle agent (an independent Go process) is responsible 
 </span><span style="color:#d14"></span>  --etcd-endpoints &lt;etcd-endpoints&gt; <span style="color:#d14">\
 </span><span style="color:#d14"></span>  --stream-root-path /path/to/stream <span style="color:#d14">\
 </span><span style="color:#d14"></span>  --measure-root-path /path/to/measure <span style="color:#d14">\
+</span><span style="color:#d14"></span>  --trace-root-path /path/to/trace <span style="color:#d14">\
 </span><span style="color:#d14"></span>  --node-labels <span style="color:#008080">type</span><span style="color:#000;font-weight:bold">=</span>hot <span style="color:#d14">\
 </span><span style="color:#d14"></span>  --progress-file /path/to/progress.json <span style="color:#d14">\
 </span><span style="color:#d14"></span>  --schedule @daily
@@ -1359,6 +1376,11 @@ Overview A dedicated lifecycle agent (an independent Go process) is responsible 
 <tr>
 <td><code>--measure-root-path</code></td>
 <td>Root directory for measure catalog snapshots</td>
+<td><code>/tmp</code></td>
+</tr>
+<tr>
+<td><code>--trace-root-path</code></td>
+<td>Root directory for trace catalog snapshots</td>
 <td><code>/tmp</code></td>
 </tr>
 <tr>
@@ -1418,7 +1440,7 @@ banyand liaison --etcd-endpoints &lt;etcd-endpoints&gt;
 
 <span style="color:#998;font-style:italic"># Hot node</span>
 banyand data --node-labels <span style="color:#008080">type</span><span style="color:#000;font-weight:bold">=</span>hot --etcd-endpoints &lt;etcd-endpoints&gt; --grpc-port <span style="color:#099">17912</span>
-   
+
 <span style="color:#998;font-style:italic"># Warm node</span>
 banyand data --node-labels <span style="color:#008080">type</span><span style="color:#000;font-weight:bold">=</span>warm --etcd-endpoints &lt;etcd-endpoints&gt; --grpc-port <span style="color:#099">18912</span>
 </code></pre></div></li>
@@ -1461,6 +1483,7 @@ banyand data --node-labels <span style="color:#008080">type</span><span style="c
 </span><span style="color:#d14"></span>  --grpc-addr 127.0.0.1:17912 <span style="color:#d14">\
 </span><span style="color:#d14"></span>  --stream-root-path /data/stream <span style="color:#d14">\
 </span><span style="color:#d14"></span>  --measure-root-path /data/measure <span style="color:#d14">\
+</span><span style="color:#d14"></span>  --trace-root-path /data/trace <span style="color:#d14">\
 </span><span style="color:#d14"></span>  --progress-file /data/progress.json
 </code></pre></div><ol start="4">
 <li><strong>Verify migration:</strong>
@@ -1686,6 +1709,10 @@ banyand data --node-labels <span style="color:#008080">type</span><span style="c
 
     </div>
     
+
+
+
+
 
 
 

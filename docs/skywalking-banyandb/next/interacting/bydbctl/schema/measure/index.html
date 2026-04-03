@@ -38,7 +38,7 @@ Create operation Create operation adds a new measure to the database&rsquo;s met
 Examples of creating A measure belongs to a unique group. We should create such a group with a catalog CATALOG_MEASURE before creating a measure.
 bydbctl group create -f - &lt;&lt;EOF metadata: name: sw_metric catalog: CATALOG_MEASURE resource_opts: shard_num: 2 segment_interval: unit: UNIT_DAY num: 1 ttl: unit: UNIT_DAY num: 7 EOF The group creates two shards to store data points.">
 
-<meta itemprop="wordCount" content="385">
+<meta itemprop="wordCount" content="377">
 
 
 
@@ -489,6 +489,14 @@ bydbctl group create -f - &lt;&lt;EOF metadata: name: sw_metric catalog: CATALOG
 
     <li>
         
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/schema/trace">Trace</a>
+        
+    </li>
+
+    
+
+    <li>
+        
             <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/schema/index-rule">IndexRule</a>
         
     </li>
@@ -540,6 +548,14 @@ bydbctl group create -f - &lt;&lt;EOF metadata: name: sw_metric catalog: CATALOG
     <li>
         
             <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/query/stream">Stream</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/query/trace">Trace</a>
         
     </li>
 
@@ -1164,7 +1180,7 @@ bydbctl group create -f - &lt;&lt;EOF metadata: name: sw_metric catalog: CATALOG
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 2890d8e</div>
+                  <div class="commit-id">Commit Id: 5dedaa1</div>
                 
 
 
@@ -1198,8 +1214,7 @@ before creating a measure.</p>
 </span><span style="color:#d14">    unit: UNIT_DAY
 </span><span style="color:#d14">    num: 7
 </span><span style="color:#d14">EOF</span>
-</code></pre></div><p>The group creates two shards to store data points. Every day, it would create a
-segment that will generate a block every 2 hours.</p>
+</code></pre></div><p>The group creates two shards to store data points. Every day, it would create a segment.</p>
 <p>The data in this group will keep 7 days.</p>
 <p>Then, the below command will create a new measure:</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">bydbctl measure create -f - <span style="color:#d14">&lt;&lt;EOF
@@ -1500,6 +1515,10 @@ segment that will generate a block every 2 hours.</p>
 
     </div>
     
+
+
+
+
 
 
 

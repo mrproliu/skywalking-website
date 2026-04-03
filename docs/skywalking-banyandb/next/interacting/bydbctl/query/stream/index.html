@@ -486,6 +486,14 @@ The input contains two parts:
 
     <li>
         
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/schema/trace">Trace</a>
+        
+    </li>
+
+    
+
+    <li>
+        
             <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/schema/index-rule">IndexRule</a>
         
     </li>
@@ -537,6 +545,14 @@ The input contains two parts:
     <li>
         
             <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/query/stream">Stream</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/query/trace">Trace</a>
         
     </li>
 
@@ -1161,7 +1177,7 @@ The input contains two parts:
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 2890d8e</div>
+                  <div class="commit-id">Commit Id: 5dedaa1</div>
                 
 
 
@@ -1328,7 +1344,7 @@ for example, if you want to get the schema of a stream named <code>segment</code
 </span><span style="color:#d14">offset: 0
 </span><span style="color:#d14">EOF</span>
 </code></pre></div><h3 id="query-from-multiple-groups">Query from Multiple Groups</h3>
-<p>When querying data from multiple groups, you can combine streams that share the same measure name. Note the following requirements:</p>
+<p>When querying data from multiple groups, you can combine streams that share the same stream name. Note the following requirements:</p>
 <ul>
 <li>Entity tag names must be identical across groups.</li>
 <li>Tags with the same name across different groups must share the same type.</li>
@@ -1577,6 +1593,10 @@ for example, if you want to get the schema of a stream named <code>segment</code
 
     </div>
     
+
+
+
+
 
 
 

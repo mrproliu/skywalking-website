@@ -36,7 +36,7 @@ bydbctl is the command line tool in examples.
 Find the Top-N entities from a dataset in a time range is a common scenario. Top-n-aggregation aims to pre-calculate the top/bottom entities during the measure writing phase.
 Create operation Create operation adds a new top-n-aggregation to the database&rsquo;s metadata registry repository. If the top-n-aggregation does not currently exist, create operation will create the schema.">
 
-<meta itemprop="wordCount" content="539">
+<meta itemprop="wordCount" content="531">
 
 
 
@@ -486,6 +486,14 @@ Create operation Create operation adds a new top-n-aggregation to the database&r
 
     <li>
         
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/schema/trace">Trace</a>
+        
+    </li>
+
+    
+
+    <li>
+        
             <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/schema/index-rule">IndexRule</a>
         
     </li>
@@ -537,6 +545,14 @@ Create operation Create operation adds a new top-n-aggregation to the database&r
     <li>
         
             <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/query/stream">Stream</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/query/trace">Trace</a>
         
     </li>
 
@@ -1161,7 +1177,7 @@ Create operation Create operation adds a new top-n-aggregation to the database&r
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 2890d8e</div>
+                  <div class="commit-id">Commit Id: 5dedaa1</div>
                 
 
 
@@ -1195,10 +1211,9 @@ Create operation Create operation adds a new top-n-aggregation to the database&r
 </span><span style="color:#d14">    unit: UNIT_DAY
 </span><span style="color:#d14">    num: 7
 </span><span style="color:#d14">EOF</span>
-</code></pre></div><p>The group creates two shards to store data points. Every day, it would create a
-segment that will generate a block every 2 hours.</p>
+</code></pre></div><p>The group creates two shards to store data points. Every day, it would create a segment.</p>
 <p>The data in this group will keep 7 days.</p>
-<p>The top-n-aggregation monitors the data ingestion of the source measure while  generating ranked top-N entities. We should create such a measure before creating a top-n-aggregation.</p>
+<p>The top-n-aggregation monitors the data ingestion of the source measure while generating ranked top-N entities. We should create such a measure before creating a top-n-aggregation.</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">bydbctl measure create -f - <span style="color:#d14">&lt;&lt;EOF
 </span><span style="color:#d14">metadata:
 </span><span style="color:#d14">  name: service_instance_cpm_minute
@@ -1222,11 +1237,11 @@ segment that will generate a block every 2 hours.</p>
 </span><span style="color:#d14">    encoding_method: ENCODING_METHOD_GORILLA
 </span><span style="color:#d14">    compression_method: COMPRESSION_METHOD_ZSTD
 </span><span style="color:#d14">entity:
-</span><span style="color:#d14">  tagNames: 
+</span><span style="color:#d14">  tagNames:
 </span><span style="color:#d14">    - service_id
 </span><span style="color:#d14">    - entity_id
 </span><span style="color:#d14">sharding_key:
-</span><span style="color:#d14">  tagNames: 
+</span><span style="color:#d14">  tagNames:
 </span><span style="color:#d14">    - service_id
 </span><span style="color:#d14">interval: 1m
 </span><span style="color:#d14">EOF</span>
@@ -1514,6 +1529,10 @@ segment that will generate a block every 2 hours.</p>
 
     </div>
     
+
+
+
+
 
 
 

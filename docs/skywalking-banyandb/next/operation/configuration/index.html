@@ -32,7 +32,7 @@
 <meta itemprop="description" content="Configuration BanyanD is the BanyanDB server. There are two ways to configure BanyanD: using a bootstrap flag or using environment variables. The environment variable name has a prefix BYDB_ followed by the flag name in uppercase. For example, the flag --port can be set using the environment variable BYDB_PORT.
  BanyanDB supports both absolute and relative paths for directory and file configurations (such as data directories, TLS certificates, keys, etc.). Relative paths are resolved against the current working directory where the BanyanD process is started.">
 
-<meta itemprop="wordCount" content="1302">
+<meta itemprop="wordCount" content="1349">
 
 
 
@@ -480,6 +480,14 @@
 
     <li>
         
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/schema/trace">Trace</a>
+        
+    </li>
+
+    
+
+    <li>
+        
             <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/schema/index-rule">IndexRule</a>
         
     </li>
@@ -531,6 +539,14 @@
     <li>
         
             <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/query/stream">Stream</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/query/trace">Trace</a>
         
     </li>
 
@@ -1155,7 +1171,7 @@
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 2890d8e</div>
+                  <div class="commit-id">Commit Id: 5dedaa1</div>
                 
 
 
@@ -1258,6 +1274,12 @@ The same certificate/key pair can be reused for both external traffic and the in
 <li><code>--stream-root-path string</code>: The root path of the database (default: &ldquo;/tmp&rdquo;).</li>
 <li><code>--stream-max-fan-out-size bytes</code>: the upper bound of a single file size after merge of stream (default 8.00EiB)</li>
 <li><code>--element-index-flush-timeout duration</code>: The element index timeout of stream (default: 1s).</li>
+</ul>
+<p>The following flags are used to configure the trace storage engine:</p>
+<ul>
+<li><code>--trace-flush-timeout duration</code>: The memory data timeout of trace (default: 1s).</li>
+<li><code>--trace-root-path string</code>: The root path of the database (default: &ldquo;/tmp&rdquo;).</li>
+<li><code>--trace-max-fan-out-size bytes</code>: the upper bound of a single file size after merge of trace (default 8.00EiB)</li>
 </ul>
 <p>The following flags are used to configure the embedded etcd storage engine which is only used when running as a standalone server:</p>
 <ul>
@@ -1534,6 +1556,10 @@ The same certificate/key pair can be reused for both external traffic and the in
 
     </div>
     
+
+
+
+
 
 
 

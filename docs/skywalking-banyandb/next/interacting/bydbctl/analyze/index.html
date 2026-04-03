@@ -26,7 +26,7 @@
 <meta property="og:description" content="Analyze the data bydbctl provides a powerful subcommand analyze to analyze the data stored in BanyanDB. The analyze subcommand supports the following operations:
 Analyze the series bydbctl analyze series to analyze the series cardinality and distribution, which is useful for understanding the performance impact of the series.
 Flags:
- -s or --subject: The name of stream or measure in the series index. If it&rsquo;s absent, the command will analyze all series in the series index." />
+ -s or --subject: The name of stream, measure or trace in the series index. If it&rsquo;s absent, the command will analyze all series in the series index." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/docs/skywalking-banyandb/next/interacting/bydbctl/analyze/" />
 
@@ -34,9 +34,9 @@ Flags:
 <meta itemprop="description" content="Analyze the data bydbctl provides a powerful subcommand analyze to analyze the data stored in BanyanDB. The analyze subcommand supports the following operations:
 Analyze the series bydbctl analyze series to analyze the series cardinality and distribution, which is useful for understanding the performance impact of the series.
 Flags:
- -s or --subject: The name of stream or measure in the series index. If it&rsquo;s absent, the command will analyze all series in the series index.">
+ -s or --subject: The name of stream, measure or trace in the series index. If it&rsquo;s absent, the command will analyze all series in the series index.">
 
-<meta itemprop="wordCount" content="228">
+<meta itemprop="wordCount" content="230">
 
 
 
@@ -46,7 +46,7 @@ Flags:
 <meta name="twitter:description" content="Analyze the data bydbctl provides a powerful subcommand analyze to analyze the data stored in BanyanDB. The analyze subcommand supports the following operations:
 Analyze the series bydbctl analyze series to analyze the series cardinality and distribution, which is useful for understanding the performance impact of the series.
 Flags:
- -s or --subject: The name of stream or measure in the series index. If it&rsquo;s absent, the command will analyze all series in the series index."/>
+ -s or --subject: The name of stream, measure or trace in the series index. If it&rsquo;s absent, the command will analyze all series in the series index."/>
 
 
 
@@ -486,6 +486,14 @@ Flags:
 
     <li>
         
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/schema/trace">Trace</a>
+        
+    </li>
+
+    
+
+    <li>
+        
             <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/schema/index-rule">IndexRule</a>
         
     </li>
@@ -537,6 +545,14 @@ Flags:
     <li>
         
             <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/query/stream">Stream</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/query/trace">Trace</a>
         
     </li>
 
@@ -1161,7 +1177,7 @@ Flags:
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 2890d8e</div>
+                  <div class="commit-id">Commit Id: 5dedaa1</div>
                 
 
 
@@ -1180,7 +1196,7 @@ Flags:
 <p><code>bydbctl analyze series</code> to analyze the series cardinality and distribution, which is useful for understanding the performance impact of the series.</p>
 <p>Flags:</p>
 <ul>
-<li><code>-s</code> or <code>--subject</code>: The name of stream or measure in the series index. If it&rsquo;s absent, the command will analyze all series in the series index.</li>
+<li><code>-s</code> or <code>--subject</code>: The name of stream, measure or trace in the series index. If it&rsquo;s absent, the command will analyze all series in the series index.</li>
 </ul>
 <p>Arguments:</p>
 <ul>
@@ -1214,7 +1230,7 @@ total, 1266040
 &quot;bWVzaC1zdnI6OnJlY29tbWVuZGF0aW9uLnNhbXBsZS1zZXJ2aWNlcw==.1_R0VUOi9yY21k&quot;,
 &quot;bWVzaC1zdnI6OnNvbmdzLnNhbXBsZS1zZXJ2aWNlcw==.1_R0VUOi9zb25ncy90b3A=&quot;,
 ...
-</code></pre><p>Each row represents a group of tags which compose a series. They are defined in the <code>entity</code> field on <code>Stream</code> or <code>Measure</code>.</p>
+</code></pre><p>Each row represents a group of tags which compose a series. They are defined in the <code>entity</code> field on <code>Stream</code>, <code>Measure</code> or <code>Trace</code>.</p>
 <p>In this example, <code>endpoint_sla_day</code>&rsquo;s <code>entity</code> is <code>entity_id</code> tag which comes from OAP&rsquo;s internal <code>endpoint_id</code>.</p>
 
 </div>
@@ -1423,6 +1439,10 @@ total, 1266040
 
     </div>
     
+
+
+
+
 
 
 
