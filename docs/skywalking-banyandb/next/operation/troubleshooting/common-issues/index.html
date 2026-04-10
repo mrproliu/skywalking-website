@@ -36,7 +36,7 @@ Group Not Found During Startup Symptom After starting or restarting BanyanDB, yo
 On liaison nodes:
 {&quot;level&quot;:&quot;error&quot;,&quot;module&quot;:&quot;SERVER-QUEUE-PUB-DATA&quot;,&quot;error&quot;:&quot;failed to receive response for chunk 0: rpc error: code = Unknown desc = failed to create part handler: group zipkinTrace not found&quot;,&quot;time&quot;:&quot;2026-03-18T05:17:05Z&quot;,&quot;message&quot;:&quot;chunk send failed, aborting sync session&quot;} {&quot;level&quot;:&quot;warn&quot;,&quot;module&quot;:&quot;TRACE&quot;,&quot;error&quot;:&quot;failed to sync streaming part: failed to stream parts: failed to send chunk 0: failed to receive response for chunk 0: rpc error: code = Unknown desc = failed to create part handler: group zipkinTrace not found&quot;,&quot;node&quot;:&quot;banyandb-data-hot-1.">
 
-<meta itemprop="wordCount" content="551">
+<meta itemprop="wordCount" content="447">
 
 
 
@@ -1177,7 +1177,7 @@ On liaison nodes:
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 29e87c9</div>
+                  <div class="commit-id">Commit Id: 5c42cd0</div>
                 
 
 
@@ -1203,12 +1203,7 @@ On liaison nodes:
 {&quot;level&quot;:&quot;error&quot;,&quot;module&quot;:&quot;SERVER-QUEUE-SUB&quot;,&quot;error&quot;:&quot;failed to create part handler: group zipkinTrace not found&quot;,&quot;session_id&quot;:&quot;sync-1773811045574321157&quot;,&quot;time&quot;:&quot;2026-03-18T05:17:25Z&quot;,&quot;message&quot;:&quot;failed to process chunk&quot;}
 </code></pre><p>The group name in the error (e.g., <code>zipkinTrace</code>) may vary depending on your configuration. These errors appear in the logs during the initial startup phase and affect both query and write operations temporarily.</p>
 <h3 id="applicable-scenario">Applicable Scenario</h3>
-<p>This issue is most commonly seen when <code>schema-registry-mode</code> is set to <code>property</code>, which is the <strong>default</strong> mode. However, it can also occur in <code>etcd</code> mode when the node is under heavy CPU pressure.</p>
-<p>BanyanDB supports two schema registry modes:</p>
-<ul>
-<li><strong><code>property</code></strong> (default): Schema metadata is synchronized between nodes via an internal property-based protocol. This mode does not require an external etcd cluster. The startup delay is more pronounced in this mode due to the push-pull synchronization mechanism.</li>
-<li><strong><code>etcd</code></strong>: Schema metadata is stored and distributed through etcd. This mode generally provides faster schema availability upon startup, but under high CPU pressure, nodes may still experience delays in loading the schema from etcd.</li>
-</ul>
+<p>This issue occurs during startup when the property-based schema registry has not yet completed synchronization. It can be more pronounced when the node is under heavy CPU pressure.</p>
 <h3 id="cause">Cause</h3>
 <p>In <code>property</code> mode, schema metadata is distributed through a hybrid push-pull mechanism:</p>
 <ul>
@@ -1226,7 +1221,6 @@ On liaison nodes:
 <li><strong>Wait for sync</strong>: The error should disappear within one or two sync intervals (default: 30-60 seconds) after startup.</li>
 <li><strong>Check resource allocation</strong>: If the error persists for an extended period, verify that the nodes have sufficient CPU and memory resources.</li>
 <li><strong>Adjust sync interval</strong>: If faster startup convergence is needed, you can reduce the sync interval with <code>--schema-property-client-sync-interval</code> (e.g., <code>10s</code>), though this increases the background sync overhead.</li>
-<li><strong>Switch to etcd mode</strong>: For environments where immediate schema availability at startup is critical, consider using <code>--schema-registry-mode=etcd</code> with an external etcd cluster.</li>
 </ul>
 
 </div>
@@ -1437,6 +1431,8 @@ On liaison nodes:
 
     </div>
     
+
+
 
 
 

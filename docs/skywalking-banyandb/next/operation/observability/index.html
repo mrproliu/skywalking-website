@@ -34,7 +34,7 @@ logging-env is used to set the logging environment." />
 Logging BanyanDB uses the zerolog library for logging. The log level can be set using the log-level flag. The supported log levels are debug, info, warn, error, and fatal. The default log level is info.
 logging-env is used to set the logging environment.">
 
-<meta itemprop="wordCount" content="2217">
+<meta itemprop="wordCount" content="2215">
 
 
 
@@ -1174,7 +1174,7 @@ logging-env is used to set the logging environment."/>
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 29e87c9</div>
+                  <div class="commit-id">Commit Id: 5c42cd0</div>
                 
 
 
@@ -1192,7 +1192,7 @@ logging-env is used to set the logging environment."/>
 <h2 id="logging">Logging</h2>
 <p>BanyanDB uses the <a href="https://github.com/rs/zerolog">zerolog</a> library for logging. The log level can be set using the <code>log-level</code> flag. The supported log levels are <code>debug</code>, <code>info</code>, <code>warn</code>, <code>error</code>, and <code>fatal</code>. The default log level is <code>info</code>.</p>
 <p><code>logging-env</code> is used to set the logging environment. The default value is <code>prod</code>. The logging environment can be set to <code>dev</code> for development or <code>prod</code> for production. The logging environment affects the log format and output. In the <code>dev</code> environment, logs are output in a human-readable format, while in the <code>prod</code> environment, logs are output in JSON format.</p>
-<p><code>logging-modules</code> and <code>logging-levels</code> are used to set the log level for specific modules. The <code>logging-modules</code> flag is a comma-separated list of module names, and the <code>logging-levels</code> flag is a comma-separated list of log levels corresponding to the module names. The log level for a specific module can be set using these flags. Available modules are <code>storage</code>, <code>distributed-query</code>, <code>liaison-grpc</code>, <code>liaison-http</code>, <code>measure</code>, <code>stream</code>, <code>trace</code>, <code>metadata</code>, <code>etcd-client</code>, <code>etcd-server</code>, <code>schema-registry</code>, <code>metrics</code>, <code>pprof-service</code>, <code>query</code>, <code>server-queue-sub</code>, <code>server-queue-pub</code>. For example, to set the log level for the <code>storage</code> module to <code>debug</code>, you can use the following flags:</p>
+<p><code>logging-modules</code> and <code>logging-levels</code> are used to set the log level for specific modules. The <code>logging-modules</code> flag is a comma-separated list of module names, and the <code>logging-levels</code> flag is a comma-separated list of log levels corresponding to the module names. The log level for a specific module can be set using these flags. Available modules are <code>storage</code>, <code>distributed-query</code>, <code>liaison-grpc</code>, <code>liaison-http</code>, <code>measure</code>, <code>stream</code>, <code>trace</code>, <code>metadata</code>, <code>schema-registry</code>, <code>metrics</code>, <code>pprof-service</code>, <code>query</code>, <code>server-queue-sub</code>, <code>server-queue-pub</code>. For example, to set the log level for the <code>storage</code> module to <code>debug</code>, you can use the following flags:</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">--logging-modules<span style="color:#000;font-weight:bold">=</span>storage --logging-levels<span style="color:#000;font-weight:bold">=</span>debug
 </code></pre></div><h3 id="slow-query-logging">Slow Query Logging</h3>
 <p>BanyanDB supports slow query logging. The <code>slow-query</code> flag is used to set the slow query threshold. If a query takes longer than the threshold, it will be logged as a slow query. The default value is <code>0</code>, which means no slow query logging. This flag is only used for the data and standalone servers.</p>
@@ -1221,8 +1221,8 @@ logging-env is used to set the logging environment."/>
 <h4 id="write-and-query-errors-rate">Write and Query Errors Rate</h4>
 <p>The write and query errors rate is the number of write and query errors per minute. It is calculated by summing the total number of write and query errors from liaison and data servers.</p>
 <p><strong>Expression</strong>: <code>sum(rate(banyandb_liaison_grpc_total_err{job=~\&quot;$job\&quot;,instance=~\&quot;$instance\&quot;,method=\&quot;query\&quot;}[$__rate_interval])*60) + sum(rate(banyandb_liaison_grpc_total_stream_msg_sent_err{job=~\&quot;$job\&quot;,instance=~\&quot;$instance\&quot;}[$__rate_interval])*60) + sum(rate(banyandb_liaison_grpc_total_stream_msg_received_err{job=~\&quot;$job\&quot;,instance=~\&quot;$instance\&quot;}[$__rate_interval])*60)  + sum(rate(banyandb_queue_sub_total_msg_sent_err{job=~\&quot;$job\&quot;,instance=~\&quot;$instance\&quot;}[$__rate_interval])*60)</code></p>
-<h4 id="etcd-operation-rate">Etcd Operation Rate</h4>
-<p>The etcd operation rate is the number of etcd operations per second. It is calculated by summing the total number of etcd operations.</p>
+<h4 id="registry-operation-rate">Registry Operation Rate</h4>
+<p>The registry operation rate is the number of registry operations per second. It is calculated by summing the total number of registry operations.</p>
 <p><strong>Expression</strong>: <code>sum(rate(banyandb_liaison_grpc_total_registry_started{job=~\&quot;$job\&quot;,instance=~\&quot;$instance\&quot;}[$__rate_interval])) + sum(rate(banyandb_liaison_grpc_total_started{job=~\&quot;$job\&quot;,instance=~\&quot;$instance\&quot;,method!=\&quot;query\&quot;}[$__rate_interval]))</code></p>
 <h4 id="active-instances">Active Instances</h4>
 <p>The active instances is the number of active instances in the BanyanDB cluster.</p>
@@ -1623,6 +1623,8 @@ logging-env is used to set the logging environment."/>
 
     </div>
     
+
+
 
 
 

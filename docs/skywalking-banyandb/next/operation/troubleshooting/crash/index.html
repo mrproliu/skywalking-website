@@ -25,16 +25,16 @@
 <title>Troubleshooting Crash Issues | Apache SkyWalking</title><meta property="og:title" content="Troubleshooting Crash Issues" />
 <meta property="og:description" content="Troubleshooting Crash Issues If BanyanDB processes crash or encounter file corruption, follow these steps to diagnose and recover from the issue.
 Remove Corrupted Standalone Metadata If the BanyanDB standalone process crashes due to corrupted metadata. You should remove the corrupted metadata:
- Shutdown BanyanDB:  Before making any changes to the data files, ensure that BanyanDB is not running. This prevents further corruption and ensures data integrity. Send SIGTERM or SIGINT signals to the BanyanDB process to gracefully shut it down   Locate the Metadata File:  The metadata file is located in the standalone directory." />
+ Shutdown BanyanDB:  Before making any changes to the data files, ensure that BanyanDB is not running. This prevents further corruption and ensures data integrity. Send SIGTERM or SIGINT signals to the BanyanDB process to gracefully shut it down   Locate the Metadata File:  Schema metadata is stored by the property-based schema server embedded in every data node." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/docs/skywalking-banyandb/next/operation/troubleshooting/crash/" />
 
 <meta itemprop="name" content="Troubleshooting Crash Issues">
 <meta itemprop="description" content="Troubleshooting Crash Issues If BanyanDB processes crash or encounter file corruption, follow these steps to diagnose and recover from the issue.
 Remove Corrupted Standalone Metadata If the BanyanDB standalone process crashes due to corrupted metadata. You should remove the corrupted metadata:
- Shutdown BanyanDB:  Before making any changes to the data files, ensure that BanyanDB is not running. This prevents further corruption and ensures data integrity. Send SIGTERM or SIGINT signals to the BanyanDB process to gracefully shut it down   Locate the Metadata File:  The metadata file is located in the standalone directory.">
+ Shutdown BanyanDB:  Before making any changes to the data files, ensure that BanyanDB is not running. This prevents further corruption and ensures data integrity. Send SIGTERM or SIGINT signals to the BanyanDB process to gracefully shut it down   Locate the Metadata File:  Schema metadata is stored by the property-based schema server embedded in every data node.">
 
-<meta itemprop="wordCount" content="410">
+<meta itemprop="wordCount" content="408">
 
 
 
@@ -43,7 +43,7 @@ Remove Corrupted Standalone Metadata If the BanyanDB standalone process crashes 
 <meta name="twitter:title" content="Troubleshooting Crash Issues"/>
 <meta name="twitter:description" content="Troubleshooting Crash Issues If BanyanDB processes crash or encounter file corruption, follow these steps to diagnose and recover from the issue.
 Remove Corrupted Standalone Metadata If the BanyanDB standalone process crashes due to corrupted metadata. You should remove the corrupted metadata:
- Shutdown BanyanDB:  Before making any changes to the data files, ensure that BanyanDB is not running. This prevents further corruption and ensures data integrity. Send SIGTERM or SIGINT signals to the BanyanDB process to gracefully shut it down   Locate the Metadata File:  The metadata file is located in the standalone directory."/>
+ Shutdown BanyanDB:  Before making any changes to the data files, ensure that BanyanDB is not running. This prevents further corruption and ensures data integrity. Send SIGTERM or SIGINT signals to the BanyanDB process to gracefully shut it down   Locate the Metadata File:  Schema metadata is stored by the property-based schema server embedded in every data node."/>
 
 
 
@@ -1174,7 +1174,7 @@ Remove Corrupted Standalone Metadata If the BanyanDB standalone process crashes 
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 29e87c9</div>
+                  <div class="commit-id">Commit Id: 5c42cd0</div>
                 
 
 
@@ -1200,8 +1200,8 @@ Remove Corrupted Standalone Metadata If the BanyanDB standalone process crashes 
 </li>
 <li><strong>Locate the Metadata File</strong>:
 <ul>
-<li>The metadata file is located in the standalone directory.</li>
-<li>Navigate to the directory where BanyanDB stores its standalone data. This is typically specified in the <a href="../../configuration#data--storage">metadata-root-path</a></li>
+<li>Schema metadata is stored by the property-based schema server embedded in every data node.</li>
+<li>Navigate to the directory pointed to by <a href="../../configuration#schema-server-data-node"><code>--schema-server-root-path</code></a> (default <code>/tmp</code>).</li>
 </ul>
 </li>
 </ol>
@@ -1464,6 +1464,8 @@ Monitor the BanyanDB logs for any error messages indicating data corruption. The
 
     </div>
     
+
+
 
 
 

@@ -7309,6 +7309,12 @@
   </url>
   
   <url>
+    <loc>/docs/skywalking-java/next/en/setup/service-agent/java-agent/claude-skills/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/docs/main/next/en/guides/claude-code-skills/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
