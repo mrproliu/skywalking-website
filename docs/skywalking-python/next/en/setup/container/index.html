@@ -24,19 +24,17 @@
 
 <title>Apache SkyWalking Python Agent dockerfile and images | Apache SkyWalking</title><meta property="og:title" content="Apache SkyWalking Python Agent dockerfile and images" />
 <meta property="og:description" content="Apache SkyWalking Python Agent dockerfile and images Docker images are not official ASF releases but provided for convenience. Recommended usage is always to build the source
-This image hosts the SkyWalking Python agent package on top of official Python base images (full &amp; slim) providing support from Python 3.8 - 3.11.
-How to use this image The images are hosted at Docker Hub.
-The images come with protocol variants(gRPC, Kafka, HTTP) and base Python variants(Full, Slim)." />
+This image hosts the SkyWalking Python agent package on top of official Python base images (full &amp; slim) providing support from Python 3.10 - 3.14.
+Known Limitations  Python 3.14: greenlet/gevent profiling is not supported yet (greenlet does not have 3.14 wheels). Thread-based profiling works normally." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/docs/skywalking-python/next/en/setup/container/" />
 
 <meta itemprop="name" content="Apache SkyWalking Python Agent dockerfile and images">
 <meta itemprop="description" content="Apache SkyWalking Python Agent dockerfile and images Docker images are not official ASF releases but provided for convenience. Recommended usage is always to build the source
-This image hosts the SkyWalking Python agent package on top of official Python base images (full &amp; slim) providing support from Python 3.8 - 3.11.
-How to use this image The images are hosted at Docker Hub.
-The images come with protocol variants(gRPC, Kafka, HTTP) and base Python variants(Full, Slim).">
+This image hosts the SkyWalking Python agent package on top of official Python base images (full &amp; slim) providing support from Python 3.10 - 3.14.
+Known Limitations  Python 3.14: greenlet/gevent profiling is not supported yet (greenlet does not have 3.14 wheels). Thread-based profiling works normally.">
 
-<meta itemprop="wordCount" content="236">
+<meta itemprop="wordCount" content="256">
 
 
 
@@ -44,9 +42,8 @@ The images come with protocol variants(gRPC, Kafka, HTTP) and base Python varian
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Apache SkyWalking Python Agent dockerfile and images"/>
 <meta name="twitter:description" content="Apache SkyWalking Python Agent dockerfile and images Docker images are not official ASF releases but provided for convenience. Recommended usage is always to build the source
-This image hosts the SkyWalking Python agent package on top of official Python base images (full &amp; slim) providing support from Python 3.8 - 3.11.
-How to use this image The images are hosted at Docker Hub.
-The images come with protocol variants(gRPC, Kafka, HTTP) and base Python variants(Full, Slim)."/>
+This image hosts the SkyWalking Python agent package on top of official Python base images (full &amp; slim) providing support from Python 3.10 - 3.14.
+Known Limitations  Python 3.14: greenlet/gevent profiling is not supported yet (greenlet does not have 3.14 wheels). Thread-based profiling works normally."/>
 
 
 
@@ -564,7 +561,7 @@ The images come with protocol variants(gRPC, Kafka, HTTP) and base Python varian
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: b91ebc4</div>
+                  <div class="commit-id">Commit Id: 263a936</div>
                 
 
 
@@ -602,7 +599,11 @@ The images come with protocol variants(gRPC, Kafka, HTTP) and base Python varian
 <p><strong>Docker images are not official ASF releases but provided for convenience. Recommended usage is always to build the
 source</strong></p>
 <p>This image hosts the SkyWalking Python agent package on top of official Python base images (full &amp; slim) providing support from
-Python 3.8 - 3.11.</p>
+Python 3.10 - 3.14.</p>
+<h3 id="known-limitations">Known Limitations</h3>
+<ul>
+<li><strong>Python 3.14</strong>: greenlet/gevent profiling is not supported yet (greenlet does not have 3.14 wheels). Thread-based profiling works normally.</li>
+</ul>
 <h2 id="how-to-use-this-image">How to use this image</h2>
 <p>The images are hosted at <a href="https://hub.docker.com/r/apache/skywalking-python">Docker Hub</a>.</p>
 <p>The images come with protocol variants(gRPC, Kafka, HTTP) and base Python variants(Full, Slim).</p>
@@ -707,6 +708,11 @@ SW_PYTHON_AGENT_PROTOCOL # agent protocol - grpc/ http/ kafka
   <ul>
     <li><a href="#apache-skywalking-python-agent-dockerfile-and-images">Apache SkyWalking Python Agent dockerfile and images</a>
       <ul>
+        <li>
+          <ul>
+            <li><a href="#known-limitations">Known Limitations</a></li>
+          </ul>
+        </li>
         <li><a href="#how-to-use-this-image">How to use this image</a>
           <ul>
             <li><a href="#build-your-python-application-image-on-top-of-this-image">Build your Python application image on top of this image</a></li>
@@ -830,6 +836,10 @@ SW_PYTHON_AGENT_PROTOCOL # agent protocol - grpc/ http/ kafka
 
     </div>
     
+
+
+
+
 
 
 

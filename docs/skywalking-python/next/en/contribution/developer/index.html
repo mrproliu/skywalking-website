@@ -36,7 +36,7 @@ First you need to have the make command available:
 # ubuntu/wsl sudo apt-get update sudo apt-get -y install make or
 # windows powershell Set-ExecutionPolicy RemoteSigned -Scope CurrentUser # Optional: Needed to run a remote script the first time irm get.scoop.sh | iex scoop install make Poetry We have migrated from basic pip to Poetry to manage dependencies and package our project.">
 
-<meta itemprop="wordCount" content="247">
+<meta itemprop="wordCount" content="268">
 
 
 
@@ -564,7 +564,7 @@ First you need to have the make command available:
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: b91ebc4</div>
+                  <div class="commit-id">Commit Id: 263a936</div>
                 
 
 
@@ -619,19 +619,21 @@ scoop install make
 (plus manage) a <code>.venv</code> virtual environment for us based on the currently activated Python 3 version. Enjoy coding!</p>
 <p>Note: Make sure you have <code>python3</code> aliased to <code>python</code> available on Windows computers instead of pointing to the Microsoft app store.</p>
 <h3 id="switching-between-multiple-python-versions">Switching between Multiple Python Versions</h3>
-<p>Do not develop/test on Python &lt; 3.8, since Poetry and some other functionalities we implement rely on Python 3.8+</p>
+<p>Do not develop/test on Python &lt; 3.10, since Python 3.8/3.9 have reached end of life</p>
 <p>If you would like to test on multiple Python versions, run the following to switch and recreate virtual environment:</p>
 <h4 id="without-python-version-tools">Without Python Version Tools</h4>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">poetry env use python3.x
 poetry install
 </code></pre></div><h4 id="with-python-version-tools">With Python Version Tools</h4>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">pyenv shell 3.9.11
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">pyenv shell 3.13.0
 poetry env use <span style="color:#000;font-weight:bold">$(</span>pyenv which python<span style="color:#000;font-weight:bold">)</span>
 poetry install
 </code></pre></div><p>Or try: <code>virtualenvs.prefer-active-python</code>, which is an experimental poetry feature that can be set to <code>true</code> so that it will
 automatically follow environment.</p>
 <h1 id="next">Next</h1>
 <p>Refer to the <a href="../how-to-develop-plugin">Plugin Development Guide</a> to learn how to build a new plugin for a library.</p>
+<h2 id="claude-code-skills">Claude Code Skills</h2>
+<p>This project includes Claude Code configuration for AI-assisted development. See <a href="../claude-code-skills">Claude Code Skills</a> for available skills (<code>/new-plugin</code>, <code>/plugin-test</code>) and what <code>CLAUDE.md</code> covers.</p>
 
 </div>
 <div>
@@ -724,7 +726,11 @@ automatically follow environment.</p>
         </li>
       </ul>
     </li>
-    <li><a href="#next">Next</a></li>
+    <li><a href="#next">Next</a>
+      <ul>
+        <li><a href="#claude-code-skills">Claude Code Skills</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
 
@@ -840,6 +846,10 @@ automatically follow environment.</p>
 
     </div>
     
+
+
+
+
 
 
 
