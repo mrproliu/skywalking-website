@@ -30,7 +30,7 @@
 <meta itemprop="name" content="10.5.0">
 <meta itemprop="description" content="10.5.0 Project OAP Server  Add Zipkin Virtual GenAI e2e test. Use zipkin_json exporter to avoid protobuf dependency conflict between opentelemetry-exporter-zipkin-proto-http (protobuf~=3.12) and opentelemetry-proto (protobuf&gt;=5.0). Fix missing taskId filter and incorrect IN clause parameter binding in JDBCJFRDataQueryDAO and JDBCPprofDataQueryDAO. Remove deprecated GroupBy.field_name from BanyanDB MeasureQuery request building (Phase 1 of staged removal across repos). Push taskId filter down to the storage layer in IAsyncProfilerTaskLogQueryDAO, removing in-memory filtering from AsyncProfilerQueryService. Fix missing parentheses around OR conditions in JDBCZipkinQueryDAO.">
 
-<meta itemprop="wordCount" content="220">
+<meta itemprop="wordCount" content="268">
 
 
 
@@ -2780,7 +2780,7 @@
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 7abe7b3</div>
+                  <div class="commit-id">Commit Id: b4a8811</div>
                 
 
 
@@ -2848,6 +2848,9 @@ between <code>opentelemetry-exporter-zipkin-proto-http</code> (protobuf~=3.12) a
 <li>Support MCP (Model Context Protocol) observability for Envoy AI Gateway: MCP metrics (request CPM/latency, method breakdown, backend breakdown, initialization latency, capabilities), MCP access log sampling (errors only), <code>ai_route_type</code> searchable log tag, and MCP dashboard tabs.</li>
 <li>Add weighted handler support to <code>BatchQueue</code> adaptive partitioning. MAL metrics use weight 0.05 at L1 (vs 1.0 for OAL), reducing partition count and memory overhead when many MAL metric types are registered.</li>
 <li>Fix missing <code>taskId</code> filter in pprof task log query and its JDBC/BanyanDB/Elasticsearch implementations.</li>
+<li>Fix duplicate calls in <code>EndpointTopologyBuilder</code> — calls were not deduplicated unlike <code>ServiceTopologyBuilder</code>, causing duplicate entries when storage returns multiple records for the same relation.</li>
+<li>Use <code>containsOnce</code> and <code>noDuplicates</code> for topology dependency e2e expected files to enforce no-duplicate verification.</li>
+<li>Bump infra-e2e to <code>ef073ad</code> to include <code>noDuplicates</code> pipe function support.</li>
 </ul>
 <h4 id="ui">UI</h4>
 <h4 id="documentation">Documentation</h4>
