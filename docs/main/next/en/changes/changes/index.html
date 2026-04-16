@@ -30,7 +30,7 @@
 <meta itemprop="name" content="10.5.0">
 <meta itemprop="description" content="10.5.0 Project  Bump infra-e2e to testcontainers-go v0.42.0 (apache/skywalking-infra-e2e#146), which uses Docker Compose v2 plugin natively and removes docker-compose v1 dependency. Remove deprecated version field from all docker-compose files for Compose v2 compatibility.  OAP Server  Add Zipkin Virtual GenAI e2e test. Use zipkin_json exporter to avoid protobuf dependency conflict between opentelemetry-exporter-zipkin-proto-http (protobuf~=3.12) and opentelemetry-proto (protobuf&gt;=5.0). Fix missing taskId filter and incorrect IN clause parameter binding in JDBCJFRDataQueryDAO and JDBCPprofDataQueryDAO.">
 
-<meta itemprop="wordCount" content="357">
+<meta itemprop="wordCount" content="429">
 
 
 
@@ -2780,7 +2780,7 @@
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 35a8b1c</div>
+                  <div class="commit-id">Commit Id: 097fe8b</div>
                 
 
 
@@ -2861,9 +2861,16 @@ Test additions: add unit tests for 21 JDBC query DAOs verifying SQL/WHERE clause
 <li>Bump infra-e2e to <code>ef073ad</code> to include <code>noDuplicates</code> pipe function support.</li>
 <li>PromQL: support querying Zipkin metadata (service name, remote service name, span name).</li>
 <li>TraceQL: support more tags and variables in Grafana for querying.</li>
+<li>LAL: add <code>sourceAttribute()</code> function for non-persistent OTLP resource attribute access in LAL scripts.</li>
+<li>LAL: add <code>layer: auto</code> mode for dynamic layer assignment when <code>service.layer</code> is absent.</li>
+<li>Add two-phase <code>SpanListener</code> SPI mechanism for extensible trace span processing. Refactor GenAI from hardcoded <code>SpanForward.processGenAILogic()</code> to <code>GenAISpanListener</code>.</li>
+<li>Add OTLP/HTTP receiver support for traces, logs, and metrics (<code>/v1/traces</code>, <code>/v1/logs</code>, <code>/v1/metrics</code>). Supports both <code>application/x-protobuf</code> and <code>application/json</code> content types.</li>
 </ul>
 <h4 id="ui">UI</h4>
 <h4 id="documentation">Documentation</h4>
+<ul>
+<li>Update LAL documentation with <code>sourceAttribute()</code> function and <code>layer: auto</code> mode.</li>
+</ul>
 <p>All issues and pull requests are <a href="https://github.com/apache/skywalking/issues?q=milestone:10.5.0">here</a></p>
 
 </div>

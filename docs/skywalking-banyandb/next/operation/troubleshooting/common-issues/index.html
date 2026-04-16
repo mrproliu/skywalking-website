@@ -36,7 +36,7 @@ Group Not Found During Startup Symptom After starting or restarting BanyanDB, yo
 On liaison nodes:
 {&quot;level&quot;:&quot;error&quot;,&quot;module&quot;:&quot;SERVER-QUEUE-PUB-DATA&quot;,&quot;error&quot;:&quot;failed to receive response for chunk 0: rpc error: code = Unknown desc = failed to create part handler: group zipkinTrace not found&quot;,&quot;time&quot;:&quot;2026-03-18T05:17:05Z&quot;,&quot;message&quot;:&quot;chunk send failed, aborting sync session&quot;} {&quot;level&quot;:&quot;warn&quot;,&quot;module&quot;:&quot;TRACE&quot;,&quot;error&quot;:&quot;failed to sync streaming part: failed to stream parts: failed to send chunk 0: failed to receive response for chunk 0: rpc error: code = Unknown desc = failed to create part handler: group zipkinTrace not found&quot;,&quot;node&quot;:&quot;banyandb-data-hot-1.">
 
-<meta itemprop="wordCount" content="447">
+<meta itemprop="wordCount" content="481">
 
 
 
@@ -1185,7 +1185,7 @@ On liaison nodes:
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: d157821</div>
+                  <div class="commit-id">Commit Id: 5799fb0</div>
                 
 
 
@@ -1230,6 +1230,7 @@ On liaison nodes:
 <li><strong>Check resource allocation</strong>: If the error persists for an extended period, verify that the nodes have sufficient CPU and memory resources.</li>
 <li><strong>Adjust sync interval</strong>: If faster startup convergence is needed, you can reduce the sync interval with <code>--schema-property-client-sync-interval</code> (e.g., <code>10s</code>), though this increases the background sync overhead.</li>
 </ul>
+<p>If you need to inspect what the liaison is trying to sync (for example, when investigating malformed queued parts), see <a href="../../disk-management#inspecting-the-liaison-write-queue-on-disk">Disk Management</a> for the on-disk queue layout, <code>smeta.bin</code> (series metadata), and the <code>dump</code> tool.</p>
 
 </div>
 <div>
