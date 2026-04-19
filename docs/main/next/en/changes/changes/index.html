@@ -30,7 +30,7 @@
 <meta itemprop="name" content="10.5.0">
 <meta itemprop="description" content="10.5.0 Project  Bump infra-e2e to testcontainers-go v0.42.0 (apache/skywalking-infra-e2e#146), which uses Docker Compose v2 plugin natively and removes docker-compose v1 dependency. Remove deprecated version field from all docker-compose files for Compose v2 compatibility.  OAP Server  Add Zipkin Virtual GenAI e2e test. Use zipkin_json exporter to avoid protobuf dependency conflict between opentelemetry-exporter-zipkin-proto-http (protobuf~=3.12) and opentelemetry-proto (protobuf&gt;=5.0). Fix missing taskId filter and incorrect IN clause parameter binding in JDBCJFRDataQueryDAO and JDBCPprofDataQueryDAO.">
 
-<meta itemprop="wordCount" content="448">
+<meta itemprop="wordCount" content="591">
 
 
 
@@ -741,6 +741,32 @@
     <li>
         
             <a href="/docs/main/next/en/setup/service-agent/browser-agent">Browser Monitoring</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
+            <a href="#">Mobile Monitoring<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/backend-ios-monitoring">iOS</a>
+        
+    </li>
+
+    
+
+</ul>
+
         
     </li>
 
@@ -2780,7 +2806,7 @@
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 272ba7d</div>
+                  <div class="commit-id">Commit Id: 9e57d91</div>
                 
 
 
@@ -2867,11 +2893,19 @@ Test additions: add unit tests for 21 JDBC query DAOs verifying SQL/WHERE clause
 <li>Add OTLP/HTTP receiver support for traces, logs, and metrics (<code>/v1/traces</code>, <code>/v1/logs</code>, <code>/v1/metrics</code>). Supports both <code>application/x-protobuf</code> and <code>application/json</code> content types.</li>
 <li>Fix: TTL query add metadata TTL.</li>
 <li>Fix: PersistentWorker used wrong TTL for metrics cache if the storage is BanyanDB.</li>
+<li>Add iOS/iPadOS app monitoring via OpenTelemetry Swift SDK (SWIP-11). Includes the <code>IOS</code> layer, <code>IOSHTTPSpanListener</code> for outbound HTTP client metrics (supports OTel Swift <code>.old</code>/<code>.stable</code>/<code>.httpDup</code> semantic-convention modes via stable-then-legacy attribute fallback), <code>IOSMetricKitSpanListener</code> for daily MetricKit metrics (exit counts split by foreground/background, app-launch / hang-time percentile histograms with finite 30 s overflow ceiling), LAL rules for crash/hang diagnostics, Mobile menu, and iOS dashboards.</li>
+<li>Fix LAL <code>layer: auto</code> mode dropping logs after extractor set the layer. Codegen now propagates <code>layer &quot;...&quot;</code> assignments to <code>LogMetadata.layer</code> so <code>FilterSpec.doSink()</code> sees the script-decided layer.</li>
+<li>Fix MetricKit histogram percentile metrics being reported at 1000× their true value — the listener now marks its <code>SampleFamily</code> with <code>defaultHistogramBucketUnit(MILLISECONDS)</code> so MAL&rsquo;s default SECONDS→MS rescale of <code>le</code> labels is not applied.</li>
 </ul>
 <h4 id="ui">UI</h4>
+<ul>
+<li>Add mobile menu icon and i18n labels for the iOS layer.</li>
+<li>Fix metric label rendering in multi-expression dashboard widgets.</li>
+</ul>
 <h4 id="documentation">Documentation</h4>
 <ul>
 <li>Update LAL documentation with <code>sourceAttribute()</code> function and <code>layer: auto</code> mode.</li>
+<li>Add iOS app monitoring setup documentation.</li>
 </ul>
 <p>All issues and pull requests are <a href="https://github.com/apache/skywalking/issues?q=milestone:10.5.0">here</a></p>
 
@@ -3066,6 +3100,8 @@ Test additions: add unit tests for 21 JDBC query DAOs verifying SQL/WHERE clause
 
     </div>
     
+
+
 
 
 
