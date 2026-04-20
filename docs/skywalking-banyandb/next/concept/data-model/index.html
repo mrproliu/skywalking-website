@@ -36,7 +36,7 @@ Groups Group does not provide a mechanism for isolating groups of resources with
 Structure of BanyanDB The hierarchy that data is organized into streams, measures, traces and properties in groups.
 Groups Group does not provide a mechanism for isolating groups of resources within a single banyand-server but is the minimal unit to manage physical structures.">
 
-<meta itemprop="wordCount" content="2492">
+<meta itemprop="wordCount" content="2580">
 
 
 
@@ -1185,7 +1185,7 @@ Groups Group does not provide a mechanism for isolating groups of resources with
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 998ce31</div>
+                  <div class="commit-id">Commit Id: a05c3ef</div>
                 
 
 
@@ -1428,6 +1428,14 @@ functions to them.</p>
 <li><code>StreamService</code> provides <code>Write</code>, <code>Query</code></li>
 <li><code>TraceService</code> provides <code>Write</code>, <code>Query</code></li>
 </ul>
+<h3 id="query-projection-flexibility">Query Projection Flexibility</h3>
+<p>As of 0.10.0, tags used in query criteria (the <code>WHERE</code> clause) no longer need to be included in the projection (the <code>SELECT</code> clause). Previously, any tag referenced in a filter condition had to also appear in the result projection. This restriction has been removed, allowing more flexible queries.</p>
+<p>For example, the following query filters on <code>service_id</code> but only projects <code>duration</code>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#000;font-weight:bold">SELECT</span> duration
+<span style="color:#000;font-weight:bold">FROM</span> MEASURE service_latency <span style="color:#000;font-weight:bold">IN</span> production
+TIME <span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#d14">&#39;-30m&#39;</span>
+<span style="color:#000;font-weight:bold">WHERE</span> service_id <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#39;frontend&#39;</span>;
+</code></pre></div><p>This applies to queries across <code>Stream</code>, <code>Measure</code>, and <code>Trace</code> data models.</p>
 <h3 id="indexrule--indexrulebinding">IndexRule &amp; IndexRuleBinding</h3>
 <p>An <code>IndexRule</code> indicates which tags are indexed. An <code>IndexRuleBinding</code> binds an index rule to the target resources or the <code>subject</code>. There might be several rule bindings to a single resource, but their effective time range could NOT overlap.</p>
 <p><img src="https://skywalking.apache.org/doc-graph/banyandb/v0.2.0/index-binding.png" alt="Index binding"></p>
@@ -1605,6 +1613,7 @@ functions to them.</p>
         </li>
         <li><a href="#data-retrieval">Data Retrieval</a>
           <ul>
+            <li><a href="#query-projection-flexibility">Query Projection Flexibility</a></li>
             <li><a href="#indexrule--indexrulebinding">IndexRule &amp; IndexRuleBinding</a></li>
             <li><a href="#index-granularity">Index Granularity</a></li>
           </ul>
@@ -1726,6 +1735,8 @@ functions to them.</p>
 
     </div>
     
+
+
 
 
 

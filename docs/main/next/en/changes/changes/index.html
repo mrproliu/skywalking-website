@@ -30,7 +30,7 @@
 <meta itemprop="name" content="10.5.0">
 <meta itemprop="description" content="10.5.0 Project  Bump infra-e2e to testcontainers-go v0.42.0 (apache/skywalking-infra-e2e#146), which uses Docker Compose v2 plugin natively and removes docker-compose v1 dependency. Remove deprecated version field from all docker-compose files for Compose v2 compatibility.  OAP Server  Add Zipkin Virtual GenAI e2e test. Use zipkin_json exporter to avoid protobuf dependency conflict between opentelemetry-exporter-zipkin-proto-http (protobuf~=3.12) and opentelemetry-proto (protobuf&gt;=5.0). Fix missing taskId filter and incorrect IN clause parameter binding in JDBCJFRDataQueryDAO and JDBCPprofDataQueryDAO.">
 
-<meta itemprop="wordCount" content="591">
+<meta itemprop="wordCount" content="611">
 
 
 
@@ -2806,7 +2806,7 @@
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 9e57d91</div>
+                  <div class="commit-id">Commit Id: 681a5be</div>
                 
 
 
@@ -2879,6 +2879,7 @@ Bug fixes: duplicate <code>TABLE_COLUMN</code> condition in <code>JDBCMetadataQu
 wrong merged table check in <code>JFRDataQueryEsDAO</code> (used incorrect INDEX_NAME due to copy-paste),
 and missing <code>isMergedTable</code> check in <code>ProfileTaskQueryEsDAO.getById()</code>.
 Test additions: add unit tests for 21 JDBC query DAOs verifying SQL/WHERE clause construction.</li>
+<li>Optimize <code>TraceQueryService.sortSpans</code> from O(N^2) to O(N) by pre-indexing spans by <code>segmentSpanId</code>, so trace detail queries scale linearly with span count.</li>
 <li>Support MCP (Model Context Protocol) observability for Envoy AI Gateway: MCP metrics (request CPM/latency, method breakdown, backend breakdown, initialization latency, capabilities), MCP access log sampling (errors only), <code>ai_route_type</code> searchable log tag, and MCP dashboard tabs.</li>
 <li>Add weighted handler support to <code>BatchQueue</code> adaptive partitioning. MAL metrics use weight 0.05 at L1 (vs 1.0 for OAL), reducing partition count and memory overhead when many MAL metric types are registered.</li>
 <li>Fix missing <code>taskId</code> filter in pprof task log query and its JDBC/BanyanDB/Elasticsearch implementations.</li>
@@ -3100,6 +3101,8 @@ Test additions: add unit tests for 21 JDBC query DAOs verifying SQL/WHERE clause
 
     </div>
     
+
+
 
 
 
