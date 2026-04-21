@@ -36,7 +36,7 @@ bydbctl is the command line tool in examples.
 The input contains two parts:
  Request: a YAML-based text which is defined by the API Time Range: YAML and CLI&rsquo;s flags both support it.  Time Range The query specification contains time_range field. The request should set absolute times to it. bydbctl also provides start and end flags to support passing absolute and relative times.">
 
-<meta itemprop="wordCount" content="816">
+<meta itemprop="wordCount" content="934">
 
 
 
@@ -1185,7 +1185,7 @@ The input contains two parts:
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: a05c3ef</div>
+                  <div class="commit-id">Commit Id: 9654d08</div>
                 
 
 
@@ -1262,7 +1262,19 @@ for example, if you want to get the schema of a stream named <code>segment</code
     - name: tags
       type: TAG_TYPE_STRING_ARRAY
   updatedAt: null
-</code></pre></div><h2 id="examples">Examples</h2>
+</code></pre></div><h2 id="element-identity-and-deduplication">Element identity and deduplication</h2>
+<p>Each stream element has an internal element identity in addition to the series ID and timestamp.</p>
+<ul>
+<li>If a write request carries <code>element_id</code>, BanyanDB derives the element identity from it.</li>
+<li>If <code>element_id</code> is omitted, BanyanDB generates the element identity on the server side.</li>
+</ul>
+<p>This affects query results in two ways:</p>
+<ul>
+<li>Two elements with the same entity and timestamp but different element identities are still distinct stream elements, so both may appear in the result.</li>
+<li>BanyanDB deduplicates query results by element identity during scan and merge. Re-ingesting the same payload without a stable <code>element_id</code> creates a new element identity, so the query result treats it as a separate element.</li>
+</ul>
+<p>See <a href="../../../client#stream-element-identity">Client APIs</a> for the write-side behavior.</p>
+<h2 id="examples">Examples</h2>
 <p>The following examples use above schema to show how to query data in a stream and cover some common use cases:</p>
 <h3 id="query-between-specific-time-range">Query between specific time range</h3>
 <p>To retrieve elements in a stream named <code>sw</code> between <code>2022-10-15T22:32:48Z</code> and <code>2022-10-15T23:32:48Z</code> could use the below command. These elements also choose a tag <code>trace_id</code> which lives in a family named <code>searchable</code>.</p>
@@ -1470,6 +1482,7 @@ for example, if you want to get the schema of a stream named <code>segment</code
       <ul>
         <li><a href="#time-range">Time Range</a></li>
         <li><a href="#understand-the-schema-you-are-querying">Understand the schema you are querying</a></li>
+        <li><a href="#element-identity-and-deduplication">Element identity and deduplication</a></li>
         <li><a href="#examples">Examples</a>
           <ul>
             <li><a href="#query-between-specific-time-range">Query between specific time range</a></li>
@@ -1601,6 +1614,10 @@ for example, if you want to get the schema of a stream named <code>segment</code
 
     </div>
     
+
+
+
+
 
 
 

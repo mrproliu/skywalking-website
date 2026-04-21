@@ -38,7 +38,7 @@ Through this connection, clients can query existing data or perform bulk data wr
 All Protocol Buffer (.proto) definitions used by the client are maintained in the
 BanyanDB Client Proto Definitions Repository.">
 
-<meta itemprop="wordCount" content="102">
+<meta itemprop="wordCount" content="187">
 
 
 
@@ -1188,7 +1188,7 @@ BanyanDB Client Proto Definitions Repository."/>
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: a05c3ef</div>
+                  <div class="commit-id">Commit Id: 9654d08</div>
                 
 
 
@@ -1209,6 +1209,13 @@ Through this connection, clients can <strong>query</strong> existing data or <st
 <a href="https://github.com/apache/skywalking-banyandb-client-proto">BanyanDB Client Proto Definitions Repository</a>.</p>
 <p>Since version <strong>0.10.0</strong>, BanyanDB introduces <strong>schema-based validation</strong> for all write operations.<br>
 Each write request must strictly follow the schema definitions defined in the database to ensure data consistency and integrity.</p>
+<h2 id="stream-element-identity">Stream element identity</h2>
+<p>For stream writes, <code>element_id</code> is optional.</p>
+<ul>
+<li>If the client sets <code>element_id</code>, BanyanDB derives the internal element identity from the group, stream name, and <code>element_id</code> value. Use a stable <code>element_id</code> when retries or re-sends should refer to the same logical element.</li>
+<li>If the client omits <code>element_id</code>, BanyanDB generates a server-side element ID for that write. This is convenient for append-only ingestion, but repeated writes without a stable <code>element_id</code> are treated as different elements.</li>
+</ul>
+<p>See <a href="./../bydbctl/query/stream#element-identity-and-deduplication">Query Streams</a> for how element identity affects query results.</p>
 
 </div>
 <div>
@@ -1288,6 +1295,17 @@ Each write request must strictly follow the schema definitions defined in the da
 
 
 
+
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#client-apis">Client APIs</a></li>
+        <li><a href="#stream-element-identity">Stream element identity</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
 
 
 
@@ -1401,6 +1419,10 @@ Each write request must strictly follow the schema definitions defined in the da
 
     </div>
     
+
+
+
+
 
 
 

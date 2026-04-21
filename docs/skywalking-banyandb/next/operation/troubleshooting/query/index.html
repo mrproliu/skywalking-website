@@ -34,7 +34,7 @@ For Stream, the tag_projection field is mandatory. For Trace, the tag_projection
 Query Syntax Errors Mandatory Fields Missing The query&rsquo;s mandatory fields are time_range, name and groups. If any of these fields are missing, the query will fail. Ensure that the query includes all the required fields and that the syntax is correct.
 For Stream, the tag_projection field is mandatory. For Trace, the tag_projection field is optional.">
 
-<meta itemprop="wordCount" content="1031">
+<meta itemprop="wordCount" content="1052">
 
 
 
@@ -1182,7 +1182,7 @@ For Stream, the tag_projection field is mandatory. For Trace, the tag_projection
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: a05c3ef</div>
+                  <div class="commit-id">Commit Id: 9654d08</div>
                 
 
 
@@ -1230,8 +1230,8 @@ For Stream, the tag_projection field is mandatory. For Trace, the tag_projection
 <h3 id="duplicate-data">Duplicate Data</h3>
 <p><code>Stream</code>, <code>Measure</code> and <code>Trace</code> handle duplicate data differently:</p>
 <ul>
-<li><code>Stream</code>: If the same data is ingested multiple times, the <code>Stream</code> will store all the data points. The query results will include all the duplicate data points with the same entity and timestamp.</li>
-<li><code>Measure</code>: If the same data is ingested multiple times, the <code>Measure</code> will store the latest data point. It uses a internal <code>version</code> field to determine the latest data point.</li>
+<li><code>Stream</code>: <code>Stream</code> stores elements even when they share the same entity and timestamp. Query results are deduplicated by <code>element_id</code>, not by timestamp alone. Elements with different <code>element_id</code> values remain distinct. If clients omit <code>element_id</code>, BanyanDB generates one for each write, so repeated writes without a stable <code>element_id</code> appear as separate elements in query results.</li>
+<li><code>Measure</code>: If the same data is ingested multiple times, the <code>Measure</code> will store the latest data point. It uses an internal <code>version</code> field to determine the latest data point.</li>
 </ul>
 <p><code>Measure</code> data version is determined by:</p>
 <ol>
@@ -1515,6 +1515,10 @@ tag:
 
     </div>
     
+
+
+
+
 
 
 
