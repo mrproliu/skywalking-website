@@ -38,7 +38,7 @@ Through this connection, clients can query existing data or perform bulk data wr
 All Protocol Buffer (.proto) definitions used by the client are maintained in the
 BanyanDB Client Proto Definitions Repository.">
 
-<meta itemprop="wordCount" content="187">
+<meta itemprop="wordCount" content="243">
 
 
 
@@ -1188,7 +1188,7 @@ BanyanDB Client Proto Definitions Repository."/>
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 68ce9b0</div>
+                  <div class="commit-id">Commit Id: 4529ca3</div>
                 
 
 
@@ -1215,7 +1215,10 @@ Each write request must strictly follow the schema definitions defined in the da
 <li>If the client sets <code>element_id</code>, BanyanDB derives the internal element identity from the group, stream name, and <code>element_id</code> value. Use a stable <code>element_id</code> when retries or re-sends should refer to the same logical element.</li>
 <li>If the client omits <code>element_id</code>, BanyanDB generates a server-side element ID for that write. This is convenient for append-only ingestion, but repeated writes without a stable <code>element_id</code> are treated as different elements.</li>
 </ul>
-<p>See <a href="./../bydbctl/query/stream#element-identity-and-deduplication">Query Streams</a> for how element identity affects query results.</p>
+<p>See <a href="./../bydbctl/query/stream#element-identity-and-deduplication">Query Streams</a> for how element identity affects query results.
+See <a href="./../bydbctl/schema/stream#server-generated-element-id">Server-Generated Element ID</a> for writing stream data without an explicit element ID.</p>
+<h2 id="write-specifications">Write Specifications</h2>
+<p>As of 0.10.0, BanyanDB supports write specifications for <a href="../../concept/data-model#streams">Stream</a>, <a href="../../concept/data-model#measures">Measure</a>, and <a href="../../concept/data-model#traces">Trace</a> models. These specifications describe how the write payload maps to the schema, such as tag and field ordering, enabling the server to correctly interpret and validate the write operation.</p>
 
 </div>
 <div>
@@ -1302,6 +1305,7 @@ Each write request must strictly follow the schema definitions defined in the da
       <ul>
         <li><a href="#client-apis">Client APIs</a></li>
         <li><a href="#stream-element-identity">Stream element identity</a></li>
+        <li><a href="#write-specifications">Write Specifications</a></li>
       </ul>
     </li>
   </ul>
