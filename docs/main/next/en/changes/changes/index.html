@@ -30,7 +30,7 @@
 <meta itemprop="name" content="10.5.0">
 <meta itemprop="description" content="10.5.0 Project  Bump infra-e2e to testcontainers-go v0.42.0 (apache/skywalking-infra-e2e#146), which uses Docker Compose v2 plugin natively and removes docker-compose v1 dependency. Remove deprecated version field from all docker-compose files for Compose v2 compatibility.  OAP Server  Add Zipkin Virtual GenAI e2e test. Use zipkin_json exporter to avoid protobuf dependency conflict between opentelemetry-exporter-zipkin-proto-http (protobuf~=3.12) and opentelemetry-proto (protobuf&gt;=5.0). Fix missing taskId filter and incorrect IN clause parameter binding in JDBCJFRDataQueryDAO and JDBCPprofDataQueryDAO.">
 
-<meta itemprop="wordCount" content="853">
+<meta itemprop="wordCount" content="915">
 
 
 
@@ -2822,7 +2822,7 @@
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 2319def</div>
+                  <div class="commit-id">Commit Id: a06f2e1</div>
                 
 
 
@@ -2917,6 +2917,8 @@ Test additions: add unit tests for 21 JDBC query DAOs verifying SQL/WHERE clause
 <li>Fix: remove <code>VirtualServiceAnalysisListener</code>&rsquo;s dependency on <code>GenAIAnalyzerModule</code> if it is disabled.</li>
 <li>MAL: register <code>TimeUnit</code> in <code>MALCodegenHelper.ENUM_FQCN</code> so rule YAML can write <code>.histogram(&quot;le&quot;, TimeUnit.MILLISECONDS)</code> for SDKs that emit histogram bucket bounds in ms (default <code>SECONDS</code> unit applies a ×1000 rescale that would otherwise inflate stored <code>le</code> labels 1000×).</li>
 <li>Fix: potential unexpected current directory inclusion in Docker OAP classpath.</li>
+<li>MAL: add <code>safeDiv(divisor)</code> on <code>SampleFamily</code> that yields <code>0</code> when the divisor is <code>0</code> instead of <code>Infinity</code>/<code>NaN</code>. Replace <code>/</code> with <code>safeDiv(...)</code> in Envoy AI Gateway latency-average rules so <code>sum / count * 1000</code> no longer produces dropped or out-of-range samples when a counter is zero in a window.</li>
+<li>Fix: <code>envoy-ai-gateway</code> metrics rules, make the metrics value return <code>0</code> when the divisor is <code>0</code>.</li>
 </ul>
 <h4 id="ui">UI</h4>
 <ul>
@@ -3123,6 +3125,14 @@ Test additions: add unit tests for 21 JDBC query DAOs verifying SQL/WHERE clause
 
     </div>
     
+
+
+
+
+
+
+
+
 
 
 
