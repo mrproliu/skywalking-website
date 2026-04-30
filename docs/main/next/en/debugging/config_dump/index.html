@@ -2169,6 +2169,14 @@ Dump Effective Initial Configurations API is designed to help users to understan
 
     <li>
         
+            <a href="/docs/main/next/en/concepts-and-designs/runtime-rule-hot-update">Runtime Rule Hot-Update</a>
+        
+    </li>
+
+    
+
+    <li>
+        
             <a href="/docs/main/next/en/concepts-and-designs/profiling">Profiling</a>
         
     </li>
@@ -2209,6 +2217,14 @@ Dump Effective Initial Configurations API is designed to help users to understan
     <li>
         
             <a href="/docs/main/next/en/operation/dynamic-code-generation-debugging">Dynamic Code Generation and Debugging</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/backend-runtime-rule-api">Runtime Rule Hot-Update</a>
         
     </li>
 
@@ -2828,7 +2844,7 @@ Dump Effective Initial Configurations API is designed to help users to understan
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 36a3f9c</div>
+                  <div class="commit-id">Commit Id: dae1553</div>
                 
 
 
@@ -2884,7 +2900,7 @@ Dump Effective Initial Configurations API is designed to help users to understan
 	<h1 id="dump-effective-initial-configurations">Dump Effective Initial Configurations</h1>
 <p>SkyWalking OAP behaviors could be controlled through hundreds of configurations. It is hard to know what is the final
 configuration as all the configurations could be override by system environments.</p>
-<p>The core config file <a href="https://github.com/apache/skywalking/tree/36a3f9cb46cfe36f9bbf83ea7731bcbfa3a9cabd/oap-server/server-starter/src/main/resources/application.yml">application.yml</a> lists all the configurations
+<p>The core config file <a href="https://github.com/apache/skywalking/tree/dae15534d92aad328f86552a11588473d7cac988/oap-server/server-starter/src/main/resources/application.yml">application.yml</a> lists all the configurations
 and their default values. However, it is still hard to know the runtime value.</p>
 <p>Dump Effective Initial Configurations API is designed to help users to understand the effective configurations, no matter
 they are initialized in the <code>application.yml</code>, or override through system environments.</p>
@@ -3150,6 +3166,10 @@ storage.elasticsearch.password<span style="color:#000;font-weight:bold">=</span>
 
     </div>
     
+
+
+
+
 
 
 

@@ -34,7 +34,7 @@ Main Configuration The main configuration is provided by application.yml. It div
 Main Configuration The main configuration is provided by application.yml. It divided into several modules, each of which has its own settings. The following table lists the modules and their settings.
    Module Provider Settings Value(s) and Explanation System Environment Variable¹ Default     core default role Option values: Mixed/Receiver/Aggregator. Receiver mode OAP opens the service to the agents, then analyzes and aggregates the results, and forwards the results for distributed aggregation.">
 
-<meta itemprop="wordCount" content="7637">
+<meta itemprop="wordCount" content="7823">
 
 
 
@@ -2169,6 +2169,14 @@ Main Configuration The main configuration is provided by application.yml. It div
 
     <li>
         
+            <a href="/docs/main/next/en/concepts-and-designs/runtime-rule-hot-update">Runtime Rule Hot-Update</a>
+        
+    </li>
+
+    
+
+    <li>
+        
             <a href="/docs/main/next/en/concepts-and-designs/profiling">Profiling</a>
         
     </li>
@@ -2209,6 +2217,14 @@ Main Configuration The main configuration is provided by application.yml. It div
     <li>
         
             <a href="/docs/main/next/en/operation/dynamic-code-generation-debugging">Dynamic Code Generation and Debugging</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/backend-runtime-rule-api">Runtime Rule Hot-Update</a>
         
     </li>
 
@@ -2828,7 +2844,7 @@ Main Configuration The main configuration is provided by application.yml. It div
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 36a3f9c</div>
+                  <div class="commit-id">Commit Id: dae1553</div>
                 
 
 
@@ -5619,6 +5635,78 @@ It divided into several modules, each of which has its own settings. The followi
 <td></td>
 </tr>
 <tr>
+<td>receiver-runtime-rule</td>
+<td>default</td>
+<td>-</td>
+<td>Hot-update admin endpoint for MAL / LAL rule files. <strong>Disabled by default</strong>: leave the selector empty to keep the provider unloaded; set <code>SW_RECEIVER_RUNTIME_RULE=default</code> to enable. The endpoint has <strong>no authentication</strong> in this iteration — gateway-protect with IP allow-lists and never expose it to the public internet. See <a href="../backend-runtime-rule-api">Runtime Rule Hot-Update API</a>.</td>
+<td>SW_RECEIVER_RUNTIME_RULE</td>
+<td>(empty — disabled)</td>
+</tr>
+<tr>
+<td>-</td>
+<td>-</td>
+<td>restHost</td>
+<td>Binding IP of the runtime-rule admin endpoint.</td>
+<td>SW_RECEIVER_RUNTIME_RULE_REST_HOST</td>
+<td>0.0.0.0</td>
+</tr>
+<tr>
+<td>-</td>
+<td>-</td>
+<td>restPort</td>
+<td>Binding port of the runtime-rule admin endpoint.</td>
+<td>SW_RECEIVER_RUNTIME_RULE_REST_PORT</td>
+<td>17128</td>
+</tr>
+<tr>
+<td>-</td>
+<td>-</td>
+<td>restContextPath</td>
+<td>Web context path of the runtime-rule admin endpoint.</td>
+<td>SW_RECEIVER_RUNTIME_RULE_REST_CONTEXT_PATH</td>
+<td>/</td>
+</tr>
+<tr>
+<td>-</td>
+<td>-</td>
+<td>restIdleTimeOut</td>
+<td>Connector idle timeout of the runtime-rule admin endpoint (in milliseconds).</td>
+<td>SW_RECEIVER_RUNTIME_RULE_REST_IDLE_TIMEOUT</td>
+<td>30000</td>
+</tr>
+<tr>
+<td>-</td>
+<td>-</td>
+<td>restAcceptQueueSize</td>
+<td>ServerSocketChannel backlog of the runtime-rule admin endpoint.</td>
+<td>SW_RECEIVER_RUNTIME_RULE_REST_QUEUE_SIZE</td>
+<td>0</td>
+</tr>
+<tr>
+<td>-</td>
+<td>-</td>
+<td>httpMaxRequestHeaderSize</td>
+<td>Maximum length of all HTTP/1 request headers accepted by the admin endpoint (bytes).</td>
+<td>SW_RECEIVER_RUNTIME_RULE_HTTP_MAX_REQUEST_HEADER_SIZE</td>
+<td>8192</td>
+</tr>
+<tr>
+<td>-</td>
+<td>-</td>
+<td>reconcilerIntervalSeconds</td>
+<td>Period (seconds) of the cluster reconcile tick. Each node periodically re-reads stored rules and reconciles its local state against the DAO.</td>
+<td>SW_RECEIVER_RUNTIME_RULE_RECONCILER_INTERVAL_SECONDS</td>
+<td>30</td>
+</tr>
+<tr>
+<td>-</td>
+<td>-</td>
+<td>selfHealThresholdSeconds</td>
+<td>Time (seconds) a SUSPENDED rule waits before the self-heal backstop forces it back to RUNNING.</td>
+<td>SW_RECEIVER_RUNTIME_RULE_SELF_HEAL_THRESHOLD_SECONDS</td>
+<td>60</td>
+</tr>
+<tr>
 <td>ai-pipeline</td>
 <td>default</td>
 <td></td>
@@ -7333,6 +7421,10 @@ provided in the default <code>application.yml/bydb.yaml</code> file.</p>
 
     </div>
     
+
+
+
+
 
 
 

@@ -18701,6 +18701,18 @@
   </url>
   
   <url>
+    <loc>/docs/main/next/en/setup/backend/backend-runtime-rule-api/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/docs/main/next/en/concepts-and-designs/runtime-rule-hot-update/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/docs/main/latest/en/setup/backend/dashboards-so11y-satellite/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
