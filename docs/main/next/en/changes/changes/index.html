@@ -30,7 +30,7 @@
 <meta itemprop="name" content="10.5.0">
 <meta itemprop="description" content="10.5.0 Project  Runtime rule hot-update for MAL and LAL. Operators can now ship metric (MAL) and log (LAL) rule changes without restarting OAP. A push to a new admin endpoint persists the rule to the configured storage backend, and every node in the cluster converges to the new content within ~30 seconds. Common workflows:  addOrUpdate — create or replace a rule. Body is the raw YAML you would normally ship with OAP&rsquo;s static rule files.">
 
-<meta itemprop="wordCount" content="1624">
+<meta itemprop="wordCount" content="1682">
 
 
 
@@ -2838,7 +2838,7 @@
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: dae1553</div>
+                  <div class="commit-id">Commit Id: 2b745b2</div>
                 
 
 
@@ -2991,6 +2991,7 @@ Test additions: add unit tests for 21 JDBC query DAOs verifying SQL/WHERE clause
 <li>MAL: add <code>safeDiv(divisor)</code> on <code>SampleFamily</code> that yields <code>0</code> when the divisor is <code>0</code> instead of <code>Infinity</code>/<code>NaN</code>. Replace <code>/</code> with <code>safeDiv(...)</code> in Envoy AI Gateway latency-average rules so <code>sum / count * 1000</code> no longer produces dropped or out-of-range samples when a counter is zero in a window.</li>
 <li>Fix: <code>envoy-ai-gateway</code> metrics rules, make the metrics value return <code>0</code> when the divisor is <code>0</code>.</li>
 <li>Fix: LAL compiler treated <code>(tag(&quot;x&quot;) as Integer) + (tag(&quot;y&quot;) as Integer)</code> as string concatenation instead of numeric addition. Expressions like <code>input_tokens + output_tokens &lt; 10000</code> produced the concatenated string <code>&quot;2589115&quot;</code> rather than the integer sum <code>2704</code>, so token-threshold conditions never triggered <code>abort {}</code>. The compiler now detects all-numeric operands (cast to <code>Integer</code> or <code>Long</code>) and emits proper <code>long</code> arithmetic.</li>
+<li>Custom <code>Layer</code>s can be declared without modifying the OAP source — via an operator-managed <code>layer-extensions.yml</code>, inline <code>layerDefinitions:</code> block in a MAL or LAL rule file, or a plugin extension. UI dashboard templates for new layers are auto-discovered from the <code>ui-initialized-templates/</code> directory. Recommended ordinal range for external layers is <code>&gt;= 1000</code>; conflicting names or ordinals are reported at boot.</li>
 </ul>
 <h4 id="ui">UI</h4>
 <ul>
