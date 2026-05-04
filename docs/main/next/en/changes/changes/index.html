@@ -30,7 +30,7 @@
 <meta itemprop="name" content="10.5.0">
 <meta itemprop="description" content="10.5.0 Project  Runtime rule hot-update for MAL and LAL. Operators can now ship metric (MAL) and log (LAL) rule changes without restarting OAP. A push to a new admin endpoint persists the rule to the configured storage backend, and every node in the cluster converges to the new content within ~30 seconds. Common workflows:  addOrUpdate — create or replace a rule. Body is the raw YAML you would normally ship with OAP&rsquo;s static rule files.">
 
-<meta itemprop="wordCount" content="1682">
+<meta itemprop="wordCount" content="1798">
 
 
 
@@ -2838,7 +2838,7 @@
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 2b745b2</div>
+                  <div class="commit-id">Commit Id: 67160de</div>
                 
 
 
@@ -2990,8 +2990,8 @@ Test additions: add unit tests for 21 JDBC query DAOs verifying SQL/WHERE clause
 <li>Fix: potential unexpected current directory inclusion in Docker OAP classpath.</li>
 <li>MAL: add <code>safeDiv(divisor)</code> on <code>SampleFamily</code> that yields <code>0</code> when the divisor is <code>0</code> instead of <code>Infinity</code>/<code>NaN</code>. Replace <code>/</code> with <code>safeDiv(...)</code> in Envoy AI Gateway latency-average rules so <code>sum / count * 1000</code> no longer produces dropped or out-of-range samples when a counter is zero in a window.</li>
 <li>Fix: <code>envoy-ai-gateway</code> metrics rules, make the metrics value return <code>0</code> when the divisor is <code>0</code>.</li>
-<li>Fix: LAL compiler treated <code>(tag(&quot;x&quot;) as Integer) + (tag(&quot;y&quot;) as Integer)</code> as string concatenation instead of numeric addition. Expressions like <code>input_tokens + output_tokens &lt; 10000</code> produced the concatenated string <code>&quot;2589115&quot;</code> rather than the integer sum <code>2704</code>, so token-threshold conditions never triggered <code>abort {}</code>. The compiler now detects all-numeric operands (cast to <code>Integer</code> or <code>Long</code>) and emits proper <code>long</code> arithmetic.</li>
 <li>Custom <code>Layer</code>s can be declared without modifying the OAP source — via an operator-managed <code>layer-extensions.yml</code>, inline <code>layerDefinitions:</code> block in a MAL or LAL rule file, or a plugin extension. UI dashboard templates for new layers are auto-discovered from the <code>ui-initialized-templates/</code> directory. Recommended ordinal range for external layers is <code>&gt;= 1000</code>; conflicting names or ordinals are reported at boot.</li>
+<li>LAL: support full arithmetic (<code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>) on numeric operands and fix the original bug where <code>(tag(&quot;x&quot;) as Integer) + (tag(&quot;y&quot;) as Integer)</code> was treated as string concatenation — expressions like <code>input_tokens + output_tokens &lt; 10000</code> produced the concatenated string <code>&quot;2589115&quot;</code> rather than the integer sum <code>2704</code>, so token-threshold conditions never triggered <code>abort {}</code>. Operand types are now inferred from explicit casts (<code>as Integer</code> / <code>as Long</code> / <code>as Float</code> / <code>as Double</code>), typed proto fields, or numeric literal shape (with <code>L</code> / <code>F</code> / <code>D</code> suffix support, e.g. <code>1000L</code>). The compiler honours JLS-style binary numeric promotion and emits Java arithmetic in the declared primitive type — <code>(x as Integer) + (y as Integer)</code> compiles to <code>int + int</code> (not widened to <code>long</code>). <code>+</code> with any String operand falls back to string concatenation; <code>-</code> / <code>*</code> / <code>/</code> against non-numeric operands produces a compile-time error. The <code>as Double</code> and <code>as Float</code> casts are accepted in <code>typeCast</code> clauses, including in <code>def</code> declarations. Numeric comparisons honour declared casts on both sides (no more universal <code>h.toLong()</code> wrapper).</li>
 </ul>
 <h4 id="ui">UI</h4>
 <ul>
