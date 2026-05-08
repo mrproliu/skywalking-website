@@ -4184,6 +4184,10 @@
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url><url>
+    <loc>/docs/main/next/en/setup/backend/admin-api/readme/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url><url>
     <loc>/docs/main/latest/en/setup/backend/advanced-deployment/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
@@ -7294,6 +7298,22 @@
     <priority>0.5</priority>
   </url><url>
     <loc>/docs/main/v10.4.0/en/academy/dsl-compiler-design/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>/docs/main/next/en/setup/backend/admin-api/dsl-debugging/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>/docs/main/next/en/setup/backend/admin-api/dsl-debugging-lal/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>/docs/main/next/en/setup/backend/admin-api/dsl-debugging-mal/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>/docs/main/next/en/setup/backend/admin-api/dsl-debugging-oal/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url><url>
@@ -14022,7 +14042,7 @@
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>/docs/main/next/en/setup/backend/backend-runtime-rule-api/</loc>
+    <loc>/docs/main/next/en/setup/backend/admin-api/runtime-rule/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url><url>
@@ -16104,6 +16124,10 @@
     <priority>0.5</priority>
   </url><url>
     <loc>/docs/main/next/en/swip/swip-12/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>/docs/main/next/en/swip/swip-13/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url><url>
