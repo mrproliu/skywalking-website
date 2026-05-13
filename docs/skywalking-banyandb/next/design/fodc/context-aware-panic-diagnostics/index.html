@@ -22,20 +22,23 @@
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
 
-<title>Get Node List in the Cluster | Apache SkyWalking</title><meta property="og:url" content="/docs/main/next/en/status/query_cluster_nodes/">
+<title>Context-Aware Panic Diagnostics Development Design | Apache SkyWalking</title><meta property="og:url" content="/docs/skywalking-banyandb/next/design/fodc/context-aware-panic-diagnostics/">
   <meta property="og:site_name" content="Apache SkyWalking">
-  <meta property="og:title" content="Get Node List in the Cluster">
-  <meta property="og:description" content="Get Node List in the Cluster The OAP cluster is a set of OAP servers that work together to provide a scalable and reliable service. The OAP cluster supports various cluster coordinator to manage the cluster membership and the communication. This API provides capability to query the node list in the cluster from every OAP node perspective. If the cluster coordinator doesn’t work properly, the node list may be incomplete or incorrect. So, we recommend you to check the node list when set up a cluster.">
+  <meta property="og:title" content="Context-Aware Panic Diagnostics Development Design">
+  <meta property="og:description" content="Context-Aware Panic Diagnostics Development Design Table of Contents Overview Current Implementation Status Architecture Component Design Crash Artifacts Proxy API and Collection Semantics Deployment and Operations Testing Strategy Appendix Overview Context-aware panic diagnostics in BanyanDB and FODC provide two complementary capabilities:
+Recover selected panics with structured diagnostics and persisted artifacts. Surface those artifacts through the FODC agent and proxy for centralized inspection. The implementation is no longer just a file-watching sidecar concept. The current codebase has an end-to-end flow:">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="article">
     <meta property="article:section" content="docs">
 
-  <meta itemprop="name" content="Get Node List in the Cluster">
-  <meta itemprop="description" content="Get Node List in the Cluster The OAP cluster is a set of OAP servers that work together to provide a scalable and reliable service. The OAP cluster supports various cluster coordinator to manage the cluster membership and the communication. This API provides capability to query the node list in the cluster from every OAP node perspective. If the cluster coordinator doesn’t work properly, the node list may be incomplete or incorrect. So, we recommend you to check the node list when set up a cluster.">
-  <meta itemprop="wordCount" content="195">
+  <meta itemprop="name" content="Context-Aware Panic Diagnostics Development Design">
+  <meta itemprop="description" content="Context-Aware Panic Diagnostics Development Design Table of Contents Overview Current Implementation Status Architecture Component Design Crash Artifacts Proxy API and Collection Semantics Deployment and Operations Testing Strategy Appendix Overview Context-aware panic diagnostics in BanyanDB and FODC provide two complementary capabilities:
+Recover selected panics with structured diagnostics and persisted artifacts. Surface those artifacts through the FODC agent and proxy for centralized inspection. The implementation is no longer just a file-watching sidecar concept. The current codebase has an end-to-end flow:">
+  <meta itemprop="wordCount" content="1764">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Get Node List in the Cluster">
-  <meta name="twitter:description" content="Get Node List in the Cluster The OAP cluster is a set of OAP servers that work together to provide a scalable and reliable service. The OAP cluster supports various cluster coordinator to manage the cluster membership and the communication. This API provides capability to query the node list in the cluster from every OAP node perspective. If the cluster coordinator doesn’t work properly, the node list may be incomplete or incorrect. So, we recommend you to check the node list when set up a cluster.">
+  <meta name="twitter:title" content="Context-Aware Panic Diagnostics Development Design">
+  <meta name="twitter:description" content="Context-Aware Panic Diagnostics Development Design Table of Contents Overview Current Implementation Status Architecture Component Design Crash Artifacts Proxy API and Collection Semantics Deployment and Operations Testing Strategy Appendix Overview Context-aware panic diagnostics in BanyanDB and FODC provide two complementary capabilities:
+Recover selected panics with structured diagnostics and persisted artifacts. Surface those artifacts through the FODC agent and proxy for centralized inspection. The implementation is no longer just a file-watching sidecar concept. The current codebase has an end-to-end flow:">
 
 
 
@@ -54,7 +57,7 @@
 
 
 
-    <title>Get Node List in the Cluster | Apache SkyWalking</title>
+    <title>Context-Aware Panic Diagnostics Development Design | Apache SkyWalking</title>
   </head>
   <body class="td-page  project-doc">
     <header>
@@ -208,12 +211,58 @@
           <div class="col-12 col-md-3 col-xl-2 d-print-none scroll-bar td-sidebar">
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                   <div class="description-wrapper">
                     <h5>
-                    <img width="26" height="26" src="/images/project/skywalking.svg">
-                    SkyWalking
+                    <img width="26" height="26" src="/images/project/banyan-db.svg">
+                    BanyanDB
                     </h5>
-                    <p>SkyWalking primary repository and docs.</p>
+                    <p>An observability database aims to ingest, analyze and store Metrics, Tracing and Logging data.</p>
                   </div>
                   
                   <div class="version-wrapper">Version: 
@@ -237,81 +286,9 @@
                   
                     
                     
-                    <option ZgotmplZ value="v10.4.0">
+                    <option ZgotmplZ value="v0.10.2">
                     
-                      v10.4.0
-                    
-                    </option>
-                  
-                    
-                    
-                    <option ZgotmplZ value="v10.3.0">
-                    
-                      v10.3.0
-                    
-                    </option>
-                  
-                    
-                    
-                    <option ZgotmplZ value="v10.2.0">
-                    
-                      v10.2.0
-                    
-                    </option>
-                  
-                    
-                    
-                    <option ZgotmplZ value="v10.1.0">
-                    
-                      v10.1.0
-                    
-                    </option>
-                  
-                    
-                    
-                    <option ZgotmplZ value="v10.0.1">
-                    
-                      v10.0.1
-                    
-                    </option>
-                  
-                    
-                    
-                    <option ZgotmplZ value="v10.0.0">
-                    
-                      v10.0.0
-                    
-                    </option>
-                  
-                    
-                    
-                    <option ZgotmplZ value="v9.7.0">
-                    
-                      v9.7.0
-                    
-                    </option>
-                  
-                    
-                    
-                    <option ZgotmplZ value="v9.6.0">
-                    
-                      v9.6.0
-                    
-                    </option>
-                  
-                    
-                    
-                    <option ZgotmplZ value="v9.5.0">
-                    
-                      v9.5.0
-                    
-                    </option>
-                  
-                    
-                    
-                    <option ZgotmplZ value="v9.4.0">
-                    
-                      v9.4.0
+                      v0.10.2
                     
                     </option>
                   
@@ -322,95 +299,14 @@
     
     <li>
         
-            <a href="/docs/main/next/readme">Welcome</a>
+            <a href="/docs/skywalking-banyandb/next/readme">Welcome</a>
         
     </li>
     
     <li>
         
             
-            <a href="#">Concepts and Designs<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/concepts-and-designs/overview">Overview and Core concepts</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/concepts-and-designs/project-goals">Project Goals</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-
-            
-            <a href="#">Agents<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/concepts-and-designs/probe-introduction">Introduction</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/concepts-and-designs/service-agent">Service Auto Instrument Agent</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/concepts-and-designs/manual-sdk">Manual Instrument SDK</a>
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/concepts-and-designs/service-hierarchy">Service Hierarchy</a>
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-    
-    <li>
-        
-            
-            <a href="#">Setup<i class="iconfont icon-arrow-right pull-right"></i></a>
+            <a href="#">User Guide<i class="iconfont icon-arrow-right pull-right"></i></a>
             
 
             
@@ -421,7 +317,7 @@
         
 
             
-            <a href="#">Quick Start<i class="iconfont icon-arrow-right pull-right"></i></a>
+            <a href="#">Installation<i class="iconfont icon-arrow-right pull-right"></i></a>
             
 
             
@@ -430,7 +326,7 @@
 
     <li>
         
-            <a href="/docs/main/next/en/setup/backend/backend-setup">Introduction</a>
+            <a href="/docs/skywalking-banyandb/next/installation/binaries">Get Binaries</a>
         
     </li>
 
@@ -438,7 +334,7 @@
 
     <li>
         
-            <a href="/docs/main/next/en/setup/backend/backend-docker">Run with Docker</a>
+            <a href="/docs/skywalking-banyandb/next/installation/standalone">Standalone Mode</a>
         
     </li>
 
@@ -446,7 +342,7 @@
 
     <li>
         
-            <a href="/docs/main/next/en/setup/backend/backend-k8s">Run with Kubernetes</a>
+            <a href="/docs/skywalking-banyandb/next/installation/cluster">Cluster Mode</a>
         
     </li>
 
@@ -454,7 +350,15 @@
 
     <li>
         
-            <a href="/docs/main/next/en/setup/backend/graalvm-distro">GraalVM Native Image Distribution</a>
+            <a href="/docs/skywalking-banyandb/next/installation/docker">Installation On Docker</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/installation/kubernetes">Installation On Kubernetes</a>
         
     </li>
 
@@ -471,7 +375,7 @@
         
 
             
-            <a href="#">Marketplace<i class="iconfont icon-arrow-right pull-right"></i></a>
+            <a href="#">Basic Concepts and Terminology<i class="iconfont icon-arrow-right pull-right"></i></a>
             
 
             
@@ -480,7 +384,14 @@
 
     <li>
         
-            <a href="/docs/main/next/en/setup/backend/marketplace">Overview</a>
+            <a href="/docs/skywalking-banyandb/next/concept/data-model">Data Model</a>
+        
+    </li>
+
+    
+
+</ul>
+
         
     </li>
 
@@ -488,9 +399,29 @@
 
     <li>
         
+            <a href="/docs/skywalking-banyandb/next/guides/quick-start/quick-start">Quick Start Tutorial</a>
+        
+    </li>
 
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/installation/versions">Versions and Compatibility</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+    
+    <li>
+        
             
-            <a href="#">General Service<i class="iconfont icon-arrow-right pull-right"></i></a>
+            <a href="#">Interacting<i class="iconfont icon-arrow-right pull-right"></i></a>
             
 
             
@@ -499,7 +430,18 @@
 
     <li>
         
-            <a href="/docs/main/next/en/setup/service-agent/server-agents">Server Agents</a>
+
+            
+            <a href="#">CLI<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/bydbctl">bydbctl</a>
         
     </li>
 
@@ -507,7 +449,18 @@
 
     <li>
         
-            <a href="/docs/main/next/en/setup/service-agent/agent-compatibility">Compatibility</a>
+
+            
+            <a href="#">CRUD Schema<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/schema/group">Group</a>
         
     </li>
 
@@ -515,7 +468,7 @@
 
     <li>
         
-            <a href="/docs/main/next/en/setup/service-agent/virtual-database">Virtual Database</a>
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/schema/measure">Measure</a>
         
     </li>
 
@@ -523,7 +476,7 @@
 
     <li>
         
-            <a href="/docs/main/next/en/setup/service-agent/virtual-cache">Virtual Cache</a>
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/schema/stream">Stream</a>
         
     </li>
 
@@ -531,7 +484,31 @@
 
     <li>
         
-            <a href="/docs/main/next/en/setup/service-agent/virtual-mq">Virtual MQ</a>
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/schema/trace">Trace</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/schema/index-rule">IndexRule</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/schema/index-rule-binding">IndexRuleBinding</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/schema/top-n-aggregation">Top N Aggregation</a>
         
     </li>
 
@@ -548,7 +525,7 @@
         
 
             
-            <a href="#">Service Mesh<i class="iconfont icon-arrow-right pull-right"></i></a>
+            <a href="#">Querying Data<i class="iconfont icon-arrow-right pull-right"></i></a>
             
 
             
@@ -557,7 +534,7 @@
 
     <li>
         
-            <a href="/docs/main/next/en/setup/envoy/als_setting">Observe Service Mesh through Access Log Service (ALS)</a>
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/query/measure">Measure</a>
         
     </li>
 
@@ -565,7 +542,7 @@
 
     <li>
         
-            <a href="/docs/main/next/en/setup/zipkin/tracing">Observe Service Mesh through Zipkin traces</a>
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/query/stream">Stream</a>
         
     </li>
 
@@ -573,7 +550,7 @@
 
     <li>
         
-            <a href="/docs/main/next/en/setup/istio/readme">Observe Control Plane (Istio)</a>
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/query/trace">Trace</a>
         
     </li>
 
@@ -581,7 +558,7 @@
 
     <li>
         
-            <a href="/docs/main/next/en/setup/envoy/metrics_service_setting">Observe Data Plane (Envoy)</a>
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/query/filter-operation">Filter Operation</a>
         
     </li>
 
@@ -589,7 +566,30 @@
 
     <li>
         
-            <a href="/docs/main/next/en/setup/backend/backend-k8s-network-monitoring">Profile Pod&#39;s Network</a>
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/query/top-n-aggregation">Top N Aggregation</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/property">CRUD Property</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbctl/analyze">Analyzing Data</a>
         
     </li>
 
@@ -606,7 +606,7 @@
         
 
             
-            <a href="#">Kubernetes<i class="iconfont icon-arrow-right pull-right"></i></a>
+            <a href="#">Web UI<i class="iconfont icon-arrow-right pull-right"></i></a>
             
 
             
@@ -615,7 +615,7 @@
 
     <li>
         
-            <a href="/docs/main/next/en/setup/backend/backend-k8s-monitoring">Observe Kubernetes</a>
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/dashboard">Dashboard</a>
         
     </li>
 
@@ -623,7 +623,18 @@
 
     <li>
         
-            <a href="/docs/main/next/en/setup/backend/backend-k8s-monitoring-metrics-cadvisor">kube-state-metrics &#43; cAdvisor</a>
+
+            
+            <a href="#">CRUD Schema<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/schema/group">Group</a>
         
     </li>
 
@@ -631,7 +642,7 @@
 
     <li>
         
-            <a href="/docs/main/next/en/setup/backend/backend-k8s-monitoring-rover">Rover</a>
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/schema/measure">Measure</a>
         
     </li>
 
@@ -639,7 +650,7 @@
 
     <li>
         
-            <a href="/docs/main/next/en/setup/backend/backend-k8s-network-monitoring">Profile Pod&#39;s Network</a>
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/schema/stream">Stream</a>
         
     </li>
 
@@ -647,7 +658,23 @@
 
     <li>
         
-            <a href="/docs/main/next/en/setup/backend/backend-k8s-monitoring-cilium">Cilium</a>
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/schema/index-rule">IndexRule</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/schema/index-rule-binding">IndexRuleBinding</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/schema/top-n-aggregation">Top N Aggregation</a>
         
     </li>
 
@@ -664,7 +691,7 @@
         
 
             
-            <a href="#">Infrastructure Monitoring<i class="iconfont icon-arrow-right pull-right"></i></a>
+            <a href="#">Querying Data<i class="iconfont icon-arrow-right pull-right"></i></a>
             
 
             
@@ -673,7 +700,7 @@
 
     <li>
         
-            <a href="/docs/main/next/en/setup/backend/backend-vm-monitoring">Linux Monitoring</a>
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/query/measure">Measure</a>
         
     </li>
 
@@ -681,7 +708,307 @@
 
     <li>
         
-            <a href="/docs/main/next/en/setup/backend/backend-win-monitoring">Windows Monitoring</a>
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/query/stream">Stream</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/web-ui/property">CRUD Property</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/client">Client APIs</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/data-lifecycle">Data Lifecycle</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
+            <a href="#">Schema Consistency<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/schema-consistency/overview">Overview</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/schema-consistency/barriers">Barrier RPCs</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/schema-consistency/revision-gates">Revision Gates</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/schema-consistency/scenarios">Scenarios</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/interacting/bydbql">BydbQL</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+    
+    <li>
+        
+            
+            <a href="#">Operation and Maintenance<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/operation/configuration">Configure BanyanDB</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/operation/disk-management">Disk Management</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/operation/system">System Configuration</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/operation/upgrade">Upgrade</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/operation/observability">Observability</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/operation/cluster">Cluster Management</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
+            <a href="#">Troubleshooting<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/operation/troubleshooting/error-checklist">Error Checklist</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/operation/troubleshooting/install">Troubleshooting Installation</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/operation/troubleshooting/crash">Troubleshooting Crash</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/operation/troubleshooting/no-data">Troubleshooting No Data</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/operation/troubleshooting/overhead">Troubleshooting Overhead</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/operation/troubleshooting/query">Troubleshooting Query</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/operation/troubleshooting/common-issues">Common Issues</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/operation/security">Security</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/operation/backup">Backup</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/operation/restore">Restore</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/operation/lifecycle">Lifecycle Management</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
+            <a href="#">MCP Server<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/operation/mcp/setup">Setup MCP</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/operation/mcp/inspector">Test via Inspector</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/operation/mcp/build">Build and Package</a>
         
     </li>
 
@@ -698,7 +1025,7 @@
         
 
             
-            <a href="#">AWS Cloud Monitoring<i class="iconfont icon-arrow-right pull-right"></i></a>
+            <a href="#">First Occurrence Data Collection (FODC)<i class="iconfont icon-arrow-right pull-right"></i></a>
             
 
             
@@ -707,7 +1034,7 @@
 
     <li>
         
-            <a href="/docs/main/next/en/setup/backend/backend-aws-eks-monitoring">EKS Monitoring</a>
+            <a href="/docs/skywalking-banyandb/next/operation/fodc/overview">Overview</a>
         
     </li>
 
@@ -715,7 +1042,7 @@
 
     <li>
         
-            <a href="/docs/main/next/en/setup/backend/backend-aws-s3-monitoring">S3 Monitoring</a>
+            <a href="/docs/skywalking-banyandb/next/operation/fodc/ktm_metrics">KTM Metrics</a>
         
     </li>
 
@@ -723,15 +1050,7 @@
 
     <li>
         
-            <a href="/docs/main/next/en/setup/backend/backend-aws-dynamodb-monitoring">AWS DynamoDB</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/backend-aws-api-gateway-monitoring">AWS API Gateway</a>
+            <a href="/docs/skywalking-banyandb/next/operation/fodc/apis">Proxy APIs and CLI Flags</a>
         
     </li>
 
@@ -746,7 +1065,7 @@
 
     <li>
         
-            <a href="/docs/main/next/en/setup/service-agent/browser-agent">Browser Monitoring</a>
+            <a href="/docs/skywalking-banyandb/next/concept/property-repair">Property Background Repair</a>
         
     </li>
 
@@ -756,49 +1075,7 @@
         
 
             
-            <a href="#">Mobile Monitoring<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/backend-ios-monitoring">iOS</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/backend-wechat-mini-program-monitoring">WeChat Mini Program</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/backend-alipay-mini-program-monitoring">Alipay Mini Program</a>
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-
-    
-
-    <li>
-        
-
-            
-            <a href="#">Gateway Monitoring<i class="iconfont icon-arrow-right pull-right"></i></a>
+            <a href="#">Benchmark<i class="iconfont icon-arrow-right pull-right"></i></a>
             
 
             
@@ -807,7 +1084,7 @@
 
     <li>
         
-            <a href="/docs/main/next/en/setup/backend/backend-nginx-monitoring">Nginx Monitoring</a>
+            <a href="/docs/skywalking-banyandb/next/operation/benchmark/benchmark-single-model">Single‑Model Benchmark (Trace / Log / Measure / Property)</a>
         
     </li>
 
@@ -815,1299 +1092,7 @@
 
     <li>
         
-            <a href="/docs/main/next/en/setup/backend/backend-apisix-monitoring">APISIX Monitoring</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/backend-aws-api-gateway-monitoring">AWS API Gateway</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/backend-kong-monitoring">Kong Monitoring</a>
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-
-    
-
-    <li>
-        
-
-            
-            <a href="#">Database Monitoring<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/backend-mysql-monitoring">MySQL/MariaDB Server</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/backend-postgresql-monitoring">PostgreSQL Server</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/backend-aws-dynamodb-monitoring">AWS DynamoDB</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/backend-redis-monitoring">Redis</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/backend-elasticsearch-monitoring">Elasticsearch</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/backend-mongodb-monitoring">MongoDB</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/backend-bookkeeper-monitoring">BookKeeper</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/backend-clickhouse-monitoring">ClickHouse</a>
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-
-    
-
-    <li>
-        
-
-            
-            <a href="#">MQ Monitoring<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/backend-rabbitmq-monitoring">RabbitMQ</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/backend-kafka-monitoring">Kafka</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/backend-pulsar-monitoring">Pulsar</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/backend-rocketmq-monitoring">RocketMQ</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/backend-activemq-monitoring">ActiveMQ</a>
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-
-    
-
-    <li>
-        
-
-            
-            <a href="#">Data Processing Engine<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/backend-flink-monitoring">Flink</a>
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-
-    
-
-    <li>
-        
-
-            
-            <a href="#">GenAI<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/service-agent/virtual-genai">Virtual GenAI</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/backend-envoy-ai-gateway-monitoring">Envoy AI Gateway</a>
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-
-    
-
-    <li>
-        
-
-            
-            <a href="#">Self Observability<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/dashboards-so11y">OAP self telemetry</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/dashboards-so11y-satellite">Satellite self telemetry</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/dashboards-so11y-java-agent">SkyWalking Java Agent self telemetry</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/dashboards-so11y-go-agent">SkyWalking Go Agent self telemetry</a>
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/configuration-vocabulary">Configuration Vocabulary</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-
-            
-            <a href="#">Advanced Setup<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/service-auto-grouping">Service Grouping</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/backend-setting-override">Overriding Settings</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/backend-ip-port">IP And Port Setting</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/backend-init-mode">Backend Init Mode Startup</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/backend-cluster">Cluster Management</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-
-            
-            <a href="#">Choose Storage<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/backend-storage">Introduction</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/storages/banyandb">BanyanDB</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/storages/mysql">MySQL</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/storages/postgresql">PostgreSQL</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/storages/elasticsearch">Elasticsearch &amp; OpenSearch</a>
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/backend-expose">Setup External Communication Channels</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/kafka-fetcher">Kafka Fetcher</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/advanced-deployment">Advanced Deployment Options</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/ttl">Data Lifecycle. Time To Live (TTL)</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/endpoint-grouping-rules">Group Parameterized Endpoints</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/dynamical-logging">Dynamical Logging</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/grpc-security">Security(SSL/TLS/mTLS)</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/backend-load-balancer">Setup Load Balancer</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/backend-telemetry">OAP Self Observability Telemetry</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/backend-health-check">OAP Health Check</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/circuit-breaking">Circuit Breaking</a>
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-
-    
-
-    <li>
-        
-
-            
-            <a href="#">BanyanDB Exclusive Setup<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/banyandb/ttl">Progressive TTL</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/banyandb/stages">Data Lifecycle Stages(Hot/Warm/Cold)</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/banyandb/dashboards-banyandb">BanyanDB self observability dashboard</a>
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-
-    
-
-    <li>
-        
-
-            
-            <a href="#">Tracing<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/trace-sampling">Trace Sampling</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/slow-db-statement">Detect Slow Database Statement</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/slow-cache-command">Detect Slow Cache Command</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/mq">Message Queue Performance</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/uninstrumented-gateways">Uninstrumented Gateways</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/zipkin-trace">Zipkin Trace</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/otlp-trace">OpenTelemetry Trace</a>
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-
-    
-
-    <li>
-        
-
-            
-            <a href="#">Metrics<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/guides/backend-oal-scripts">OAL Scripts</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/opentelemetry-receiver">OpenTelemetry Metrics</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/aws-firehose-receiver">AWS CloudWatch Metrics</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/backend-zabbix">Zabbix Metrics</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/backend-meter">Meter Analysis</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/telegraf-receiver">Telegraf Metrics</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/apdex-threshold">Apdex Threshold</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/micrometer-observations">Spring MicroMeter Observations Analysis</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/backend-alarm">Alerting</a>
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-
-    
-
-    <li>
-        
-
-            
-            <a href="#">Logging<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-
-            
-            <a href="#">Persistent Logging<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/filelog-native">Native Logging from Files</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/log-agent-native">Native Logging from Agents</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/log-otlp">OpenTelemetry Logging</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/log-analyzer">Log Analysis</a>
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/on-demand-pod-log">On Demand Pod Logs</a>
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-
-    
-
-    <li>
-        
-
-            
-            <a href="#">Profiling<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/backend-trace-profiling">Tracing Profiling</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/backend-ebpf-profiling">eBPF Profiling</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/backend-continuous-profiling">Continuous Profiling</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/backend-java-app-profiling">Java App Profiling</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/nexten/setup/backend/backend-go-app-profiling.md">Go App Profiling</a>
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/concepts-and-designs/event/">Event</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-
-            
-            <a href="#">Extension<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/exporter">Exporter</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/dynamic-config">Dynamic Configuration</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-
-            
-            <a href="#">AI Pipeline<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/ai-pipeline/introduction">Introduction</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/ai-pipeline/http-restful-uri-pattern">HTTP Restful URI recognition</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/ai-pipeline/metrics-baseline-integration">Metrics Baseline Calculation and Alerting</a>
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-
-    
-
-    <li>
-        
-
-            
-            <a href="#">UI Setup<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-
-            
-            <a href="#">Native UI<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/ui-setup">Setup</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/ui/readme">Customization</a>
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/ui-grafana">Grafana UI</a>
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="https://github.com/apache/skywalking-cli">CLI Setup</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/backend-data-generator">Mock Data Generator Setup</a>
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-    
-    <li>
-        
-            
-            <a href="#">APIs<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-
-            
-            <a href="#">Telemetry APIs/Protocols<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-
-            
-            <a href="#">Tracing<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/api/trace-data-protocol-v3">Spans APIs</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/api/x-process-propagation-headers-v3">Tracing Context Propagation</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/api/x-process-correlation-headers-v1">Tracing Correlation Correlation</a>
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-
-    
-
-    <li>
-        
-
-            
-            <a href="#">Metrics APIs<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/api/meter">Meter APIs</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/api/browser-protocol">Browser Performance APIs</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/api/jvm-protocol">JVM Metrics APIs</a>
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/api/log-data-protocol">Logging</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/api/instance-properties">Service Instance Properties APIs</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/api/event">Event</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/api/profiling-protocol">Profiling</a>
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-
-    
-
-    <li>
-        
-
-            
-            <a href="#">Query APIs<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-
-            
-            <a href="#">GraphQL APIs<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/api/query-protocol">GraphQL APIs</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/api/metrics-query-expression">MQE Syntax</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/api/query-protocol-deprecated">Deprecated APIs</a>
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/api/promql-service">PromQL APIs</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/api/logql-service">LogQL APIs</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/api/traceql-service">TraceQL APIs</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/api/health-check">Health Check API</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-
-            
-            <a href="#">Status APIs<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/status/status_apis">Introduction</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/debugging/config_dump">Dump Effective Initial Configurations</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/debugging/query-tracing">Tracing Query Execution</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/status/query_ttl_setup">Get Effective TTL Configurations</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/status/query_cluster_nodes">Get Node List in the Cluster</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/status/query_alarm_runtime_status">Get Alarm Runtime Status</a>
-        
-    </li>
-
-    
-
-</ul>
-
+            <a href="/docs/skywalking-banyandb/next/operation/benchmark/benchmark-hybrid">Hybrid Scenario Benchmark</a>
         
     </li>
 
@@ -2128,7 +1113,7 @@
     <li>
         
             
-            <a href="#">Customization<i class="iconfont icon-arrow-right pull-right"></i></a>
+            <a href="#">File Format<i class="iconfont icon-arrow-right pull-right"></i></a>
             
 
             
@@ -2137,63 +1122,7 @@
 
     <li>
         
-            <a href="/docs/main/next/en/concepts-and-designs/backend-overview">Overview</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/concepts-and-designs/oal">Analysis Traces and Mesh Traffic</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/concepts-and-designs/mal">Analysis Metrics and Meters</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/concepts-and-designs/lal">Analysis Logs</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/concepts-and-designs/runtime-rule-hot-update">Runtime Rule Hot-Update</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/concepts-and-designs/profiling">Profiling</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/concepts-and-designs/service-hierarchy-configuration">Service Hierarchy Configuration</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/concepts-and-designs/metrics-additional-attributes">Metrics Attributes</a>
+            <a href="/docs/skywalking-banyandb/next/concept/tsdb">v1.3.0</a>
         
     </li>
 
@@ -2207,7 +1136,7 @@
     <li>
         
             
-            <a href="#">Operation<i class="iconfont icon-arrow-right pull-right"></i></a>
+            <a href="#">Concepts<i class="iconfont icon-arrow-right pull-right"></i></a>
             
 
             
@@ -2216,7 +1145,39 @@
 
     <li>
         
-            <a href="/docs/main/next/en/operation/dynamic-code-generation-debugging">Dynamic Code Generation and Debugging</a>
+            <a href="/docs/skywalking-banyandb/next/concept/clustering">Clustering</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/concept/distributed-measure-aggregation">Distributed Measure Aggregation</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/concept/tsdb">TSDB</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/concept/rotation">Data Rotation</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/next/concept/property-repair">Property Background Repair</a>
         
     </li>
 
@@ -2229,205 +1190,6 @@
     
     <li>
         
-            
-            <a href="#">Admin API<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/admin-api/readme">Introduction</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/admin-api/runtime-rule">Runtime Rule Hot-Update API</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-
-            
-            <a href="#">DSL Debug API<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/admin-api/dsl-debugging">Overview</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/admin-api/dsl-debugging-mal">MAL</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/admin-api/dsl-debugging-oal">OAL</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/setup/backend/admin-api/dsl-debugging-lal">LAL</a>
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-    
-    <li>
-        
-            <a href="/docs/main/next/en/security/readme">Security Notice</a>
-        
-    </li>
-    
-    <li>
-        
-            
-            <a href="#">Academy<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/academy/scaling-with-apache-skywalking">Scaling SkyWalking server automatically in kubernetes</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/papers/stam">STAM Paper, Streaming Topology Analysis Method</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/concepts-and-designs/sdk-profiling">SDK Profiling to Fix the Blind Spot</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/concepts-and-designs/ebpf-cpu-profiling">eBPF CPU Profiling to pinpoint Service Mesh Critical Performance Impact</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/academy/diagnose-service-mesh-network-performance-with-ebpf">Diagnose Service Mesh Network Performance with eBPF</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/academy/dsl-compiler-design">DSL Compiler Design</a>
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-    
-    <li>
-        
-            <a href="/docs/main/next/en/faq/readme">FAQs</a>
-        
-    </li>
-    
-    <li>
-        
-            
-            <a href="#">Contributing Guides<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/guides/community">Contact the community</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/guides/asf/committer">Become A Committer</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/guides/how-to-release/">Release Guide</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/guides/how-to-build">Compiling Guide</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-
             
             <a href="#">Contribute<i class="iconfont icon-arrow-right pull-right"></i></a>
             
@@ -2438,453 +1200,7 @@
 
     <li>
         
-            <a href="/docs/main/next/en/guides/it-guide">Integration Tests</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/guides/benchmark">Benchmark Tests</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/guides/e2e">End to End Tests</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-
-            
-            <a href="#">Project Extensions<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/guides/component-library-settings">Component Library Settings</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/guides/source-extension">OAL Source and Scope Extension</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/guides/mal-extension">MAL Extension Functions</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/guides/lal-extension">LAL Custom Input/Output Types</a>
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-
-    
-
-    <li>
-        
-
-            
-            <a href="#">Dependencies<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/guides/dependencies">Project Dependencies Check</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/guides/how-to-bump-up-zipkin">Zipkin dependency</a>
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/guides/i18n">I18n</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/guides/claude-code-skills">Claude Code Skills</a>
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-    
-    <li>
-        
-            <a href="/docs/main/next/en/swip/readme">SWIP</a>
-        
-    </li>
-    
-    <li>
-        
-            
-            <a href="#">Changelog<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/changes/changes">Current Version</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-
-            
-            <a href="#">10.x Releases<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/changes/changes-10.4.0">10.4.0</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/changes/changes-10.3.0">10.3.0</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/changes/changes-10.2.0">10.2.0</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/changes/changes-10.1.0">10.1.0</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/changes/changes-10.0.1">10.0.1</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/changes/changes-10.0.0">10.0.0</a>
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-
-    
-
-    <li>
-        
-
-            
-            <a href="#">9.x Releases<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/changes/changes-9.7.0">9.7.0</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/changes/changes-9.6.0">9.6.0</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/changes/changes-9.5.0">9.5.0</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/changes/changes-9.4.0">9.4.0</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/changes/changes-9.3.0">9.3.0</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/changes/changes-9.2.0">9.2.0</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/changes/changes-9.1.0">9.1.0</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/changes/changes-9.0.0">9.0.0</a>
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-
-    
-
-    <li>
-        
-
-            
-            <a href="#">Archived Releases<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/changes/changes-8.9.1">8.9.1</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/changes/changes-8.9.0">8.9.0</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/changes/changes-8.8.1">8.8.1</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/changes/changes-8.8.0">8.8.0</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/changes/changes-8.7.0">8.7.0</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/changes/changes-8.6.0">8.6.0</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/changes/changes-8.5.0">8.5.0</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/changes/changes-8.4.0">8.4.0</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/changes/changes-8.3.0">8.3.0</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/changes/changes-8.2.0">8.2.0</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/changes/changes-8.1.0">8.1.0</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/changes/changes-8.0.1">8.0.1</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/changes/changes-8.0.0">8.0.0</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/changes/changes-7.0.0">7.0.0</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/changes/changes-6.x">6.x</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/changes/changes-5.x">5.x</a>
-        
-    </li>
-
-    
-
-</ul>
-
+            <a href="/docs/skywalking-banyandb/next/contribute/debugging">Debugging</a>
         
     </li>
 
@@ -2917,54 +1233,8 @@
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 0cec0de</div>
+                  <div class="commit-id">Commit Id: 0ffd0b9</div>
                 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -2976,40 +1246,408 @@
               <i class="iconfont icon-menu-doc doc-menu-button"></i>
               
 <div class="td-content">
-	<h1 id="get-node-list-in-the-cluster">Get Node List in the Cluster</h1>
-<p>The OAP cluster is a set of OAP servers that work together to provide a scalable and reliable service. The OAP cluster
-supports <a href="../../setup/backend/backend-cluster">various cluster coordinator</a> to manage the cluster membership and the
-communication.
-This API provides capability to query the node list in the cluster from every OAP node perspective. If the cluster
-coordinator doesn&rsquo;t work properly, the node list may be incomplete or incorrect. So, we recommend you to check the
-node list when set up a cluster.</p>
-<p>This API is used to get the unified and effective TTL configurations.</p>
+	<h1 id="context-aware-panic-diagnostics-development-design">Context-Aware Panic Diagnostics Development Design</h1>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#current-implementation-status">Current Implementation Status</a></li>
+<li><a href="#architecture">Architecture</a></li>
+<li><a href="#component-design">Component Design</a></li>
+<li><a href="#crash-artifacts">Crash Artifacts</a></li>
+<li><a href="#proxy-api-and-collection-semantics">Proxy API and Collection Semantics</a></li>
+<li><a href="#deployment-and-operations">Deployment and Operations</a></li>
+<li><a href="#testing-strategy">Testing Strategy</a></li>
+<li><a href="#appendix">Appendix</a></li>
+</ol>
+<h2 id="overview">Overview</h2>
+<p>Context-aware panic diagnostics in BanyanDB and FODC provide two complementary capabilities:</p>
+<ol>
+<li>Recover selected panics with structured diagnostics and persisted artifacts.</li>
+<li>Surface those artifacts through the FODC agent and proxy for centralized inspection.</li>
+</ol>
+<p>The implementation is no longer just a file-watching sidecar concept. The current codebase has an end-to-end flow:</p>
+<ol>
+<li><code>pkg/panicdiag</code> captures panic context, breadcrumbs, stack traces, and optional state dumps.</li>
+<li>Recovered panics are written to an artifact directory on disk.</li>
+<li>The FODC agent collects crash records from both in-process panic reports and an optional watched artifact directory.</li>
+<li>The FODC proxy requests crash collections from connected agents over the crash diagnostics gRPC stream.</li>
+<li>The proxy caches deduplicated crash records and exposes them via <code>GET /diagnostics</code>.</li>
+</ol>
+<p>This document describes the current behavior implemented in code and highlights the parts that remain operational guidance rather than shipped features.</p>
+<h2 id="current-implementation-status">Current Implementation Status</h2>
+<h3 id="implemented">Implemented</h3>
 <ul>
-<li>URL, <code>http://{core restHost}:{core restPort}/status/cluster/nodes</code></li>
-<li>HTTP GET method.</li>
+<li><code>panicdiag.WithRecovery</code> and <code>panicdiag.GoWithRecovery</code> recover panics, capture stack traces, and persist structured artifacts.</li>
+<li><code>panicdiag.WithBreadcrumb</code> and <code>panicdiag.BreadcrumbsFromContext</code> preserve semantic execution markers.</li>
+<li><code>panicdiag.StateDumper</code> supports bounded JSON state dumps.</li>
+<li><code>panicdiag.CrashOutputConfig.InstallGlobalCrashOutput</code> configures the default artifact root and retention for structured panic artifacts.</li>
+<li>The FODC agent aggregates crash collections from:
+<ul>
+<li>An in-process panic reporter.</li>
+<li>An optional filesystem watcher over the configured crash directory.</li>
 </ul>
+</li>
+<li>The FODC proxy requests diagnostics from agents over <code>StreamCrashDiagnostics</code>.</li>
+<li>The proxy caches crash records keyed by <code>agentID::artifactDir</code>.</li>
+<li><code>GET /diagnostics</code> returns the proxy cache and supports filtering by <code>role</code> and <code>pod_name</code>.</li>
+</ul>
+<h3 id="not-implemented-here">Not Implemented Here</h3>
+<ul>
+<li>Automatic upload of crash artifacts from the proxy or agent to OAP.</li>
+<li>Alert fan-out such as Slack or webhook notifications.</li>
+<li>Proxy-side artifact completeness markers or remote retention coordination.</li>
+</ul>
+<p>Those remain future integration possibilities, not current behavior.</p>
+<h2 id="architecture">Architecture</h2>
+<h3 id="end-to-end-flow">End-to-End Flow</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Managed goroutine / instrumented code path
+</span></span><span style="display:flex;"><span>        │
+</span></span><span style="display:flex;"><span>        ├── Breadcrumbs added to context.Context
+</span></span><span style="display:flex;"><span>        │
+</span></span><span style="display:flex;"><span>        └── panicdiag.WithRecovery / GoWithRecovery
+</span></span><span style="display:flex;"><span>                │
+</span></span><span style="display:flex;"><span>                ├── Recover panic value
+</span></span><span style="display:flex;"><span>                ├── Capture goroutine stack
+</span></span><span style="display:flex;"><span>                ├── Read breadcrumbs from context
+</span></span><span style="display:flex;"><span>                ├── Optionally dump bounded state
+</span></span><span style="display:flex;"><span>                └── Write artifact directory on disk
+</span></span><span style="display:flex;"><span>                        │
+</span></span><span style="display:flex;"><span>                        ├── panic.json
+</span></span><span style="display:flex;"><span>                        └── deep-dump.json         (optional)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>FODC agent
+</span></span><span style="display:flex;"><span>        │
+</span></span><span style="display:flex;"><span>        ├── In-process panic store
+</span></span><span style="display:flex;"><span>        ├── Optional filesystem watcher over crash directory
+</span></span><span style="display:flex;"><span>        └── MultiCollectionProvider deduplicates by artifactDir
+</span></span><span style="display:flex;"><span>                │
+</span></span><span style="display:flex;"><span>                └── Crash diagnostics gRPC stream to proxy
+</span></span><span style="display:flex;"><span>                        │
+</span></span><span style="display:flex;"><span>                        ├── Proxy sends RequestDiagnostics=true
+</span></span><span style="display:flex;"><span>                        ├── Agent streams one message per collection
+</span></span><span style="display:flex;"><span>                        └── Proxy caches records by agentID::artifactDir
+</span></span><span style="display:flex;"><span>                                │
+</span></span><span style="display:flex;"><span>                                └── HTTP GET /diagnostics
+</span></span></code></pre></div><h3 id="why-the-layers-are-separate">Why the Layers Are Separate</h3>
+<ul>
+<li><code>panicdiag</code> is responsible for local panic capture and artifact persistence.</li>
+<li>The FODC agent is responsible for discovering crash collections from local sources.</li>
+<li>The FODC proxy is responsible for requesting, caching, filtering, and serving fleet-wide diagnostics.</li>
+<li>Global crash output remains the last-resort path for fatal runtime crashes that bypass recovery in processes that enable it, such as the FODC agent.</li>
+</ul>
+<h2 id="component-design">Component Design</h2>
+<h3 id="1-recovery-runtime">1. Recovery Runtime</h3>
+<p><strong>Purpose</strong>: Recover managed panics and persist structured diagnostics.</p>
+<h4 id="core-types">Core Types</h4>
+<p><strong><code>RecoveryOptions</code></strong></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#cf222e">type</span><span style="color:#fff"> </span><span style="color:#1f2328">RecoveryOptions</span><span style="color:#fff"> </span><span style="color:#cf222e">struct</span><span style="color:#fff"> </span><span style="color:#1f2328">{</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">Counter</span><span style="color:#fff">         </span><span style="color:#1f2328">meter</span><span style="color:#1f2328">.</span><span style="color:#1f2328">Counter</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">Logger</span><span style="color:#fff">          </span><span style="color:#0550ae">*</span><span style="color:#1f2328">logger</span><span style="color:#1f2328">.</span><span style="color:#1f2328">Logger</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">StateDumper</span><span style="color:#fff">     </span><span style="color:#1f2328">StateDumper</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">ProcessMetadata</span><span style="color:#fff"> </span><span style="color:#cf222e">map</span><span style="color:#1f2328">[</span><span style="color:#cf222e">string</span><span style="color:#1f2328">]</span><span style="color:#cf222e">string</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">Component</span><span style="color:#fff">       </span><span style="color:#cf222e">string</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">ArtifactRoot</span><span style="color:#fff">    </span><span style="color:#cf222e">string</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">StateLimitBytes</span><span style="color:#fff"> </span><span style="color:#cf222e">int64</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#1f2328">}</span><span style="color:#fff">
+</span></span></span></code></pre></div><p><strong><code>StateDumper</code></strong></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#cf222e">type</span><span style="color:#fff"> </span><span style="color:#1f2328">StateDumper</span><span style="color:#fff"> </span><span style="color:#cf222e">interface</span><span style="color:#fff"> </span><span style="color:#1f2328">{</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#6639ba">DumpState</span><span style="color:#1f2328">(</span><span style="color:#1f2328">context</span><span style="color:#1f2328">.</span><span style="color:#1f2328">Context</span><span style="color:#1f2328">)</span><span style="color:#fff"> </span><span style="color:#1f2328">(</span><span style="color:#cf222e">any</span><span style="color:#1f2328">,</span><span style="color:#fff"> </span><span style="color:#cf222e">error</span><span style="color:#1f2328">)</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#1f2328">}</span><span style="color:#fff">
+</span></span></span></code></pre></div><p><strong><code>PanicRecord</code></strong></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#cf222e">type</span><span style="color:#fff"> </span><span style="color:#1f2328">PanicRecord</span><span style="color:#fff"> </span><span style="color:#cf222e">struct</span><span style="color:#fff"> </span><span style="color:#1f2328">{</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">ProcessMetadata</span><span style="color:#fff"> </span><span style="color:#cf222e">map</span><span style="color:#1f2328">[</span><span style="color:#cf222e">string</span><span style="color:#1f2328">]</span><span style="color:#cf222e">string</span><span style="color:#fff"> </span><span style="color:#0a3069">`json:&#34;processMetadata,omitempty&#34;`</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">StateDump</span><span style="color:#fff">       </span><span style="color:#0550ae">*</span><span style="color:#1f2328">StateDumpStatus</span><span style="color:#fff">  </span><span style="color:#0a3069">`json:&#34;stateDump,omitempty&#34;`</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">Component</span><span style="color:#fff">       </span><span style="color:#cf222e">string</span><span style="color:#fff">            </span><span style="color:#0a3069">`json:&#34;component&#34;`</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">PanicValue</span><span style="color:#fff">      </span><span style="color:#cf222e">string</span><span style="color:#fff">            </span><span style="color:#0a3069">`json:&#34;panicValue&#34;`</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">GoroutineStack</span><span style="color:#fff">  </span><span style="color:#cf222e">string</span><span style="color:#fff">            </span><span style="color:#0a3069">`json:&#34;goroutineStack&#34;`</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">OccurredAt</span><span style="color:#fff">      </span><span style="color:#1f2328">time</span><span style="color:#1f2328">.</span><span style="color:#1f2328">Time</span><span style="color:#fff">         </span><span style="color:#0a3069">`json:&#34;occurredAt&#34;`</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">Breadcrumbs</span><span style="color:#fff">     </span><span style="color:#1f2328">[]</span><span style="color:#1f2328">Breadcrumb</span><span style="color:#fff">      </span><span style="color:#0a3069">`json:&#34;breadcrumbs,omitempty&#34;`</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">Recovered</span><span style="color:#fff">       </span><span style="color:#cf222e">bool</span><span style="color:#fff">              </span><span style="color:#0a3069">`json:&#34;recovered&#34;`</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#1f2328">}</span><span style="color:#fff">
+</span></span></span></code></pre></div><h4 id="current-behavior">Current Behavior</h4>
+<ul>
+<li><code>WithRecovery</code> recovers panics with <code>defer</code> and <code>recover</code>.</li>
+<li>The active <code>context.Context</code> is passed by pointer so breadcrumbs appended during execution are visible to recovery.</li>
+<li>If configured, a panic counter is incremented with a <code>component</code> label.</li>
+<li>If an artifact root is available, <code>panic.json</code> is written immediately.</li>
+<li>If a <code>StateDumper</code> is configured, the runtime writes:
+<ul>
+<li><code>deep-dump.json</code></li>
+</ul>
+</li>
+<li>The in-process panic report includes breadcrumbs and state-dump status. Filesystem-backed collections derive their structured record from <code>panic.json</code> and list dump files separately.</li>
+</ul>
+<h3 id="2-global-panic-diagnostics">2. Global Panic Diagnostics</h3>
+<p><strong>Purpose</strong>: Configure structured panic artifacts for failures that pass through <code>WithRecovery</code>.</p>
+<h4 id="current-behavior-1">Current Behavior</h4>
+<ul>
+<li><code>CrashOutputConfig.InstallGlobalCrashOutput</code> does not create <code>runtime-crash-&lt;pid&gt;.txt</code> files.</li>
+<li>Installing panic diagnostics sets:
+<ul>
+<li>the default artifact root used by <code>panicdiag</code></li>
+<li>the default maximum number of retained artifact directories</li>
+</ul>
+</li>
+<li><code>--max-diagnosis-memory-usage-percentage</code> can reserve memory headroom for post-panic diagnostics.</li>
+</ul>
+<p>In the current FODC code, this crash-output path is enabled by the FODC agent, not the FODC proxy.</p>
+<p>This is the safety net for fatal runtime failures and escaped panics.</p>
+<h3 id="3-diagnostic-breadcrumbs">3. Diagnostic Breadcrumbs</h3>
+<p><strong>Purpose</strong>: Preserve the semantic path that led to a panic.</p>
+<h4 id="core-type">Core Type</h4>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#cf222e">type</span><span style="color:#fff"> </span><span style="color:#1f2328">Breadcrumb</span><span style="color:#fff"> </span><span style="color:#cf222e">struct</span><span style="color:#fff"> </span><span style="color:#1f2328">{</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">Fields</span><span style="color:#fff">    </span><span style="color:#cf222e">map</span><span style="color:#1f2328">[</span><span style="color:#cf222e">string</span><span style="color:#1f2328">]</span><span style="color:#cf222e">string</span><span style="color:#fff"> </span><span style="color:#0a3069">`json:&#34;fields,omitempty&#34;`</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">Time</span><span style="color:#fff">      </span><span style="color:#1f2328">time</span><span style="color:#1f2328">.</span><span style="color:#1f2328">Time</span><span style="color:#fff">         </span><span style="color:#0a3069">`json:&#34;time&#34;`</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">Stage</span><span style="color:#fff">     </span><span style="color:#cf222e">string</span><span style="color:#fff">            </span><span style="color:#0a3069">`json:&#34;stage&#34;`</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">Component</span><span style="color:#fff"> </span><span style="color:#cf222e">string</span><span style="color:#fff">            </span><span style="color:#0a3069">`json:&#34;component,omitempty&#34;`</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#1f2328">}</span><span style="color:#fff">
+</span></span></span></code></pre></div><h4 id="current-behavior-2">Current Behavior</h4>
+<ul>
+<li><code>WithBreadcrumb(ctx, stage, component, fields)</code> returns a derived context with one additional immutable marker.</li>
+<li><code>BreadcrumbsFromContext(ctx)</code> returns markers ordered oldest-to-newest.</li>
+<li>The implementation clones field maps so callers cannot mutate already-recorded breadcrumb data.</li>
+<li>Breadcrumbs are already used in several query and service paths, including FODC lifecycle collection and BanyanDB stream and measure query handling.</li>
+</ul>
+<h3 id="4-deep-state-serialization">4. Deep State Serialization</h3>
+<p><strong>Purpose</strong>: Persist bounded state that helps explain the crash input and runtime state.</p>
+<h4 id="current-behavior-3">Current Behavior</h4>
+<ul>
+<li><code>StateDumper.DumpState</code> is called only after a panic has been recovered.</li>
+<li>The runtime writes a bounded JSON dump.</li>
+<li>Serialization status is recorded in <code>PanicRecord.StateDump</code>.</li>
+<li>Serialization failure does not prevent panic recovery or artifact creation.</li>
+</ul>
+<h4 id="statedump-status">StateDump Status</h4>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#cf222e">type</span><span style="color:#fff"> </span><span style="color:#1f2328">StateDumpStatus</span><span style="color:#fff"> </span><span style="color:#cf222e">struct</span><span style="color:#fff"> </span><span style="color:#1f2328">{</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">Path</span><span style="color:#fff">      </span><span style="color:#cf222e">string</span><span style="color:#fff"> </span><span style="color:#0a3069">`json:&#34;path,omitempty&#34;`</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">Error</span><span style="color:#fff">     </span><span style="color:#cf222e">string</span><span style="color:#fff"> </span><span style="color:#0a3069">`json:&#34;error,omitempty&#34;`</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">Truncated</span><span style="color:#fff"> </span><span style="color:#cf222e">bool</span><span style="color:#fff">   </span><span style="color:#0a3069">`json:&#34;truncated,omitempty&#34;`</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#1f2328">}</span><span style="color:#fff">
+</span></span></span></code></pre></div><h3 id="5-artifact-writer">5. Artifact Writer</h3>
+<p><strong>Purpose</strong>: Write crash diagnostics into a stable per-panic directory.</p>
+<h4 id="current-layout">Current Layout</h4>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>&lt;panic-diagnostics-dir&gt;/
+</span></span><span style="display:flex;"><span>  &lt;timestamp&gt;-&lt;component&gt;-&lt;pid&gt;/
+</span></span><span style="display:flex;"><span>    panic.json
+</span></span><span style="display:flex;"><span>    deep-dump.json        (optional)
+</span></span></code></pre></div><h4 id="naming-and-retention">Naming and Retention</h4>
+<ul>
+<li>Artifact directories are named as <code>&lt;UTC timestamp&gt;-&lt;sanitized component&gt;-&lt;pid&gt;</code>.</li>
+<li>Components are sanitized for safe filesystem names.</li>
+<li>Retention pruning removes the oldest artifact directories first.</li>
+<li>Only directories containing <code>panic.json</code> are treated as crash artifacts for pruning.</li>
+</ul>
+<h3 id="6-fodc-agent-collection">6. FODC Agent Collection</h3>
+<p><strong>Purpose</strong>: Merge locally available crash collections into one streamable view.</p>
+<h4 id="sources">Sources</h4>
+<ul>
+<li><code>InProcessPanicStore</code>
+<ul>
+<li>receives reports directly from <code>panicdiag</code> through the default reporter</li>
+</ul>
+</li>
+<li><code>DirectoryWatcher</code>
+<ul>
+<li>scans a crash directory using filesystem notifications plus periodic rescans</li>
+<li>waits until <code>panic.json</code> exists before storing a filesystem-backed collection</li>
+</ul>
+</li>
+</ul>
+<h4 id="merging">Merging</h4>
+<p><code>MultiCollectionProvider</code> deduplicates by <code>Collection.ArtifactDir</code> so the same artifact is not reported twice when it is seen by both the in-process store and the directory watcher.</p>
+<h4 id="collection-record">Collection Record</h4>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#cf222e">type</span><span style="color:#fff"> </span><span style="color:#1f2328">CollectionRecord</span><span style="color:#fff"> </span><span style="color:#cf222e">struct</span><span style="color:#fff"> </span><span style="color:#1f2328">{</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">FetchedAt</span><span style="color:#fff">      </span><span style="color:#1f2328">time</span><span style="color:#1f2328">.</span><span style="color:#1f2328">Time</span><span style="color:#fff">            </span><span style="color:#0a3069">`json:&#34;fetchedAt&#34;`</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">SourceEndpoint</span><span style="color:#fff"> </span><span style="color:#cf222e">string</span><span style="color:#fff">               </span><span style="color:#0a3069">`json:&#34;sourceEndpoint&#34;`</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">Collection</span><span style="color:#fff">     </span><span style="color:#1f2328">panicdiag</span><span style="color:#1f2328">.</span><span style="color:#1f2328">Collection</span><span style="color:#fff"> </span><span style="color:#0a3069">`json:&#34;collection&#34;`</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#1f2328">}</span><span style="color:#fff">
+</span></span></span></code></pre></div><h3 id="7-fodc-proxy-aggregation">7. FODC Proxy Aggregation</h3>
+<p><strong>Purpose</strong>: Collect diagnostics from connected agents on demand and expose a filtered fleet view.</p>
+<h4 id="current-behavior-4">Current Behavior</h4>
+<ul>
+<li>The proxy creates the diagnostics aggregator before the gRPC service exists.</li>
+<li><code>SetGRPCService</code> wires the gRPC sender after service construction.</li>
+<li><code>CollectDiagnostics</code> reads <code>grpcService</code> under lock.</li>
+<li>If <code>grpcService</code> is still <code>nil</code> during startup, the proxy logs a warning and returns the cached snapshot instead of failing.</li>
+<li>On each <code>GET /diagnostics</code> request, the proxy:
+<ol>
+<li>filters agents by <code>role</code> and optional <code>pod_name</code></li>
+<li>sends <code>RequestDiagnostics(agentID)</code> to each matching agent</li>
+<li>waits a short fixed collection window</li>
+<li>returns the current cached snapshot</li>
+</ol>
+</li>
+</ul>
+<h4 id="cache-semantics">Cache Semantics</h4>
+<ul>
+<li>Each incoming <code>StreamCrashDiagnosticsRequest</code> represents one artifact.</li>
+<li>The proxy cache key is <code>agentID::artifactDir</code>.</li>
+<li>Repeated sends update the cached record in place.</li>
+<li>Removing an agent removes all cached records for that agent.</li>
+<li>Request failures are non-fatal and are logged as agent capability or stream-availability issues.</li>
+</ul>
+<h2 id="crash-artifacts">Crash Artifacts</h2>
+<h3 id="persisted-panicjson-example">Persisted <code>panic.json</code> Example</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>BanyanDB panic recovered
+</span></span><span style="display:flex;"><span>OccurredAt: 2026-04-01T10:11:12Z
+</span></span><span style="display:flex;"><span>Component: measure-query-worker
+</span></span><span style="display:flex;"><span>Recovered: true
+</span></span><span style="display:flex;"><span>Panic: runtime error: index out of range [7] with length 4
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Stack:
+</span></span><span style="display:flex;"><span>goroutine 9123 [running]:
+</span></span><span style="display:flex;"><span>...
+</span></span></code></pre></div><h3 id="files-in-a-collection">Files in a Collection</h3>
+<ul>
+<li><code>panic.json</code> is the required structured summary written by the artifact writer. Filesystem collection parses its core fields into <code>panic_record</code>.</li>
+<li><code>deep-dump.json</code> is optional.</li>
+</ul>
+<h3 id="completeness-rules">Completeness Rules</h3>
+<ul>
+<li><code>panic.json</code> is required for a directory to be recognized as a crash collection by <code>panicdiag.ListCollections</code>.</li>
+<li>The agent-side <code>DirectoryWatcher</code> treats <code>panic.json</code> as the required file for a complete artifact.</li>
+<li>Directories without <code>panic.json</code> are ignored until a later scan observes the summary file.</li>
+</ul>
+<h2 id="proxy-api-and-collection-semantics">Proxy API and Collection Semantics</h2>
+<h3 id="http-endpoint">HTTP Endpoint</h3>
+<p>The proxy exposes:</p>
+<ul>
+<li><code>GET /diagnostics</code></li>
+</ul>
+<p>Supported query parameters:</p>
+<ul>
+<li><code>role</code></li>
+<li><code>pod_name</code></li>
+</ul>
+<p>The endpoint returns an array of aggregated records.</p>
+<h3 id="returned-record-shape">Returned Record Shape</h3>
 <div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-json" data-lang="json"><span style="display:flex;"><span><span style="color:#1f2328">{</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#0550ae">&#34;nodes&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">[</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#1f2328">{</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;host&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;10.0.12.23&#34;</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;port&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0550ae">11800</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;self&#34;</span><span style="color:#1f2328">:</span> <span style="color:#cf222e">true</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#1f2328">},</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#1f2328">{</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;host&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;10.0.12.25&#34;</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;port&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0550ae">11800</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;self&#34;</span><span style="color:#1f2328">:</span> <span style="color:#cf222e">false</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#1f2328">},</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#1f2328">{</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;host&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;10.0.12.37&#34;</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;port&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0550ae">11800</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;self&#34;</span><span style="color:#1f2328">:</span> <span style="color:#cf222e">false</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#1f2328">}</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#0550ae">&#34;fetched_at&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;2026-04-20T10:00:00Z&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#0550ae">&#34;panic_record&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0550ae">&#34;occurred_at&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;2026-04-20T09:59:30Z&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0550ae">&#34;component&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;watchdog&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0550ae">&#34;goroutine_stack&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;goroutine 100 [running]:\n...&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0550ae">&#34;panic_value&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;boom&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0550ae">&#34;recovered&#34;</span><span style="color:#1f2328">:</span> <span style="color:#cf222e">true</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#1f2328">},</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#0550ae">&#34;agent_id&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;agent-1&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#0550ae">&#34;pod_name&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;banyand-datanode-0&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#0550ae">&#34;role&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;datanode&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#0550ae">&#34;source_endpoint&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;file:///crash&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#0550ae">&#34;artifact_dir&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;20260420T095930.000000000Z-watchdog-1234&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#0550ae">&#34;files&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">[</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0a3069">&#34;panic.json&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0a3069">&#34;deep-dump.json&#34;</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#1f2328">]</span>
 </span></span><span style="display:flex;"><span><span style="color:#1f2328">}</span>
-</span></span></code></pre></div><p>The <code>nodes</code> list all the nodes in the cluster. The size of the list should be exactly same as your cluster setup.
-The <code>host</code> and <code>port</code> are the address of the OAP node, which are used for OAP nodes communicating with each other. The
-<code>self</code> is a flag to indicate whether the node is the current node, others are remote nodes.</p>
+</span></span></code></pre></div><h3 id="requestresponse-model">Request/Response Model</h3>
+<ul>
+<li>The proxy does not continuously mirror all agent crash collections.</li>
+<li>Diagnostics are refreshed on demand when the HTTP endpoint is called.</li>
+<li>Agents respond by listing their currently known collections and streaming them one-by-one to the proxy.</li>
+<li>The proxy then serves a cached snapshot after waiting for a short response window.</li>
+</ul>
+<p>This model avoids requiring a batch-end marker in the current proto while still giving the HTTP caller a coherent fleet snapshot.</p>
+<h2 id="deployment-and-operations">Deployment and Operations</h2>
+<h3 id="shared-directory-model">Shared Directory Model</h3>
+<p>The local crash artifact directory is still important, but it now primarily feeds the FODC agent rather than a separate sidecar uploader.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>+---------------------------+        +---------------------------+
+</span></span><span style="display:flex;"><span>| BanyanDB / FODC process   |        | FODC agent               |
+</span></span><span style="display:flex;"><span>|                           |        |                           |
+</span></span><span style="display:flex;"><span>| panicdiag writes artifacts| -----&gt; | In-process store          |
+</span></span><span style="display:flex;"><span>|                           | local  | Directory watcher         |
+</span></span><span style="display:flex;"><span>|                           | dir    | gRPC crash stream client  |
+</span></span><span style="display:flex;"><span>+---------------------------+        +-------------+-------------+
+</span></span><span style="display:flex;"><span>                                                  |
+</span></span><span style="display:flex;"><span>                                                  v
+</span></span><span style="display:flex;"><span>                                        +-----------------------+
+</span></span><span style="display:flex;"><span>                                        | FODC proxy            |
+</span></span><span style="display:flex;"><span>                                        | diagnostics cache     |
+</span></span><span style="display:flex;"><span>                                        | GET /diagnostics      |
+</span></span><span style="display:flex;"><span>                                        +-----------------------+
+</span></span></code></pre></div><h3 id="relevant-flags">Relevant Flags</h3>
+<p>From the current implementation:</p>
+<ul>
+<li><code>--panic-diagnostics-enabled</code></li>
+<li><code>--panic-diagnostics-dir</code></li>
+<li><code>--panic-diagnostics-max-artifacts</code></li>
+<li><code>--max-diagnosis-memory-usage-percentage</code></li>
+</ul>
+<p>These flags are part of the FODC agent&rsquo;s CLI surface. Agent crash collection also depends on the configured watched crash source directory when filesystem-backed collection is enabled.</p>
+<h3 id="operational-notes">Operational Notes</h3>
+<ul>
+<li>The artifact directory should be writable by the process generating artifacts.</li>
+<li>Retention is directory-count based, not total-byte based.</li>
+<li><code>GOMEMLIMIT</code> headroom helps the process finish diagnostic work under memory pressure.</li>
+<li>Incomplete artifacts may appear transiently while files are still being written.</li>
+<li>During proxy startup, <code>/diagnostics</code> can return a cached snapshot even before the gRPC service has been wired into the aggregator.</li>
+</ul>
+<h2 id="testing-strategy">Testing Strategy</h2>
+<h3 id="unit-tests">Unit Tests</h3>
+<ul>
+<li><code>WithRecovery</code> captures panic value, stack trace, breadcrumbs, and optional state dump status.</li>
+<li>Breadcrumb helpers preserve ordering and clone field maps.</li>
+<li>Artifact writing creates <code>panic.json</code>.</li>
+<li>Panic diagnostics installation does not create runtime crash text files.</li>
+<li>Directory watching detects artifact directories once <code>panic.json</code> is present.</li>
+<li>Proxy aggregation returns a cached snapshot when the gRPC service is unset.</li>
+</ul>
+<h3 id="integration-tests">Integration Tests</h3>
+<ul>
+<li>State dump files are surfaced in collection <code>Files</code>.</li>
+<li>Breadcrumbs written during recovered panics remain available through the in-process panic report.</li>
+<li>Incomplete artifact directories are ignored until <code>panic.json</code> appears.</li>
+<li>Proxy diagnostics requests collect records from connected agents and expose them through <code>GET /diagnostics</code>.</li>
+</ul>
+<h2 id="appendix">Appendix</h2>
+<h3 id="layer-summary">Layer Summary</h3>
+<table>
+  <thead>
+      <tr>
+          <th>Layer</th>
+          <th>Name</th>
+          <th>Current Outcome</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>0</td>
+          <td>Recovery Runtime</td>
+          <td>Recover managed panics and persist <code>panic.json</code></td>
+      </tr>
+      <tr>
+          <td>1</td>
+          <td>Global Panic Diagnostics</td>
+          <td>Configure artifact root, retention, and memory headroom</td>
+      </tr>
+      <tr>
+          <td>2</td>
+          <td>Breadcrumbs</td>
+          <td>Preserve semantic execution history in the in-process panic report</td>
+      </tr>
+      <tr>
+          <td>3</td>
+          <td>State Dump</td>
+          <td>Persist bounded JSON state snapshots</td>
+      </tr>
+      <tr>
+          <td>4</td>
+          <td>Agent Collection</td>
+          <td>Merge in-process and filesystem-backed crash collections</td>
+      </tr>
+      <tr>
+          <td>5</td>
+          <td>Proxy Aggregation</td>
+          <td>Request, cache, filter, and serve fleet-wide diagnostics</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="expected-operator-value">Expected Operator Value</h3>
+<ul>
+<li>Faster root-cause analysis because crash records include stack traces, breadcrumbs, and optional state dumps.</li>
+<li>Less filesystem noise because runtime crash text files are not created for normal recovered panic diagnostics.</li>
+<li>Fleet-level visibility because the proxy can serve crash diagnostics aggregated from connected agents through a single endpoint.</li>
+</ul>
 
 </div>
 
@@ -3038,6 +1676,73 @@ The <code>host</code> and <code>port</code> are the address of the OAP node, whi
 
 
 
+
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#context-aware-panic-diagnostics-development-design">Context-Aware Panic Diagnostics Development Design</a>
+      <ul>
+        <li><a href="#table-of-contents">Table of Contents</a></li>
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#current-implementation-status">Current Implementation Status</a>
+          <ul>
+            <li><a href="#implemented">Implemented</a></li>
+            <li><a href="#not-implemented-here">Not Implemented Here</a></li>
+          </ul>
+        </li>
+        <li><a href="#architecture">Architecture</a>
+          <ul>
+            <li><a href="#end-to-end-flow">End-to-End Flow</a></li>
+            <li><a href="#why-the-layers-are-separate">Why the Layers Are Separate</a></li>
+          </ul>
+        </li>
+        <li><a href="#component-design">Component Design</a>
+          <ul>
+            <li><a href="#1-recovery-runtime">1. Recovery Runtime</a></li>
+            <li><a href="#2-global-panic-diagnostics">2. Global Panic Diagnostics</a></li>
+            <li><a href="#3-diagnostic-breadcrumbs">3. Diagnostic Breadcrumbs</a></li>
+            <li><a href="#4-deep-state-serialization">4. Deep State Serialization</a></li>
+            <li><a href="#5-artifact-writer">5. Artifact Writer</a></li>
+            <li><a href="#6-fodc-agent-collection">6. FODC Agent Collection</a></li>
+            <li><a href="#7-fodc-proxy-aggregation">7. FODC Proxy Aggregation</a></li>
+          </ul>
+        </li>
+        <li><a href="#crash-artifacts">Crash Artifacts</a>
+          <ul>
+            <li><a href="#persisted-panicjson-example">Persisted <code>panic.json</code> Example</a></li>
+            <li><a href="#files-in-a-collection">Files in a Collection</a></li>
+            <li><a href="#completeness-rules">Completeness Rules</a></li>
+          </ul>
+        </li>
+        <li><a href="#proxy-api-and-collection-semantics">Proxy API and Collection Semantics</a>
+          <ul>
+            <li><a href="#http-endpoint">HTTP Endpoint</a></li>
+            <li><a href="#returned-record-shape">Returned Record Shape</a></li>
+            <li><a href="#requestresponse-model">Request/Response Model</a></li>
+          </ul>
+        </li>
+        <li><a href="#deployment-and-operations">Deployment and Operations</a>
+          <ul>
+            <li><a href="#shared-directory-model">Shared Directory Model</a></li>
+            <li><a href="#relevant-flags">Relevant Flags</a></li>
+            <li><a href="#operational-notes">Operational Notes</a></li>
+          </ul>
+        </li>
+        <li><a href="#testing-strategy">Testing Strategy</a>
+          <ul>
+            <li><a href="#unit-tests">Unit Tests</a></li>
+            <li><a href="#integration-tests">Integration Tests</a></li>
+          </ul>
+        </li>
+        <li><a href="#appendix">Appendix</a>
+          <ul>
+            <li><a href="#layer-summary">Layer Summary</a></li>
+            <li><a href="#expected-operator-value">Expected Operator Value</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
 
 
 
@@ -12018,6 +10723,10 @@ The <code>host</code> and <code>port</code> are the address of the OAP node, whi
 
 
 
+
+
+
+
 <div class="sky-event-popup">
 
     <div class="sky-pop-modal">
@@ -12078,6 +10787,10 @@ The <code>host</code> and <code>port</code> are the address of the OAP node, whi
                     
                 </a>
             </div>
+            
+            
+            
+            
             
             
             

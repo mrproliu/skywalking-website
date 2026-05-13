@@ -22,26 +22,23 @@
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
 
-<title>Get Alarm Runtime Status | Apache SkyWalking</title><meta property="og:url" content="/docs/main/next/en/status/query_alarm_runtime_status/">
+<title>SWIP-14 Inspect API for Admin Server | Apache SkyWalking</title><meta property="og:url" content="/docs/main/next/en/swip/swip-14/">
   <meta property="og:site_name" content="Apache SkyWalking">
-  <meta property="og:title" content="Get Alarm Runtime Status">
-  <meta property="og:description" content="Get Alarm Runtime Status OAP calculates the alarm conditions in the memory based on the alarm rules and the metrics data. If the OAP cluster has multiple instances, each instance will calculate the alarm conditions independently. You can query from any OAP instance to get the all instances’ alarm running status.
-The following APIs are exposed to make the alerting running kernel visible.
-Get Alarm Running Rules Return the list of alarm running rules.">
+  <meta property="og:title" content="SWIP-14 Inspect API for Admin Server">
+  <meta property="og:description" content="SWIP-14 Inspect API for Admin Server Motivation When operators author OAL / MAL / LAL rules and turn them on (statically or via runtime-rule hot-update from SWIP-13), the natural follow-up question is:
+“Which metrics did this rule actually produce?” “For metric service_xyz, which entities are emitting values right now?” “Once I have an entity, can I query it via MQE without guessing how to reconstruct the Entity shape?” Today the only way to answer these is to dig through dashboards, write exploratory MQE expressions against guessed entity names, or read storage directly. There is no first-class “browse” interface.">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="article">
     <meta property="article:section" content="docs">
 
-  <meta itemprop="name" content="Get Alarm Runtime Status">
-  <meta itemprop="description" content="Get Alarm Runtime Status OAP calculates the alarm conditions in the memory based on the alarm rules and the metrics data. If the OAP cluster has multiple instances, each instance will calculate the alarm conditions independently. You can query from any OAP instance to get the all instances’ alarm running status.
-The following APIs are exposed to make the alerting running kernel visible.
-Get Alarm Running Rules Return the list of alarm running rules.">
-  <meta itemprop="wordCount" content="732">
+  <meta itemprop="name" content="SWIP-14 Inspect API for Admin Server">
+  <meta itemprop="description" content="SWIP-14 Inspect API for Admin Server Motivation When operators author OAL / MAL / LAL rules and turn them on (statically or via runtime-rule hot-update from SWIP-13), the natural follow-up question is:
+“Which metrics did this rule actually produce?” “For metric service_xyz, which entities are emitting values right now?” “Once I have an entity, can I query it via MQE without guessing how to reconstruct the Entity shape?” Today the only way to answer these is to dig through dashboards, write exploratory MQE expressions against guessed entity names, or read storage directly. There is no first-class “browse” interface.">
+  <meta itemprop="wordCount" content="3790">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Get Alarm Runtime Status">
-  <meta name="twitter:description" content="Get Alarm Runtime Status OAP calculates the alarm conditions in the memory based on the alarm rules and the metrics data. If the OAP cluster has multiple instances, each instance will calculate the alarm conditions independently. You can query from any OAP instance to get the all instances’ alarm running status.
-The following APIs are exposed to make the alerting running kernel visible.
-Get Alarm Running Rules Return the list of alarm running rules.">
+  <meta name="twitter:title" content="SWIP-14 Inspect API for Admin Server">
+  <meta name="twitter:description" content="SWIP-14 Inspect API for Admin Server Motivation When operators author OAL / MAL / LAL rules and turn them on (statically or via runtime-rule hot-update from SWIP-13), the natural follow-up question is:
+“Which metrics did this rule actually produce?” “For metric service_xyz, which entities are emitting values right now?” “Once I have an entity, can I query it via MQE without guessing how to reconstruct the Entity shape?” Today the only way to answer these is to dig through dashboards, write exploratory MQE expressions against guessed entity names, or read storage directly. There is no first-class “browse” interface.">
 
 
 
@@ -60,7 +57,7 @@ Get Alarm Running Rules Return the list of alarm running rules.">
 
 
 
-    <title>Get Alarm Runtime Status | Apache SkyWalking</title>
+    <title>SWIP-14 Inspect API for Admin Server | Apache SkyWalking</title>
   </head>
   <body class="td-page  project-doc">
     <header>
@@ -2053,72 +2050,6 @@ Get Alarm Running Rules Return the list of alarm running rules.">
 
     
 
-    <li>
-        
-
-            
-            <a href="#">Status APIs<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/status/status_apis">Introduction</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/debugging/config_dump">Dump Effective Initial Configurations</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/debugging/query-tracing">Tracing Query Execution</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/status/query_ttl_setup">Get Effective TTL Configurations</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/status/query_cluster_nodes">Get Node List in the Cluster</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/next/en/status/query_alarm_runtime_status">Get Alarm Runtime Status</a>
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-
-    
-
 </ul>
 
         
@@ -2304,6 +2235,64 @@ Get Alarm Running Rules Return the list of alarm running rules.">
 
 </ul>
 
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
+            <a href="#">Status API<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/admin-api/status">Overview</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/debugging/config_dump">Dump Effective Initial Configurations</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/debugging/query-tracing">Tracing Query Execution</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/admin-api/inspect">Inspect API</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/admin-api/admin-ui">Admin UI (Community)</a>
         
     </li>
 
@@ -2923,7 +2912,7 @@ Get Alarm Running Rules Return the list of alarm running rules.">
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 0cec0de</div>
+                  <div class="commit-id">Commit Id: dc77df6</div>
                 
 
 
@@ -2982,266 +2971,900 @@ Get Alarm Running Rules Return the list of alarm running rules.">
               <i class="iconfont icon-menu-doc doc-menu-button"></i>
               
 <div class="td-content">
-	<h1 id="get-alarm-runtime-status">Get Alarm Runtime Status</h1>
-<p>OAP calculates the alarm conditions in the memory based on the alarm rules and the metrics data.
-If the OAP cluster has multiple instances, each instance will calculate the alarm conditions independently.
-You can query from any OAP instance to get the all instances&rsquo; alarm running status.</p>
-<p>The following APIs are exposed to make the alerting running kernel visible.</p>
-<h2 id="get-alarm-running-rules">Get Alarm Running Rules</h2>
-<p>Return the list of alarm running rules.</p>
+	<h1 id="swip-14-inspect-api-for-admin-server">SWIP-14 Inspect API for Admin Server</h1>
+<h2 id="motivation">Motivation</h2>
+<p>When operators author OAL / MAL / LAL rules and turn them on (statically or via
+runtime-rule hot-update from SWIP-13), the natural follow-up question is:</p>
 <ul>
-<li>URL, <code>http://{core restHost}:{core restPort}/status/alarm/rules</code></li>
-<li>HTTP GET method.</li>
+<li>&ldquo;Which metrics did this rule actually produce?&rdquo;</li>
+<li>&ldquo;For metric <code>service_xyz</code>, which entities are emitting values right now?&rdquo;</li>
+<li>&ldquo;Once I have an entity, can I query it via MQE without guessing how to
+reconstruct the <code>Entity</code> shape?&rdquo;</li>
 </ul>
+<p>Today the only way to answer these is to dig through dashboards, write
+exploratory MQE expressions against guessed entity names, or read storage
+directly. There is no first-class &ldquo;browse&rdquo; interface.</p>
+<p>The public GraphQL surface deliberately does not expose
+&ldquo;enumerate entities with values for metric X in range R&rdquo;, because that scan is
+unbounded and would compete with user-facing query traffic for storage
+resources. Operators still need it — for debugging rules, validating new
+monitoring features, and onboarding new agents.</p>
+<p>This SWIP proposes an <strong>Inspect API</strong> on the existing admin-server
+(SWIP-13&rsquo;s admin-host bundle, default port 17128) that exposes:</p>
+<ol>
+<li>The metric catalog with type + scope + supported downsamplings.</li>
+<li>For a given metric + time range, the set of entities (capped) that hold
+values, decoded into MQE-ready form.</li>
+</ol>
+<p>The output of (2) is shaped so the operator can paste it directly into a
+follow-up MQE call against the existing <code>MetricsExpressionQuery</code> GraphQL
+mutation. This SWIP <strong>does not</strong> introduce a new MQE entry point — the public
+GraphQL path remains the single MQE surface.</p>
+<h2 id="scope">Scope</h2>
+<p>In scope:</p>
+<ul>
+<li><code>COMMON_VALUE</code> and <code>LABELED_VALUE</code> metric types — the two <code>dataType</code>s
+that <code>MQEVisitor.visitMetric</code> actually dispatches today.</li>
+<li><code>Service</code>, <code>ServiceInstance</code>, <code>Endpoint</code>, <code>ServiceRelation</code>,
+<code>ServiceInstanceRelation</code>, <code>EndpointRelation</code> scopes.</li>
+<li>All three storage backends: BanyanDB, Elasticsearch, JDBC.</li>
+<li><code>/inspect/metrics</code> lists every registered metric regardless of type
+(including <code>HEATMAP</code> and <code>SAMPLED_RECORD</code>) so operators can see the full
+catalog. Only <code>/inspect/entities</code> is restricted to MQE-dispatchable types.</li>
+<li><strong>Companion: relocate + dual-bind the Status API.</strong> The existing
+<code>status-query-plugin</code> (cluster nodes / alarm runtime status / TTL config
+/ debug query trace) is replaced by a new <code>status</code> feature module under
+<code>server-admin/</code>. The module registers its handlers on <strong>both</strong> the
+public REST <code>HTTPHandlerRegister</code> (preserving today&rsquo;s binding —
+skywalking-ui consumes these endpoints on <code>core.restPort</code>) <strong>and</strong>, if
+admin-server is enabled, the admin-server <code>HTTPHandlerRegister</code>. The
+default state remains &ldquo;status on the public REST port&rdquo; so the UI keeps
+working unchanged. No new endpoint is added — clients that need to
+discover the OAP REST address parse the existing
+<code>GET /debugging/config/dump</code>, which already publishes the effective
+configuration including REST host and port.</li>
+</ul>
+<p>Out of scope (deferred):</p>
+<ul>
+<li><code>HISTOGRAM</code> / <code>HEATMAP</code> metrics from <code>/inspect/entities</code>. MQE has no
+dispatch path for histogram dataType — <code>MQEVisitor.visitMetric</code> only
+handles <code>COMMON_VALUE</code>, <code>LABELED_VALUE</code>, and <code>SAMPLED_RECORD</code>; histograms
+flow through the legacy <code>MetricsQuery.readHeatMap</code> GraphQL resolver,
+which is being phased out. The <code>mqeEntity</code> block this API produces would
+not be usable for them. They remain visible in <code>/inspect/metrics</code> (with
+<code>type: HEATMAP</code>) so operators can see they exist.</li>
+<li><code>SAMPLED_RECORD</code> metrics from <code>/inspect/entities</code>. These live in Stream
+storage (logs, trace segments, browser errors) and are addressed via
+<code>IRecordsQueryDAO</code> / trace-relative queries, not the metrics DAO. A
+future Inspect-Records endpoint can mirror this design once the scoping
+question is settled. They remain visible in <code>/inspect/metrics</code>.</li>
+<li><code>Process</code> and <code>ProcessRelation</code> scopes. <code>ProcessID</code> is a SHA-256 hash with
+no decoder; readable rendering would require a <code>ProcessTraffic</code> join, which
+we punt on for v1.</li>
+<li>Firing MQE from admin-server. Operators take the inspect response and call
+the existing public GraphQL <code>execExpression</code> mutation. Keeping MQE on one
+surface preserves auth/quotas/observability there.</li>
+</ul>
+<h2 id="architecture">Architecture</h2>
+<pre tabindex="0"><code>   ┌── operator / swctl / curl ──┐         ┌── skywalking-ui ──┐
+   │  /inspect/* (admin-only)    │         │  /status/* (UI)   │
+   │  /status/*  (admin mirror)  │         │                   │
+   └─────────────┬───────────────┘         └─────────┬─────────┘
+                 │ admin port 17128                  │ public REST port 12800
+                 ▼                to kee                   ▼
+   ┌─────────────────────────────────┐   ┌──────────────────────────────┐
+   │      admin-server (Armeria)     │   │  public REST (sharing/core)  │
+   │  ┌───────────────────────────┐  │   │   GraphQL / MQE / receivers  │
+   │  │  inspect feature module   │  │   │                              │
+   │  │   ├── /inspect/metrics    │  │   │   ┌────────────────────────┐ │
+   │  │   └── /inspect/entities   │  │   │   │   status feature module │ │
+   │  └───────────────────────────┘  │   │   │   ├── /status/cluster/.. │ │
+   │                                 │   │   │   ├── /status/alarm/..  │ │
+   │  ┌───────────────────────────┐  │   │   │   ├── /status/config/.. │ │
+   │  │  status feature module    │◄─┼───┼───┤   └── /debugging/...    │ │
+   │  │  (same handler instance,  │  │   │   │                          │ │
+   │  │   dual-bound when admin   │  │   │   └────────────────────────┘ │
+   │  │   is on; this side is     │  │   │                              │
+   │  │   silent if admin off)    │  │   └──────────────────────────────┘
+   │  └───────────────────────────┘  │
+   └─────────────────────────────────┘
+                     │                             │
+                     ▼                             ▼
+       ┌──────────────────────────┐  ┌──────────────────────────────┐
+       │ ValueColumnMetadata      │  │  IMetricsQueryDAO            │
+       │ StorageModels            │  │   .listEntityIdsInRange(...) │  ◄── new method
+       │ MetadataQueryService     │  │  (BanyanDB / ES / JDBC impl) │
+       │ DefaultScopeDefine       │  └──────────────────────────────┘
+       └──────────────────────────┘
+                     │
+                     ▼
+              decode entity_id via IDManager.*ID.analysisId(),
+              enrich with layer(s) from MetadataQueryService cache,
+              shape into MQE-ready Entity
+
+  inspect-client flow (admin operator):
+    1. (one-time) GET admin:17128/debugging/config/dump → parse REST host/port
+       OR rely on a known deployment-time URL.
+    2. GET admin:17128/inspect/metrics            → pick a metric
+    3. GET admin:17128/inspect/entities?metric=…  → get entityId + mqeEntity
+    4. POST &lt;REST URL&gt;/graphql execExpression(    → fire the actual query on
+         entity = mqeEntity, expression = …)        the public GraphQL surface
+
+  ui flow (skywalking-ui, unchanged):
+    1. GET oap:12800/status/cluster, /status/alarm, /status/ttl, …
+       (admin-server may be off — these still work via the public REST binding)
+</code></pre><p>The inspect feature module is a sibling of <code>dsl-debugging</code> and
+<code>runtime-rule</code> under the existing admin-host. It registers its handlers in
+<code>start()</code> against the shared <code>HTTPHandlerRegister</code>. No new port, no new auth
+surface.</p>
+<h2 id="api">API</h2>
+<h3 id="get-inspectmetrics"><code>GET /inspect/metrics</code></h3>
+<p>Lists all registered metrics with type, scope catalog, and the downsampling
+levels at which each metric is materialized.</p>
+<p>Query parameters:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Name</th>
+          <th>Required</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>regex</code></td>
+          <td>no</td>
+          <td>Java regex over metric name. Default <code>.*</code>.</td>
+      </tr>
+      <tr>
+          <td><code>type</code></td>
+          <td>no</td>
+          <td>Filter by <code>REGULAR_VALUE</code> / <code>LABELED_VALUE</code> / <code>HEATMAP</code> / <code>SAMPLED_RECORD</code>. Repeatable.</td>
+      </tr>
+      <tr>
+          <td><code>mqeQueryable</code></td>
+          <td>no</td>
+          <td>If <code>true</code>, return only metrics that <code>/inspect/entities</code> accepts (<code>REGULAR_VALUE</code>, <code>LABELED_VALUE</code>). Default <code>false</code>.</td>
+      </tr>
+      <tr>
+          <td><code>catalog</code></td>
+          <td>no</td>
+          <td>Filter by catalog name (<code>SERVICE</code>, <code>SERVICE_INSTANCE</code>, <code>ENDPOINT</code>, <code>SERVICE_RELATION</code>, <code>SERVICE_INSTANCE_RELATION</code>, <code>ENDPOINT_RELATION</code>). Repeatable.</td>
+      </tr>
+  </tbody>
+</table>
+<p>Response (<code>200 OK</code>, <code>application/json</code>):</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-json" data-lang="json"><span style="display:flex;"><span><span style="color:#1f2328">{</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#0550ae">&#34;oapInstances&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">[</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#0550ae">&#34;metrics&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">[</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#1f2328">{</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;address&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;127.0.0.1_11800&#34;</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;status&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;ruleList&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">[</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#1f2328">{</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">&#34;id&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;service_percentile_rule&#34;</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#1f2328">},</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#1f2328">{</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">&#34;id&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;service_resp_time_rule&#34;</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#1f2328">}</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#1f2328">]</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;name&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;service_cpm&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;type&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;REGULAR_VALUE&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;catalog&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;SERVICE&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;scopeId&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0550ae">1</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;scope&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;Service&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;valueColumnName&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;value&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;downsamplings&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">[</span><span style="color:#0a3069">&#34;MINUTE&#34;</span><span style="color:#1f2328">,</span> <span style="color:#0a3069">&#34;HOUR&#34;</span><span style="color:#1f2328">,</span> <span style="color:#0a3069">&#34;DAY&#34;</span><span style="color:#1f2328">]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#1f2328">},</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#1f2328">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;name&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;service_percentile&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;type&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;LABELED_VALUE&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;catalog&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;SERVICE&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;scopeId&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0550ae">1</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;scope&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;Service&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;valueColumnName&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;value&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;downsamplings&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">[</span><span style="color:#0a3069">&#34;MINUTE&#34;</span><span style="color:#1f2328">,</span> <span style="color:#0a3069">&#34;HOUR&#34;</span><span style="color:#1f2328">,</span> <span style="color:#0a3069">&#34;DAY&#34;</span><span style="color:#1f2328">]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#1f2328">},</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#1f2328">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;name&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;endpoint_response_time&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;type&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;HEATMAP&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;catalog&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;ENDPOINT&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;scopeId&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0550ae">3</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;scope&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;Endpoint&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;valueColumnName&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;dataset&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;downsamplings&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">[</span><span style="color:#0a3069">&#34;MINUTE&#34;</span><span style="color:#1f2328">,</span> <span style="color:#0a3069">&#34;HOUR&#34;</span><span style="color:#1f2328">,</span> <span style="color:#0a3069">&#34;DAY&#34;</span><span style="color:#1f2328">]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#1f2328">}</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#1f2328">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">}</span>
+</span></span></code></pre></div><p>Implementation:</p>
+<ul>
+<li>Source of metric list is <code>ValueColumnMetadata.INSTANCE.getAllMetadata()</code>,
+the same map already exposed via <code>MetricsMetadataQueryService.listMetrics</code>.</li>
+<li>Entries with <code>Column.ValueDataType.NOT_VALUE</code> are <strong>filtered out</strong> —
+these are persisted-but-not-queryable internal columns (topology lines,
+service entries) per <code>Column.java</code>&rsquo;s contract. They never appear in
+<code>/inspect/metrics</code>.</li>
+<li>Entries whose scope resolves to <code>Scope.All</code> are <strong>filtered out</strong> as well
+(<code>Scope.All</code> is deprecated and not routable through the inspect path).</li>
+<li><code>type</code> is mapped from <code>Column.ValueDataType</code> exactly as
+<code>MetricsMetadataQueryService.typeOfMetrics</code> does today.</li>
+<li><code>scope</code> is <code>Scope.Finder.valueOf(scopeId).name()</code>.</li>
+<li><code>downsamplings</code> is derived once at startup by scanning
+<code>StorageModels.allModels()</code>, grouping by metric name, collecting
+<code>model.getDownsampling()</code> values into a <code>Set</code>. Pure metadata, no storage I/O.</li>
+<li>This endpoint is safe to poll; results change only when models are
+registered or removed (boot, runtime-rule add/delete).</li>
+</ul>
+<h3 id="get-inspectentities"><code>GET /inspect/entities</code></h3>
+<p>Lists entities that hold values for a metric within a time range, decoded
+into MQE-ready form.</p>
+<p>Query parameters:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Name</th>
+          <th>Required</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>metric</code></td>
+          <td>yes</td>
+          <td>Metric name (must resolve in <code>ValueColumnMetadata</code>).</td>
+      </tr>
+      <tr>
+          <td><code>start</code></td>
+          <td>yes</td>
+          <td>Time-range start. Same format as MQE <code>Duration.start</code>: <code>yyyy-MM-dd</code> (DAY), <code>yyyy-MM-dd HH</code> (HOUR), <code>yyyy-MM-dd HHmm</code> (MINUTE), <code>yyyy-MM-dd HHmmss</code> (SECOND).</td>
+      </tr>
+      <tr>
+          <td><code>end</code></td>
+          <td>yes</td>
+          <td>Time-range end. Format mirrors <code>start</code>.</td>
+      </tr>
+      <tr>
+          <td><code>step</code></td>
+          <td>yes</td>
+          <td>One of <code>MINUTE</code>, <code>HOUR</code>, <code>DAY</code>. Must be one of the metric&rsquo;s <code>downsamplings</code>.</td>
+      </tr>
+      <tr>
+          <td><code>limit</code></td>
+          <td>no</td>
+          <td>Server-side cap. Default 300, hard-capped at 300.</td>
+      </tr>
+  </tbody>
+</table>
+<p><code>coldStage</code> is intentionally not exposed. The inspect API targets the
+operationally-active hot path; cold-stage scans bypass the same TTL window
+the operator would be debugging within.</p>
+<p>The <code>limit</code> is applied as <code>LIMIT N</code> at the storage layer — it bounds the
+total rows scanned (N = 300 ≅ 10 buckets × 30 entities), not 300 entities.
+Backends dedup on <code>entity_id</code> before returning.</p>
+<p><code>step</code> is parsed via <code>DownSampling.valueOf(step)</code> after upper-casing and
+must appear in the metric&rsquo;s <code>supportedDownsamplings</code> (else 400). The
+<code>(start, end)</code> pair is converted to time buckets through the same
+<code>Duration.getStartTimeBucket()</code> / <code>getEndTimeBucket()</code> path MQE uses, so
+range semantics match exactly.</p>
+<p>Response (<code>200 OK</code>, <code>application/json</code>) — example: <code>service_cpm</code> over the
+last 10 minutes, where service <code>payment</code> is registered under both <code>MESH</code> and
+<code>GENERAL</code> layers:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-json" data-lang="json"><span style="display:flex;"><span><span style="color:#1f2328">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#0550ae">&#34;metric&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;service_cpm&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#0550ae">&#34;scope&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;Service&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#0550ae">&#34;step&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;MINUTE&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#0550ae">&#34;start&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;2026-05-10 1230&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#0550ae">&#34;end&#34;</span><span style="color:#1f2328">:</span>   <span style="color:#0a3069">&#34;2026-05-10 1240&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#0550ae">&#34;rows&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">[</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#1f2328">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;entityId&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;cGF5bWVudA==.1&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;decoded&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">{</span> <span style="color:#0550ae">&#34;serviceName&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;payment&#34;</span><span style="color:#1f2328">,</span> <span style="color:#0550ae">&#34;isReal&#34;</span><span style="color:#1f2328">:</span> <span style="color:#cf222e">true</span> <span style="color:#1f2328">},</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;layer&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;MESH&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;mqeEntity&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;scope&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;Service&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;serviceName&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;payment&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;normal&#34;</span><span style="color:#1f2328">:</span> <span style="color:#cf222e">true</span>
 </span></span><span style="display:flex;"><span>      <span style="color:#1f2328">}</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#1f2328">},</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#1f2328">{</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;address&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;127.0.0.1_11801&#34;</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;status&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;ruleList&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">[</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#1f2328">{</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">&#34;id&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;service_percentile_rule&#34;</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#1f2328">},</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#1f2328">{</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">&#34;id&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;service_resp_time_rule&#34;</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#1f2328">}</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#1f2328">]</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;entityId&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;cGF5bWVudA==.1&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;decoded&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">{</span> <span style="color:#0550ae">&#34;serviceName&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;payment&#34;</span><span style="color:#1f2328">,</span> <span style="color:#0550ae">&#34;isReal&#34;</span><span style="color:#1f2328">:</span> <span style="color:#cf222e">true</span> <span style="color:#1f2328">},</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;layer&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;GENERAL&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;mqeEntity&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;scope&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;Service&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;serviceName&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;payment&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;normal&#34;</span><span style="color:#1f2328">:</span> <span style="color:#cf222e">true</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#1f2328">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#1f2328">},</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#1f2328">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;entityId&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;Y2hlY2tvdXQ=.1&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;decoded&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">{</span> <span style="color:#0550ae">&#34;serviceName&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;checkout&#34;</span><span style="color:#1f2328">,</span> <span style="color:#0550ae">&#34;isReal&#34;</span><span style="color:#1f2328">:</span> <span style="color:#cf222e">true</span> <span style="color:#1f2328">},</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;layer&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;GENERAL&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;mqeEntity&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;scope&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;Service&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;serviceName&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;checkout&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;normal&#34;</span><span style="color:#1f2328">:</span> <span style="color:#cf222e">true</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#1f2328">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#1f2328">},</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#1f2328">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;entityId&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;bXlzcWw=.0&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;decoded&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">{</span> <span style="color:#0550ae">&#34;serviceName&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;mysql&#34;</span><span style="color:#1f2328">,</span> <span style="color:#0550ae">&#34;isReal&#34;</span><span style="color:#1f2328">:</span> <span style="color:#cf222e">false</span> <span style="color:#1f2328">},</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;layer&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;VIRTUAL_DATABASE&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;mqeEntity&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;scope&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;Service&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;serviceName&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;mysql&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;normal&#34;</span><span style="color:#1f2328">:</span> <span style="color:#cf222e">false</span>
 </span></span><span style="display:flex;"><span>      <span style="color:#1f2328">}</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#1f2328">}</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#1f2328">]</span>
 </span></span><span style="display:flex;"><span><span style="color:#1f2328">}</span>
-</span></span></code></pre></div><h2 id="get-alarm-running-rule-info">Get Alarm Running Rule Info</h2>
-<p>Return the detailed information of the alarm running rule.</p>
-<ul>
-<li>URL, <code>http://{core restHost}:{core restPort}/status/alarm/rules/{ruleId}</code></li>
-<li>HTTP GET method.</li>
-</ul>
+</span></span></code></pre></div><p>An empty result is not an error — <code>{ &quot;metric&quot;: …, &quot;rows&quot;: [] }</code> simply
+means no entity wrote a value in the requested window.</p>
+<p>Multi-layer rule: one logical entity emits <strong>one row per layer</strong> it is
+registered under. <code>payment</code> appears twice above because
+<code>ServiceTraffic</code> has two rows (<code>payment</code>/<code>MESH</code> and <code>payment</code>/<code>GENERAL</code>),
+and the inspect API does not collapse them — the operator may want to
+investigate one layer at a time, and <code>Layer</code> is meaningful for downstream
+calls such as <code>listInstances(serviceId)</code>. The <code>mqeEntity</code> block, however, is
+identical across layer rows because MQE itself does not take a layer
+parameter — including it lets the operator copy-paste without thinking.</p>
+<p>ServiceInstance example (<code>service_instance_cpm</code>):</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-json" data-lang="json"><span style="display:flex;"><span><span style="color:#1f2328">{</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#0550ae">&#34;oapInstances&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">[</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#0550ae">&#34;rows&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">[</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#1f2328">{</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;address&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;127.0.0.1_11800&#34;</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;status&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;ruleId&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;service_resp_time_rule&#34;</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;expression&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;sum(service_resp_time &gt; 1000) &gt;= 1&#34;</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;period&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0550ae">10</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;silencePeriod&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0550ae">10</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;recoveryObservationPeriod&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0550ae">2</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;additionalPeriod&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0550ae">0</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;includeEntityNames&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">[],</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;excludeEntityNames&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">[],</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;includeEntityNamesRegex&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;&#34;</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;excludeEntityNamesRegex&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;&#34;</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;runningEntities&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">[</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#1f2328">{</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">&#34;scope&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;SERVICE&#34;</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">&#34;name&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;mock_b_service&#34;</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">&#34;formattedMessage&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;Service mock_b_service response time is more than 1000ms of last 10 minutes&#34;</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#1f2328">}</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#1f2328">],</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;tags&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">[</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#1f2328">{</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">&#34;key&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;level&#34;</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">&#34;value&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;WARNING&#34;</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#1f2328">}</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#1f2328">],</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;hooks&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">[</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#0a3069">&#34;webhook.default&#34;</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#0a3069">&#34;wechat.default&#34;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#1f2328">],</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;includeMetrics&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">[</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#0a3069">&#34;service_resp_time&#34;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#1f2328">]</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#1f2328">}</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#1f2328">},</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#1f2328">{</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;address&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;127.0.0.1_11801&#34;</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;status&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;ruleId&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;service_resp_time_rule&#34;</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;expression&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;sum(service_resp_time &gt; 1000) &gt;= 1&#34;</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;period&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0550ae">10</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;silencePeriod&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0550ae">10</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;recoveryObservationPeriod&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0550ae">2</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;additionalPeriod&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0550ae">0</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;includeEntityNames&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">[],</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;excludeEntityNames&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">[],</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;includeEntityNamesRegex&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;&#34;</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;excludeEntityNamesRegex&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;&#34;</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;runningEntities&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">[</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#1f2328">{</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">&#34;scope&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;SERVICE&#34;</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">&#34;name&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;mock_a_service&#34;</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">&#34;formattedMessage&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;Service mock_a_service response time is more than 1000ms of last 10 minutes.&#34;</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#1f2328">},</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#1f2328">{</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">&#34;scope&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;SERVICE&#34;</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">&#34;name&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;mock_c_service&#34;</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">&#34;formattedMessage&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;Service mock_c_service response time is more than 1000ms of last 10 minutes.&#34;</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#1f2328">}</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#1f2328">],</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;tags&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">[</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#1f2328">{</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">&#34;key&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;level&#34;</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">&#34;value&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;WARNING&#34;</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#1f2328">}</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#1f2328">],</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;hooks&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">[</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#0a3069">&#34;webhook.default&#34;</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#0a3069">&#34;wechat.default&#34;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#1f2328">],</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;includeMetrics&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">[</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#0a3069">&#34;service_resp_time&#34;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#1f2328">]</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;entityId&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;cGF5bWVudA==.1_cG9kLTAx&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;decoded&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;serviceName&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;payment&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;isReal&#34;</span><span style="color:#1f2328">:</span> <span style="color:#cf222e">true</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;serviceInstanceName&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;pod-01&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#1f2328">},</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;layer&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;GENERAL&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;mqeEntity&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;scope&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;ServiceInstance&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;serviceName&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;payment&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;serviceInstanceName&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;pod-01&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;normal&#34;</span><span style="color:#1f2328">:</span> <span style="color:#cf222e">true</span>
 </span></span><span style="display:flex;"><span>      <span style="color:#1f2328">}</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#1f2328">}</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#1f2328">]</span>
 </span></span><span style="display:flex;"><span><span style="color:#1f2328">}</span>
-</span></span></code></pre></div><ul>
-<li><code>additonalPeriod</code> is the additional period if the expression includes the <a href="../../api/metrics-query-expression#trend-operation">increase/rate function</a>.
-This additional period is used to enlarge window size for calculating the trend value.</li>
-<li><code>runningEntities</code> is the entities that have metrics data and being calculated by the alarm rule.</li>
-<li><code>formattedMessages</code> is the result message according to the message template and the affected running entities.</li>
-</ul>
-<h2 id="get-alarm-running-context">Get Alarm Running Context</h2>
-<p>Return the running context of the alarm rule.</p>
-<ul>
-<li>URL, <code>http://{core restHost}:{core restPort}/status/alarm/{ruleId}/{entityName}</code></li>
-<li>HTTP GET method.</li>
-</ul>
+</span></span></code></pre></div><p>ServiceRelation example (<code>service_relation_client_cpm</code>):</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-json" data-lang="json"><span style="display:flex;"><span><span style="color:#1f2328">{</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#0550ae">&#34;oapInstances&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">[</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#0550ae">&#34;rows&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">[</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#1f2328">{</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;address&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;127.0.0.1_11800&#34;</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;status&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;ruleId&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;service_resp_time_rule&#34;</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;expression&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;sum(service_resp_time &gt; 1000) &gt;= 1&#34;</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;endTime&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;2025-11-19T15:20:00.000&#34;</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;additionalPeriod&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0550ae">0</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;size&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0550ae">10</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;silencePeriod&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0550ae">10</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;recoveryObservationPeriod&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0550ae">0</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;silenceCountdown&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0550ae">10</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;recoveryObservationCountdown&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0550ae">0</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;currentState&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;FIRING&#34;</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;entityName&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;mock_b_service&#34;</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;windowValues&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">[</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#1f2328">{</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">&#34;index&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0550ae">0</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">&#34;metrics&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">[]</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#1f2328">},</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#1f2328">{</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">&#34;index&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0550ae">1</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">&#34;metrics&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">[]</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#1f2328">},</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#1f2328">{</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">&#34;index&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0550ae">2</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">&#34;metrics&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">[]</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#1f2328">},</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#1f2328">{</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">&#34;index&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0550ae">3</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">&#34;metrics&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">[]</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#1f2328">},</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#1f2328">{</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">&#34;index&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0550ae">4</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">&#34;metrics&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">[]</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#1f2328">},</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#1f2328">{</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">&#34;index&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0550ae">5</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">&#34;metrics&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">[]</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#1f2328">},</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#1f2328">{</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">&#34;index&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0550ae">6</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">&#34;metrics&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">[]</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#1f2328">},</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#1f2328">{</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">&#34;index&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0550ae">7</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">&#34;metrics&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">[]</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#1f2328">},</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#1f2328">{</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">&#34;index&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0550ae">8</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">&#34;metrics&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">[</span>
-</span></span><span style="display:flex;"><span>              <span style="color:#1f2328">{</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#0550ae">&#34;name&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;service_resp_time&#34;</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#0550ae">&#34;timeBucket&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0550ae">202511191519</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#0550ae">&#34;value&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;6000&#34;</span>
-</span></span><span style="display:flex;"><span>              <span style="color:#1f2328">}</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#1f2328">]</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#1f2328">},</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#1f2328">{</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">&#34;index&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0550ae">9</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">&#34;metrics&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">[]</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#1f2328">}</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#1f2328">],</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;mqeMetricsSnapshot&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">{</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#0550ae">&#34;service_resp_time&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;[{\&#34;metric\&#34;:{\&#34;labels\&#34;:[]},\&#34;values\&#34;:[{\&#34;id\&#34;:\&#34;202511191511\&#34;,\&#34;doubleValue\&#34;:0.0,\&#34;isEmptyValue\&#34;:true},{\&#34;id\&#34;:\&#34;202511191512\&#34;,\&#34;doubleValue\&#34;:0.0,\&#34;isEmptyValue\&#34;:true},{\&#34;id\&#34;:\&#34;202511191513\&#34;,\&#34;doubleValue\&#34;:0.0,\&#34;isEmptyValue\&#34;:true},{\&#34;id\&#34;:\&#34;202511191514\&#34;,\&#34;doubleValue\&#34;:0.0,\&#34;isEmptyValue\&#34;:true},{\&#34;id\&#34;:\&#34;202511191515\&#34;,\&#34;doubleValue\&#34;:0.0,\&#34;isEmptyValue\&#34;:true},{\&#34;id\&#34;:\&#34;202511191516\&#34;,\&#34;doubleValue\&#34;:0.0,\&#34;isEmptyValue\&#34;:true},{\&#34;id\&#34;:\&#34;202511191517\&#34;,\&#34;doubleValue\&#34;:0.0,\&#34;isEmptyValue\&#34;:true},{\&#34;id\&#34;:\&#34;202511191518\&#34;,\&#34;doubleValue\&#34;:0.0,\&#34;isEmptyValue\&#34;:true},{\&#34;id\&#34;:\&#34;202511191519\&#34;,\&#34;doubleValue\&#34;:6000.0,\&#34;isEmptyValue\&#34;:false},{\&#34;id\&#34;:\&#34;202511191520\&#34;,\&#34;doubleValue\&#34;:0.0,\&#34;isEmptyValue\&#34;:true}]}]&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;entityId&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;Y2hlY2tvdXQ=.1-cGF5bWVudA==.1&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;decoded&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;source&#34;</span><span style="color:#1f2328">:</span>      <span style="color:#1f2328">{</span> <span style="color:#0550ae">&#34;serviceName&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;checkout&#34;</span><span style="color:#1f2328">,</span> <span style="color:#0550ae">&#34;isReal&#34;</span><span style="color:#1f2328">:</span> <span style="color:#cf222e">true</span> <span style="color:#1f2328">},</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;destination&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">{</span> <span style="color:#0550ae">&#34;serviceName&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;payment&#34;</span><span style="color:#1f2328">,</span>  <span style="color:#0550ae">&#34;isReal&#34;</span><span style="color:#1f2328">:</span> <span style="color:#cf222e">true</span> <span style="color:#1f2328">}</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#1f2328">},</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;layer&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;GENERAL&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;mqeEntity&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;scope&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;ServiceRelation&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;serviceName&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;checkout&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;normal&#34;</span><span style="color:#1f2328">:</span> <span style="color:#cf222e">true</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;destServiceName&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;payment&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;destNormal&#34;</span><span style="color:#1f2328">:</span> <span style="color:#cf222e">true</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#1f2328">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#1f2328">}</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#1f2328">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">}</span>
+</span></span></code></pre></div><p>ServiceInstanceRelation example
+(<code>service_instance_relation_client_cpm</code>, e.g., a <code>consumer</code> instance
+calling a <code>provider</code> instance in the java-agent provider/consumer
+showcase):</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-json" data-lang="json"><span style="display:flex;"><span><span style="color:#1f2328">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#0550ae">&#34;rows&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">[</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#1f2328">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;entityId&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;Y29uc3VtZXI=.1_cG9kLWE=-cHJvdmlkZXI=.1_cG9kLWI=&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;decoded&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;source&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">{</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#0550ae">&#34;serviceName&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;consumer&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#0550ae">&#34;isReal&#34;</span><span style="color:#1f2328">:</span> <span style="color:#cf222e">true</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#0550ae">&#34;serviceInstanceName&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;pod-a&#34;</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#1f2328">},</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;lastAlarmTime&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;1763536823628&#34;</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;lastAlarmMessage&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;Service mock_b_service response time is more than 1000ms of last 10 minutes.&#34;</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;lastAlarmMqeMetricsSnapshot&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">{</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#0550ae">&#34;service_resp_time&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;[{\&#34;metric\&#34;:{\&#34;labels\&#34;:[]},\&#34;values\&#34;:[{\&#34;id\&#34;:\&#34;202511191511\&#34;,\&#34;doubleValue\&#34;:0.0,\&#34;isEmptyValue\&#34;:true},{\&#34;id\&#34;:\&#34;202511191512\&#34;,\&#34;doubleValue\&#34;:0.0,\&#34;isEmptyValue\&#34;:true},{\&#34;id\&#34;:\&#34;202511191513\&#34;,\&#34;doubleValue\&#34;:0.0,\&#34;isEmptyValue\&#34;:true},{\&#34;id\&#34;:\&#34;202511191514\&#34;,\&#34;doubleValue\&#34;:0.0,\&#34;isEmptyValue\&#34;:true},{\&#34;id\&#34;:\&#34;202511191515\&#34;,\&#34;doubleValue\&#34;:0.0,\&#34;isEmptyValue\&#34;:true},{\&#34;id\&#34;:\&#34;202511191516\&#34;,\&#34;doubleValue\&#34;:0.0,\&#34;isEmptyValue\&#34;:true},{\&#34;id\&#34;:\&#34;202511191517\&#34;,\&#34;doubleValue\&#34;:0.0,\&#34;isEmptyValue\&#34;:true},{\&#34;id\&#34;:\&#34;202511191518\&#34;,\&#34;doubleValue\&#34;:0.0,\&#34;isEmptyValue\&#34;:true},{\&#34;id\&#34;:\&#34;202511191519\&#34;,\&#34;doubleValue\&#34;:6000.0,\&#34;isEmptyValue\&#34;:false},{\&#34;id\&#34;:\&#34;202511191520\&#34;,\&#34;doubleValue\&#34;:0.0,\&#34;isEmptyValue\&#34;:true}]}]&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;destination&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">{</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#0550ae">&#34;serviceName&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;provider&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#0550ae">&#34;isReal&#34;</span><span style="color:#1f2328">:</span> <span style="color:#cf222e">true</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#0550ae">&#34;serviceInstanceName&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;pod-b&#34;</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#1f2328">}</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#1f2328">}</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#1f2328">},</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#1f2328">{</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;address&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;127.0.0.1_11801&#34;</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;status&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;ruleId&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;service_resp_time_rule&#34;</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;expression&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;sum(service_resp_time &gt; 1000) &gt;= 1&#34;</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;additionalPeriod&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0550ae">0</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;size&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0550ae">0</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;silenceCountdown&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0550ae">0</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;recoveryObservationCountdown&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0550ae">0</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;windowValues&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">[],</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;lastAlarmTime&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0550ae">0</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#1f2328">},</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;layer&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;GENERAL&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;mqeEntity&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;scope&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;ServiceInstanceRelation&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;serviceName&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;consumer&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;normal&#34;</span><span style="color:#1f2328">:</span> <span style="color:#cf222e">true</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;serviceInstanceName&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;pod-a&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;destServiceName&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;provider&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;destNormal&#34;</span><span style="color:#1f2328">:</span> <span style="color:#cf222e">true</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;destServiceInstanceName&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;pod-b&#34;</span>
 </span></span><span style="display:flex;"><span>      <span style="color:#1f2328">}</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#1f2328">}</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#1f2328">]</span>
 </span></span><span style="display:flex;"><span><span style="color:#1f2328">}</span>
-</span></span></code></pre></div><p><code>size</code> is the window size. Equal to the <code>period + additionalPeriod</code>.
-<code>silenceCountdown</code> is the countdown of the silence period. -1 means silence countdown is not running.
-<code>recoveryObservationCountdown</code> is the countdown of the recovery observation period.
-<code>windowValues</code> is the original metrics data when the metrics come in. The <code>index</code> is the index of the window, starting from 0.
-<code>mqeMetricsSnapshot</code> is the current metrics data in the MQE format which is generated when executing the checking.
-These data will be calculated according to the expression.
-<code>lastAlarmTime</code> is the last time when the alarm is triggered. It will be reset to 0 when the alarm recovers.
-<code>lastAlarmMessage</code> is the last alarm message when the alarm is triggered.
-<code>lastAlarmMqeMetricsSnapshot</code> is the metrics data snapshot in the MQE format when the last alarm is triggered.</p>
-<h2 id="get-errors-when-querying-status-from-oap-instances">Get Errors When Querying Status from OAP Instances</h2>
-<p>If some errors occur when querying the status from OAP instances, the error messages will be returned.</p>
+</span></span></code></pre></div><p>EndpointRelation example (<code>endpoint_relation_cpm</code>, where consumer&rsquo;s
+<code>/order</code> calls provider&rsquo;s <code>/charge</code>):</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-json" data-lang="json"><span style="display:flex;"><span><span style="color:#1f2328">{</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#0550ae">&#34;oapInstances&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">[</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#0550ae">&#34;rows&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">[</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#1f2328">{</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;address&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;127.0.0.1_11800&#34;</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;status&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;ruleList&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">[</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#1f2328">{</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">&#34;id&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;service_percentile_rule&#34;</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#1f2328">},</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#1f2328">{</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#0550ae">&#34;id&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;service_resp_time_rule&#34;</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#1f2328">}</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#1f2328">]</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;entityId&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;Y29uc3VtZXI=.1-L29yZGVy-cHJvdmlkZXI=.1-L2NoYXJnZQ==&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;decoded&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;source&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">{</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#0550ae">&#34;serviceName&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;consumer&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#0550ae">&#34;isReal&#34;</span><span style="color:#1f2328">:</span> <span style="color:#cf222e">true</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#0550ae">&#34;endpointName&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;/order&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#1f2328">},</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;destination&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">{</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#0550ae">&#34;serviceName&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;provider&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#0550ae">&#34;isReal&#34;</span><span style="color:#1f2328">:</span> <span style="color:#cf222e">true</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#0550ae">&#34;endpointName&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;/charge&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#1f2328">}</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#1f2328">},</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;layer&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;GENERAL&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;mqeEntity&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;scope&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;EndpointRelation&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;serviceName&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;consumer&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;normal&#34;</span><span style="color:#1f2328">:</span> <span style="color:#cf222e">true</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;endpointName&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;/order&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;destServiceName&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;provider&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;destNormal&#34;</span><span style="color:#1f2328">:</span> <span style="color:#cf222e">true</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0550ae">&#34;destEndpointName&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;/charge&#34;</span>
 </span></span><span style="display:flex;"><span>      <span style="color:#1f2328">}</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#1f2328">},</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#1f2328">{</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;address&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;127.0.0.1_11801&#34;</span><span style="color:#1f2328">,</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#0550ae">&#34;errorMsg&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;UNAVAILABLE: io exception&#34;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#1f2328">}</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#1f2328">]</span>
 </span></span><span style="display:flex;"><span><span style="color:#1f2328">}</span>
-</span></span></code></pre></div>
+</span></span></code></pre></div><p>Error responses:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Status</th>
+          <th>Body</th>
+          <th>Cause</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>400</td>
+          <td><code>{&quot;error&quot;:&quot;unknown metric: foo&quot;}</code></td>
+          <td>metric not in <code>ValueColumnMetadata</code>.</td>
+      </tr>
+      <tr>
+          <td>400</td>
+          <td><code>{&quot;error&quot;:&quot;step DAY not supported by metric foo (MINUTE,HOUR)&quot;}</code></td>
+          <td>metric not materialized at requested downsampling.</td>
+      </tr>
+      <tr>
+          <td>400</td>
+          <td><code>{&quot;error&quot;:&quot;metric type HEATMAP is not MQE-queryable; /inspect/entities only accepts REGULAR_VALUE and LABELED_VALUE&quot;}</code></td>
+          <td>metric type is <code>HEATMAP</code> (HISTOGRAM dataType).</td>
+      </tr>
+      <tr>
+          <td>400</td>
+          <td><code>{&quot;error&quot;:&quot;metric type SAMPLED_RECORD is out of scope for /inspect/entities&quot;}</code></td>
+          <td>metric type is <code>SAMPLED_RECORD</code>.</td>
+      </tr>
+      <tr>
+          <td>400</td>
+          <td><code>{&quot;error&quot;:&quot;process scope is out of scope&quot;}</code></td>
+          <td>scope is <code>Process</code> / <code>ProcessRelation</code>.</td>
+      </tr>
+      <tr>
+          <td>400</td>
+          <td><code>{&quot;error&quot;:&quot;limit must be between 1 and 300&quot;}</code></td>
+          <td><code>limit</code> out of range.</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="status-api-relocation">Status API relocation</h3>
+<p>The <code>status-query-plugin</code> module currently registers its HTTP handlers
+(<code>AlarmStatusQueryHandler</code>, <code>ClusterStatusQueryHandler</code>,
+<code>TTLConfigQueryHandler</code>, <code>DebuggingHTTPHandler</code> for query trace) against
+the public <code>HTTPHandlerRegister</code> exposed by the core / sharing-server
+module — the same HTTP surface as GraphQL, on the public REST port
+(<code>core.restPort</code>, default <code>12800</code>, or the sharing-server port if
+configured). <strong>skywalking-ui calls these endpoints on the public REST
+port today</strong>, so the binding cannot move; it can only be supplemented.</p>
+<p>This SWIP replaces <code>status-query-plugin</code> with a new feature module
+<code>status</code> under <code>server-admin/</code> that <strong>dual-binds</strong>:</p>
+<ol>
+<li><strong>Always</strong>: registers every handler on the public REST
+<code>HTTPHandlerRegister</code> resolved through <code>CoreModule</code> — the same surface
+<code>status-query-plugin</code> uses today, with the same URIs and payloads. UI
+compatibility is preserved.</li>
+<li><strong>Conditionally</strong>: if <code>AdminServerModule</code> is loaded
+(<code>SW_ADMIN_SERVER=default</code>), also registers every handler on the
+admin-server <code>HTTPHandlerRegister</code>. Operators that gateway-protect the
+admin port can drive status from the same private surface as
+<code>/inspect/*</code>, <code>/dsl-debugging/*</code>, <code>/runtime/rule/*</code>.</li>
+</ol>
+<p>The module is gated by <code>SW_STATUS=default</code> and is <strong>enabled by default</strong>
+(matching today&rsquo;s <code>status-query-plugin</code> posture so existing UI deployments
+keep working without an opt-in step). It does <strong>not</strong> require
+admin-server: when admin-server is off, status still binds on the public
+REST port — that is the entire point of the dual-bind design.</p>
+<p><strong>Routes hosted by the <code>status</code> feature module</strong> — every existing route
+preserved verbatim from <code>status-query-plugin</code>. No new endpoint is added
+by this SWIP; clients that need to discover the OAP REST URL parse the
+existing <code>GET /debugging/config/dump</code> response, which already publishes
+the effective configuration including REST host and port.</p>
+<table>
+  <thead>
+      <tr>
+          <th>URI (all <code>GET</code>)</th>
+          <th>Purpose</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>/status/cluster/nodes</code></td>
+          <td>OAP cluster peer list.</td>
+      </tr>
+      <tr>
+          <td><code>/status/alarm/rules</code></td>
+          <td>Registered alarm rules.</td>
+      </tr>
+      <tr>
+          <td><code>/status/alarm/{ruleId}</code></td>
+          <td>Per-rule runtime status.</td>
+      </tr>
+      <tr>
+          <td><code>/status/alarm/{ruleId}/{entityName}</code></td>
+          <td>Per-rule + per-entity runtime status.</td>
+      </tr>
+      <tr>
+          <td><code>/status/config/ttl</code></td>
+          <td>Effective TTL configuration.</td>
+      </tr>
+      <tr>
+          <td><code>/debugging/config/dump</code></td>
+          <td>Effective configuration dump (also serves as the REST-URL discovery primitive for inspect clients).</td>
+      </tr>
+      <tr>
+          <td><code>/debugging/query/mqe</code></td>
+          <td>Run an MQE expression with debug tracing.</td>
+      </tr>
+      <tr>
+          <td><code>/debugging/query/trace/queryBasicTraces</code></td>
+          <td>Trace query brief, debug-traced.</td>
+      </tr>
+      <tr>
+          <td><code>/debugging/query/trace/queryTrace</code></td>
+          <td>Trace query detail, debug-traced.</td>
+      </tr>
+      <tr>
+          <td><code>/debugging/query/zipkin/api/v2/traces</code></td>
+          <td>Zipkin compat brief, debug-traced.</td>
+      </tr>
+      <tr>
+          <td><code>/debugging/query/zipkin/api/v2/trace</code></td>
+          <td>Zipkin compat detail, debug-traced.</td>
+      </tr>
+      <tr>
+          <td><code>/debugging/query/topology/getGlobalTopology</code></td>
+          <td></td>
+      </tr>
+      <tr>
+          <td><code>/debugging/query/topology/getServicesTopology</code></td>
+          <td></td>
+      </tr>
+      <tr>
+          <td><code>/debugging/query/topology/getServiceInstanceTopology</code></td>
+          <td></td>
+      </tr>
+      <tr>
+          <td><code>/debugging/query/topology/getEndpointDependencies</code></td>
+          <td></td>
+      </tr>
+      <tr>
+          <td><code>/debugging/query/topology/getProcessTopology</code></td>
+          <td></td>
+      </tr>
+      <tr>
+          <td><code>/debugging/query/log/queryLogs</code></td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p>Every route is published on both binding surfaces (public REST + admin
+when admin-server is enabled). URI paths, query parameters, and response
+payloads do not change — only the host:port the routes bind on.</p>
+<h2 id="storage-layer">Storage layer</h2>
+<p>A new abstract method on <code>IMetricsQueryDAO</code>:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>List<span style="color:#0550ae">&lt;</span>String<span style="color:#0550ae">&gt;</span><span style="color:#fff"> </span><span style="color:#6639ba">listEntityIdsInRange</span><span style="color:#1f2328">(</span>String<span style="color:#fff"> </span>metricName<span style="color:#1f2328">,</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">                                  </span>String<span style="color:#fff"> </span>valueColumnName<span style="color:#1f2328">,</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">                                  </span>Duration<span style="color:#fff"> </span>duration<span style="color:#1f2328">,</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">                                  </span><span style="color:#cf222e">int</span><span style="color:#fff"> </span>limit<span style="color:#1f2328">)</span><span style="color:#fff"> </span><span style="color:#cf222e">throws</span><span style="color:#fff"> </span>IOException<span style="color:#1f2328">;</span><span style="color:#fff">
+</span></span></span></code></pre></div><p>Abstract on purpose so any 3rd party storage backend that implements
+<code>IMetricsQueryDAO</code> MUST provide this override — a default body would
+let a missing override slip through compilation and surface as silent
+&ldquo;no entities&rdquo; or 500 the first time the inspect API hit that backend.</p>
+<p>Returns distinct <code>entity_id</code>s, ordered by most recent timestamp
+descending, capped at <code>limit</code>. Each backend must enforce that ordering
+explicitly — without an explicit sort directive, scoring / index-internal
+order can drop a hot entity that ingested late before the cap is reached.
+Implementations:</p>
+<ul>
+<li><strong>BanyanDB</strong> (<code>BanyanDBMetricsQueryDAO</code>):
+<code>MeasureQuery</code> against the resolved measure (downsampling chosen via
+<code>MetadataRegistry.formatName(metricName, downSampling)</code>), timestamp range
+filter, tag projection limited to <code>ENTITY_ID</code>, value-column field
+projection, <strong><code>setOrderBy(new AbstractQuery.OrderBy(Sort.DESC))</code></strong> for
+timestamp-DESC ordering, <code>.limit(limit)</code>. Client-side <code>LinkedHashSet</code>
+dedup preserves the server-side ordering.</li>
+<li><strong>Elasticsearch</strong> (<code>MetricsQueryEsDAO</code>):
+range filter on <code>time_bucket</code>, <strong><code>search.sort(Metrics.TIME_BUCKET, Sort.Order.DESC)</code></strong>
+for timestamp-DESC ordering, <code>Search.size(limit)</code>. The downsampling-suffixed
+index name is resolved through the existing <code>IndexController</code> /
+<code>MetricsModelInstaller</code> path (the same name the existing
+<code>readMetricsValues</code> uses for the requested step). Client-side
+<code>LinkedHashSet</code> dedup on the returned hits.</li>
+<li><strong>JDBC</strong> (<code>JDBCMetricsQueryDAO</code>):
+<code>getTablesForRead(metricName, startTimeBucket, endTimeBucket)</code> resolves
+the day-partitioned tables. Per table:
+<code>SELECT entity_id, MAX(time_bucket) AS latest_time_bucket FROM &lt;table&gt; WHERE table_column = ? AND time_bucket BETWEEN ? AND ? GROUP BY entity_id ORDER BY latest_time_bucket DESC LIMIT ?</code>. (PostgreSQL rejects
+<code>ORDER BY time_bucket</code> when it isn&rsquo;t in a <code>SELECT DISTINCT</code> list, so the
+GROUP BY shape is the portable one across H2 / MySQL / PostgreSQL.) Per-table
+results are merged into a <code>Map&lt;entityId, maxTimeBucket&gt;</code> with <code>Math::max</code>,
+then sorted by the value DESC and capped at the global <code>limit</code> — so a
+multi-day range cannot fill the result with stale entities from older
+partitions before newer partitions are queried.</li>
+</ul>
+<p>This shape mirrors the existing
+<code>readLabeledMetricsValuesWithoutEntity(metricName, valueColumnName, labels, duration)</code> (limit hard-coded to 10, projects value as well) — we reuse the
+range-scan and downsampling-resolution scaffolding from those
+implementations.</p>
+<h2 id="decode--enrich">Decode &amp; enrich</h2>
+<p>Per row, the handler:</p>
+<ol>
+<li>Calls <code>Scope.Finder.valueOf(scopeId)</code> to resolve the scope from the
+metric&rsquo;s metadata.</li>
+<li>Switches on the scope to call the correct
+<code>IDManager.{ServiceID,ServiceInstanceID,EndpointID}.analysisId(...)</code> /
+<code>analysisRelationId(...)</code>.</li>
+<li>For Service-bearing rows, reads <code>MetadataQueryService.getService(serviceId)</code>
+from the in-memory cache and emits one row per layer in
+<code>service.getLayers()</code>.</li>
+<li>Builds the <code>mqeEntity</code> block by inverting the decode — same fields
+<code>Entity.buildId()</code> would consume to reconstruct the same <code>entity_id</code>.</li>
+</ol>
+<p>If a service is missing from the metadata cache (e.g., it was just deleted
+but a metric row still exists in the storage TTL window), the row is still
+emitted with <code>layer: null</code> and the decoded names; the operator can still
+call MQE.</p>
+<h2 id="module-layout">Module layout</h2>
+<p>Two new feature modules under the existing admin-server bundle:</p>
+<pre tabindex="0"><code>oap-server/server-admin/inspect/
+├── pom.xml
+├── src/main/java/org/apache/skywalking/oap/server/admin/inspect/
+│   ├── InspectModule.java               # ModuleDefine
+│   ├── InspectModuleProvider.java       # ModuleProvider
+│   ├── InspectModuleConfig.java
+│   ├── handler/InspectRestHandler.java  # Armeria handler
+│   ├── decoder/EntityDecoder.java       # scope → IDManager dispatch
+│   └── response/{MetricRow, EntityRow, MqeEntity}.java
+└── src/main/resources/META-INF/services/
+    └── org.apache.skywalking.oap.server.library.module.ModuleDefine
+
+oap-server/server-admin/status/        ◄── relocated from
+                                           server-query-plugin/status-query-plugin
+├── pom.xml
+├── src/main/java/org/apache/skywalking/oap/server/admin/status/
+│   ├── StatusModule.java
+│   ├── StatusModuleProvider.java
+│   ├── StatusModuleConfig.java
+│   ├── handler/
+│   │   ├── ClusterStatusHandler.java    # moved
+│   │   ├── AlarmStatusHandler.java      # moved
+│   │   ├── TTLConfigHandler.java        # moved
+│   │   └── DebuggingHTTPHandler.java    # moved (query trace)
+│   └── service/{AlarmStatusQueryService, …}.java   # moved
+└── src/main/resources/META-INF/services/
+    └── org.apache.skywalking.oap.server.library.module.ModuleDefine
+</code></pre><p><code>requiredModules()</code>:</p>
+<ul>
+<li><code>inspect</code>: <code>CoreModule.NAME</code>, <code>StorageModule.NAME</code>, <code>AdminServerModule.NAME</code>.
+Inspect is admin-only; it has no public-REST mirror and therefore
+<strong>does</strong> require admin-server.</li>
+<li><code>status</code>: <code>CoreModule.NAME</code> only. <strong><code>AdminServerModule.NAME</code> is
+consulted reflectively</strong> via <code>moduleManager.has(...)</code> for the
+conditional second handler registration. Declaring it as required
+would force every status-using deployment to also enable admin-server,
+which contradicts the &ldquo;UI keeps working with admin off&rdquo; goal.</li>
+</ul>
+<p>Handler registration in <code>status</code>&rsquo;s <code>start()</code>:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#57606a">// Always — public REST surface, where the UI calls today.</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span>HTTPHandlerRegister<span style="color:#fff"> </span>publicRegister<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span>manager<span style="color:#1f2328">.</span><span style="color:#1f2328">find</span><span style="color:#1f2328">(</span>CoreModule<span style="color:#1f2328">.</span><span style="color:#1f2328">NAME</span><span style="color:#1f2328">)</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#1f2328">.</span><span style="color:#1f2328">provider</span><span style="color:#1f2328">().</span><span style="color:#1f2328">getService</span><span style="color:#1f2328">(</span>HTTPHandlerRegister<span style="color:#1f2328">.</span><span style="color:#1f2328">class</span><span style="color:#1f2328">);</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span>registerAll<span style="color:#1f2328">(</span>publicRegister<span style="color:#1f2328">);</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a">// Additionally, when admin-server is enabled.</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#cf222e">if</span><span style="color:#fff"> </span><span style="color:#1f2328">(</span>manager<span style="color:#1f2328">.</span><span style="color:#1f2328">has</span><span style="color:#1f2328">(</span>AdminServerModule<span style="color:#1f2328">.</span><span style="color:#1f2328">NAME</span><span style="color:#1f2328">))</span><span style="color:#fff"> </span><span style="color:#1f2328">{</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span>HTTPHandlerRegister<span style="color:#fff"> </span>adminRegister<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span>manager<span style="color:#1f2328">.</span><span style="color:#1f2328">find</span><span style="color:#1f2328">(</span>AdminServerModule<span style="color:#1f2328">.</span><span style="color:#1f2328">NAME</span><span style="color:#1f2328">)</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#1f2328">.</span><span style="color:#1f2328">provider</span><span style="color:#1f2328">().</span><span style="color:#1f2328">getService</span><span style="color:#1f2328">(</span>HTTPHandlerRegister<span style="color:#1f2328">.</span><span style="color:#1f2328">class</span><span style="color:#1f2328">);</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span>registerAll<span style="color:#1f2328">(</span>adminRegister<span style="color:#1f2328">);</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#1f2328">}</span><span style="color:#fff">
+</span></span></span></code></pre></div><p>Inspect&rsquo;s <code>start()</code> registers only on the admin-server register
+(mirroring <code>dsl-debugging</code> and <code>runtime-rule</code>). The old
+<code>status-query-plugin</code> module is removed.</p>
+<h3 id="maven-module--pom-changes">Maven module / pom changes</h3>
+<p>One module dropped, two added, three existing poms edited. Net: same number of distribution jars, just relocated under <code>server-admin</code>.</p>
+<table>
+  <thead>
+      <tr>
+          <th>Pom</th>
+          <th>Edit</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>oap-server/server-admin/pom.xml</code></td>
+          <td><code>&lt;modules&gt;</code> adds <code>inspect</code> and <code>status</code> (already lists <code>admin-server</code>, <code>runtime-rule</code>, <code>dsl-debugging</code>).</td>
+      </tr>
+      <tr>
+          <td><code>oap-server/server-query-plugin/pom.xml</code></td>
+          <td><code>&lt;modules&gt;</code> drops <code>status-query-plugin</code>.</td>
+      </tr>
+      <tr>
+          <td><code>oap-server/server-starter/pom.xml</code></td>
+          <td>Removes <code>&lt;dependency&gt;status-query-plugin&lt;/dependency&gt;</code>; adds <code>&lt;dependency&gt;status&lt;/dependency&gt;</code> and <code>&lt;dependency&gt;inspect&lt;/dependency&gt;</code> next to the existing <code>admin-server</code> / <code>runtime-rule</code> / <code>dsl-debugging</code> block.</td>
+      </tr>
+      <tr>
+          <td><code>oap-server/server-admin/inspect/pom.xml</code></td>
+          <td><strong>New.</strong> <code>parent=server-admin</code>, <code>packaging=jar</code>, depends on <code>server-core</code>, <code>admin-server</code>, <code>library-server</code>.</td>
+      </tr>
+      <tr>
+          <td><code>oap-server/server-admin/status/pom.xml</code></td>
+          <td><strong>New.</strong> Same parent / packaging; carries the deps the relocated handlers already used (notably <code>library-server</code> for the Armeria handler glue).</td>
+      </tr>
+      <tr>
+          <td><code>oap-server/server-query-plugin/status-query-plugin/</code></td>
+          <td><strong>Directory deleted</strong> along with the pom. Sources move under <code>oap-server/server-admin/status/src/main/java/...</code> (package rename <code>org.apache.skywalking.oap.query.debug</code> → <code>org.apache.skywalking.oap.server.admin.status</code>).</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="cost--safety">Cost &amp; safety</h2>
+<ul>
+<li><code>/inspect/metrics</code> is in-process metadata only — O(N) over registered
+metrics, no I/O.</li>
+<li><code>/inspect/entities</code> issues exactly one storage call per request bounded by
+<code>LIMIT 300</code>. The 300 ceiling is enforced server-side and cannot be raised
+via parameter. This is the same shape as today&rsquo;s
+<code>readLabeledMetricsValuesWithoutEntity</code> (limit 10) just with a higher cap;
+no new query class is introduced.</li>
+<li>The endpoint is bound only on the admin port (default 17128), which is
+not the agent or query port; existing operator-network controls apply.</li>
+<li>No caching layer in v1. If poll-storms become a problem we can add a
+short-TTL in-process cache keyed on <code>(metric,start,end,step,limit)</code>, but
+given operators are humans and the cap is 300 rows, premature.</li>
+</ul>
+<h2 id="compatibility">Compatibility</h2>
+<p>The dual-bind design keeps the Status API backwards compatible for the
+UI and for any scripted consumer of <code>http://oap:12800/status/...</code>.</p>
+<table>
+  <thead>
+      <tr>
+          <th>Change</th>
+          <th>Impact</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>status-query-plugin</code> module is removed; replaced by the new <code>status</code> feature module under <code>server-admin/</code>. The selector renames from the QUERY-plugin form (<code>SW_QUERY=…,status-query-plugin</code>) to a top-level <code>SW_STATUS=default</code> (on by default).</td>
+          <td><strong>Mild.</strong> Custom <code>application.yml</code> overrides that referenced <code>status-query-plugin</code> need to be repointed; default deployments do not need to change anything. URIs, payloads, and the public REST binding are preserved.</td>
+      </tr>
+      <tr>
+          <td>Status API docs move from <code>docs/en/status/</code> → <code>docs/en/setup/backend/admin-api/status.md</code> (new consolidated page). The <code>docs/en/status/</code> directory is removed and <code>docs/menu.yml</code> updated; <code>docs/en/status/status_apis.md</code> becomes a redirect stub for one minor cycle.</td>
+          <td><strong>Doc move only.</strong> No URI or payload churn.</td>
+      </tr>
+      <tr>
+          <td>Additive: second handler binding on the admin port (when admin-server is enabled), <code>/inspect/metrics</code>, <code>/inspect/entities</code>, new <code>IMetricsQueryDAO.listEntityIdsInRange</code> method, new modules <code>inspect</code> and <code>status</code>.</td>
+          <td><strong>No impact</strong> on existing deployments. UI continues to call status on the public REST port; admin-port consumers are opt-in via <code>SW_ADMIN_SERVER=default</code>.</td>
+      </tr>
+  </tbody>
+</table>
+<p>The admin-port binding for status is intentionally <strong>additional</strong>, not a
+replacement, so that admin-server may stay off (the default) without
+breaking the UI. A future SWIP can drop the public-REST binding once
+skywalking-ui has migrated to the admin-port path; until then, both
+surfaces co-exist.</p>
+<h2 id="test-plan">Test plan</h2>
+<p>The inspect surface is e2e-validated against the existing <strong>java-agent
+e2e</strong> (<code>test/e2e-v2/cases/simple/...</code>) — that suite already runs across
+every supported storage backend (BanyanDB, Elasticsearch, JDBC), so
+piggy-backing keeps the matrix free.</p>
+<p>The agent showcase boots a <code>provider</code> and a <code>consumer</code> Java service; this
+gives us live metrics across every scope inspect supports. The flow uses
+<code>curl</code> + <code>jq</code> directly (no swctl wiring) so the test is portable across
+the existing e2e runners:</p>
+<ol>
+<li>Wait for the showcase to ingest at least one minute window.</li>
+<li>(one-time) <code>curl http://oap:17128/debugging/config/dump</code> and parse the
+response to learn the OAP REST host:port the harness will fire MQE
+against. Existing endpoint; no new discovery primitive needed.</li>
+<li><code>curl http://oap:17128/inspect/metrics?regex=service_cpm</code> →
+assert <code>service_cpm</code> appears with <code>scope=Service</code>, <code>type=REGULAR_VALUE</code>,
+<code>downsamplings</code> includes <code>MINUTE</code>. Repeat for <code>instance_jvm_memory_*</code>
+(ServiceInstance scope) and <code>instance_jvm_class_loaded_count</code>
+(ServiceInstance, REGULAR_VALUE).</li>
+<li><code>curl http://oap:17128/inspect/entities?metric=service_cpm&amp;start=…&amp;end=…&amp;step=MINUTE</code>
+→ expect rows for both <code>provider</code> and <code>consumer</code>. <code>jq</code> out one row&rsquo;s
+<code>mqeEntity</code> block.</li>
+<li><code>POST</code> MQE expression <code>service_cpm</code> against <code>&lt;discovered MQE URL&gt;</code>
+with the extracted <code>mqeEntity</code> → assert non-empty time-series result.</li>
+<li>Repeat (4)–(5) with <code>instance_jvm_memory_heap_used</code> (ServiceInstance
+scope) — confirm both provider and consumer instances surface, and
+MQE for the picked instance returns data.</li>
+<li>Relation coverage: <code>/inspect/entities?metric=service_relation_client_cpm</code>
+→ assert a <code>consumer→provider</code> row, then MQE
+<code>service_relation_client_cpm</code> against its <code>mqeEntity</code> returns data.
+Same pattern for <code>service_instance_relation_client_cpm</code> and
+<code>endpoint_relation_cpm</code> (when endpoint relations are present in the
+showcase).</li>
+<li>Negative cases: HEATMAP metric (<code>endpoint_response_time</code>) → expect
+400 from <code>/inspect/entities</code>; <code>step=DAY</code> against a metric registered
+only at MINUTE → expect 400 with the supported-downsamplings list.</li>
+</ol>
+<p>Module-level unit tests live alongside each new source: <code>EntityDecoder</code>
+for every supported scope (covering <code>isReal=true</code> and <code>isReal=false</code>
+service IDs, multi-layer service merge, missing-from-cache fallback),
+the <code>/inspect/metrics</code> filter (NOT_VALUE / Scope.All exclusion),
+and the new DAO method per backend mocked at the storage interface.</p>
+<h2 id="deliverables">Deliverables</h2>
+<table>
+  <thead>
+      <tr>
+          <th>Item</th>
+          <th>Location</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Module sources</td>
+          <td><code>oap-server/server-admin/inspect/</code>, <code>oap-server/server-admin/status/</code></td>
+      </tr>
+      <tr>
+          <td>Storage DAO method</td>
+          <td><code>IMetricsQueryDAO.listEntityIdsInRange</code> + 3 implementations</td>
+      </tr>
+      <tr>
+          <td>Operator doc</td>
+          <td><code>docs/en/setup/backend/admin-api/inspect.md</code> (new), <code>admin-api/status.md</code> (new, consolidates the relocated <code>docs/en/status/*</code> pages)</td>
+      </tr>
+      <tr>
+          <td>Doc index updates</td>
+          <td><code>docs/en/setup/backend/admin-api/readme.md</code> (add inspect + status sections), <code>docs/menu.yml</code> (drop <code>docs/en/status/</code>, add <code>admin-api/{inspect,status}.md</code>)</td>
+      </tr>
+      <tr>
+          <td>Redirect stub</td>
+          <td><code>docs/en/status/status_apis.md</code> → one-cycle redirect pointing to <code>admin-api/status.md</code></td>
+      </tr>
+      <tr>
+          <td>Changelog</td>
+          <td><code>docs/en/changes/changes-X.X.X.md</code> — entries for: new <code>/inspect/*</code>, status-plugin → status-feature-module relocation + selector rename, new <code>IMetricsQueryDAO.listEntityIdsInRange</code></td>
+      </tr>
+      <tr>
+          <td>E2E updates</td>
+          <td><code>test/e2e-v2/cases/simple/...</code> — add an inspect verification step to the existing java-agent showcase case; runs unchanged across BanyanDB / ES / JDBC matrix</td>
+      </tr>
+      <tr>
+          <td>Unit tests</td>
+          <td>per-module under each new source root</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="implementation-order">Implementation order</h2>
+<p>The status-relocation work and the inspect-API work share zero code paths
+and can be staged independently:</p>
+<ol>
+<li><strong>Phase 1 — status relocation.</strong> Create <code>server-admin/status</code> module,
+move sources, set up dual-bind, delete <code>status-query-plugin</code>. UI and
+existing operator scripts continue to work; URI paths and payloads
+are unchanged.</li>
+<li><strong>Phase 2 — inspect.</strong> Add <code>IMetricsQueryDAO.listEntityIdsInRange</code>
+across the three backends, then <code>server-admin/inspect</code> with handlers
+and decoder. Independent of Phase 1 — inspect clients that need to
+discover the OAP REST URL parse <code>/debugging/config/dump</code>, an
+already-existing endpoint preserved by Phase 1.</li>
+</ol>
+<p>Each phase is a self-contained PR.</p>
+<h2 id="future-work">Future work</h2>
+<ul>
+<li>Inspect-Records (<code>/inspect/records</code>) for <code>SAMPLED_RECORD</code> metrics, backed
+by <code>IRecordsQueryDAO</code>.</li>
+<li>Inspect-Process for <code>Process</code> / <code>ProcessRelation</code>, contingent on a
+decoder for <code>ProcessID</code> (likely a <code>ProcessTraffic</code> join).</li>
+<li>Optional <code>?attribute=k=v</code> filter pushdown to leverage the same attribute
+conditions <code>TopNCondition</code> accepts.</li>
+</ul>
+
 </div>
 
             </main>
@@ -3272,12 +3895,31 @@ These data will be calculated according to the expression.
 
 <nav id="TableOfContents">
   <ul>
-    <li><a href="#get-alarm-runtime-status">Get Alarm Runtime Status</a>
+    <li><a href="#swip-14-inspect-api-for-admin-server">SWIP-14 Inspect API for Admin Server</a>
       <ul>
-        <li><a href="#get-alarm-running-rules">Get Alarm Running Rules</a></li>
-        <li><a href="#get-alarm-running-rule-info">Get Alarm Running Rule Info</a></li>
-        <li><a href="#get-alarm-running-context">Get Alarm Running Context</a></li>
-        <li><a href="#get-errors-when-querying-status-from-oap-instances">Get Errors When Querying Status from OAP Instances</a></li>
+        <li><a href="#motivation">Motivation</a></li>
+        <li><a href="#scope">Scope</a></li>
+        <li><a href="#architecture">Architecture</a></li>
+        <li><a href="#api">API</a>
+          <ul>
+            <li><a href="#get-inspectmetrics"><code>GET /inspect/metrics</code></a></li>
+            <li><a href="#get-inspectentities"><code>GET /inspect/entities</code></a></li>
+            <li><a href="#status-api-relocation">Status API relocation</a></li>
+          </ul>
+        </li>
+        <li><a href="#storage-layer">Storage layer</a></li>
+        <li><a href="#decode--enrich">Decode &amp; enrich</a></li>
+        <li><a href="#module-layout">Module layout</a>
+          <ul>
+            <li><a href="#maven-module--pom-changes">Maven module / pom changes</a></li>
+          </ul>
+        </li>
+        <li><a href="#cost--safety">Cost &amp; safety</a></li>
+        <li><a href="#compatibility">Compatibility</a></li>
+        <li><a href="#test-plan">Test plan</a></li>
+        <li><a href="#deliverables">Deliverables</a></li>
+        <li><a href="#implementation-order">Implementation order</a></li>
+        <li><a href="#future-work">Future work</a></li>
       </ul>
     </li>
   </ul>
@@ -12262,6 +12904,10 @@ These data will be calculated according to the expression.
 
 
 
+
+
+
+
 <div class="sky-event-popup">
 
     <div class="sky-pop-modal">
@@ -12322,6 +12968,10 @@ These data will be calculated according to the expression.
                     
                 </a>
             </div>
+            
+            
+            
+            
             
             
             

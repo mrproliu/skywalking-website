@@ -4188,6 +4188,10 @@
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url><url>
+    <loc>/docs/main/next/en/setup/backend/admin-api/admin-ui/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url><url>
     <loc>/docs/main/latest/en/setup/backend/advanced-deployment/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
@@ -6315,6 +6319,10 @@
     <priority>0.5</priority>
   </url><url>
     <loc>/docs/skywalking-php/v1.1.0/en/configuration/context-injection/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>/docs/skywalking-banyandb/next/design/fodc/context-aware-panic-diagnostics/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url><url>
@@ -8678,10 +8686,6 @@
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>/docs/main/next/en/status/query_alarm_runtime_status/</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.5</priority>
-  </url><url>
     <loc>/docs/main/v10.2.0/en/status/query_alarm_runtime_status/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
@@ -8710,10 +8714,6 @@
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>/docs/main/next/en/status/query_ttl_setup/</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.5</priority>
-  </url><url>
     <loc>/docs/main/v10.2.0/en/status/query_ttl_setup/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
@@ -8727,10 +8727,6 @@
     <priority>0.5</priority>
   </url><url>
     <loc>/docs/main/latest/en/status/query_cluster_nodes/</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>/docs/main/next/en/status/query_cluster_nodes/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url><url>
@@ -9607,6 +9603,10 @@
     <priority>0.5</priority>
   </url><url>
     <loc>/docs/main/v9.7.0/en/setup/backend/backend-init-mode/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>/docs/main/next/en/setup/backend/admin-api/inspect/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url><url>
@@ -15695,6 +15695,10 @@
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url><url>
+    <loc>/docs/main/next/en/setup/backend/admin-api/status/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url><url>
     <loc>/docs/main/latest/en/status/status_apis/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
@@ -16128,6 +16132,10 @@
     <priority>0.5</priority>
   </url><url>
     <loc>/docs/main/next/en/swip/swip-13/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>/docs/main/next/en/swip/swip-14/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url><url>
