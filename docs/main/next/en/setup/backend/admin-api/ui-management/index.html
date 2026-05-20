@@ -22,26 +22,23 @@
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
 
-<title>Admin UI | Apache SkyWalking</title><meta property="og:url" content="/docs/main/next/en/setup/backend/admin-api/admin-ui/">
+<title>UI Management API | Apache SkyWalking</title><meta property="og:url" content="/docs/main/next/en/setup/backend/admin-api/ui-management/">
   <meta property="og:site_name" content="Apache SkyWalking">
-  <meta property="og:title" content="Admin UI">
-  <meta property="og:description" content="Admin UI The Admin API is a set of HTTP endpoints (Runtime Rule Hot-Update, DSL Debug, Status, Inspect) — operators drive them with curl, swctl, or a front-end of their choice. SkyWalking does not ship an official admin UI.
-Vantage Studio (community) Vantage Studio is a community-built web UI that consumes SkyWalking’s Admin API surface. It provides a visual driver for the same endpoints documented in this section.
-Project: https://github.com/SkyAPM/vantage-studio Author: Sheng Wu Status: Community project under the SkyAPM organization — not an Apache SkyWalking release artifact. License, release cadence, and support follow that project’s repository. Operators looking for a UI in front of /runtime/rule/*, /dsl-debugging/*, /status/*, and /inspect/* can adopt it the same way they would any third-party tool — install separately, point it at the admin port (default 17128) behind the same gateway / authenticating reverse proxy the admin-server security notice requires.">
+  <meta property="og:title" content="UI Management API">
+  <meta property="og:description" content="UI Management API REST surface for dashboard templates, hosted on the admin-server REST port (default 17128). The official Horizon UI consumes these endpoints to populate the dashboard library, and operators hit them directly with curl or swctl to seed / customize / disable templates.
+The sidebar menu is not served from OAP — Horizon UI ships its own menu config in its bundle and uses listServices(layer:...) on the metadata query surface for dynamic “layer has services” gating.">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="article">
     <meta property="article:section" content="docs">
 
-  <meta itemprop="name" content="Admin UI">
-  <meta itemprop="description" content="Admin UI The Admin API is a set of HTTP endpoints (Runtime Rule Hot-Update, DSL Debug, Status, Inspect) — operators drive them with curl, swctl, or a front-end of their choice. SkyWalking does not ship an official admin UI.
-Vantage Studio (community) Vantage Studio is a community-built web UI that consumes SkyWalking’s Admin API surface. It provides a visual driver for the same endpoints documented in this section.
-Project: https://github.com/SkyAPM/vantage-studio Author: Sheng Wu Status: Community project under the SkyAPM organization — not an Apache SkyWalking release artifact. License, release cadence, and support follow that project’s repository. Operators looking for a UI in front of /runtime/rule/*, /dsl-debugging/*, /status/*, and /inspect/* can adopt it the same way they would any third-party tool — install separately, point it at the admin port (default 17128) behind the same gateway / authenticating reverse proxy the admin-server security notice requires.">
-  <meta itemprop="wordCount" content="144">
+  <meta itemprop="name" content="UI Management API">
+  <meta itemprop="description" content="UI Management API REST surface for dashboard templates, hosted on the admin-server REST port (default 17128). The official Horizon UI consumes these endpoints to populate the dashboard library, and operators hit them directly with curl or swctl to seed / customize / disable templates.
+The sidebar menu is not served from OAP — Horizon UI ships its own menu config in its bundle and uses listServices(layer:...) on the metadata query surface for dynamic “layer has services” gating.">
+  <meta itemprop="wordCount" content="424">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Admin UI">
-  <meta name="twitter:description" content="Admin UI The Admin API is a set of HTTP endpoints (Runtime Rule Hot-Update, DSL Debug, Status, Inspect) — operators drive them with curl, swctl, or a front-end of their choice. SkyWalking does not ship an official admin UI.
-Vantage Studio (community) Vantage Studio is a community-built web UI that consumes SkyWalking’s Admin API surface. It provides a visual driver for the same endpoints documented in this section.
-Project: https://github.com/SkyAPM/vantage-studio Author: Sheng Wu Status: Community project under the SkyAPM organization — not an Apache SkyWalking release artifact. License, release cadence, and support follow that project’s repository. Operators looking for a UI in front of /runtime/rule/*, /dsl-debugging/*, /status/*, and /inspect/* can adopt it the same way they would any third-party tool — install separately, point it at the admin port (default 17128) behind the same gateway / authenticating reverse proxy the admin-server security notice requires.">
+  <meta name="twitter:title" content="UI Management API">
+  <meta name="twitter:description" content="UI Management API REST surface for dashboard templates, hosted on the admin-server REST port (default 17128). The official Horizon UI consumes these endpoints to populate the dashboard library, and operators hit them directly with curl or swctl to seed / customize / disable templates.
+The sidebar menu is not served from OAP — Horizon UI ships its own menu config in its bundle and uses listServices(layer:...) on the metadata query surface for dynamic “layer has services” gating.">
 
 
 
@@ -60,7 +57,7 @@ Project: https://github.com/SkyAPM/vantage-studio Author: Sheng Wu Status: Commu
 
 
 
-    <title>Admin UI | Apache SkyWalking</title>
+    <title>UI Management API | Apache SkyWalking</title>
   </head>
   <body class="td-page  project-doc">
     <header>
@@ -2295,7 +2292,7 @@ Project: https://github.com/SkyAPM/vantage-studio Author: Sheng Wu Status: Commu
 
     <li>
         
-            <a href="/docs/main/next/en/setup/backend/admin-api/admin-ui">Admin UI (Community)</a>
+            <a href="/docs/main/next/en/setup/backend/admin-api/ui-management">UI Management API</a>
         
     </li>
 
@@ -2915,7 +2912,7 @@ Project: https://github.com/SkyAPM/vantage-studio Author: Sheng Wu Status: Commu
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 137935d</div>
+                  <div class="commit-id">Commit Id: 5b481a4</div>
                 
 
 
@@ -2974,28 +2971,99 @@ Project: https://github.com/SkyAPM/vantage-studio Author: Sheng Wu Status: Commu
               <i class="iconfont icon-menu-doc doc-menu-button"></i>
               
 <div class="td-content">
-	<h1 id="admin-ui">Admin UI</h1>
-<p>The Admin API is a set of HTTP endpoints (Runtime Rule Hot-Update, DSL
-Debug, Status, Inspect) — operators drive them with <code>curl</code>, <code>swctl</code>, or a
-front-end of their choice. SkyWalking does not ship an official admin UI.</p>
-<h2 id="vantage-studio-community">Vantage Studio (community)</h2>
-<p><a href="https://github.com/SkyAPM/vantage-studio"><strong>Vantage Studio</strong></a> is a
-community-built web UI that consumes SkyWalking&rsquo;s Admin API surface. It
-provides a visual driver for the same endpoints documented in this
-section.</p>
-<ul>
-<li>Project: <a href="https://github.com/SkyAPM/vantage-studio">https://github.com/SkyAPM/vantage-studio</a></li>
-<li>Author: <a href="https://github.com/wu-sheng">Sheng Wu</a></li>
-<li>Status: Community project under the SkyAPM organization — not an Apache
-SkyWalking release artifact. License, release cadence, and support
-follow that project&rsquo;s repository.</li>
-</ul>
-<p>Operators looking for a UI in front of <code>/runtime/rule/*</code>,
-<code>/dsl-debugging/*</code>, <code>/status/*</code>, and <code>/inspect/*</code> can adopt it the same
-way they would any third-party tool — install separately, point it at the
-admin port (default <code>17128</code>) behind the same gateway / authenticating
-reverse proxy the <a href="../readme#security-notice">admin-server security
-notice</a> requires.</p>
+	<h1 id="ui-management-api">UI Management API</h1>
+<p>REST surface for dashboard templates, hosted on the admin-server REST port
+(default <code>17128</code>). The official
+<a href="https://github.com/apache/skywalking-horizon-ui">Horizon UI</a> consumes these
+endpoints to populate the dashboard library, and operators hit them
+directly with <code>curl</code> or <code>swctl</code> to seed / customize / disable templates.</p>
+<p>The sidebar menu is <strong>not</strong> served from OAP — Horizon UI ships its own
+menu config in its bundle and uses <code>listServices(layer:...)</code> on the
+metadata query surface for dynamic &ldquo;layer has services&rdquo; gating.</p>
+<h2 id="hosting">Hosting</h2>
+<p>Routes mount on admin-server&rsquo;s REST register only. There is no public-REST
+mirror — write operations are operator-only and gated behind the admin
+gateway, same posture as <code>runtime-rule</code> and <code>dsl-debugging</code>. Admin-server
+ships <strong>enabled by default</strong>; set <code>SW_UI_MANAGEMENT=</code> empty to close the
+UI surface without closing the rest of admin-server.</p>
+<p><strong>Template writes (<code>POST</code> / <code>PUT</code> / <code>POST /disable</code>) are enabled by default.</strong>
+The REST endpoints accept writes unconditionally when the module is
+loaded; the admin host&rsquo;s gateway / IP allow-list is the auth boundary.
+Operators who want to lock writes down disable the entire module
+(<code>SW_UI_MANAGEMENT=</code>).</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#0550ae">ui-management</span><span style="color:#1f2328">:</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">  </span><span style="color:#0550ae">selector</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_UI_MANAGEMENT:default}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">  </span><span style="color:#0550ae">default</span><span style="color:#1f2328">:</span><span style="color:#fff">
+</span></span></span></code></pre></div><h2 id="endpoints">Endpoints</h2>
+<h3 id="get-ui-managementtemplates"><code>GET /ui-management/templates</code></h3>
+<p>List all templates. Optional <code>includingDisabled=true</code> returns soft-disabled
+templates too; default skips them.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -s <span style="color:#0a3069">&#34;http://oap:17128/ui-management/templates&#34;</span> <span style="color:#1f2328">|</span> jq
+</span></span></code></pre></div><p>Response: JSON array of template objects:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-json" data-lang="json"><span style="display:flex;"><span><span style="color:#1f2328">[</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#1f2328">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0550ae">&#34;id&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;8b2f0eb1-...&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0550ae">&#34;configuration&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;{\&#34;name\&#34;:\&#34;General-Service\&#34;,...}&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0550ae">&#34;disabled&#34;</span><span style="color:#1f2328">:</span> <span style="color:#cf222e">false</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#1f2328">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">]</span>
+</span></span></code></pre></div><h3 id="get-ui-managementtemplatesid"><code>GET /ui-management/templates/{id}</code></h3>
+<p>Fetch a single template by ID. Returns <code>404 not_found</code> when the ID is
+unknown.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -s <span style="color:#0a3069">&#34;http://oap:17128/ui-management/templates/8b2f0eb1-...&#34;</span> <span style="color:#1f2328">|</span> jq
+</span></span></code></pre></div><h3 id="post-ui-managementtemplates"><code>POST /ui-management/templates</code></h3>
+<p>Add a new template. Body must include <code>configuration</code> (a JSON-encoded
+template definition); the server allocates the ID.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -s -X POST <span style="color:#0a3069">&#34;http://oap:17128/ui-management/templates&#34;</span> <span style="color:#0a3069">\
+</span></span></span><span style="display:flex;"><span>  -H <span style="color:#0a3069">&#39;Content-Type: application/json&#39;</span> <span style="color:#0a3069">\
+</span></span></span><span style="display:flex;"><span>  -d <span style="color:#0a3069">&#39;{&#34;configuration&#34;:&#34;{\&#34;name\&#34;:\&#34;my-dashboard\&#34;,...}&#34;}&#39;</span>
+</span></span></code></pre></div><p>Response body is a <code>TemplateChangeStatus</code>:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-json" data-lang="json"><span style="display:flex;"><span><span style="color:#1f2328">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#0550ae">&#34;id&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;&lt;server-generated UUID&gt;&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#0550ae">&#34;status&#34;</span><span style="color:#1f2328">:</span> <span style="color:#cf222e">true</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#0550ae">&#34;message&#34;</span><span style="color:#1f2328">:</span> <span style="color:#cf222e">null</span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">}</span>
+</span></span></code></pre></div><p>HTTP <code>200 OK</code> on success; <code>409 Conflict</code> when the service layer rejects the
+write (e.g., name collision) — the body still carries the same shape.</p>
+<h3 id="put-ui-managementtemplates"><code>PUT /ui-management/templates</code></h3>
+<p>Update an existing template. Body must include both <code>id</code> and the new
+<code>configuration</code>.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -s -X PUT <span style="color:#0a3069">&#34;http://oap:17128/ui-management/templates&#34;</span> <span style="color:#0a3069">\
+</span></span></span><span style="display:flex;"><span>  -H <span style="color:#0a3069">&#39;Content-Type: application/json&#39;</span> <span style="color:#0a3069">\
+</span></span></span><span style="display:flex;"><span>  -d <span style="color:#0a3069">&#39;{&#34;id&#34;:&#34;&lt;existing-uuid&gt;&#34;,&#34;configuration&#34;:&#34;{\&#34;name\&#34;:\&#34;...\&#34;,...}&#34;}&#39;</span>
+</span></span></code></pre></div><h3 id="post-ui-managementtemplatesiddisable"><code>POST /ui-management/templates/{id}/disable</code></h3>
+<p>Soft-disable a template. Idempotent — disabling an already-disabled
+template returns success. The template&rsquo;s row is preserved; only the
+<code>disabled</code> field flips.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -s -X POST <span style="color:#0a3069">&#34;http://oap:17128/ui-management/templates/&lt;uuid&gt;/disable&#34;</span>
+</span></span></code></pre></div><h2 id="configuration">Configuration</h2>
+<table>
+  <thead>
+      <tr>
+          <th>Key</th>
+          <th>Default</th>
+          <th>Purpose</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>SW_UI_MANAGEMENT</code></td>
+          <td><code>default</code></td>
+          <td>Selector. Set empty to disable the UI management surface.</td>
+      </tr>
+      <tr>
+          <td><code>SW_ADMIN_SERVER</code></td>
+          <td><code>default</code></td>
+          <td>Underlying admin host. Must be on for <code>ui-management</code> to reach its handlers.</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="security">Security</h2>
+<p>UI Management writes (<code>POST</code>, <code>PUT</code>, <code>POST /disable</code>) are equivalent to
+mutating the OAP backend&rsquo;s dashboard library — operationally sensitive.
+Gateway-protect the admin port per the
+<a href="../readme#-security-notice">admin-server security notice</a> and never
+expose it to the public internet.</p>
 
 </div>
 
@@ -3027,9 +3095,20 @@ notice</a> requires.</p>
 
 <nav id="TableOfContents">
   <ul>
-    <li><a href="#admin-ui">Admin UI</a>
+    <li><a href="#ui-management-api">UI Management API</a>
       <ul>
-        <li><a href="#vantage-studio-community">Vantage Studio (community)</a></li>
+        <li><a href="#hosting">Hosting</a></li>
+        <li><a href="#endpoints">Endpoints</a>
+          <ul>
+            <li><a href="#get-ui-managementtemplates"><code>GET /ui-management/templates</code></a></li>
+            <li><a href="#get-ui-managementtemplatesid"><code>GET /ui-management/templates/{id}</code></a></li>
+            <li><a href="#post-ui-managementtemplates"><code>POST /ui-management/templates</code></a></li>
+            <li><a href="#put-ui-managementtemplates"><code>PUT /ui-management/templates</code></a></li>
+            <li><a href="#post-ui-managementtemplatesiddisable"><code>POST /ui-management/templates/{id}/disable</code></a></li>
+          </ul>
+        </li>
+        <li><a href="#configuration">Configuration</a></li>
+        <li><a href="#security">Security</a></li>
       </ul>
     </li>
   </ul>
@@ -12020,8 +12099,6 @@ notice</a> requires.</p>
 
 
 
-
-
 <div class="sky-event-popup">
 
     <div class="sky-pop-modal">
@@ -12082,8 +12159,6 @@ notice</a> requires.</p>
                     
                 </a>
             </div>
-            
-            
             
             
             
