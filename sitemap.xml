@@ -4372,6 +4372,10 @@
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url><url>
+    <loc>/docs/main/next/en/setup/backend/backend-airflow-monitoring/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url><url>
     <loc>/docs/main/latest/en/setup/backend/backend-alarm/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
@@ -5257,15 +5261,15 @@
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>/docs/main/next/en/banyandb/dashboards-banyandb/</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.5</priority>
-  </url><url>
     <loc>/docs/main/v10.3.0/en/banyandb/dashboards-banyandb/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url><url>
     <loc>/docs/main/v10.4.0/en/banyandb/dashboards-banyandb/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>/docs/main/next/en/banyandb/dashboards-banyandb/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url><url>
@@ -15804,6 +15808,10 @@
     <priority>0.5</priority>
   </url><url>
     <loc>/docs/main/v10.4.0/en/swip/swip-6/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>/docs/main/next/en/swip/swip-7/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url><url>
