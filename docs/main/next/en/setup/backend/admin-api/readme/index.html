@@ -34,7 +34,7 @@
   <meta itemprop="name" content="Admin API">
   <meta itemprop="description" content="Admin API admin-server is SkyWalking OAP’s shared HTTP host for admin / on-demand write APIs — the operations operators perform from a jumphost or CI rather than telemetry-time queries. This document is the entry point for every endpoint hosted there.
 ⚠️ Security notice The admin port has no built-in authentication in this release. Anything that can reach the port can call every endpoint listed below. Several endpoints (DSL debug capture, runtime-rule writes) expose or modify operationally-sensitive state.">
-  <meta itemprop="wordCount" content="1119">
+  <meta itemprop="wordCount" content="1147">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Admin API">
   <meta name="twitter:description" content="Admin API admin-server is SkyWalking OAP’s shared HTTP host for admin / on-demand write APIs — the operations operators perform from a jumphost or CI rather than telemetry-time queries. This document is the entry point for every endpoint hosted there.
@@ -1511,6 +1511,14 @@
 
     <li>
         
+            <a href="/docs/main/next/en/setup/backend/dashboards-php-runtime">PHP runtime metrics (PHM)</a>
+        
+    </li>
+
+    
+
+    <li>
+        
             <a href="/docs/main/next/en/setup/backend/telegraf-receiver">Telegraf Metrics</a>
         
     </li>
@@ -2938,7 +2946,7 @@
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: f409ed7</div>
+                  <div class="commit-id">Commit Id: bb16533</div>
                 
 
 
@@ -3072,6 +3080,9 @@ by default); set <code>SW_INSPECT=</code> (empty) to disable.</p>
 <li><code>GET /inspect/metrics</code> — metric catalog with type / scope / supported downsamplings.</li>
 <li><code>GET /inspect/entities?metric=&amp;start=&amp;end=&amp;step=</code> — capped (≤300) list of
 entities holding values, decoded into MQE-ready form.</li>
+<li><code>POST /inspect/values</code> — read the value series of a metric this OAP does not
+define locally (foreign metric), by supplying its <code>{valueColumn, valueType}</code>;
+returns the native MQE result.</li>
 </ul>
 <p>Operator reference: <a href="../inspect">Inspect API</a>.</p>
 <h3 id="status-api"><a href="../status">Status API</a></h3>
@@ -3348,6 +3359,10 @@ that gates every other module dependency in OAP.</p>
 
     </div>
     
+
+
+
+
 
 
 
