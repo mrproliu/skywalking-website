@@ -11530,6 +11530,10 @@
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url><url>
+    <loc>/docs/main/next/en/setup/backend/dashboards-nodejs-runtime/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url><url>
     <loc>/docs/skywalking-graalvm-distro/latest/internals/oal-immigration/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
