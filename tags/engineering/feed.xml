@@ -1,0 +1,213 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Apache SkyWalking – Engineering</title>
+    <link>https://skywalking.apache.org/tags/engineering/</link>
+    <description>Recent engineering posts from Apache SkyWalking</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <lastBuildDate>Tue, 30 Jun 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://skywalking.apache.org/tags/engineering/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Meet Horizon UI · 13/17: Platform &amp; Cluster Introspection</title>
+      <link>https://skywalking.apache.org/blog/2026-06-30-horizon-ui-platform-introspection/</link>
+      <pubDate>Tue, 30 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2026-06-30-horizon-ui-platform-introspection/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sheng Wu</dc:creator>
+      <category>Engineering</category>
+      <category>Cloud Native</category>
+      <description>Part 13 of the Meet Horizon UI series: three read-only introspection surfaces that turn the lens on the backend itself — Cluster Status (is OAP healthy, across which ports), OAP Configuration (the effective runtime config), and Data Retention (how long each class of data lives, including BanyanDB&#39;s hot/warm/cold lifecycle).</description>
+    </item>
+    <item>
+      <title>Meet Horizon UI · 14/17: Access Control &amp; Security</title>
+      <link>https://skywalking.apache.org/blog/2026-06-30-horizon-ui-access-control-and-security/</link>
+      <pubDate>Tue, 30 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2026-06-30-horizon-ui-access-control-and-security/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sheng Wu</dc:creator>
+      <category>Engineering</category>
+      <category>Cloud Native</category>
+      <description>Part 14 of the Meet Horizon UI series: Horizon&#39;s own access control — server-enforced RBAC with four roles, local and LDAP/AD authentication, an append-only audit log, an LDAP-only break-glass hatch, and five themes. All of it lives in Horizon&#39;s BFF and works the same on any OAP version.</description>
+    </item>
+    <item>
+      <title>Meet Horizon UI · 15/17: Customization — Config-Driven Layer Templates</title>
+      <link>https://skywalking.apache.org/blog/2026-06-30-horizon-ui-customization-and-templates/</link>
+      <pubDate>Tue, 30 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2026-06-30-horizon-ui-customization-and-templates/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sheng Wu</dc:creator>
+      <category>Engineering</category>
+      <category>Cloud Native</category>
+      <description>Part 15 of the Meet Horizon UI series: the whole console is driven by templates you can edit. Open any layer or overview as a template, change its widgets, components, and labels in a local draft, preview it, and publish it to OAP for the whole org — with diff-before-push and export/import.</description>
+    </item>
+    <item>
+      <title>Meet Horizon UI · 16/17: Localization in Eight Languages</title>
+      <link>https://skywalking.apache.org/blog/2026-06-30-horizon-ui-localization-i18n/</link>
+      <pubDate>Tue, 30 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2026-06-30-horizon-ui-localization-i18n/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sheng Wu</dc:creator>
+      <category>Engineering</category>
+      <category>Community</category>
+      <description>Part 16 of the Meet Horizon UI series: Horizon speaks eight languages, not by re-translating on every render but as server-side overlays merged onto the same templates. Pick a language from the topbar, or click any widget on the Translations admin to translate it — while every value OAP supplies stays verbatim.</description>
+    </item>
+    <item>
+      <title>认识 Horizon UI · 13/17：平台与集群自检</title>
+      <link>https://skywalking.apache.org/zh/2026-06-30-horizon-ui-platform-introspection/</link>
+      <pubDate>Tue, 30 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/zh/2026-06-30-horizon-ui-platform-introspection/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">吴晟</dc:creator>
+      <category>Engineering</category>
+      <category>Cloud Native</category>
+      <description>Horizon UI 系列第十三篇：Platform monitoring 下的三个只读入口，用来查看 OAP 集群是否健康、实际运行配置是什么，以及各类数据会保留多久，包括 BanyanDB 的 hot/warm/cold 生命周期。</description>
+    </item>
+    <item>
+      <title>认识 Horizon UI · 14/17：访问控制与安全</title>
+      <link>https://skywalking.apache.org/zh/2026-06-30-horizon-ui-access-control-and-security/</link>
+      <pubDate>Tue, 30 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/zh/2026-06-30-horizon-ui-access-control-and-security/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">吴晟</dc:creator>
+      <category>Engineering</category>
+      <category>Cloud Native</category>
+      <description>Horizon UI 系列第十四篇：Horizon 自己的访问控制体系，包括由服务端强制执行的四级 RBAC、本地与 LDAP/AD 认证、append-only audit log、仅在 LDAP 故障时可用的 break-glass 入口，以及五套内置主题。所有逻辑都在 Horizon BFF 中实现，对任何 OAP 版本都一致。</description>
+    </item>
+    <item>
+      <title>认识 Horizon UI · 15/17：用模板定制控制台</title>
+      <link>https://skywalking.apache.org/zh/2026-06-30-horizon-ui-customization-and-templates/</link>
+      <pubDate>Tue, 30 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/zh/2026-06-30-horizon-ui-customization-and-templates/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">吴晟</dc:creator>
+      <category>Engineering</category>
+      <category>Cloud Native</category>
+      <description>Horizon UI 系列第十五篇：整个控制台都由可编辑模板驱动。你可以把任意 layer 或 overview 打开成模板，在本地草稿里调整组件、widget 和文案，预览后发布到 OAP 给整个组织使用，并在发布前查看差异，也可以导出和导入。</description>
+    </item>
+    <item>
+      <title>认识 Horizon UI · 16/17：八种语言的本地化</title>
+      <link>https://skywalking.apache.org/zh/2026-06-30-horizon-ui-localization-i18n/</link>
+      <pubDate>Tue, 30 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/zh/2026-06-30-horizon-ui-localization-i18n/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">吴晟</dc:creator>
+      <category>Engineering</category>
+      <category>Community</category>
+      <description>Horizon UI 系列第十六篇：Horizon 支持八种语言。本地化不是每次渲染时重新翻译，而是在服务端把翻译 overlay 合并到同一套 template 上；用户可以从顶栏切换语言，也可以在 Translations 管理页点选任意 widget 直接补翻译，而 OAP 返回的数据始终保持原样。</description>
+    </item>
+    <item>
+      <title>Meet Horizon UI · 11/17: Runtime Rules &amp; Live Debugging</title>
+      <link>https://skywalking.apache.org/blog/2026-06-29-horizon-ui-runtime-rules-and-live-debugging/</link>
+      <pubDate>Mon, 29 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2026-06-29-horizon-ui-runtime-rules-and-live-debugging/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sheng Wu</dc:creator>
+      <category>Engineering</category>
+      <category>Metrics</category>
+      <description>Part 11 of the Meet Horizon UI series: edit SkyWalking&#39;s OAL/MAL/LAL analysis rules in the browser and hot-apply them to the running cluster with a fenced, recoverable rollout — then step those same rules against live data in the three-tab Live Debugger to see exactly what they compute.</description>
+    </item>
+    <item>
+      <title>Meet Horizon UI · 12/17: Inspect — Cross-Layer Query Power-Tools</title>
+      <link>https://skywalking.apache.org/blog/2026-06-29-horizon-ui-inspect-cross-layer-query/</link>
+      <pubDate>Mon, 29 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2026-06-29-horizon-ui-inspect-cross-layer-query/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sheng Wu</dc:creator>
+      <category>Engineering</category>
+      <category>Metrics</category>
+      <description>Part 12 of the Meet Horizon UI series: the Inspect family under Operate — a metric catalog and MQE board that shows which rule defines every metric, plus layer-less trace and log finders that query across the whole deployment without picking a layer first.</description>
+    </item>
+    <item>
+      <title>认识 Horizon UI · 11/17：运行时规则与实时调试</title>
+      <link>https://skywalking.apache.org/zh/2026-06-29-horizon-ui-runtime-rules-and-live-debugging/</link>
+      <pubDate>Mon, 29 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/zh/2026-06-29-horizon-ui-runtime-rules-and-live-debugging/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">吴晟</dc:creator>
+      <category>Engineering</category>
+      <category>Metrics</category>
+      <description>Horizon UI 系列第十一篇：在浏览器里编辑 SkyWalking 的 OAL/MAL/LAL 分析规则，通过可恢复的集群确认流程让变更在运行中的 OAP 上生效；再用三个标签页的 Live Debugger 让同一条规则跑在真实数据上，看清它到底算出了什么。</description>
+    </item>
+    <item>
+      <title>认识 Horizon UI · 12/17：Inspect，跨 layer 查询工具</title>
+      <link>https://skywalking.apache.org/zh/2026-06-29-horizon-ui-inspect-cross-layer-query/</link>
+      <pubDate>Mon, 29 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/zh/2026-06-29-horizon-ui-inspect-cross-layer-query/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">吴晟</dc:creator>
+      <category>Engineering</category>
+      <category>Metrics</category>
+      <description>Horizon UI 系列第十二篇：Operate 下的 Inspect 家族，包括能看到每个指标由哪条规则定义的指标目录和 MQE 看板，以及不必先选择 layer 就能在全局范围查询的 trace 和 log 入口。</description>
+    </item>
+    <item>
+      <title>Meet Horizon UI · 9/17: Five Profilers, One Flame Graph</title>
+      <link>https://skywalking.apache.org/blog/2026-06-26-horizon-ui-profiling/</link>
+      <pubDate>Fri, 26 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2026-06-26-horizon-ui-profiling/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sheng Wu</dc:creator>
+      <category>Profiling</category>
+      <category>Engineering</category>
+      <description>Part 9 of the Meet Horizon UI series: SkyWalking&#39;s five profilers — trace, async (JVM), eBPF, Go pprof, and network — four of them pouring into one shared flame-graph and stack-tree engine, and the fifth rendering a process honeycomb instead.</description>
+    </item>
+    <item>
+      <title>认识 Horizon UI · 9/17：五种 Profiler，一套火焰图</title>
+      <link>https://skywalking.apache.org/zh/2026-06-26-horizon-ui-profiling/</link>
+      <pubDate>Fri, 26 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/zh/2026-06-26-horizon-ui-profiling/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">吴晟</dc:creator>
+      <category>Profiling</category>
+      <category>Engineering</category>
+      <description>Horizon UI 系列第九篇：SkyWalking 的五种 profiler：trace、async（JVM）、eBPF、Go pprof 和 network。前四种统一进入同一套火焰图和调用树视图，network 则用蜂窝拓扑展示进程间通信。</description>
+    </item>
+    <item>
+      <title>Meet Horizon UI · 8/17: Browser Errors &amp; Source Maps</title>
+      <link>https://skywalking.apache.org/blog/2026-06-23-horizon-ui-browser-errors-and-source-maps/</link>
+      <pubDate>Tue, 23 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2026-06-23-horizon-ui-browser-errors-and-source-maps/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sheng Wu</dc:creator>
+      <category>Logging</category>
+      <category>Engineering</category>
+      <description>Part 8 of the Meet Horizon UI series: the browser agent&#39;s JavaScript-error feed, and the capability that makes it useful — resolving a minified production stack back to your original file, line, column, symbol and source, frame by frame.</description>
+    </item>
+    <item>
+      <title>认识 Horizon UI · 8/17：浏览器错误与 Source Map</title>
+      <link>https://skywalking.apache.org/zh/2026-06-23-horizon-ui-browser-errors-and-source-maps/</link>
+      <pubDate>Tue, 23 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/zh/2026-06-23-horizon-ui-browser-errors-and-source-maps/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">吴晟</dc:creator>
+      <category>Logging</category>
+      <category>Engineering</category>
+      <description>Horizon UI 系列第八篇：浏览器端 agent 上报的 JavaScript 错误流，以及如何借助 source map 把生产环境压缩后的 stack 还原到原始文件、行、列、符号和源码片段。</description>
+    </item>
+    <item>
+      <title>Meet Horizon UI · 5/17: The 3D Infrastructure Map</title>
+      <link>https://skywalking.apache.org/blog/2026-06-22-horizon-ui-3d-infrastructure-map/</link>
+      <pubDate>Mon, 22 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2026-06-22-horizon-ui-3d-infrastructure-map/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sheng Wu</dc:creator>
+      <category>Cloud Native</category>
+      <category>Engineering</category>
+      <description>Part 5 of the Meet Horizon UI series: a single WebGL view of your whole deployment — every layer&#39;s services as cubes stacked on tiers, with live traffic, alarm beacons, and the calls between them.</description>
+    </item>
+    <item>
+      <title>认识 Horizon UI · 5/17：3D 基础设施地图</title>
+      <link>https://skywalking.apache.org/zh/2026-06-22-horizon-ui-3d-infrastructure-map/</link>
+      <pubDate>Mon, 22 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/zh/2026-06-22-horizon-ui-3d-infrastructure-map/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">吴晟</dc:creator>
+      <category>Cloud Native</category>
+      <category>Engineering</category>
+      <description>Horizon UI 系列第五篇：用一个 WebGL 场景把整个部署放到同一张 3D 地图里，把各个 Layer 的服务渲染成立方体，并同时展示实时流量、告警和调用关系。</description>
+    </item>
+    <item>
+      <title>基于 SkyWalking 10.4 的大模型应用监控：洞察 LLM 的性能与成本</title>
+      <link>https://skywalking.apache.org/zh/2026-04-05-virtual-genai-monitoring/</link>
+      <pubDate>Sun, 05 Apr 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/zh/2026-04-05-virtual-genai-monitoring/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">邵一鸣</dc:creator>
+      <category>AI</category>
+      <category>Engineering</category>
+      <category>Tracing</category>
+      <description>SkyWalking 10.4 增加了 Virtual GenAI 观测面板,本文将介绍该新特性的使用。</description>
+    </item>
+    <item>
+      <title>用 Apache SkyWalking 监控 Envoy AI Gateway</title>
+      <link>https://skywalking.apache.org/zh/2026-04-02-envoy-ai-gateway-monitoring/</link>
+      <pubDate>Thu, 02 Apr 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/zh/2026-04-02-envoy-ai-gateway-monitoring/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">吴晟</dc:creator>
+      <category>AI</category>
+      <category>Cloud Native</category>
+      <category>Engineering</category>
+      <description>基于 Envoy AI Gateway、SkyWalking OAP 10.4.0 和 BanyanDB 0.10.0，搭建面向 AI/LLM 流量的全栈可观测方案。</description>
+    </item>
+  </channel>
+</rss>

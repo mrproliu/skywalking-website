@@ -1,1415 +1,171 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Apache SkyWalking – Storage</title>
-    <link>/tags/storage/</link>
-    <description>Recent content in Storage on Apache SkyWalking</description>
+    <link>https://skywalking.apache.org/tags/storage/</link>
+    <description>Recent storage posts from Apache SkyWalking</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
-    <lastBuildDate>Thu, 01 Jan 2026 00:00:00 +0000</lastBuildDate>
-    
-	  <atom:link href="/tags/storage/feed.xml" rel="self" type="application/rss+xml" />
-    
-    
-      
-        
-      
-    
-    
+    <language>en-US</language>
+    <lastBuildDate>Sun, 21 Jun 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://skywalking.apache.org/tags/storage/feed.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Blog: Apache SkyWalking 2025 in Review: Making BanyanDB Ready for Production</title>
-      <link>/blog/2026-01-01-skywalking-2025-year-in-review/</link>
+      <title>Meet Horizon UI · 4/17: The Deployment Tab &amp; BanyanDB Self-Observability</title>
+      <link>https://skywalking.apache.org/blog/2026-06-21-horizon-ui-deployment-and-banyandb/</link>
+      <pubDate>Sun, 21 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2026-06-21-horizon-ui-deployment-and-banyandb/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sheng Wu</dc:creator>
+      <category>Cloud Native</category>
+      <category>Storage</category>
+      <description>Part 4 of the Meet Horizon UI series: the Deployment tab turns the topology map inward to show one clustered service&#39;s own instances, and BanyanDB is modeled as the role- and tier-aware cluster it is — SkyWalking finally watching its own database the way it watches everything else.</description>
+    </item>
+    <item>
+      <title>认识 Horizon UI · 4/17：Deployment 标签页与 BanyanDB 自观测</title>
+      <link>https://skywalking.apache.org/zh/2026-06-21-horizon-ui-deployment-and-banyandb/</link>
+      <pubDate>Sun, 21 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/zh/2026-06-21-horizon-ui-deployment-and-banyandb/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">吴晟</dc:creator>
+      <category>Cloud Native</category>
+      <category>Storage</category>
+      <description>Horizon UI 系列第四篇：Deployment 标签页如何把拓扑视角转向单个集群服务内部，并以 BanyanDB 为例说明 SkyWalking 如何观测自己的存储引擎。</description>
+    </item>
+    <item>
+      <title>SkyWalking GraalVM Distro：设计与基准测试</title>
+      <link>https://skywalking.apache.org/zh/2026-03-13-skywalking-graalvm-distro-design-and-benchmarks/</link>
+      <pubDate>Sun, 15 Mar 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/zh/2026-03-13-skywalking-graalvm-distro-design-and-benchmarks/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">吴晟</dc:creator>
+      <category>Profiling</category>
+      <category>Storage</category>
+      <category>Cloud Native</category>
+      <description>从设计到测试，详解 SkyWalking GraalVM Distro 如何把一个成熟、运行时动态特性很多的 Java 可观测性后端做成原生二进制，并沉淀出可重复的迁移流程。</description>
+    </item>
+    <item>
+      <title>SkyWalking GraalVM Distro: Design and Benchmarks</title>
+      <link>https://skywalking.apache.org/blog/2026-03-13-skywalking-graalvm-distro-design-and-benchmarks/</link>
+      <pubDate>Fri, 13 Mar 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2026-03-13-skywalking-graalvm-distro-design-and-benchmarks/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sheng Wu</dc:creator>
+      <category>Cloud Native</category>
+      <category>Profiling</category>
+      <category>Storage</category>
+      <description>A technical deep-dive into SkyWalking GraalVM Distro — how we turned a mature, reflection-heavy Java observability backend into a native binary with a repeatable migration pipeline.</description>
+    </item>
+    <item>
+      <title>Apache SkyWalking 2025 in Review: Making BanyanDB Ready for Production</title>
+      <link>https://skywalking.apache.org/blog/2026-01-01-skywalking-2025-year-in-review/</link>
       <pubDate>Thu, 01 Jan 2026 00:00:00 +0000</pubDate>
-      <guid>/blog/2026-01-01-skywalking-2025-year-in-review/</guid>
-      <description>
-        
-        
-        &lt;p&gt;2025 was a very focused year for the Apache SkyWalking community: &lt;strong&gt;moving BanyanDB from “native storage” to a “production-ready default”&lt;/strong&gt;, and making SkyWalking APM fully benefit from that foundation.&lt;/p&gt;
-&lt;p&gt;This post summarizes the key milestones, with an emphasis on BanyanDB.&lt;/p&gt;
-&lt;h2 id=&#34;storage-strategy-saying-goodbye-to-h2&#34;&gt;Storage strategy: saying goodbye to H2&lt;/h2&gt;
-&lt;p&gt;We started 2025 with a clear direction: the &lt;strong&gt;H2 storage option is permanently removed&lt;/strong&gt;.
-This change reduced long-term maintenance burden and removed a storage choice that was not aligned with production and cloud-native deployments.&lt;/p&gt;
-&lt;h2 id=&#34;banyandb-from-080-foundations-to-090-production-features&#34;&gt;BanyanDB: from 0.8.0 foundations to 0.9.0 production features&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;BanyanDB 0.8.0&lt;/strong&gt; delivered the “day-2 operations” foundation that a default storage backend needs. The community put a lot of effort into making queries faster and more predictable (for example &lt;code&gt;index_mode&lt;/code&gt;, numeric index types, and multiple query-path optimizations), while also making the system safer under real production pressure. Disk-usage thresholds and a query &lt;strong&gt;memory protector&lt;/strong&gt; were added as guardrails, and the operational toolbox matured with snapshot/backup/restore utilities and improved metadata synchronization.&lt;/p&gt;
-&lt;p&gt;Just as importantly, 0.8.0 started filling in the missing pieces of a full platform: native property storage and lifecycle-related capabilities that later enabled stronger HA and stage-based deployment patterns.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;BanyanDB 0.9.0&lt;/strong&gt; was the “production features” milestone. It introduced the &lt;strong&gt;Trace&lt;/strong&gt; data model as a first-class citizen, which unlocked much deeper trace storage and query capabilities. On the reliability and scaling side, the release brought configurable replicas, liaison-side improvements (including load balancing and moving some TopN flow), and broader correctness work such as migrations, version compatibility checks, and access logs.&lt;/p&gt;
-&lt;p&gt;It also made long-term operations more cloud-friendly with backup/restore support for AWS S3, GCS, and Azure Blob Storage, and added authentication primitives needed in shared environments. In short, 0.9.0 is where BanyanDB clearly moved beyond a “fast storage engine” into a “production platform”.&lt;/p&gt;
-&lt;h2 id=&#34;skywalking-apm-banyandb-becomes-the-default-path&#34;&gt;SkyWalking APM: BanyanDB becomes the default path&lt;/h2&gt;
-&lt;p&gt;With &lt;strong&gt;APM 10.2.0&lt;/strong&gt;, the project made the strategic shift official: H2 was removed permanently, and BanyanDB 0.8.0 became the default path that SkyWalking invests in. A lot of the work here was not flashy, but essential — refining OAP behavior (group settings, index model changes, Progressive TTL, query limits, and more) so running BanyanDB in production felt stable and predictable.&lt;/p&gt;
-&lt;p&gt;With &lt;strong&gt;APM 10.3.0&lt;/strong&gt;, SkyWalking and BanyanDB moved forward together: BanyanDB 0.9.0’s new trace model was adopted end-to-end, reducing inefficient query round-trips and enabling new query views that significantly lowered page latency. The integration also expanded into lifecycle-aware operations with hot/warm/cold stage configuration (including TTL and query support), and added BanyanDB &lt;strong&gt;self-monitoring&lt;/strong&gt; through OAP and the UI — the kind of end-to-end polish that turns a storage backend into a truly native solution.&lt;/p&gt;
-&lt;p&gt;If you’d like this review to cover &lt;strong&gt;APM 10.4.x&lt;/strong&gt; as well, please point me to the corresponding release content in this repo (I didn’t find an APM 10.4.0 release announcement in the current checkout).&lt;/p&gt;
-&lt;h2 id=&#34;packaging-and-deployment-ecosystem-helm&#34;&gt;Packaging and deployment ecosystem (Helm)&lt;/h2&gt;
-&lt;p&gt;BanyanDB’s production readiness is not only server features — it also depends on deployment maturity.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Helm charts:
-&lt;ul&gt;
-&lt;li&gt;SkyWalking Kubernetes Helm Chart 4.8.0 improved BanyanDB deployment defaults by updating the bundled BanyanDB Helm dependency, fixing an init-job volume-mount mismatch, and aligning OAP/UI images with the APM 10.3.0 line.&lt;/li&gt;
-&lt;li&gt;BanyanDB Helm 0.4.0 added backup/restore sidecars and a default volume for property storage.&lt;/li&gt;
-&lt;li&gt;BanyanDB Helm 0.5.0 introduced stage-aware patterns (hot/warm/cold), improved lifecycle-sidecar scheduling, moved liaison to StatefulSet, refined internal networking, and expanded configuration options.&lt;/li&gt;
-&lt;li&gt;BanyanDB Helm 0.5.1 refined liaison configuration and fixed restore-init environment issues.&lt;/li&gt;
-&lt;li&gt;BanyanDB Helm 0.5.3 fixed a liaison/data-node port issue.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;the-rest-of-the-community-agents-and-tooling-kept-moving&#34;&gt;The rest of the community: agents and tooling kept moving&lt;/h2&gt;
-&lt;p&gt;While storage was the “main storyline”, the community shipped releases across agents, clients, and surrounding components throughout 2025.&lt;/p&gt;
-&lt;p&gt;Below is a consolidated view of the other releases, grouped by project, with the most important notes.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;SkyWalking Java Agent&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;9.4.0&lt;/strong&gt;: agent self-observability; async-profiler support; broader plugin improvements.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;9.5.0&lt;/strong&gt;: virtual thread executor plugin; compatibility and stability fixes; dependency upgrades.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;SkyWalking Go&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;0.6.0&lt;/strong&gt;: richer manual APIs (events/logs/metrics, set span error); goframev2 plugin; bug fixes including Redis cluster mode.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;SkyWalking for NodeJS&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;0.8.0&lt;/strong&gt;: Express 4/5 compatibility, keep-alive HTTP trace fix, and test/dependency maintenance.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;SkyWalking Python&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;1.2.0&lt;/strong&gt;: sampling service, &lt;code&gt;sw_grpc&lt;/code&gt; plugin, async/profiling stability fixes, Python 3.13 support, and dropping Python 3.7.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;SkyWalking PHP&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;1.0.0&lt;/strong&gt;: reach 1.0; add PSR-3 log reporting; upgrade toolchain/dependencies.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;SkyWalking Rust&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;0.9.0&lt;/strong&gt;: migrate to Rust edition 2024 and upgrade dependencies.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;0.10.0&lt;/strong&gt;: Kafka client configuration refactor, &lt;code&gt;rdkafka&lt;/code&gt; upgrade, CI maintenance.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;SkyWalking Ruby&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;0.1.0&lt;/strong&gt;: initialize agent core and e2e tests; add plugins for Sinatra, redis-rb, net-http, memcached, and Elasticsearch.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;SkyWalking Client JS&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;1.0.0&lt;/strong&gt;: add Core Web Vitals and static resource metrics; fix fetch/resource error handling; dependency and e2e/test improvements.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;SkyWalking Satellite&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;1.3.0&lt;/strong&gt;: support native eBPF Access Log protocol and async-profiler protocol; upgrade Go toolchain.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;SkyWalking Eyes&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;0.7.0&lt;/strong&gt;: improve installation/docs, respect gitignore behavior, upgrade Go, and simplify release steps.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;0.8.0&lt;/strong&gt;: add Elixir support and stronger dependency-license scanning (notably Ruby via Gemfile.lock), plus stability fixes.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;looking-ahead-possible-directions-in-2026&#34;&gt;Looking ahead: possible directions in 2026&lt;/h2&gt;
-&lt;p&gt;2025 was about making BanyanDB ready for production. In 2026, the community is exploring the next set of improvements that could make the whole stack simpler to operate, more stable under stress, and easier to integrate into broader observability ecosystems.&lt;/p&gt;
-&lt;p&gt;Possible areas include:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;BanyanDB: remove the etcd dependency&lt;/strong&gt;: the direction under discussion is to move away from etcd (given ecosystem activity and maintenance concerns) and rely more on DNS-based discovery plus BanyanDB’s native property capabilities.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;BanyanDB: stronger stability testing&lt;/strong&gt;: more systematic testing, including chaos testing, to validate behavior under failures and noisy conditions.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;BanyanDB: better observability export&lt;/strong&gt;: introducing First Occurrence Data Collection (FODC) as a sidecar and proxy server to provide a unified stream of observability data to third-party systems.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;SkyWalking APM: broader runtime and query capabilities&lt;/strong&gt;: cold-stage data query support, a newer Java runtime (Java 25), and consideration of TraceQL protocol (Temper) support.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;closing&#34;&gt;Closing&lt;/h2&gt;
-&lt;p&gt;Thanks to everyone who contributed to SkyWalking in 2025. Every contribution is high-value — code, documentation, reviews, testing, issue triage, and operational experience — and each of them helped move the project forward.&lt;/p&gt;
-&lt;p&gt;We also want to say a special thank you to the countless end users across global companies. Many of the most valuable improvements don’t start from a pull request: they start from real-world use cases, performance investigations, production feedback, bug reports, and the patience to help us reproduce and validate fixes.&lt;/p&gt;
-&lt;p&gt;As another milestone, SkyWalking reached &lt;strong&gt;968 GitHub contributors&lt;/strong&gt; globally, and we expect the &lt;strong&gt;1000th&lt;/strong&gt; contributor milestone to arrive soon in 2026. But the community is much larger than the number suggests, and SkyWalking’s progress has always been driven by collaboration between contributors, adopters, and maintainers.&lt;/p&gt;
-&lt;p&gt;Apache SkyWalking was originally created by Sheng Wu as a personal project in May 2015. It would never have grown into what it is today without the whole community — and it will keep moving forward because of the community.&lt;/p&gt;
-
-      </description>
+      <guid>https://skywalking.apache.org/blog/2026-01-01-skywalking-2025-year-in-review/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sheng Wu</dc:creator>
+      <category>Release</category>
+      <category>Storage</category>
+      <category>Community</category>
+      <description>A review of Apache SkyWalking community work in 2025, with a focus on BanyanDB becoming the production-grade native storage for SkyWalking.</description>
     </item>
-    
     <item>
-      <title>Zh: BanyanDB 0.6 版本发布：性能和效率的提升</title>
-      <link>/zh/2024-06-04-banyandb-0.6-release/</link>
+      <title>BanyanDB 0.6 版本发布：性能和效率的提升</title>
+      <link>https://skywalking.apache.org/zh/2024-06-04-banyandb-0.6-release/</link>
       <pubDate>Wed, 12 Jun 2024 00:00:00 +0000</pubDate>
-      <guid>/zh/2024-06-04-banyandb-0.6-release/</guid>
-      <description>
-        
-        
-        &lt;h1 id=&#34;引言&#34;&gt;引言&lt;/h1&gt;
-&lt;p&gt;我们很高兴地宣布 BanyanDB v0.6 的发布，这是我们数据库技术发展的一个重要里程碑。这个最新版本引入了一种开创性的基于列的文件系统，提高了处理大数据集的性能和效率。经过广泛测试，我们可以确认这个新文件系统已经准备好投入生产。BanyanDB 现已准备就绪。&lt;/p&gt;
-&lt;p&gt;在这篇博客中，我们将深入探讨新的架构和观察到的性能改进，并提供一个关于如何安装并开始使用 BanyanDB v0.6 的逐步指南。&lt;/p&gt;
-&lt;h1 id=&#34;理解-banyandb-架构&#34;&gt;理解 BanyanDB 架构&lt;/h1&gt;
-&lt;p&gt;BanyanDB 设计为一个高度可扩展的多模型数据库。BanyanDB 的架构是模块化的，允许在存储和索引策略上具有灵活性，这使其成为处理复杂数据环境的理想选择。&lt;/p&gt;
-&lt;h3 id=&#34;主要特性&#34;&gt;主要特性：&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;多模型支持&lt;/strong&gt;：无缝处理各种数据类型。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;可扩展性&lt;/strong&gt;：设计为可以在多个节点上水平扩展。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;高性能&lt;/strong&gt;：优化了快速数据检索和高数据吞吐率。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;数据模型&#34;&gt;数据模型&lt;/h2&gt;
-&lt;p&gt;BanyanDB 是一个多模型数据库，旨在支持包括时间序列和键值数据在内的多种数据类型。这种灵活性对于需要多样化数据处理能力的现代 APM 系统至关重要。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;data_models.png&#34; alt=&#34;BanyanDB 模型&#34;&gt;&lt;/p&gt;
-&lt;p&gt;BanyanDB 模型&lt;/p&gt;
-&lt;h3 id=&#34;时间序列数据&#34;&gt;时间序列数据：&lt;/h3&gt;
-&lt;p&gt;BanyanDB 管理时间序列数据，即按时间顺序索引的数据点，通常在等间隔的时间点记录。这使其理想用于离散时间数据的序列。在 BanyanDB 中，你可以通过两种结构存储时间序列数据：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Stream&lt;/strong&gt;：这种类型的数据适合记录，如日志、追踪和事件。Stream（流）有助于管理连续生成并顺序记录的数据。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Measure&lt;/strong&gt;：专为摄取度量和概况而设计。Measure（度量）对于时间间隔的统计表示很有用。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;键值数据&#34;&gt;键值数据：&lt;/h3&gt;
-&lt;p&gt;BanyanDB 中的键值模型是属性模型的一个子集。每个属性由一个唯一的键标识，格式为&lt;code&gt;&amp;lt;group&amp;gt;/&amp;lt;name&amp;gt;/&amp;lt;id&amp;gt;&lt;/code&gt;，作为检索数据的主键。这个键一旦设置就是不可改变，确保数据的一致性和完整性。&lt;/p&gt;
-&lt;p&gt;属性由几个键值对组成，称为 Tag。你可以根据 Tag 的键动态地添加、更新或删除 Tag，提供灵活性在管理和存储数据方面。例如，SkyWalking UI 模板利用这个模型有效地存储配置数据。&lt;/p&gt;
-&lt;h2 id=&#34;banyandb-的集群化&#34;&gt;BanyanDB 的集群化&lt;/h2&gt;
-&lt;p&gt;BanyanDB 的架构不仅确保了高效的数据管理和高可用性，还强调了其集群环境中的可扩展性。系统包括三种不同的节点类型，每种类型都能独立扩展以满足不同的工作负载需求。&lt;/p&gt;
-&lt;h3 id=&#34;数据节点data-node&#34;&gt;数据节点（Data Node）&lt;/h3&gt;
-&lt;p&gt;数据节点是存储和管理所有原始时间序列数据、元数据和索引数据的核心。这些节点采用无共享架构运行，彼此之间不直接通信也不共享任何数据，增强了集群的可用性并简化了维护和扩展。这种设计优先考虑可用性，即使某些节点暂时不可用，系统仍能保持数据摄取和查询操作。&lt;/p&gt;
-&lt;h3 id=&#34;元数据节点meta-node&#34;&gt;元数据节点（Meta Node）&lt;/h3&gt;
-&lt;p&gt;元数据节点使用 etcd 实现，管理整个集群的元数据并确保系统的一致性。它们维护节点状态和数据库架构的全局视图，促进集群内的协调操作。&lt;/p&gt;
-&lt;h3 id=&#34;联络节点liaison-node&#34;&gt;联络节点（Liaison Node）&lt;/h3&gt;
-&lt;p&gt;联络节点作为通信桥梁，将查询和数据路由到适当的数据节点。它们处理安全功能，如认证和 TTL 执行，并管理分布式查询执行以优化性能。它们在维护服务可用性中发挥关键作用；只要至少有一个数据节点在运行，联络节点就可以继续服务查询。在某些数据节点不可用的情况下，联络节点会将流量重定向到剩余的健康节点，这可能导致这些节点的资源使用增加。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;cluster.png&#34; alt=&#34;BanyanDB 集群&#34;&gt;&lt;/p&gt;
-&lt;p&gt;BanyanDB 集群&lt;/p&gt;
-&lt;h3 id=&#34;通信&#34;&gt;通信&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;元数据节点&lt;/strong&gt; 在集群中同步元数据。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;数据节点&lt;/strong&gt; 与元数据节点互动，更新和获取元数据。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;联络节点&lt;/strong&gt; 将数据路由到数据节点并协调查询过程，利用元数据节点的元数据进行有效的分发和执行。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;可扩展性和容错性&#34;&gt;可扩展性和容错性&lt;/h3&gt;
-&lt;p&gt;BanyanDB 集群中的每种节点类型都可以根据部署的具体需要独立扩展：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;扩展数据节点&lt;/strong&gt; 增加数据处理能力并在更重的负载下改善性能。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;扩展元数据节点&lt;/strong&gt; 增强集群元数据操作的管理能力和弹性。这些节点的数量应该是奇数。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;扩展联络节点&lt;/strong&gt; 改善查询处理和数据路由能力的吞吐量。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;这种灵活性使 BanyanDB 能够适应需求变化，而不会损害性能或可用性。如果某些组件暂时不可用，系统设计为继续运营，优先保证可用性而非严格一致性。然而，在这种事件中，如果活动节点没有足够的资源来处理当前的工作负载，用户可能会经历数据摄取和查询处理的延迟或失败。&lt;/p&gt;
-&lt;h1 id=&#34;在-kubernetes-上安装&#34;&gt;在 Kubernetes 上安装&lt;/h1&gt;
-&lt;p&gt;要在 Kubernetes 上安装 BanyanDB，你可以使用我们的 Helm chart，这简化了部署过程。你可以在&lt;a href=&#34;https://github.com/apache/skywalking-helm/tree/v4.6.0&#34;&gt;我们的官方文档&lt;/a&gt;中找到详细的安装指南。&lt;/p&gt;
-&lt;p&gt;这个逐步指南假设你对 Kubernetes 和 Helm 有基本的了解，Helm 是 Kubernetes 的包管理器。如果你不熟悉 Helm，你可能需要在继续之前先熟悉 Helm 的基础知识。&lt;/p&gt;
-&lt;h2 id=&#34;先决条件&#34;&gt;先决条件&lt;/h2&gt;
-&lt;p&gt;在我们开始之前，请确保你有以下内容：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;strong&gt;Kubernetes 集群&lt;/strong&gt;：你可以使用 Minikube 进行本地设置，或使用支持 Kubernetes 的任何云提供商，如 AWS、GCP 或 Azure。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Helm 3&lt;/strong&gt;：确保 Helm 3 已安装并配置在你的机器上。你可以从 &lt;a href=&#34;https://helm.sh/&#34;&gt;Helm 的官方网站&lt;/a&gt; 下载。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id=&#34;第-1-步配置-helm-以使用-oci&#34;&gt;第 1 步：配置 Helm 以使用 OCI&lt;/h2&gt;
-&lt;p&gt;由于 BanyanDB Helm chart 托管为 Docker Hub 中的 OCI chart，你需要确保你的 Helm 配置为处理 OCI 工件。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;helm registry login registry-1.docker.io
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;你将被提示输入你的 Docker Hub 用户名和密码。此步骤是从 Docker Hub 拉取 Helm chart 所必需的。&lt;/p&gt;
-&lt;h2 id=&#34;第-2-步设置环境变量&#34;&gt;第 2 步：设置环境变量&lt;/h2&gt;
-&lt;p&gt;接下来，设置 SkyWalking 发行版本、名称和命名空间的环境变量。这些变量将用于后续命令。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#6639ba&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#953800&#34;&gt;SKYWALKING_RELEASE_VERSION&lt;/span&gt;&lt;span style=&#34;color:#0550ae&#34;&gt;=&lt;/span&gt;4.6.0
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#6639ba&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#953800&#34;&gt;SKYWALKING_RELEASE_NAME&lt;/span&gt;&lt;span style=&#34;color:#0550ae&#34;&gt;=&lt;/span&gt;skywalking
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#6639ba&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#953800&#34;&gt;SKYWALKING_RELEASE_NAMESPACE&lt;/span&gt;&lt;span style=&#34;color:#0550ae&#34;&gt;=&lt;/span&gt;default
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;第-3-步使用-helm-安装-banyandbskywalking&#34;&gt;第 3 步：使用 Helm 安装 BanyanDB+SkyWalking&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;helm install &lt;span style=&#34;color:#0a3069&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#0a3069&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#953800&#34;&gt;SKYWALKING_RELEASE_NAME&lt;/span&gt;&lt;span style=&#34;color:#0a3069&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#0a3069&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#0a3069&#34;&gt;\
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  oci://registry-1.docker.io/apache/skywalking-helm &lt;span style=&#34;color:#0a3069&#34;&gt;\
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  --version &lt;span style=&#34;color:#0a3069&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#0a3069&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#953800&#34;&gt;SKYWALKING_RELEASE_VERSION&lt;/span&gt;&lt;span style=&#34;color:#0a3069&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#0a3069&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#0a3069&#34;&gt;\
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  -n &lt;span style=&#34;color:#0a3069&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#0a3069&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#953800&#34;&gt;SKYWALKING_RELEASE_NAMESPACE&lt;/span&gt;&lt;span style=&#34;color:#0a3069&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#0a3069&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#0a3069&#34;&gt;\
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  --set oap.image.tag&lt;span style=&#34;color:#0550ae&#34;&gt;=&lt;/span&gt;10.0.1 &lt;span style=&#34;color:#0a3069&#34;&gt;\
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  --set oap.storageType&lt;span style=&#34;color:#0550ae&#34;&gt;=&lt;/span&gt;banyandb &lt;span style=&#34;color:#0a3069&#34;&gt;\
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  --set ui.image.tag&lt;span style=&#34;color:#0550ae&#34;&gt;=&lt;/span&gt;10.0.1 &lt;span style=&#34;color:#0a3069&#34;&gt;\
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  --set elasticsearch.enabled&lt;span style=&#34;color:#0550ae&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#6639ba&#34;&gt;false&lt;/span&gt; &lt;span style=&#34;color:#0a3069&#34;&gt;\
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  --set banyandb.enabled&lt;span style=&#34;color:#0550ae&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#6639ba&#34;&gt;true&lt;/span&gt; &lt;span style=&#34;color:#0a3069&#34;&gt;\
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  --set banyandb.image.tag&lt;span style=&#34;color:#0550ae&#34;&gt;=&lt;/span&gt;0.6.1 &lt;span style=&#34;color:#0a3069&#34;&gt;\
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  --set banyandb.standalone.enabled&lt;span style=&#34;color:#0550ae&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#6639ba&#34;&gt;false&lt;/span&gt; &lt;span style=&#34;color:#0a3069&#34;&gt;\
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  --set banyandb.cluster.enabled&lt;span style=&#34;color:#0550ae&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#6639ba&#34;&gt;true&lt;/span&gt; &lt;span style=&#34;color:#0a3069&#34;&gt;\
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  --set banyandb.etcd.enabled&lt;span style=&#34;color:#0550ae&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#6639ba&#34;&gt;true&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;此命令将部署 SkyWalking OAP 集群和 BanyanDB 集群到你的 Kubernetes 环境。&lt;/p&gt;
-&lt;h2 id=&#34;第-4-步验证安装&#34;&gt;第 4 步：验证安装&lt;/h2&gt;
-&lt;p&gt;检查 pod 的状态以确保它们正常运行：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;kubectl get pods -l &lt;span style=&#34;color:#953800&#34;&gt;release&lt;/span&gt;&lt;span style=&#34;color:#0550ae&#34;&gt;=&lt;/span&gt;skywalking
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果一切配置正确，你应该看到以下 pod 处于&lt;code&gt;Running&lt;/code&gt;或&lt;code&gt;Completed&lt;/code&gt;状态。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;pods.png&#34; alt=&#34;BanyanDB 集群中的 Pods&#34;&gt;&lt;/p&gt;
-&lt;p&gt;BanyanDB 集群中的 Pod&lt;/p&gt;
-&lt;h2 id=&#34;第-5-步访问-skywalking-ui&#34;&gt;第 5 步：访问 SkyWalking UI&lt;/h2&gt;
-&lt;p&gt;要访问 SkyWalking UI，你可以检查服务：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;kubectl get svc
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;你应该选择服务&lt;code&gt;skywalkin-skywalking-helm-ui&lt;/code&gt;来访问 UI。&lt;/p&gt;
-&lt;h1 id=&#34;性能测试&#34;&gt;性能测试&lt;/h1&gt;
-&lt;p&gt;我们针对 Elasticsearch 8.13.2 对 BanyanDB v0.6.1 进行了基准测试，SkyWalking 推荐的数据库。新的 BanyanDB 在几个关键领域表现优于 Elasticsearch，特别是在内存使用和磁盘空间方面。&lt;/p&gt;
-&lt;h2 id=&#34;数据生成工具&#34;&gt;数据生成工具&lt;/h2&gt;
-&lt;p&gt;对于此测试，我们使用了一个自定义的数据生成工具，设计用来创建模拟典型实际场景的追踪和度量数据。&lt;/p&gt;
-&lt;h3 id=&#34;服务实例和端点&#34;&gt;服务、实例和端点&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Total Services&lt;/strong&gt;：20&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Groups of Services&lt;/strong&gt;：每 3 个生成器实例运行两组，贡献总服务数。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Instances per Service&lt;/strong&gt;：每个服务有 20 个实例，所有服务共有 400 个实例。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Endpoints per Service&lt;/strong&gt;：每个服务实例托管 100 个端点。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Total Endpoints&lt;/strong&gt;：20 个服务的总端点数为 2000。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;trace-和-segment-生成&#34;&gt;Trace 和 Segment 生成&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Trace Gerneration Rate&lt;/strong&gt;：每组服务每秒生成 1000 条 trace，有效模拟大规模微服务环境中的高负载场景。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Spans per Trace&lt;/strong&gt;：每条追踪包含五个 segement，详细描述了各种服务和实例之间的模拟交互。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Total Writes per Second&lt;/strong&gt;：2 group * 3 data-generator * 1000 trace * 5 segment = 30k segment。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;我们设计的额外查询类型代表了生产环境中监控微服务架构的 SkyWalking 执行的典型读取操作。每种查询类型针对服务数据的不同方面：&lt;/p&gt;
-&lt;h3 id=&#34;1service-dashboard-queries&#34;&gt;1. &lt;strong&gt;Service Dashboard Queries&lt;/strong&gt;&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;目的&lt;/strong&gt;：在过去 30 分钟内获取 5 项服务级别的度量。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;频率&lt;/strong&gt;：每秒 1 次查询&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;2top-n-list-queries&#34;&gt;2. &lt;strong&gt;Top-N List Queries&lt;/strong&gt;&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;目的&lt;/strong&gt;：在过去 30 分钟内检索 2 个特定服务的前 5 项度量。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;频率&lt;/strong&gt;：每秒 1 次查询。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;3segment-list-queries&#34;&gt;3. &lt;strong&gt;Segment List Queries&lt;/strong&gt;&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;目的&lt;/strong&gt;：在过去 30 分钟内获取按降序排列的服务段列表。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;频率&lt;/strong&gt;：每秒 1 次查询。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;4trace-detail-queries&#34;&gt;4. &lt;strong&gt;Trace Detail Queries&lt;/strong&gt;&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;目的&lt;/strong&gt;：从段列表检索所有追踪细节。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;频率&lt;/strong&gt;：每秒 2 次查询。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;设置&#34;&gt;设置&lt;/h2&gt;
-&lt;p&gt;下表详细列出了集群内每个组件的规格，允许轻松比较分配给每个系统的硬件资源。这提供了对 Elasticsearch 8.13.2 和我们性能测试中使用的 BanyanDB v0.6.1 部署配置的清晰而结构化的比较。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;test_setup.png&#34; alt=&#34;性能测试设置&#34;&gt;&lt;/p&gt;
-&lt;p&gt;性能测试设置&lt;/p&gt;
-&lt;h2 id=&#34;集群配置表&#34;&gt;集群配置表&lt;/h2&gt;
-&lt;table&gt;
-  &lt;thead&gt;
-      &lt;tr&gt;
-          &lt;th&gt;组件&lt;/th&gt;
-          &lt;th&gt;系统&lt;/th&gt;
-          &lt;th&gt;数量&lt;/th&gt;
-          &lt;th&gt;CPU 核心&lt;/th&gt;
-          &lt;th&gt;内存 (GB)&lt;/th&gt;
-          &lt;th&gt;存储 (GB)&lt;/th&gt;
-          &lt;th&gt;角色描述&lt;/th&gt;
-      &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-      &lt;tr&gt;
-          &lt;td&gt;主节点&lt;/td&gt;
-          &lt;td&gt;Elasticsearch&lt;/td&gt;
-          &lt;td&gt;3&lt;/td&gt;
-          &lt;td&gt;2&lt;/td&gt;
-          &lt;td&gt;6&lt;/td&gt;
-          &lt;td&gt;N/A&lt;/td&gt;
-          &lt;td&gt;集群协调和管理&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;数据节点&lt;/td&gt;
-          &lt;td&gt;Elasticsearch&lt;/td&gt;
-          &lt;td&gt;3&lt;/td&gt;
-          &lt;td&gt;4&lt;/td&gt;
-          &lt;td&gt;8&lt;/td&gt;
-          &lt;td&gt;50 (高级 RWO)&lt;/td&gt;
-          &lt;td&gt;数据存储、索引和查询处理&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;ETCD 节点&lt;/td&gt;
-          &lt;td&gt;BanyanDB&lt;/td&gt;
-          &lt;td&gt;3&lt;/td&gt;
-          &lt;td&gt;2&lt;/td&gt;
-          &lt;td&gt;4&lt;/td&gt;
-          &lt;td&gt;N/A&lt;/td&gt;
-          &lt;td&gt;元数据和集群状态存储&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;数据节点&lt;/td&gt;
-          &lt;td&gt;BanyanDB&lt;/td&gt;
-          &lt;td&gt;3&lt;/td&gt;
-          &lt;td&gt;8&lt;/td&gt;
-          &lt;td&gt;4&lt;/td&gt;
-          &lt;td&gt;50 (高级 RWO)&lt;/td&gt;
-          &lt;td&gt;数据存储和处理&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;联络节点&lt;/td&gt;
-          &lt;td&gt;BanyanDB&lt;/td&gt;
-          &lt;td&gt;2&lt;/td&gt;
-          &lt;td&gt;4&lt;/td&gt;
-          &lt;td&gt;4&lt;/td&gt;
-          &lt;td&gt;N/A&lt;/td&gt;
-          &lt;td&gt;协调客户端应用和数据节点间的联系&lt;/td&gt;
-      &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;h2 id=&#34;结果&#34;&gt;结果&lt;/h2&gt;
-&lt;p&gt;在此我们整理了 Elasticsearch 8.13.2 和 BanyanDB v0.6.1 的性能测试结果，重点比较资源使用情况。结果分为两个表格以便更清晰地展示——一个详细介绍 CPU 和内存使用情况，另一个关注磁盘相关指标。&lt;/p&gt;
-&lt;h2 id=&#34;cpu-和内存使用情况&#34;&gt;CPU 和内存使用情况&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;cpu.png&#34; alt=&#34;CPU&#34;&gt;
-&lt;img src=&#34;memory.png&#34; alt=&#34;内存&#34;&gt;&lt;/p&gt;
-&lt;table&gt;
-  &lt;thead&gt;
-      &lt;tr&gt;
-          &lt;th&gt;系统&lt;/th&gt;
-          &lt;th&gt;平均 CPU 使用率 (核心)&lt;/th&gt;
-          &lt;th&gt;平均内存使用量 (MB)&lt;/th&gt;
-      &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-      &lt;tr&gt;
-          &lt;td&gt;Elasticsearch 数据&lt;/td&gt;
-          &lt;td&gt;3.2&lt;/td&gt;
-          &lt;td&gt;4147&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;BanyanDB 数据&lt;/td&gt;
-          &lt;td&gt;3.6&lt;/td&gt;
-          &lt;td&gt;738&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;BanyanDB 联络&lt;/td&gt;
-          &lt;td&gt;1.9&lt;/td&gt;
-          &lt;td&gt;62&lt;/td&gt;
-      &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;h3 id=&#34;观察&#34;&gt;观察：&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;CPU 使用率&lt;/strong&gt;：BanyanDB 数据节点的 CPU 使用率略高，因为它们在压缩和解压数据文件时操作较多。然而，BanyanDB 联络节点的 CPU 使用明显较少。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;内存使用率&lt;/strong&gt;：BanyanDB 显示出显著较低的内存使用率，数据和联络节点的内存使用量几乎比 Elasticsearch 数据节点少 5 倍，凸显其在内存利用效率方面的优势。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;磁盘使用iops-和吞吐量&#34;&gt;磁盘使用、IOPS 和吞吐量&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;disk_usage.png&#34; alt=&#34;磁盘使用&#34;&gt;&lt;/p&gt;
-&lt;p&gt;磁盘使用&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;disk_iops.png&#34; alt=&#34;磁盘 IOPS&#34;&gt;
-&lt;img src=&#34;disk_throughput.png&#34; alt=&#34;磁盘吞吐量&#34;&gt;&lt;/p&gt;
-&lt;p&gt;磁盘 IOPS &amp;amp; 吞吐量&lt;/p&gt;
-&lt;table&gt;
-  &lt;thead&gt;
-      &lt;tr&gt;
-          &lt;th&gt;系统&lt;/th&gt;
-          &lt;th&gt;平均磁盘使用量 (GB)&lt;/th&gt;
-          &lt;th&gt;IOPS (千)&lt;/th&gt;
-          &lt;th&gt;磁盘吞吐量 (GB/s)&lt;/th&gt;
-      &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-      &lt;tr&gt;
-          &lt;td&gt;Elasticsearch 数据&lt;/td&gt;
-          &lt;td&gt;29.6&lt;/td&gt;
-          &lt;td&gt;115.5&lt;/td&gt;
-          &lt;td&gt;12.8&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;BanyanDB 数据&lt;/td&gt;
-          &lt;td&gt;21.6&lt;/td&gt;
-          &lt;td&gt;21.4&lt;/td&gt;
-          &lt;td&gt;3.3&lt;/td&gt;
-      &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;h3 id=&#34;观察-1&#34;&gt;观察：&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;磁盘空间使用&lt;/strong&gt;：BanyanDB 比 Elasticsearch 使用约 30% 较少的磁盘空间，这可能导致较低的存储成本。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;IOPS 和吞吐量&lt;/strong&gt;：BanyanDB 的 IOPS 和磁盘吞吐量显著较低，表明对磁盘资源的压力较小。这对于降低运营成本和延长物理存储设备的使用寿命可能是有益的。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id=&#34;结论&#34;&gt;结论&lt;/h1&gt;
-&lt;p&gt;BanyanDB v0.6 的发布标志着数据库技术的重大进步，其新的基于列的文件系统在性能和效率上，尤其是在内存使用和磁盘空间方面与 Elasticsearch 相比显示出显著的改进。BanyanDB 能够处理各种数据类型，具有可扩展的架构以及在数据检索和摄取方面的高性能，使其成为复杂数据环境的强大解决方案。灵活的集群系统的引入允许独立扩展节点类型，确保在不影响性能或可用性的情况下适应变化的需求。总体而言，BanyanDB v0.6 将自己定位为现代应用性能管理 (APM) 系统的一个经济高效且可靠的选择。&lt;/p&gt;
-
-      </description>
+      <guid>https://skywalking.apache.org/zh/2024-06-04-banyandb-0.6-release/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">高洪涛、吴晟（tetrate.io）</dc:creator>
+      <category>Release</category>
+      <category>Storage</category>
+      <description>介绍 BanyanDB v0.6 的新功能以及与 Elasticsearch 的基准测试。</description>
     </item>
-    
     <item>
-      <title>Blog: BanyanDB 0.6 Release: Enhanced Performance and Efficiency</title>
-      <link>/blog/2024-06-04-banyandb-0.6-release/</link>
+      <title>BanyanDB 0.6 Release: Enhanced Performance and Efficiency</title>
+      <link>https://skywalking.apache.org/blog/2024-06-04-banyandb-0.6-release/</link>
       <pubDate>Tue, 04 Jun 2024 00:00:00 +0000</pubDate>
-      <guid>/blog/2024-06-04-banyandb-0.6-release/</guid>
-      <description>
-        
-        
-        &lt;h1 id=&#34;introduction&#34;&gt;Introduction&lt;/h1&gt;
-&lt;p&gt;We are excited to announce the release of BanyanDB v0.6, a significant milestone in the evolution of our database technology. This latest version introduces a groundbreaking column-based file system that enhances performance and improves efficiency in handling large datasets. After extensive testing, we can confirm that this new file system is ready for production. BanyanDB is now production-ready.&lt;/p&gt;
-&lt;p&gt;In this blog post, we’ll dive deep into the new architecture and the performance improvements observed and provide a step-by-step guide on installing and getting started with BanyanDB v0.6.&lt;/p&gt;
-&lt;h1 id=&#34;understanding-banyandb-architecture&#34;&gt;Understanding BanyanDB Architecture&lt;/h1&gt;
-&lt;p&gt;BanyanDB is designed as a highly scalable, multi-model database. The architecture of BanyanDB is modular, allowing for flexibility in storage and indexing strategies, which makes it an ideal choice for complex data environments.&lt;/p&gt;
-&lt;h3 id=&#34;key-features&#34;&gt;Key Features:&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Multi-Model Support:&lt;/strong&gt; Seamlessly handles various data types.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Scalability:&lt;/strong&gt; Designed to scale horizontally across multiple nodes.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;High Performance:&lt;/strong&gt; Optimized for quick data retrieval and high data ingestion rates.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;data-model&#34;&gt;Data Model&lt;/h2&gt;
-&lt;p&gt;BanyanDB is a multi-model database engineered to support diverse data types, including time series and key-value data. This flexibility is essential for modern APM systems that require versatile data handling capabilities.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;data_models.png&#34; alt=&#34;BanyanDB Models&#34;&gt;&lt;/p&gt;
-&lt;p&gt;BanyanDB Models&lt;/p&gt;
-&lt;h3 id=&#34;time-series-data&#34;&gt;Time-Series Data:&lt;/h3&gt;
-&lt;p&gt;BanyanDB manages time-series data, which are data points indexed in time order, typically logged at successive, equally spaced points in time. This makes it ideal for a sequence of discrete-time data. In BanyanDB, you can store time-series data through two structures:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Stream&lt;/strong&gt;: This type of data is suitable for logging, such as logs, traces, and events. Streams help manage data that are continuously generated and sequentially recorded.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Measure&lt;/strong&gt;: Designed for ingesting metrics and profiles. Measures are useful for statistical representations over intervals of time.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;key-value-data&#34;&gt;Key-Value Data:&lt;/h3&gt;
-&lt;p&gt;The key-value model in BanyanDB is a subset of the Property model. Each property is identified by a unique key formatted as &lt;code&gt;&amp;lt;group&amp;gt;/&amp;lt;name&amp;gt;/&amp;lt;id&amp;gt;&lt;/code&gt;, which acts as a primary key for retrieving data. This key is immutable once set, ensuring data consistency and integrity.&lt;/p&gt;
-&lt;p&gt;Properties consist of several key-value pairs, referred to as Tags. You can dynamically add, update, or drop tags based on the tag&amp;rsquo;s key, offering flexibility in managing and storing data. For example, SkyWalking UI templates utilize this model to store configuration data efficiently.&lt;/p&gt;
-&lt;h2 id=&#34;clustering-in-banyandb&#34;&gt;Clustering in BanyanDB&lt;/h2&gt;
-&lt;p&gt;BanyanDB&amp;rsquo;s architecture not only ensures efficient data management and high availability but also emphasizes scalability across its clustered environment. The system includes three distinct node types, each capable of scaling independently to meet varying workload demands.&lt;/p&gt;
-&lt;h3 id=&#34;data-nodes&#34;&gt;Data Nodes&lt;/h3&gt;
-&lt;p&gt;Data Nodes are central to storing and managing all raw time series data, metadata, and indexed data. Operating under a shared-nothing architecture, these nodes do not communicate directly with each other nor share any data, enhancing cluster availability and simplifying maintenance and scaling. This design prioritizes availability, allowing the system to remain operational for data ingestion and querying even if some nodes are temporarily unavailable.&lt;/p&gt;
-&lt;h3 id=&#34;meta-nodes&#34;&gt;Meta Nodes&lt;/h3&gt;
-&lt;p&gt;Implemented using etcd, Meta Nodes manage the overarching cluster metadata and ensure consistency across the system. They maintain a global view of the node states and database schemas, facilitating coordinated operations within the cluster.&lt;/p&gt;
-&lt;h3 id=&#34;liaison-nodes&#34;&gt;Liaison Nodes&lt;/h3&gt;
-&lt;p&gt;Liaison Nodes serve as the communication bridge, routing queries and data to the appropriate Data Nodes. They handle security functions like authentication and TTL enforcement, and manage distributed query execution to optimize performance. They play a crucial role in maintaining service availability; as long as at least one Data Node is operational, Liaison Nodes can continue to serve queries. In scenarios where some Data Nodes are unavailable, Liaison Nodes reroute traffic to the remaining healthy nodes, which may lead to increased resource use on these nodes.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;cluster.png&#34; alt=&#34;BanyanDB Cluster&#34;&gt;&lt;/p&gt;
-&lt;p&gt;BanyanDB Cluster&lt;/p&gt;
-&lt;h3 id=&#34;communication&#34;&gt;Communication&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Meta Nodes&lt;/strong&gt; synchronize metadata across the cluster.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Data Nodes&lt;/strong&gt; interact with Meta Nodes to update and fetch metadata.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Liaison Nodes&lt;/strong&gt; route data to Data Nodes and coordinate query processes, leveraging metadata from Meta Nodes for efficient distribution and execution.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;scalability-and-fault-tolerance&#34;&gt;Scalability and Fault Tolerance&lt;/h3&gt;
-&lt;p&gt;Each node type within the BanyanDB cluster can be scaled independently based on the specific needs of the deployment:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Scaling Data Nodes&lt;/strong&gt; increases data handling capacity and improves performance under heavier loads.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Scaling Meta Nodes&lt;/strong&gt; enhances the management capabilities and resiliency of cluster metadata operations. The number of such nodes should be odd.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Scaling Liaison Nodes&lt;/strong&gt; improves the throughput of query processing and data routing capabilities.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;This flexibility allows BanyanDB to adapt to changes in demand without compromising performance or availability. If some components become temporarily unavailable, the system is designed to continue operations, prioritizing availability over strict consistency. However, during such events, if the active nodes do not have sufficient resources to handle the current workload, users may experience delays or failures in data ingestion and query processing.&lt;/p&gt;
-&lt;h1 id=&#34;installation-on-kubernetes&#34;&gt;Installation On Kubernetes&lt;/h1&gt;
-&lt;p&gt;To install BanyanDB on Kubernetes, you can use our Helm chart, which simplifies the deployment process.  You can find detailed installation instructions in &lt;a href=&#34;https://github.com/apache/skywalking-helm/tree/v4.6.0&#34;&gt;our official documentation&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;This step-by-step guide assumes you have a basic understanding of Kubernetes and Helm, the package manager for Kubernetes. If you&amp;rsquo;re new to Helm, you might want to familiarize yourself with Helm basics before proceeding.&lt;/p&gt;
-&lt;h2 id=&#34;prerequisites&#34;&gt;Prerequisites&lt;/h2&gt;
-&lt;p&gt;Before we begin, ensure you have the following:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;strong&gt;A Kubernetes Cluster&lt;/strong&gt;: You can use Minikube for a local setup, or any cloud provider like AWS, GCP, or Azure that supports Kubernetes.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Helm 3&lt;/strong&gt;: Ensure Helm 3 is installed and configured on your machine. You can download it from &lt;a href=&#34;https://helm.sh/&#34;&gt;Helm&amp;rsquo;s official website&lt;/a&gt;.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id=&#34;step-1-configure-helm-to-use-oci&#34;&gt;Step 1: Configure Helm to Use OCI&lt;/h2&gt;
-&lt;p&gt;Since the BanyanDB Helm chart is hosted as an OCI chart in Docker Hub, you need to ensure your Helm is configured to handle OCI artifacts.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;helm registry login registry-1.docker.io
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;You will be prompted to enter your Docker Hub username and password. This step is necessary to pull Helm charts from Docker Hub.&lt;/p&gt;
-&lt;h2 id=&#34;step-2-setup-env-variables&#34;&gt;Step 2: Setup Env Variables&lt;/h2&gt;
-&lt;p&gt;Next, set up the environment variables for the SkyWalking release version, name, and namespace. These variables will be used in subsequent commands.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#6639ba&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#953800&#34;&gt;SKYWALKING_RELEASE_VERSION&lt;/span&gt;&lt;span style=&#34;color:#0550ae&#34;&gt;=&lt;/span&gt;4.6.0
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#6639ba&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#953800&#34;&gt;SKYWALKING_RELEASE_NAME&lt;/span&gt;&lt;span style=&#34;color:#0550ae&#34;&gt;=&lt;/span&gt;skywalking
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#6639ba&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#953800&#34;&gt;SKYWALKING_RELEASE_NAMESPACE&lt;/span&gt;&lt;span style=&#34;color:#0550ae&#34;&gt;=&lt;/span&gt;default
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;step-3-install-banyandbskywalking-using-helm&#34;&gt;Step 3: Install BanyanDB+SkyWalking Using Helm&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;helm install &lt;span style=&#34;color:#0a3069&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#0a3069&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#953800&#34;&gt;SKYWALKING_RELEASE_NAME&lt;/span&gt;&lt;span style=&#34;color:#0a3069&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#0a3069&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#0a3069&#34;&gt;\
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  oci://registry-1.docker.io/apache/skywalking-helm &lt;span style=&#34;color:#0a3069&#34;&gt;\
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  --version &lt;span style=&#34;color:#0a3069&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#0a3069&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#953800&#34;&gt;SKYWALKING_RELEASE_VERSION&lt;/span&gt;&lt;span style=&#34;color:#0a3069&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#0a3069&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#0a3069&#34;&gt;\
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  -n &lt;span style=&#34;color:#0a3069&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#0a3069&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#953800&#34;&gt;SKYWALKING_RELEASE_NAMESPACE&lt;/span&gt;&lt;span style=&#34;color:#0a3069&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#0a3069&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#0a3069&#34;&gt;\
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  --set oap.image.tag&lt;span style=&#34;color:#0550ae&#34;&gt;=&lt;/span&gt;10.0.1 &lt;span style=&#34;color:#0a3069&#34;&gt;\
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  --set oap.storageType&lt;span style=&#34;color:#0550ae&#34;&gt;=&lt;/span&gt;banyandb &lt;span style=&#34;color:#0a3069&#34;&gt;\
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  --set ui.image.tag&lt;span style=&#34;color:#0550ae&#34;&gt;=&lt;/span&gt;10.0.1 &lt;span style=&#34;color:#0a3069&#34;&gt;\
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  --set elasticsearch.enabled&lt;span style=&#34;color:#0550ae&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#6639ba&#34;&gt;false&lt;/span&gt; &lt;span style=&#34;color:#0a3069&#34;&gt;\
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  --set banyandb.enabled&lt;span style=&#34;color:#0550ae&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#6639ba&#34;&gt;true&lt;/span&gt; &lt;span style=&#34;color:#0a3069&#34;&gt;\
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  --set banyandb.image.tag&lt;span style=&#34;color:#0550ae&#34;&gt;=&lt;/span&gt;0.6.1 &lt;span style=&#34;color:#0a3069&#34;&gt;\
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  --set banyandb.standalone.enabled&lt;span style=&#34;color:#0550ae&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#6639ba&#34;&gt;false&lt;/span&gt; &lt;span style=&#34;color:#0a3069&#34;&gt;\
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  --set banyandb.cluster.enabled&lt;span style=&#34;color:#0550ae&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#6639ba&#34;&gt;true&lt;/span&gt; &lt;span style=&#34;color:#0a3069&#34;&gt;\
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  --set banyandb.etcd.enabled&lt;span style=&#34;color:#0550ae&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#6639ba&#34;&gt;true&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;This command will deploy the SkyWalking OAP cluster and BanyanDB cluster to your Kubernetes environment.&lt;/p&gt;
-&lt;h2 id=&#34;step-4-verify-the-installation&#34;&gt;Step 4: Verify the Installation&lt;/h2&gt;
-&lt;p&gt;Check the status of the pods to ensure they are running properly:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;kubectl get pods -l &lt;span style=&#34;color:#953800&#34;&gt;release&lt;/span&gt;&lt;span style=&#34;color:#0550ae&#34;&gt;=&lt;/span&gt;skywalking
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;You should see the following pods in a &lt;code&gt;Running&lt;/code&gt; or &lt;code&gt;Completed&lt;/code&gt; state if everything is configured correctly.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;pods.png&#34; alt=&#34;Pods in BanyanDB Cluster&#34;&gt;&lt;/p&gt;
-&lt;p&gt;Pods in BanyanDB Cluster&lt;/p&gt;
-&lt;h2 id=&#34;step-5-access-skywalking-ui&#34;&gt;Step 5: Access SkyWalking UI&lt;/h2&gt;
-&lt;p&gt;To access the SkyWalking UI, you can check the service by :&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;kubectl get svc
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;You should select the service &lt;code&gt;skywalkin-skywalking-helm-ui&lt;/code&gt; to access the UI.&lt;/p&gt;
-&lt;h1 id=&#34;performance-test&#34;&gt;Performance Test&lt;/h1&gt;
-&lt;p&gt;We benchmarked BanyanDB v0.6.1 against Elasticsearch 8.13.2, SkyWalking’s recommended database. The new BanyanDB outperformed Elasticsearch in several key areas, particularly in memory usage and disk space.&lt;/p&gt;
-&lt;h2 id=&#34;data-generation-tool&#34;&gt;Data Generation Tool&lt;/h2&gt;
-&lt;p&gt;For this test, we used a custom data generation tool designed to create data that mimics a typical real-world scenario for trace and metrics data.&lt;/p&gt;
-&lt;h3 id=&#34;services-instances-and-endpoints&#34;&gt;Services, Instances, and Endpoints&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Total Services:&lt;/strong&gt; 20&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Groups of Services:&lt;/strong&gt; Each of the 3 generator instances runs two groups, contributing to the total count of services.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Instances per Service:&lt;/strong&gt; Each service is represented by 20 instances, leading to 400 instances across all services.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Endpoints per Service:&lt;/strong&gt; Each service instance hosts 100 endpoints.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Total Endpoints:&lt;/strong&gt; With 20 services, the total number of endpoints is 2000.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;trace-and-segment-generation&#34;&gt;Trace and Segment Generation&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Trace Generation Rate:&lt;/strong&gt; Each group of services generates 1000 traces per second, effectively simulating a high-load scenario typical in large-scale microservice environments.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Spans per Trace:&lt;/strong&gt; Each trace comprises five segments, detailing the simulated interactions between various services and instances.&lt;/li&gt;
-&lt;li&gt;Total Writes per Second: 2 groups * 3 data-generators * 1000 traces * 5 segments = 30k segments.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;The additional query types were designed to represent typical read operations performed in a production environment monitoring microservice architectures by SkyWalking. Each query type targets a different aspect of service data:&lt;/p&gt;
-&lt;h3 id=&#34;1service-dashboard-queries&#34;&gt;1. &lt;strong&gt;Service Dashboard Queries&lt;/strong&gt;&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Purpose:&lt;/strong&gt; Fetch 5 service-level metrics over the last 30 minutes.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Frequency:&lt;/strong&gt; 1 query per second&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;2top-n-list-queries&#34;&gt;2. &lt;strong&gt;Top-N List Queries&lt;/strong&gt;&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Purpose:&lt;/strong&gt; Retrieve the top 5 metrics for 2 specific services over the last 30 minutes.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Frequency:&lt;/strong&gt; 1 query per second.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;3segment-list-queries&#34;&gt;3. &lt;strong&gt;Segment List Queries&lt;/strong&gt;&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Purpose:&lt;/strong&gt; Fetch a list of service segments ordered by descending latency within the last 30 minutes.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Frequency:&lt;/strong&gt; 1 query per second.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;4trace-detail-queries&#34;&gt;4. &lt;strong&gt;Trace Detail Queries&lt;/strong&gt;&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Purpose:&lt;/strong&gt; Retrieve all trace details from the segment list.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Frequency:&lt;/strong&gt; 2 queries per second.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;setup&#34;&gt;Setup&lt;/h2&gt;
-&lt;p&gt;Below is a detailed table that outlines the specifications of each component within the clusters, allowing for an easy comparison of hardware resources allocated to each system. This provides a clear and structured comparison of the deployment configurations used for Elasticsearch 8.13.2 and BanyanDB v0.6.1 in our performance tests.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;test_setup.png&#34; alt=&#34;Performance Test Setup&#34;&gt;&lt;/p&gt;
-&lt;p&gt;Performance Test Setup&lt;/p&gt;
-&lt;h2 id=&#34;cluster-configuration-table&#34;&gt;Cluster Configuration Table&lt;/h2&gt;
-&lt;table&gt;
-  &lt;thead&gt;
-      &lt;tr&gt;
-          &lt;th&gt;Component&lt;/th&gt;
-          &lt;th&gt;System&lt;/th&gt;
-          &lt;th&gt;Quantity&lt;/th&gt;
-          &lt;th&gt;CPU Cores&lt;/th&gt;
-          &lt;th&gt;RAM (GB)&lt;/th&gt;
-          &lt;th&gt;Storage (GB)&lt;/th&gt;
-          &lt;th&gt;Role Description&lt;/th&gt;
-      &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-      &lt;tr&gt;
-          &lt;td&gt;Master Nodes&lt;/td&gt;
-          &lt;td&gt;Elasticsearch&lt;/td&gt;
-          &lt;td&gt;3&lt;/td&gt;
-          &lt;td&gt;2&lt;/td&gt;
-          &lt;td&gt;6&lt;/td&gt;
-          &lt;td&gt;N/A&lt;/td&gt;
-          &lt;td&gt;Cluster coordination and management&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;Data Nodes&lt;/td&gt;
-          &lt;td&gt;Elasticsearch&lt;/td&gt;
-          &lt;td&gt;3&lt;/td&gt;
-          &lt;td&gt;4&lt;/td&gt;
-          &lt;td&gt;8&lt;/td&gt;
-          &lt;td&gt;50 (Premium RWO)&lt;/td&gt;
-          &lt;td&gt;Data storage, indexing, and query processing&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;ETCD Nodes&lt;/td&gt;
-          &lt;td&gt;BanyanDB&lt;/td&gt;
-          &lt;td&gt;3&lt;/td&gt;
-          &lt;td&gt;2&lt;/td&gt;
-          &lt;td&gt;4&lt;/td&gt;
-          &lt;td&gt;N/A&lt;/td&gt;
-          &lt;td&gt;Metadata and cluster state storage&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;Data Nodes&lt;/td&gt;
-          &lt;td&gt;BanyanDB&lt;/td&gt;
-          &lt;td&gt;3&lt;/td&gt;
-          &lt;td&gt;8&lt;/td&gt;
-          &lt;td&gt;4&lt;/td&gt;
-          &lt;td&gt;50 (Premium RWO)&lt;/td&gt;
-          &lt;td&gt;Data storage and processing&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;Liaison Nodes&lt;/td&gt;
-          &lt;td&gt;BanyanDB&lt;/td&gt;
-          &lt;td&gt;2&lt;/td&gt;
-          &lt;td&gt;4&lt;/td&gt;
-          &lt;td&gt;4&lt;/td&gt;
-          &lt;td&gt;N/A&lt;/td&gt;
-          &lt;td&gt;Coordination between client applications and data nodes&lt;/td&gt;
-      &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;h2 id=&#34;result&#34;&gt;Result&lt;/h2&gt;
-&lt;p&gt;Here we consolidate the performance test results for Elasticsearch 8.13.2 and BanyanDB v0.6.1, focusing on resource usage comparisons. The results are organized into two tables for better clarity—one detailing CPU and memory usage, and the other focusing on disk-related metrics.&lt;/p&gt;
-&lt;h2 id=&#34;cpu-and-memory-usage&#34;&gt;CPU and Memory Usage&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;cpu.png&#34; alt=&#34;CPU&#34;&gt;
-&lt;img src=&#34;memory.png&#34; alt=&#34;Memory&#34;&gt;&lt;/p&gt;
-&lt;table&gt;
-  &lt;thead&gt;
-      &lt;tr&gt;
-          &lt;th&gt;System&lt;/th&gt;
-          &lt;th&gt;Mean CPU Usage (cores)&lt;/th&gt;
-          &lt;th&gt;Mean Memory Usage (MB)&lt;/th&gt;
-      &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-      &lt;tr&gt;
-          &lt;td&gt;Elasticsearch Data&lt;/td&gt;
-          &lt;td&gt;3.2&lt;/td&gt;
-          &lt;td&gt;4147&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;BanyanDB Data&lt;/td&gt;
-          &lt;td&gt;3.6&lt;/td&gt;
-          &lt;td&gt;738&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;BanyanDB Liaison&lt;/td&gt;
-          &lt;td&gt;1.9&lt;/td&gt;
-          &lt;td&gt;62&lt;/td&gt;
-      &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;h3 id=&#34;observations&#34;&gt;Observations:&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;CPU Usage:&lt;/strong&gt; BanyanDB data nodes have slightly higher CPU usage due to their operations on compressing and decompressing data files. However, BanyanDB liaison nodes use significantly less CPU.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Memory Usage:&lt;/strong&gt; BanyanDB shows markedly lower memory usage for both data and liaison nodes, using nearly 5x less memory than Elasticsearch data nodes, highlighting its efficiency in memory utilization.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;disk-usage-iops-and-throughput&#34;&gt;Disk Usage, IOPS, and Throughput&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;disk_usage.png&#34; alt=&#34;Disk Usage&#34;&gt;&lt;/p&gt;
-&lt;p&gt;Disk Usage&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;disk_iops.png&#34; alt=&#34;Disk IOPS&#34;&gt;
-&lt;img src=&#34;disk_throughput.png&#34; alt=&#34;Disk Throughput&#34;&gt;&lt;/p&gt;
-&lt;p&gt;Disk IOPS &amp;amp; Throughput&lt;/p&gt;
-&lt;table&gt;
-  &lt;thead&gt;
-      &lt;tr&gt;
-          &lt;th&gt;System&lt;/th&gt;
-          &lt;th&gt;Mean Disk Usage (GB)&lt;/th&gt;
-          &lt;th&gt;IOPS (k)&lt;/th&gt;
-          &lt;th&gt;Disk Throughput (GB/s)&lt;/th&gt;
-      &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-      &lt;tr&gt;
-          &lt;td&gt;Elasticsearch Data&lt;/td&gt;
-          &lt;td&gt;29.6&lt;/td&gt;
-          &lt;td&gt;115.5&lt;/td&gt;
-          &lt;td&gt;12.8&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;BanyanDB Data&lt;/td&gt;
-          &lt;td&gt;21.6&lt;/td&gt;
-          &lt;td&gt;21.4&lt;/td&gt;
-          &lt;td&gt;3.3&lt;/td&gt;
-      &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;h3 id=&#34;observations-1&#34;&gt;Observations:&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Disk Space Usage:&lt;/strong&gt; BanyanDB utilizes about 30% less disk space than Elasticsearch, which can translate into lower storage costs.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;IOPS and Throughput:&lt;/strong&gt; BanyanDB&amp;rsquo;s IOPS and disk throughput are significantly lower, indicating less strain on disk resources. This could be beneficial for reducing operational costs and extending the lifespan of physical storage devices.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h1&gt;
-&lt;p&gt;The release of BanyanDB v0.6 marks a significant advancement in database technology with its new column-based file system. This version demonstrates substantial improvements in both performance and efficiency, particularly in memory usage and disk space compared to Elasticsearch. BanyanDB&amp;rsquo;s ability to handle various data types, its scalable architecture, and its high performance in data retrieval and ingestion make it a robust solution for complex data environments. The introduction of a flexible clustering system allows for independent scaling of node types, ensuring adaptability to changing demands without compromising on performance or availability. Overall, BanyanDB v0.6 positions itself as a cost-effective and reliable choice for modern application performance management (APM) systems.&lt;/p&gt;
-
-      </description>
+      <guid>https://skywalking.apache.org/blog/2024-06-04-banyandb-0.6-release/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Hongtao Gao, Sheng Wu. tetrate.io</dc:creator>
+      <category>Release</category>
+      <category>Storage</category>
+      <description>Introducing What&#39;s New in BanyanDB v0.6 and a Benchmark Test Against Elasticsearch</description>
     </item>
-    
     <item>
-      <title>Blog: The Application Guide of Apache IoTDB Storage Option</title>
-      <link>/blog/2021-12-08-application-guide-of-iotdb-storage-option/</link>
+      <title>SkyWalking 10 发布：服务层次结构、基于 eBPF 的 Kubernetes 网络监控、BanyanDB 等</title>
+      <link>https://skywalking.apache.org/zh/2024-05-13-skywalking-10-release/</link>
+      <pubDate>Mon, 13 May 2024 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/zh/2024-05-13-skywalking-10-release/</guid>
+      <category>Release</category>
+      <category>Profiling</category>
+      <category>Storage</category>
+      <description>介绍 SkyWalking 10 的新特性，包括服务层次结构、基于 eBPF 的 Kubernetes 网络监控、BanyanDB 等。</description>
+    </item>
+    <item>
+      <title>Monitoring Clickhouse Server through SkyWalking</title>
+      <link>https://skywalking.apache.org/blog/2024-03-12-monitoring-clickhouse-through-skywalking/</link>
+      <pubDate>Tue, 12 Mar 2024 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2024-03-12-monitoring-clickhouse-through-skywalking/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Ziyan Chen</dc:creator>
+      <category>Storage</category>
+      <description>SkyWalking 10.0 introduces a new ClickHouse server monitoring dashboard, and this article will demonstrate the usage of this monitoring dashboard.</description>
+    </item>
+    <item>
+      <title>使用 SkyWalking 监控 ClickHouse Server</title>
+      <link>https://skywalking.apache.org/zh/2024-03-12-monitoring-clickhouse-through-skywalking/</link>
+      <pubDate>Tue, 12 Mar 2024 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/zh/2024-03-12-monitoring-clickhouse-through-skywalking/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">陈子妍</dc:creator>
+      <category>Storage</category>
+      <description>SkyWalking 10.0 引入了 ClickHouse 监控面板，本文将演示该监控面板的使用。</description>
+    </item>
+    <item>
+      <title>CommunityOverCode Conference 2023 Asia</title>
+      <link>https://skywalking.apache.org/zh/2023-08-20-coc-asia-2023/</link>
+      <pubDate>Tue, 03 Oct 2023 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/zh/2023-08-20-coc-asia-2023/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Hongtao Gao && Han Liu</dc:creator>
+      <category>Agents</category>
+      <category>Storage</category>
+      <description>会议视频，（1）SkyWalking的Golang自动探针实践 刘晗，（2）BanyanDB一个高扩展性的分布式追踪数据库 高洪涛</description>
+    </item>
+    <item>
+      <title>How to run Apache SkyWalking on AWS EKS and RDS/Aurora</title>
+      <link>https://skywalking.apache.org/blog/2022-12-13-how-to-run-apache-skywalking-on-aws-eks-rds/</link>
+      <pubDate>Tue, 13 Dec 2022 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2022-12-13-how-to-run-apache-skywalking-on-aws-eks-rds/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">[Zhenxu Ke](https://github.com/kezhenxu94)</dc:creator>
+      <category>Cloud Native</category>
+      <category>Storage</category>
+      <category>Engineering</category>
+      <description>Introduce how to quickly set up Apache SkyWalking on AWS EKS and RDS/Aurora</description>
+    </item>
+    <item>
+      <title>如何在 AWS EKS 和 RDS/Aurora 上运行 Apache SkyWalking</title>
+      <link>https://skywalking.apache.org/zh/2022-12-13-how-to-run-apache-skywalking-on-aws-eks-rds/</link>
+      <pubDate>Tue, 13 Dec 2022 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/zh/2022-12-13-how-to-run-apache-skywalking-on-aws-eks-rds/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">[柯振旭](https://github.com/kezhenxu94)</dc:creator>
+      <category>Storage</category>
+      <category>Cloud Native</category>
+      <category>Engineering</category>
+      <description>介绍如何在 AWS EKS 和 RDS/Aurora 上快速搭建 Apache SkyWalking。</description>
+    </item>
+    <item>
+      <title>SkyWalking&#39;s New Storage Feature Based on ShardingSphere-Proxy: MySQL-Sharding</title>
+      <link>https://skywalking.apache.org/blog/skywalkings-new-storage-feature-based-on-shardingsphere-proxy-mysql-sharding/</link>
+      <pubDate>Tue, 06 Dec 2022 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/skywalkings-new-storage-feature-based-on-shardingsphere-proxy-mysql-sharding/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Kai Wan (tetrate.io)</dc:creator>
+      <category>Storage</category>
+      <description>Based on MySQL storage, SkyWalking v9.3.0 provides a new storage method: MySQL-Sharding. It supports database and table sharding features thanks to ShardingSphere-Proxy, which is a mature solution for dealing with relational databases’ massive amounts of data.</description>
+    </item>
+    <item>
+      <title>The Application Guide of Apache IoTDB Storage Option</title>
+      <link>https://skywalking.apache.org/blog/2021-12-08-application-guide-of-iotdb-storage-option/</link>
       <pubDate>Wed, 08 Dec 2021 00:00:00 +0000</pubDate>
-      <guid>/blog/2021-12-08-application-guide-of-iotdb-storage-option/</guid>
-      <description>
-        
-        
-        &lt;p&gt;This document is one of the outcomes of &lt;a href=&#34;https://summer.iscas.ac.cn/#/org/prodetail/210070771&#34;&gt;Apache IoTDB - Apache SkyWalking Adapter&lt;/a&gt; in &lt;a href=&#34;https://summer.iscas.ac.cn/#/homepage&#34;&gt;Summer 2021 of Open Source Promotion Plan&lt;/a&gt;. The design and development work is under the guidance of &lt;a href=&#34;https://github.com/jixuan1989&#34;&gt;@jixuan1989&lt;/a&gt; from IoTDB and &lt;a href=&#34;https://github.com/wu-sheng&#34;&gt;@wu-sheng&lt;/a&gt; from SkyWalking. Thanks for their guidance and the help from community.&lt;/p&gt;
-&lt;h2 id=&#34;start-with-skywalking-showcase&#34;&gt;Start with SkyWalking Showcase&lt;/h2&gt;
-&lt;p&gt;Before using SkyWalking Showcase to quick start with IoTDB, please ensure your have &lt;code&gt;make&lt;/code&gt; installed and Docker daemon running.&lt;/p&gt;
-&lt;p&gt;Please run the command below.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git clone https://github.com/LIU-WEI-git/skywalking-showcase.git
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#6639ba&#34;&gt;cd&lt;/span&gt; skywalking-showcase
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;make deploy.docker &lt;span style=&#34;color:#953800&#34;&gt;FEATURE_FLAGS&lt;/span&gt;&lt;span style=&#34;color:#0550ae&#34;&gt;=&lt;/span&gt;single-node.iotdb,agent
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The former variable &lt;code&gt;single-node.iotdb&lt;/code&gt; will deploy only one single node of SkyWalking OAP-v8.9.0, and SkyWalking RocketBot UI-v8.9.0, IoTDB-v0.12.3 as storage. The latter variable &lt;code&gt;agent&lt;/code&gt; will deploy micro-services with SkyWalking agent enabled, which include agents for Java, NodeJS server, browser, Python.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;iotdb-showcase-command.png&#34; alt=&#34;iotdb-showcase-command&#34;&gt;&lt;/p&gt;
-&lt;p&gt;These shell command maybe take a long while. After pulling and running docker image, please visit http://localhost:9999/. Then you will see the SkyWalking UI and data from OAP backend.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;iotdb-showcase-screenshot.png&#34; alt=&#34;iotdb-showcase-screenshot&#34;&gt;&lt;/p&gt;
-&lt;p&gt;If you want to use more functions of SkyWalking Showcase, please visit its &lt;a href=&#34;https://skywalking.apache.org/docs/skywalking-showcase/latest/readme/&#34;&gt;official document&lt;/a&gt; and clone &lt;a href=&#34;https://github.com/apache/skywalking-showcase&#34;&gt;official repository&lt;/a&gt;.&lt;/p&gt;
-&lt;h2 id=&#34;start-manually&#34;&gt;Start Manually&lt;/h2&gt;
-&lt;p&gt;If you want to download and run IoTDB and SkyWalking manually, here is the guidance.&lt;/p&gt;
-&lt;h3 id=&#34;install-and-run-iotdb&#34;&gt;Install and Run IoTDB&lt;/h3&gt;
-&lt;p&gt;Apache IoTDB (Database for Internet of Things) is an IoT native database with high performance for data management and analysis, deployable on the edge and the cloud. It is a time-series database storage option for SkyWalking now.
-Please ensure your &lt;strong&gt;IoTDB server version &amp;gt;= &lt;a href=&#34;https://github.com/apache/iotdb/releases/tag/v0.12.3&#34;&gt;0.12.3&lt;/a&gt;&lt;/strong&gt; and a single node version is sufficient. For more installation details, please see official document: &lt;a href=&#34;https://iotdb.apache.org/UserGuide/V0.12.x/QuickStart/QuickStart.html&#34;&gt;IoTDB Quick Start&lt;/a&gt; and &lt;a href=&#34;https://iotdb.apache.org/Download/&#34;&gt;IoTDB Download Page&lt;/a&gt;. You could download it from &lt;a href=&#34;https://hub.docker.com/r/apache/iotdb&#34;&gt;Docker Hub&lt;/a&gt; as well.&lt;/p&gt;
-&lt;p&gt;There is some connection tools for IoTDB&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://iotdb.apache.org/UserGuide/V0.12.x/CLI/Command-Line-Interface.html&#34;&gt;Command Line Interface(CLI)&lt;/a&gt;&lt;br&gt;
-If iotdb-cli connects successfully, you will see&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt; _____       _________  ______   ______
-|_   _|     |  _   _  ||_   _ `.|_   _ \
-  | |   .--.|_/ | | \_|  | | `. \ | |_) |
-  | | / .&amp;#39;`\ \  | |      | |  | | |  __&amp;#39;.
- _| |_| \__. | _| |_    _| |_.&amp;#39; /_| |__) |
-|_____|&amp;#39;.__.&amp;#39; |_____|  |______.&amp;#39;|_______/  version x.x.x
-
-
-IoTDB&amp;gt; login successfully
-IoTDB&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://iotdb.apache.org/UserGuide/V0.12.x/Ecosystem%20Integration/Grafana.html&#34;&gt;IoTDB-Grafana&lt;/a&gt;&lt;br&gt;
-IoTDB-Grafana is a connector which we developed to show time series data in IoTDB by reading data from IoTDB and sends to &lt;a href=&#34;https://grafana.com/&#34;&gt;Grafana&lt;/a&gt;.
-&lt;img src=&#34;https://user-images.githubusercontent.com/13203019/51664878-6e54a380-1ff5-11e9-9718-4d0e24627fa8.png&#34; alt=&#34;Grafana-IoTDB-Screenshot&#34;&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://iotdb.apache.org/UserGuide/V0.12.x/Ecosystem%20Integration/Zeppelin-IoTDB.html&#34;&gt;Zeppelin-IoTDB&lt;/a&gt;&lt;br&gt;
-You could enable Zeppelin to operate IoTDB via SQL.
-&lt;img src=&#34;https://user-images.githubusercontent.com/5548915/102752947-520a3e80-43a5-11eb-8fb1-8fac471c8c7e.png&#34; alt=&#34;Zeppelin-IoTDB-Screenshot&#34;&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;For more ecosystem integration, please visit official documents.&lt;/p&gt;
-&lt;p&gt;We will use iotdb-cli in the next examples.&lt;/p&gt;
-&lt;h3 id=&#34;run-skywalking-oap-server&#34;&gt;Run SkyWalking OAP Server&lt;/h3&gt;
-&lt;p&gt;There are some SkyWalking official documents which will help you start. Please ensure your &lt;strong&gt;SkyWalking version &amp;gt;= &lt;a href=&#34;https://github.com/apache/skywalking/releases/tag/v8.9.0&#34;&gt;8.9.0&lt;/a&gt;&lt;/strong&gt;. We recommend you download SkyWalking OAP distributions from its official download page or pull docker images.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://skywalking.apache.org/downloads/&#34;&gt;SkyWalking Download Page&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://skywalking.apache.org/docs/main/latest/en/setup/backend/backend-setup/&#34;&gt;SkyWalking Backend Setup&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://skywalking.apache.org/docs/main/latest/en/setup/backend/ui-setup/&#34;&gt;SkyWalking UI Setup&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Before starting SkyWalking backend, please edit &lt;code&gt;/config/application.yml&lt;/code&gt;, set &lt;code&gt;storage.selector: ${SW_STORAGE:iotdb}&lt;/code&gt; or set environment variable &lt;code&gt;SW_STORAGE=iotdb&lt;/code&gt;. All config options about IoTDB is following, please edit it or not according to your local environment:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#0550ae&#34;&gt;storage&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#fff&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#0550ae&#34;&gt;selector&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;${SW_STORAGE:iotdb}&lt;span style=&#34;color:#fff&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#fff&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#0550ae&#34;&gt;iotdb&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#fff&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#0550ae&#34;&gt;host&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;${SW_STORAGE_IOTDB_HOST:127.0.0.1}&lt;span style=&#34;color:#fff&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#fff&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#0550ae&#34;&gt;rpcPort&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;${SW_STORAGE_IOTDB_RPC_PORT:6667}&lt;span style=&#34;color:#fff&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#fff&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#0550ae&#34;&gt;username&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;${SW_STORAGE_IOTDB_USERNAME:root}&lt;span style=&#34;color:#fff&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#fff&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#0550ae&#34;&gt;password&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;${SW_STORAGE_IOTDB_PASSWORD:root}&lt;span style=&#34;color:#fff&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#fff&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#0550ae&#34;&gt;storageGroup&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;${SW_STORAGE_IOTDB_STORAGE_GROUP:root.skywalking}&lt;span style=&#34;color:#fff&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#fff&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#0550ae&#34;&gt;sessionPoolSize&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;${SW_STORAGE_IOTDB_SESSIONPOOL_SIZE:16}&lt;span style=&#34;color:#fff&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#fff&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#0550ae&#34;&gt;fetchTaskLogMaxSize&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;${SW_STORAGE_IOTDB_FETCH_TASK_LOG_MAX_SIZE:1000}&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#57606a&#34;&gt;# the max number of fetch task log in a request&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;visit-iotdb-server-and-query-skywalking-data&#34;&gt;Visit IoTDB Server and Query SkyWalking Data&lt;/h2&gt;
-&lt;p&gt;There are some official document about data model and IoTDB-SQL language:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://iotdb.apache.org/UserGuide/V0.12.x/Data-Concept/Data-Model-and-Terminology.html&#34;&gt;Data Model and Terminology&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://iotdb.apache.org/UserGuide/V0.12.x/IoTDB-SQL-Language/DDL-Data-Definition-Language.html&#34;&gt;DDL (Data Definition Language)&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://iotdb.apache.org/UserGuide/V0.12.x/IoTDB-SQL-Language/DML-Data-Manipulation-Language.html&#34;&gt;DML (Data Manipulation Language)&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://iotdb.apache.org/UserGuide/V0.12.x/IoTDB-SQL-Language/Maintenance-Command.html&#34;&gt;Maintenance Command&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;example-model-and-insert-sql&#34;&gt;Example Model and Insert SQL&lt;/h3&gt;
-&lt;p&gt;Before giving any example, we set time display type as long (CLI: &lt;code&gt;set time_display_type=long&lt;/code&gt;).&lt;/p&gt;
-&lt;p&gt;In our design, we choose &lt;code&gt;id&lt;/code&gt;, &lt;code&gt;entity_id&lt;/code&gt;, &lt;code&gt;node_type&lt;/code&gt;, &lt;code&gt;service_id&lt;/code&gt;, &lt;code&gt;service_group&lt;/code&gt;, &lt;code&gt;trace_id&lt;/code&gt; as indexes and fix their appearance order. The value of these indexed fields store in the path with double quotation mark wrapping, just like &lt;code&gt;&amp;quot;value&amp;quot;&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;There is a model named &lt;code&gt;service_traffic&lt;/code&gt; with fields &lt;code&gt;id&lt;/code&gt;, &lt;code&gt;time_bucket&lt;/code&gt;, &lt;code&gt;name&lt;/code&gt;, &lt;code&gt;node_type&lt;/code&gt;, &lt;code&gt;service_group&lt;/code&gt;. In order to see its data, we could use a query SQL: &lt;code&gt;select * from root.skywalking.service_traffic align by device&lt;/code&gt;. &lt;code&gt;root.skywalking&lt;/code&gt; is the default storage group and &lt;code&gt;align by device&lt;/code&gt; could return a more friendly result. The query result is following:&lt;/p&gt;
-&lt;table&gt;
-  &lt;thead&gt;
-      &lt;tr&gt;
-          &lt;th&gt;Time&lt;/th&gt;
-          &lt;th&gt;Device&lt;/th&gt;
-          &lt;th&gt;name&lt;/th&gt;
-      &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-      &lt;tr&gt;
-          &lt;td&gt;1637919540000&lt;/td&gt;
-          &lt;td&gt;root.skywalking.service_traffic.&amp;ldquo;YXBwbGljYXRpb24tZGVtbw==.1&amp;rdquo;.&amp;ldquo;0&amp;rdquo;.&amp;quot;&amp;quot;&lt;/td&gt;
-          &lt;td&gt;application-demo&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;1637919600000&lt;/td&gt;
-          &lt;td&gt;root.skywalking.service_traffic.&amp;ldquo;YXBwbGljYXRpb24tZGVtby1teXNxbA==.1&amp;rdquo;.&amp;ldquo;0&amp;rdquo;.&amp;quot;&amp;quot;&lt;/td&gt;
-          &lt;td&gt;application-demo-mysql&lt;/td&gt;
-      &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;Another example model is &lt;code&gt;service_cpm&lt;/code&gt; which has fields &lt;code&gt;id&lt;/code&gt;, &lt;code&gt;service_id&lt;/code&gt;, &lt;code&gt;total&lt;/code&gt;, &lt;code&gt;value&lt;/code&gt;. Query its data with &lt;code&gt;select * from root.skywalking.service_cpm align by device&lt;/code&gt;. The result is following:&lt;/p&gt;
-&lt;table&gt;
-  &lt;thead&gt;
-      &lt;tr&gt;
-          &lt;th&gt;Time&lt;/th&gt;
-          &lt;th&gt;Device&lt;/th&gt;
-          &lt;th&gt;total&lt;/th&gt;
-          &lt;th&gt;value&lt;/th&gt;
-      &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-      &lt;tr&gt;
-          &lt;td&gt;1637919540000&lt;/td&gt;
-          &lt;td&gt;root.skywalking.service_cpm.&amp;ldquo;202111261739_YXBwbGljYXRpb24tZGVtbw==.1&amp;rdquo;.&amp;ldquo;YXBwbGljYXRpb24tZGVtbw==.1&amp;rdquo;&lt;/td&gt;
-          &lt;td&gt;2&lt;/td&gt;
-          &lt;td&gt;2&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;1637919600000&lt;/td&gt;
-          &lt;td&gt;root.skywalking.service_cpm.&amp;ldquo;202111261740_YXBwbGljYXRpb24tZGVtby1teXNxbA==.1&amp;rdquo;.&amp;ldquo;YXBwbGljYXRpb24tZGVtby1teXNxbA==.1&amp;rdquo;&lt;/td&gt;
-          &lt;td&gt;1&lt;/td&gt;
-          &lt;td&gt;1&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;1637917200000&lt;/td&gt;
-          &lt;td&gt;root.skywalking.service_cpm.&amp;ldquo;2021112617_YXBwbGljYXRpb24tZGVtbw==.1&amp;rdquo;.&amp;ldquo;YXBwbGljYXRpb24tZGVtbw==.1&amp;rdquo;&lt;/td&gt;
-          &lt;td&gt;2&lt;/td&gt;
-          &lt;td&gt;0&lt;/td&gt;
-      &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;For the first data of &lt;code&gt;service_traffic&lt;/code&gt;, the mapping between fields and values is following. Notice, all &lt;code&gt;time_bucket&lt;/code&gt; are converted to &lt;code&gt;timestamp&lt;/code&gt;(also named &lt;code&gt;time&lt;/code&gt; in IoTDB) and the value of all indexed fields are stored in the Device path.&lt;/p&gt;
-&lt;table&gt;
-  &lt;thead&gt;
-      &lt;tr&gt;
-          &lt;th&gt;Field&lt;/th&gt;
-          &lt;th&gt;Value&lt;/th&gt;
-      &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-      &lt;tr&gt;
-          &lt;td&gt;id(indexed)&lt;/td&gt;
-          &lt;td&gt;YXBwbGljYXRpb24tZGVtbw==.1&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;time(converted from time_bucket)&lt;/td&gt;
-          &lt;td&gt;1637919540000&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;name&lt;/td&gt;
-          &lt;td&gt;application-demo&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;node_type(indexed)&lt;/td&gt;
-          &lt;td&gt;0&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;service_group(indexed)&lt;/td&gt;
-          &lt;td&gt;(empty string)&lt;/td&gt;
-      &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;You could use the SQL below to insert example data.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#cf222e&#34;&gt;create&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#cf222e&#34;&gt;storage&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#cf222e&#34;&gt;group&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;root&lt;span style=&#34;color:#1f2328&#34;&gt;.&lt;/span&gt;skywalking&lt;span style=&#34;color:#fff&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#cf222e&#34;&gt;insert&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#cf222e&#34;&gt;into&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;root&lt;span style=&#34;color:#1f2328&#34;&gt;.&lt;/span&gt;skywalking&lt;span style=&#34;color:#1f2328&#34;&gt;.&lt;/span&gt;service_traffic&lt;span style=&#34;color:#1f2328&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#0a3069&#34;&gt;&amp;#34;YXBwbGljYXRpb24tZGVtbw==.1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#0a3069&#34;&gt;&amp;#34;0&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#0a3069&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#cf222e&#34;&gt;timestamp&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;name&lt;span style=&#34;color:#1f2328&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#cf222e&#34;&gt;values&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#0550ae&#34;&gt;1637919540000&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#0a3069&#34;&gt;&amp;#34;application-demo&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#cf222e&#34;&gt;insert&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#cf222e&#34;&gt;into&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;root&lt;span style=&#34;color:#1f2328&#34;&gt;.&lt;/span&gt;skywalking&lt;span style=&#34;color:#1f2328&#34;&gt;.&lt;/span&gt;service_traffic&lt;span style=&#34;color:#1f2328&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#0a3069&#34;&gt;&amp;#34;YXBwbGljYXRpb24tZGVtby1teXNxbA==.1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#0a3069&#34;&gt;&amp;#34;0&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#0a3069&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#cf222e&#34;&gt;timestamp&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;name&lt;span style=&#34;color:#1f2328&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#cf222e&#34;&gt;values&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#0550ae&#34;&gt;1637919600000&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#0a3069&#34;&gt;&amp;#34;application-demo-mysql&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#cf222e&#34;&gt;insert&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#cf222e&#34;&gt;into&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;root&lt;span style=&#34;color:#1f2328&#34;&gt;.&lt;/span&gt;skywalking&lt;span style=&#34;color:#1f2328&#34;&gt;.&lt;/span&gt;service_cpm&lt;span style=&#34;color:#1f2328&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#0a3069&#34;&gt;&amp;#34;202111261739_YXBwbGljYXRpb24tZGVtbw==.1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#0a3069&#34;&gt;&amp;#34;YXBwbGljYXRpb24tZGVtbw==.1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#cf222e&#34;&gt;timestamp&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;total&lt;span style=&#34;color:#1f2328&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;value&lt;span style=&#34;color:#1f2328&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#cf222e&#34;&gt;values&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#0550ae&#34;&gt;1637919540000&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#0550ae&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#0550ae&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#cf222e&#34;&gt;insert&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#cf222e&#34;&gt;into&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;root&lt;span style=&#34;color:#1f2328&#34;&gt;.&lt;/span&gt;skywalking&lt;span style=&#34;color:#1f2328&#34;&gt;.&lt;/span&gt;service_cpm&lt;span style=&#34;color:#1f2328&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#0a3069&#34;&gt;&amp;#34;202111261740_YXBwbGljYXRpb24tZGVtby1teXNxbA==.1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#0a3069&#34;&gt;&amp;#34;YXBwbGljYXRpb24tZGVtby1teXNxbA==.1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#cf222e&#34;&gt;timestamp&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;total&lt;span style=&#34;color:#1f2328&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;value&lt;span style=&#34;color:#1f2328&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#cf222e&#34;&gt;values&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#0550ae&#34;&gt;1637919600000&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#0550ae&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#0550ae&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#cf222e&#34;&gt;insert&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#cf222e&#34;&gt;into&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;root&lt;span style=&#34;color:#1f2328&#34;&gt;.&lt;/span&gt;skywalking&lt;span style=&#34;color:#1f2328&#34;&gt;.&lt;/span&gt;service_cpm&lt;span style=&#34;color:#1f2328&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#0a3069&#34;&gt;&amp;#34;2021112617_YXBwbGljYXRpb24tZGVtbw==.1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#0a3069&#34;&gt;&amp;#34;YXBwbGljYXRpb24tZGVtbw==.1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#cf222e&#34;&gt;timestamp&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;total&lt;span style=&#34;color:#1f2328&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;value&lt;span style=&#34;color:#1f2328&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#cf222e&#34;&gt;values&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#0550ae&#34;&gt;1637917200000&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#0550ae&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#0550ae&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;query-sql&#34;&gt;Query SQL&lt;/h3&gt;
-&lt;p&gt;Now, let&amp;rsquo;s show some query examples.&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;
-&lt;p&gt;Filter Query&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;If you want to query &lt;code&gt;name&lt;/code&gt; field of &lt;code&gt;service_traffic&lt;/code&gt;, the query SQL is &lt;code&gt;select name from root.skywalking.service_traffic align by device&lt;/code&gt;.&lt;/li&gt;
-&lt;li&gt;If you want to query &lt;code&gt;service_traffic&lt;/code&gt; with &lt;code&gt;id = YXBwbGljYXRpb24tZGVtbw==.1&lt;/code&gt;, the query SQL is &lt;code&gt;select * from root.skywalking.service_traffic.&amp;quot;YXBwbGljYXRpb24tZGVtbw==.1&amp;quot; align by device&lt;/code&gt;.&lt;/li&gt;
-&lt;li&gt;If you want to query &lt;code&gt;service_traffic&lt;/code&gt; with &lt;code&gt;name = application-demo&lt;/code&gt;, the query SQL is &lt;code&gt;select * from root.skywalking.service_traffic where name = &amp;quot;application-demo&amp;quot; align by device&lt;/code&gt;.&lt;/li&gt;
-&lt;li&gt;Combining the above three, the query SQL is &lt;code&gt;select name from root.skywalking.service_traffic.&amp;quot;YXBwbGljYXRpb24tZGVtbw==.1&amp;quot; where name = &amp;quot;application-demo&amp;quot; align by device&lt;/code&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Fuzzy Query&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;If you want to query &lt;code&gt;service_traffic&lt;/code&gt; with &lt;code&gt;name&lt;/code&gt; contains &lt;code&gt;application&lt;/code&gt;, the query SQL is &lt;code&gt;select * from root.skywalking.service_traffic.*.*.* where name like &#39;%application%&#39; align by device&lt;/code&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Aggregate Query&lt;br&gt;
-IoTDB only supports &lt;code&gt;group by time&lt;/code&gt; and &lt;code&gt;group by level&lt;/code&gt;. The former please refer to &lt;a href=&#34;https://iotdb.apache.org/UserGuide/V0.12.x/IoTDB-SQL-Language/DML-Data-Manipulation-Language.html#down-frequency-aggregate-query&#34;&gt;Down-Frequency Aggregate Query&lt;/a&gt; and the latter please refer to &lt;a href=&#34;https://iotdb.apache.org/UserGuide/V0.12.x/IoTDB-SQL-Language/DML-Data-Manipulation-Language.html#aggregation-by-level&#34;&gt;Aggregation By Level&lt;/a&gt;. Here is an example about &lt;code&gt;group by level&lt;/code&gt;: &lt;code&gt;select sum(total) from root.skywalking.service_cpm.*.* group by level = 3&lt;/code&gt;. We couldn&amp;rsquo;t get a expected result since our design make the data of one model spread across multiple devices. So we don&amp;rsquo;t recommend using &lt;code&gt;group by level&lt;/code&gt; to query SkyWalking backend data. You could refer to the &lt;a href=&#34;https://github.com/apache/iotdb/discussions/3907&#34;&gt;Discussion #3907&lt;/a&gt; in IoTDB community for more details.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Sort Query&lt;br&gt;
-IoTDB only supports &lt;code&gt;order by time&lt;/code&gt;, but we could use its &lt;a href=&#34;https://iotdb.apache.org/UserGuide/V0.12.x/IoTDB-SQL-Language/DML-Data-Manipulation-Language.html#selector-functions&#34;&gt;select function&lt;/a&gt; which contains &lt;code&gt;top_k&lt;/code&gt; and &lt;code&gt;bottom_k&lt;/code&gt; to get top/bottom k data. For example, &lt;code&gt;select top_k(total, &amp;quot;k&amp;quot;=&amp;quot;3&amp;quot;) from root.skywalking.service_cpm.*.*&lt;/code&gt;. We don&amp;rsquo;t recommend using this to query SkyWalking backend data since its result is not friendly. You could refer to the &lt;a href=&#34;https://github.com/apache/iotdb/discussions/3888&#34;&gt;Discussion #3888&lt;/a&gt; in IoTDB community for more details.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Pagination Query&lt;br&gt;
-We could use &lt;code&gt;limit&lt;/code&gt; and &lt;code&gt;offset&lt;/code&gt; to paginate the query result. Please refer to &lt;a href=&#34;https://iotdb.apache.org/UserGuide/V0.12.x/IoTDB-SQL-Language/DML-Data-Manipulation-Language.html#row-and-column-control-over-query-results&#34;&gt;Row and Column Control over Query Results&lt;/a&gt;.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Delete&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Delete storage group:
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;delete storage group root.skywalking&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Delete timeseries:
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;delete timeseries root.skywalking.service_cpm.*.*.total&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;delete timeseries root.skywalking.service_cpm.&amp;quot;202111261739_YXBwbGljYXRpb24tZGVtbw==.1&amp;quot;.&amp;quot;YXBwbGljYXRpb24tZGVtbw==.1&amp;quot;.total&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Delete data:
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;delete from root.skywalking.service_traffic&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;delete from root.skywalking.service_traffic where time &amp;lt; 1637919540000&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-
-      </description>
+      <guid>https://skywalking.apache.org/blog/2021-12-08-application-guide-of-iotdb-storage-option/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">[Wei Liu](https://github.com/LIU-WEI-git), School of Computer Science, NPU, China</dc:creator>
+      <category>Storage</category>
+      <description>This guide will tell you how to use SkyWalking Showcase to run demo applications or start manually step by step. In addition, it introduces some methods about visiting IoTDB server and gives some query SQLs as example.</description>
     </item>
-    
     <item>
-      <title>Blog: The Design of Apache IoTDB Storage Option</title>
-      <link>/blog/2021-11-23-design-of-iotdb-storage-option/</link>
+      <title>The Design of Apache IoTDB Storage Option</title>
+      <link>https://skywalking.apache.org/blog/2021-11-23-design-of-iotdb-storage-option/</link>
       <pubDate>Tue, 23 Nov 2021 00:00:00 +0000</pubDate>
-      <guid>/blog/2021-11-23-design-of-iotdb-storage-option/</guid>
-      <description>
-        
-        
-        &lt;p&gt;This plugin is one of the outcomes of &lt;a href=&#34;https://summer.iscas.ac.cn/#/org/prodetail/210070771&#34;&gt;Apache IoTDB - Apache SkyWalking Adapter&lt;/a&gt; in &lt;a href=&#34;https://summer.iscas.ac.cn/#/homepage&#34;&gt;Summer 2021 of Open Source Promotion Plan&lt;/a&gt;. The design and development work is under the guidance of &lt;a href=&#34;https://github.com/jixuan1989&#34;&gt;@jixuan1989&lt;/a&gt; from IoTDB and &lt;a href=&#34;https://github.com/wu-sheng&#34;&gt;@wu-sheng&lt;/a&gt; from SkyWalking. Thanks for their guidance and the help from community.&lt;/p&gt;
-&lt;h2 id=&#34;iotdb-storage-plugin-setup&#34;&gt;IoTDB Storage Plugin Setup&lt;/h2&gt;
-&lt;p&gt;IoTDB is a time-series database from Apache, which is one of the storage plugin options. If you want to use iotdb as SkyWalking backend storage, please refer to the following configuration.&lt;br&gt;
-IoTDB storage plugin is still in progress. Its efficiency will improve in the future.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#0550ae&#34;&gt;storage&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#fff&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#0550ae&#34;&gt;selector&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;${SW_STORAGE:iotdb}&lt;span style=&#34;color:#fff&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#fff&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#0550ae&#34;&gt;iotdb&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#fff&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#0550ae&#34;&gt;host&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;${SW_STORAGE_IOTDB_HOST:127.0.0.1}&lt;span style=&#34;color:#fff&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#fff&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#0550ae&#34;&gt;rpcPort&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;${SW_STORAGE_IOTDB_RPC_PORT:6667}&lt;span style=&#34;color:#fff&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#fff&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#0550ae&#34;&gt;username&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;${SW_STORAGE_IOTDB_USERNAME:root}&lt;span style=&#34;color:#fff&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#fff&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#0550ae&#34;&gt;password&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;${SW_STORAGE_IOTDB_PASSWORD:root}&lt;span style=&#34;color:#fff&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#fff&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#0550ae&#34;&gt;storageGroup&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;${SW_STORAGE_IOTDB_STORAGE_GROUP:root.skywalking}&lt;span style=&#34;color:#fff&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#fff&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#0550ae&#34;&gt;sessionPoolSize&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;${SW_STORAGE_IOTDB_SESSIONPOOL_SIZE:16}&lt;span style=&#34;color:#fff&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#fff&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#0550ae&#34;&gt;fetchTaskLogMaxSize&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;${SW_STORAGE_IOTDB_FETCH_TASK_LOG_MAX_SIZE:1000}&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#57606a&#34;&gt;# the max number of fetch task log in a request&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;All connection related settings, including host, rpcPort, username, and password are found in &lt;code&gt;application.yml&lt;/code&gt;. Please ensure the IoTDB version &amp;gt;= 0.12.3.&lt;/p&gt;
-&lt;h2 id=&#34;iotdb-introduction&#34;&gt;IoTDB Introduction&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&#34;https://iotdb.apache.org/&#34;&gt;Apache IoTDB&lt;/a&gt; (Database for Internet of Things) is an IoT native database with high performance for data management and analysis, deployable on the edge and the cloud. It is a time-series database donated by Tsinghua University to Apache Foundation.&lt;/p&gt;
-&lt;h3 id=&#34;the-data-model-of-iotdb&#34;&gt;The Data Model of IoTDB&lt;/h3&gt;
-&lt;p&gt;We can use the tree structure to understand the data model of iotdb. If divided according to layers, from high to low is: &lt;code&gt;Storage Group&lt;/code&gt; &amp;ndash; (&lt;code&gt;LayerName&lt;/code&gt;) &amp;ndash; &lt;code&gt;Device&lt;/code&gt; &amp;ndash; &lt;code&gt;Measurement&lt;/code&gt;. From the top layer to a certain layer below it is called a Path. The top layer is &lt;code&gt;Storage Group&lt;/code&gt; (must start with &lt;code&gt;root&lt;/code&gt;), the penultimate layer is &lt;code&gt;Device&lt;/code&gt;, and the bottom layer is &lt;code&gt;Measurement&lt;/code&gt;. There can be many layers in the middle, and each layer is called a &lt;code&gt;LayerName&lt;/code&gt;. For more information, please refer to the &lt;a href=&#34;https://iotdb.apache.org/UserGuide/V0.12.x/Data-Concept/Data-Model-and-Terminology.html&#34;&gt;Data Model and Terminology&lt;/a&gt; in the official document of the version 0.12.x.&lt;/p&gt;
-&lt;h2 id=&#34;the-design-of-iotdb-storage-plugin&#34;&gt;The Design of IoTDB Storage Plugin&lt;/h2&gt;
-&lt;h3 id=&#34;the-data-model-of-skywalking&#34;&gt;The Data Model of SkyWalking&lt;/h3&gt;
-&lt;p&gt;Each storage model of SkyWalking can be considered as a Model, which contains multiple Columns. Each Column has ColumnName and ColumnType attributes, representing the name and type of Column respectively. Each Column named ColumnName stores multiple Value of the ColumnType. From a relational database perspective, Model is a relational table and Column is the field in a relational table.&lt;/p&gt;
-&lt;h3 id=&#34;schema-design&#34;&gt;Schema Design&lt;/h3&gt;
-&lt;p&gt;Since each &lt;code&gt;LayerName&lt;/code&gt; of IoTDB is stored in memory, it can be considered as an index, and this feature can be fully utilized to improve IoTDB query performance. The default storage group is &lt;code&gt;root.skywalking&lt;/code&gt;, it will occupy the first and the second layer of the path. The model name is stored at the next layer of the storage group (the third layer of the path), such as &lt;code&gt;root.skywalking.model_name&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;SkyWalking has its own index requirement, but it isn&amp;rsquo;t applicable to IoTDB. Considering query frequency and referring to the implementation of the other storage options, we choose &lt;code&gt;id&lt;/code&gt;, &lt;code&gt;entity_id&lt;/code&gt;, &lt;code&gt;node_type&lt;/code&gt;, &lt;code&gt;service_id&lt;/code&gt;, &lt;code&gt;service_group&lt;/code&gt;, &lt;code&gt;trace_id&lt;/code&gt; as indexes and fix their appearance order in the path. The value of these indexed columns will occupy the last few layers of the path. If we don&amp;rsquo;t fix their order, we cannot map their value to column, since we only store their value in the path but don&amp;rsquo;t store their column name. The other columns are treated as Measurements.&lt;/p&gt;
-&lt;p&gt;The mapping from SkyWalking data model to IoTDB data model is below.&lt;/p&gt;
-&lt;table&gt;
-  &lt;thead&gt;
-      &lt;tr&gt;
-          &lt;th&gt;SkyWalking&lt;/th&gt;
-          &lt;th&gt;IoTDB&lt;/th&gt;
-      &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-      &lt;tr&gt;
-          &lt;td&gt;Database&lt;/td&gt;
-          &lt;td&gt;Storage Group (1st and 2nd layer of the path)&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;Model&lt;/td&gt;
-          &lt;td&gt;LayerName (3rd layer of the path)&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;Indexed Column&lt;/td&gt;
-          &lt;td&gt;stored in memory through hard-code&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;Indexed Column Value&lt;/td&gt;
-          &lt;td&gt;LayerName (after 3rd layer of the path)&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;Non-indexed Column&lt;/td&gt;
-          &lt;td&gt;Measurement&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;Non-indexed Value&lt;/td&gt;
-          &lt;td&gt;the value of Measurement&lt;/td&gt;
-      &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;h4 id=&#34;for-general-example&#34;&gt;For general example&lt;/h4&gt;
-&lt;p&gt;There are model1(&lt;u&gt;column11&lt;/u&gt;, column12), model2(&lt;u&gt;column21&lt;/u&gt;, &lt;u&gt;column22&lt;/u&gt;, column23), model3(column31). Underline indicates that the column requires to be indexed. In this example, &lt;code&gt;modelx_name&lt;/code&gt; refers to the name of modelx, &lt;code&gt;columnx_name&lt;/code&gt; refers to the name of columnx and &lt;code&gt;columnx_value&lt;/code&gt; refers to the value of columnx.&lt;/p&gt;
-&lt;p&gt;Before these 3 model storage schema, here are some points we need to know.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;In order to avoid the value of indexed column contains dot(&lt;code&gt;.&lt;/code&gt;), all of them should be wrapped in double quotation mark since IoTDB use dot(&lt;code&gt;.&lt;/code&gt;) as the separator in the path.&lt;/li&gt;
-&lt;li&gt;We use &lt;code&gt;align by device&lt;/code&gt; in query SQL to get a more friendly result. For more information about &lt;code&gt;align by device&lt;/code&gt;, please see &lt;a href=&#34;https://iotdb.apache.org/UserGuide/V0.12.x/IoTDB-SQL-Language/DML-Data-Manipulation-Language.html&#34;&gt;DML (Data Manipulation Language)&lt;/a&gt; and &lt;a href=&#34;https://iotdb.apache.org/SystemDesign/DataQuery/AlignByDeviceQuery.html&#34;&gt;Query by device alignment&lt;/a&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;The path of them is following:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;The Model with index:
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;root.skywalking.model1_name.column11_value.column12_name&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;root.skywalking.model2_name.column21_value.column22_value.column23_name&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;The Model without index:
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;root.skywalking.model3_name.column31_Name&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Use &lt;code&gt;select * from root.skywalking.modelx_name align by device&lt;/code&gt; respectively to get their schema and data. The SQL result is following:&lt;/p&gt;
-&lt;table&gt;
-  &lt;thead&gt;
-      &lt;tr&gt;
-          &lt;th&gt;Time&lt;/th&gt;
-          &lt;th&gt;Device&lt;/th&gt;
-          &lt;th&gt;column12_name&lt;/th&gt;
-      &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-      &lt;tr&gt;
-          &lt;td&gt;1637494020000&lt;/td&gt;
-          &lt;td&gt;root.skywalking.model1_name.&amp;ldquo;column11_value&amp;rdquo;&lt;/td&gt;
-          &lt;td&gt;column12_value&lt;/td&gt;
-      &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;table&gt;
-  &lt;thead&gt;
-      &lt;tr&gt;
-          &lt;th&gt;Time&lt;/th&gt;
-          &lt;th&gt;Device&lt;/th&gt;
-          &lt;th&gt;column23_name&lt;/th&gt;
-      &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-      &lt;tr&gt;
-          &lt;td&gt;1637494020000&lt;/td&gt;
-          &lt;td&gt;root.skywalking.model2_name.&amp;ldquo;column21_value&amp;rdquo;.&amp;ldquo;column22_value&amp;rdquo;&lt;/td&gt;
-          &lt;td&gt;column23_value&lt;/td&gt;
-      &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;table&gt;
-  &lt;thead&gt;
-      &lt;tr&gt;
-          &lt;th&gt;Time&lt;/th&gt;
-          &lt;th&gt;Device&lt;/th&gt;
-          &lt;th&gt;column31_name&lt;/th&gt;
-      &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-      &lt;tr&gt;
-          &lt;td&gt;1637494020000&lt;/td&gt;
-          &lt;td&gt;root.skywalking.model3_name&lt;/td&gt;
-          &lt;td&gt;column31_value&lt;/td&gt;
-      &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;h4 id=&#34;for-specific-example&#34;&gt;For specific example&lt;/h4&gt;
-&lt;p&gt;Before 5 typical examples, here are some points we need to know.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;The indexed columns and their order: &lt;code&gt;id&lt;/code&gt;, &lt;code&gt;entity_id&lt;/code&gt;, &lt;code&gt;node_type&lt;/code&gt;, &lt;code&gt;service_id&lt;/code&gt;, &lt;code&gt;service_group&lt;/code&gt;, &lt;code&gt;trace_id&lt;/code&gt;. Other columns are treated as non indexed and stored as Measurement.&lt;/li&gt;
-&lt;li&gt;The storage entity extends Metrics or Record contains a column &lt;code&gt;time_bucket&lt;/code&gt;. The &lt;code&gt;time_bucket&lt;/code&gt; column in SkyWalking Model can be converted to the &lt;code&gt;timestamp&lt;/code&gt; of IoTDB when inserting data. We don&amp;rsquo;t need to store &lt;code&gt;time_bucket&lt;/code&gt; separately. In the next examples, we won&amp;rsquo;t list &lt;code&gt;time_bucket&lt;/code&gt; anymore.&lt;/li&gt;
-&lt;li&gt;The &lt;code&gt;Time&lt;/code&gt; in query result corresponds to the &lt;code&gt;timestamp&lt;/code&gt; in insert SQL and API.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;ol&gt;
-&lt;li&gt;Metadata: service_traffic&lt;br&gt;
-service_traffic entity has 4 columns: &lt;u&gt;id&lt;/u&gt;, name, &lt;u&gt;node_type&lt;/u&gt;, &lt;u&gt;service_group&lt;/u&gt;.
-When service_traffic entity includes a row with timestamp 1637494020000, the row should be as following:
-(&lt;strong&gt;Notice&lt;/strong&gt;: the value of service_group is null.)&lt;/li&gt;
-&lt;/ol&gt;
-&lt;table&gt;
-  &lt;thead&gt;
-      &lt;tr&gt;
-          &lt;th&gt;id&lt;/th&gt;
-          &lt;th&gt;name&lt;/th&gt;
-          &lt;th&gt;node_type&lt;/th&gt;
-          &lt;th&gt;service_group&lt;/th&gt;
-      &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-      &lt;tr&gt;
-          &lt;td&gt;ZTJlLXNlcnZpY2UtcHJvdmlkZXI=.1&lt;/td&gt;
-          &lt;td&gt;e2e-service-provider&lt;/td&gt;
-          &lt;td&gt;0&lt;/td&gt;
-          &lt;td&gt;&lt;/td&gt;
-      &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;And the row stored in IoTDB should be as following:
-(Query SQL: &lt;code&gt;select  from root.skywalking.service_traffic align by device&lt;/code&gt;)&lt;/p&gt;
-&lt;table&gt;
-  &lt;thead&gt;
-      &lt;tr&gt;
-          &lt;th&gt;Time&lt;/th&gt;
-          &lt;th&gt;Device&lt;/th&gt;
-          &lt;th&gt;name&lt;/th&gt;
-      &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-      &lt;tr&gt;
-          &lt;td&gt;1637494020000&lt;/td&gt;
-          &lt;td&gt;root.skywalking.service_traffic.&amp;ldquo;ZTJlLXNlcnZpY2UtcHJvdmlkZXI=.1&amp;rdquo;.&amp;ldquo;0&amp;rdquo;.&amp;ldquo;null&amp;rdquo;&lt;/td&gt;
-          &lt;td&gt;e2e-service-provider&lt;/td&gt;
-      &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;The value of id, node_type and service_group are stored in the path in the specified order.
-&lt;strong&gt;Notice&lt;/strong&gt;: If those index value is null, it will be transformed to a string &amp;ldquo;null&amp;rdquo;.&lt;/p&gt;
-&lt;ol start=&#34;2&#34;&gt;
-&lt;li&gt;Metrics: service_cpm&lt;br&gt;
-service_cpm entity has 4 columns: &lt;u&gt;id&lt;/u&gt;, &lt;u&gt;service_id&lt;/u&gt;, total, value.&lt;br&gt;
-When service_cpm entity includes a row with timestamp 1637494020000, the row should be as following:&lt;/li&gt;
-&lt;/ol&gt;
-&lt;table&gt;
-  &lt;thead&gt;
-      &lt;tr&gt;
-          &lt;th&gt;id&lt;/th&gt;
-          &lt;th&gt;service_id&lt;/th&gt;
-          &lt;th&gt;total&lt;/th&gt;
-          &lt;th&gt;value&lt;/th&gt;
-      &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-      &lt;tr&gt;
-          &lt;td&gt;202111211127_ZTJlLXNlcnZpY2UtY29uc3VtZXI=.1&lt;/td&gt;
-          &lt;td&gt;ZTJlLXNlcnZpY2UtY29uc3VtZXI=.1&lt;/td&gt;
-          &lt;td&gt;4&lt;/td&gt;
-          &lt;td&gt;4&lt;/td&gt;
-      &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;And the row stored in IoTDB should be as following:
-(Query SQL: &lt;code&gt;select from root.skywalking.service_cpm align by device&lt;/code&gt;)&lt;/p&gt;
-&lt;table&gt;
-  &lt;thead&gt;
-      &lt;tr&gt;
-          &lt;th&gt;Time&lt;/th&gt;
-          &lt;th&gt;Device&lt;/th&gt;
-          &lt;th&gt;total&lt;/th&gt;
-          &lt;th&gt;value&lt;/th&gt;
-      &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-      &lt;tr&gt;
-          &lt;td&gt;1637494020000&lt;/td&gt;
-          &lt;td&gt;root.skywalking.service_cpm.&amp;ldquo;202111211127_ZTJlLXNlcnZpY2UtY29uc3VtZXI=.1&amp;rdquo;.&amp;ldquo;ZTJlLXNlcnZpY2UtY29uc3VtZXI=.1&amp;rdquo;&lt;/td&gt;
-          &lt;td&gt;4&lt;/td&gt;
-          &lt;td&gt;4&lt;/td&gt;
-      &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;The value of id and service_id are stored in the path in the specified order.&lt;/p&gt;
-&lt;ol start=&#34;3&#34;&gt;
-&lt;li&gt;Trace segment: segment&lt;br&gt;
-segment entity has 10 columns at least: &lt;u&gt;id&lt;/u&gt;, segment_id, &lt;u&gt;trace_id&lt;/u&gt;, &lt;u&gt;service_id&lt;/u&gt;, service_instance_id, endpoint_id, start_time, latency, is_error, data_binary. In addition, it could have variable number of tags.&lt;br&gt;
-When segment entity includes 2 rows with timestamp 1637494106000 and 1637494134000, these rows should be as following. The &lt;code&gt;db.type&lt;/code&gt; and &lt;code&gt;db.instance&lt;/code&gt; are two tags. The first data has two tags, and the second data doesn&amp;rsquo;t have tag.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;table&gt;
-  &lt;thead&gt;
-      &lt;tr&gt;
-          &lt;th&gt;id&lt;/th&gt;
-          &lt;th&gt;segment_id&lt;/th&gt;
-          &lt;th&gt;trace_id&lt;/th&gt;
-          &lt;th&gt;service_id&lt;/th&gt;
-          &lt;th&gt;service_instance_id&lt;/th&gt;
-          &lt;th&gt;endpoint_id&lt;/th&gt;
-          &lt;th&gt;start_time&lt;/th&gt;
-          &lt;th&gt;latency&lt;/th&gt;
-          &lt;th&gt;is_error&lt;/th&gt;
-          &lt;th&gt;data_binary&lt;/th&gt;
-          &lt;th&gt;db.type&lt;/th&gt;
-          &lt;th&gt;db.instance&lt;/th&gt;
-      &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-      &lt;tr&gt;
-          &lt;td&gt;id_1&lt;/td&gt;
-          &lt;td&gt;segment_id_1&lt;/td&gt;
-          &lt;td&gt;trace_id_1&lt;/td&gt;
-          &lt;td&gt;service_id_1&lt;/td&gt;
-          &lt;td&gt;service_instance_id_1&lt;/td&gt;
-          &lt;td&gt;endpoint_id_1&lt;/td&gt;
-          &lt;td&gt;1637494106515&lt;/td&gt;
-          &lt;td&gt;1425&lt;/td&gt;
-          &lt;td&gt;0&lt;/td&gt;
-          &lt;td&gt;data_binary_1&lt;/td&gt;
-          &lt;td&gt;sql&lt;/td&gt;
-          &lt;td&gt;testdb&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;id_2&lt;/td&gt;
-          &lt;td&gt;segment_id_2&lt;/td&gt;
-          &lt;td&gt;trace_id_2&lt;/td&gt;
-          &lt;td&gt;service_id_2&lt;/td&gt;
-          &lt;td&gt;service_instance_id_2&lt;/td&gt;
-          &lt;td&gt;endpoint_id_2&lt;/td&gt;
-          &lt;td&gt;2637494106765&lt;/td&gt;
-          &lt;td&gt;1254&lt;/td&gt;
-          &lt;td&gt;0&lt;/td&gt;
-          &lt;td&gt;data_binary_2&lt;/td&gt;
-          &lt;td&gt;&lt;/td&gt;
-          &lt;td&gt;&lt;/td&gt;
-      &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;And these row stored in IoTDB should be as following:
-(Query SQL: &lt;code&gt;select from root.skywalking.segment align by device&lt;/code&gt;)&lt;/p&gt;
-&lt;table&gt;
-  &lt;thead&gt;
-      &lt;tr&gt;
-          &lt;th&gt;Time&lt;/th&gt;
-          &lt;th&gt;Device&lt;/th&gt;
-          &lt;th&gt;start_time&lt;/th&gt;
-          &lt;th&gt;data_binary&lt;/th&gt;
-          &lt;th&gt;latency&lt;/th&gt;
-          &lt;th&gt;endpoint_id&lt;/th&gt;
-          &lt;th&gt;is_error&lt;/th&gt;
-          &lt;th&gt;service_instance_id&lt;/th&gt;
-          &lt;th&gt;segment_id&lt;/th&gt;
-          &lt;th&gt;&amp;ldquo;db.type&amp;rdquo;&lt;/th&gt;
-          &lt;th&gt;&amp;ldquo;db.instance&amp;rdquo;&lt;/th&gt;
-      &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-      &lt;tr&gt;
-          &lt;td&gt;1637494106000&lt;/td&gt;
-          &lt;td&gt;root.skywalking.segment.&amp;ldquo;id_1&amp;rdquo;.&amp;ldquo;service_id_1&amp;rdquo;.&amp;ldquo;trace_id_1&amp;rdquo;&lt;/td&gt;
-          &lt;td&gt;1637494106515&lt;/td&gt;
-          &lt;td&gt;data_binary_1&lt;/td&gt;
-          &lt;td&gt;1425&lt;/td&gt;
-          &lt;td&gt;endpoint_id_1&lt;/td&gt;
-          &lt;td&gt;0&lt;/td&gt;
-          &lt;td&gt;service_instance_id_1&lt;/td&gt;
-          &lt;td&gt;segment_id_1&lt;/td&gt;
-          &lt;td&gt;sql&lt;/td&gt;
-          &lt;td&gt;testdb&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;1637494106000&lt;/td&gt;
-          &lt;td&gt;root.skywalking.segment.&amp;ldquo;id_2&amp;rdquo;.&amp;ldquo;service_id_2&amp;rdquo;.&amp;ldquo;trace_id_2&amp;rdquo;&lt;/td&gt;
-          &lt;td&gt;1637494106765&lt;/td&gt;
-          &lt;td&gt;data_binary_2&lt;/td&gt;
-          &lt;td&gt;1254&lt;/td&gt;
-          &lt;td&gt;endpoint_id_2&lt;/td&gt;
-          &lt;td&gt;0&lt;/td&gt;
-          &lt;td&gt;service_instance_id_2&lt;/td&gt;
-          &lt;td&gt;segment_id_2&lt;/td&gt;
-          &lt;td&gt;null&lt;/td&gt;
-          &lt;td&gt;null&lt;/td&gt;
-      &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;The value of id, service_id and trace_id are stored in the path in the specified order.
-&lt;strong&gt;Notice&lt;/strong&gt;: If the measurement contains dot(&lt;code&gt;.&lt;/code&gt;), it will be wrapped in double quotation mark since IoTDB doesn&amp;rsquo;t allow it. In order to align, IoTDB will append null value for those data without tag in some models.&lt;/p&gt;
-&lt;ol start=&#34;4&#34;&gt;
-&lt;li&gt;Log&lt;br&gt;
-log entity has 12 columns at least: &lt;u&gt;id&lt;/u&gt;, unique_id, &lt;u&gt;service_id&lt;/u&gt;, service_instance_id, endpoint_id, &lt;u&gt;trace_id&lt;/u&gt;, trace_segment_id, span_id, content_type, content, tags_raw_data, timestamp. In addition, it could have variable number of tags.
-When log entity includes a row with timestamp 1637494052000, the row should be as following and the level is a tag.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;table&gt;
-  &lt;thead&gt;
-      &lt;tr&gt;
-          &lt;th&gt;id&lt;/th&gt;
-          &lt;th&gt;unique_id&lt;/th&gt;
-          &lt;th&gt;service_id&lt;/th&gt;
-          &lt;th&gt;service_instance_id&lt;/th&gt;
-          &lt;th&gt;endpoint_id&lt;/th&gt;
-          &lt;th&gt;trace_id&lt;/th&gt;
-          &lt;th&gt;trace_segment_id&lt;/th&gt;
-          &lt;th&gt;span_id&lt;/th&gt;
-          &lt;th&gt;content_type&lt;/th&gt;
-          &lt;th&gt;content&lt;/th&gt;
-          &lt;th&gt;tags_raw_data&lt;/th&gt;
-          &lt;th&gt;timestamp&lt;/th&gt;
-          &lt;th&gt;level&lt;/th&gt;
-      &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-      &lt;tr&gt;
-          &lt;td&gt;id_1&lt;/td&gt;
-          &lt;td&gt;unique_id_1&lt;/td&gt;
-          &lt;td&gt;service_id_1&lt;/td&gt;
-          &lt;td&gt;service_instance_id_1&lt;/td&gt;
-          &lt;td&gt;endpoint_id_1&lt;/td&gt;
-          &lt;td&gt;trace_id_1&lt;/td&gt;
-          &lt;td&gt;trace_segment_id_1&lt;/td&gt;
-          &lt;td&gt;0&lt;/td&gt;
-          &lt;td&gt;1&lt;/td&gt;
-          &lt;td&gt;content_1&lt;/td&gt;
-          &lt;td&gt;tags_raw_data_1&lt;/td&gt;
-          &lt;td&gt;1637494052118&lt;/td&gt;
-          &lt;td&gt;INFO&lt;/td&gt;
-      &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;And the row stored in IoTDB should be as following:
-(Query SQL: &lt;code&gt;select from root.skywalking.log align by device&lt;/code&gt;)&lt;/p&gt;
-&lt;table&gt;
-  &lt;thead&gt;
-      &lt;tr&gt;
-          &lt;th&gt;Time&lt;/th&gt;
-          &lt;th&gt;Device&lt;/th&gt;
-          &lt;th&gt;unique_id&lt;/th&gt;
-          &lt;th&gt;content_type&lt;/th&gt;
-          &lt;th&gt;span_id&lt;/th&gt;
-          &lt;th&gt;tags_raw_data&lt;/th&gt;
-          &lt;th&gt;&amp;ldquo;timestamp&amp;rdquo;&lt;/th&gt;
-          &lt;th&gt;level&lt;/th&gt;
-          &lt;th&gt;service_instance_id&lt;/th&gt;
-          &lt;th&gt;content&lt;/th&gt;
-          &lt;th&gt;trace_segment_id&lt;/th&gt;
-      &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-      &lt;tr&gt;
-          &lt;td&gt;1637494052000&lt;/td&gt;
-          &lt;td&gt;root.skywalking.&amp;ldquo;id_1&amp;rdquo;.&amp;ldquo;service_id_1&amp;rdquo;.&amp;ldquo;trace_id_1&amp;rdquo;&lt;/td&gt;
-          &lt;td&gt;unique_id_1&lt;/td&gt;
-          &lt;td&gt;1&lt;/td&gt;
-          &lt;td&gt;0&lt;/td&gt;
-          &lt;td&gt;tags_raw_data_1&lt;/td&gt;
-          &lt;td&gt;1637494052118&lt;/td&gt;
-          &lt;td&gt;INFO&lt;/td&gt;
-          &lt;td&gt;service_instance_id_1&lt;/td&gt;
-          &lt;td&gt;content_1&lt;/td&gt;
-          &lt;td&gt;trace_segment_id_1&lt;/td&gt;
-      &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;The value of id, service_id and trace_id are stored in the path in the specified order.
-&lt;strong&gt;Notice&lt;/strong&gt;: If the measurement named timestamp, it will be wrapped in double quotation mark since IoTDB doesn&amp;rsquo;t allow it.&lt;/p&gt;
-&lt;ol start=&#34;5&#34;&gt;
-&lt;li&gt;Profiling snapshots: profile_task_segment_snapshot&lt;br&gt;
-profile_task_segment_snapshot entity has 6 columns: &lt;u&gt;id&lt;/u&gt;, task_id, segment_id, dump_time, sequence, stack_binary.
-When profile_task_segment_snapshot includes a row with timestamp 1637494131000, the row should be as following.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;table&gt;
-  &lt;thead&gt;
-      &lt;tr&gt;
-          &lt;th&gt;id&lt;/th&gt;
-          &lt;th&gt;task_id&lt;/th&gt;
-          &lt;th&gt;segment_id&lt;/th&gt;
-          &lt;th&gt;dump_time&lt;/th&gt;
-          &lt;th&gt;sequence&lt;/th&gt;
-          &lt;th&gt;stack_binary&lt;/th&gt;
-      &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-      &lt;tr&gt;
-          &lt;td&gt;id_1&lt;/td&gt;
-          &lt;td&gt;task_id_1&lt;/td&gt;
-          &lt;td&gt;segment_id_1&lt;/td&gt;
-          &lt;td&gt;1637494131153&lt;/td&gt;
-          &lt;td&gt;0&lt;/td&gt;
-          &lt;td&gt;stack_binary_1&lt;/td&gt;
-      &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;And the row stored in IoTDB should be as following:
-(Query SQL: &lt;code&gt;select from root.skywalking.profile_task_segment_snapshot align by device&lt;/code&gt;)&lt;/p&gt;
-&lt;table&gt;
-  &lt;thead&gt;
-      &lt;tr&gt;
-          &lt;th&gt;Time&lt;/th&gt;
-          &lt;th&gt;Device&lt;/th&gt;
-          &lt;th&gt;sequence&lt;/th&gt;
-          &lt;th&gt;dump_time&lt;/th&gt;
-          &lt;th&gt;stack_binary&lt;/th&gt;
-          &lt;th&gt;task_id&lt;/th&gt;
-          &lt;th&gt;segment_id&lt;/th&gt;
-      &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-      &lt;tr&gt;
-          &lt;td&gt;1637494131000&lt;/td&gt;
-          &lt;td&gt;root.skywalking.profile_task_segment_snapshot.&amp;ldquo;id_1&amp;rdquo;&lt;/td&gt;
-          &lt;td&gt;0&lt;/td&gt;
-          &lt;td&gt;1637494131153&lt;/td&gt;
-          &lt;td&gt;stack_binary_1&lt;/td&gt;
-          &lt;td&gt;task_id_1&lt;/td&gt;
-          &lt;td&gt;segment_id_1&lt;/td&gt;
-      &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;The value of id is stored in the path in the specified order.&lt;/p&gt;
-&lt;h3 id=&#34;query&#34;&gt;Query&lt;/h3&gt;
-&lt;p&gt;In this design, part of the data is stored in memory through &lt;code&gt;LayerName&lt;/code&gt;, so data from the same Model is spread across multiple &lt;code&gt;devices&lt;/code&gt;. Queries often need to cross multiple &lt;code&gt;devices&lt;/code&gt;. But in this aspect, IoTDB&amp;rsquo;s support is not perfect in cross-device aggregation query, sort query and pagination query. In some cases, we have to use a &lt;strong&gt;violence method&lt;/strong&gt; that query all data meets the condition and then aggregate, sort or paginate them. So it might not be efficient. For detailed descriptions, please refer to the Discussion submitted in IoTDB community below.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Discussion:
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/apache/iotdb/discussions/3888&#34;&gt;一个有关排序查询的问题（A problem about sort query）#3888&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/apache/iotdb/discussions/3907&#34;&gt;一个有关聚合查询的问题（A problem about aggregation query）#3907&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Query SQL for the general example above:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#57606a&#34;&gt;-- query all data in model1
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#cf222e&#34;&gt;select&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#0550ae&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#cf222e&#34;&gt;from&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;root&lt;span style=&#34;color:#1f2328&#34;&gt;.&lt;/span&gt;skywalking&lt;span style=&#34;color:#1f2328&#34;&gt;.&lt;/span&gt;model1_name&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;align&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#cf222e&#34;&gt;by&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;device&lt;span style=&#34;color:#1f2328&#34;&gt;;&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#57606a&#34;&gt;-- query the data in model2 with column22_value=&amp;#34;test&amp;#34;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#cf222e&#34;&gt;select&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#0550ae&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#cf222e&#34;&gt;from&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;root&lt;span style=&#34;color:#1f2328&#34;&gt;.&lt;/span&gt;skywalking&lt;span style=&#34;color:#1f2328&#34;&gt;.&lt;/span&gt;model2_name&lt;span style=&#34;color:#1f2328&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#0550ae&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#0a3069&#34;&gt;&amp;#34;test&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;align&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#cf222e&#34;&gt;by&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;device&lt;span style=&#34;color:#1f2328&#34;&gt;;&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#57606a&#34;&gt;-- query the sum of column23 in model2 and group by column21
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#cf222e&#34;&gt;select&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#cf222e&#34;&gt;sum&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;(&lt;/span&gt;column23&lt;span style=&#34;color:#1f2328&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#cf222e&#34;&gt;from&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;root&lt;span style=&#34;color:#1f2328&#34;&gt;.&lt;/span&gt;skywalking&lt;span style=&#34;color:#1f2328&#34;&gt;.&lt;/span&gt;model2_name&lt;span style=&#34;color:#1f2328&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#0550ae&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#0550ae&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#cf222e&#34;&gt;group&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#cf222e&#34;&gt;by&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#cf222e&#34;&gt;level&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#0550ae&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#0550ae&#34;&gt;3&lt;/span&gt;&lt;span style=&#34;color:#1f2328&#34;&gt;;&lt;/span&gt;&lt;span style=&#34;color:#fff&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;iotdb-cli is a useful tools to connect and visit IoTDB server. More information please refer &lt;a href=&#34;https://iotdb.apache.org/UserGuide/V0.12.x/CLI/Command-Line-Interface.html&#34;&gt;Command Line Interface(CLI)&lt;/a&gt;&lt;/p&gt;
-
-      </description>
+      <guid>https://skywalking.apache.org/blog/2021-11-23-design-of-iotdb-storage-option/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">[Wei Liu](https://github.com/LIU-WEI-git), School of Computer Science, NPU, China</dc:creator>
+      <category>Storage</category>
+      <description>This is an introduction to IoTDB Storage Option. It introduces some basic concept about IoTDB and the storage schema design.</description>
     </item>
-    
   </channel>
 </rss>

@@ -1,0 +1,165 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Apache SkyWalking – Release</title>
+    <link>https://skywalking.apache.org/tags/release/</link>
+    <description>Recent release posts from Apache SkyWalking</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <lastBuildDate>Mon, 06 Jul 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://skywalking.apache.org/tags/release/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Meet Horizon UI · The AI Assistant: Ask Your Observability Data in Plain Language</title>
+      <link>https://skywalking.apache.org/blog/2026-07-06-horizon-ui-ai-assistant/</link>
+      <pubDate>Mon, 06 Jul 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2026-07-06-horizon-ui-ai-assistant/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sheng Wu</dc:creator>
+      <category>Release</category>
+      <category>AI</category>
+      <category>Cloud Native</category>
+      <description>Horizon UI&#39;s new AI Assistant answers questions about your live system with the same charts, topology and tables as the UI — read-only, permission-scoped, and running on a cost-efficient model you bring yourself.</description>
+    </item>
+    <item>
+      <title>认识 Horizon UI · AI Assistant：用日常语言查询你的可观测性数据</title>
+      <link>https://skywalking.apache.org/zh/2026-07-06-horizon-ui-ai-assistant/</link>
+      <pubDate>Mon, 06 Jul 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/zh/2026-07-06-horizon-ui-ai-assistant/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">吴晟</dc:creator>
+      <category>Release</category>
+      <category>AI</category>
+      <category>Cloud Native</category>
+      <description>Horizon UI 新增的 AI Assistant 可以用和 UI 相同的图表、拓扑和表格回答关于 live system 的问题；它只读、继承权限，并运行在你自己接入的高性价比模型上。</description>
+    </item>
+    <item>
+      <title>Meet Horizon UI · 17/17: Getting Started &amp; Migration</title>
+      <link>https://skywalking.apache.org/blog/2026-06-30-horizon-ui-getting-started-and-migration/</link>
+      <pubDate>Tue, 30 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2026-06-30-horizon-ui-getting-started-and-migration/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sheng Wu</dc:creator>
+      <category>Release</category>
+      <category>Community</category>
+      <description>The finale of the Meet Horizon UI series: install Horizon as a single env-driven container, point it at your OAP, and — if you&#39;re on the old UI — swap it in drop-in. Plus the OAP 10.x vs 11.x compatibility matrix: what works on the query port, and what needs OAP 11&#39;s admin host.</description>
+    </item>
+    <item>
+      <title>认识 Horizon UI · 17/17：安装与迁移</title>
+      <link>https://skywalking.apache.org/zh/2026-06-30-horizon-ui-getting-started-and-migration/</link>
+      <pubDate>Tue, 30 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/zh/2026-06-30-horizon-ui-getting-started-and-migration/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">吴晟</dc:creator>
+      <category>Release</category>
+      <category>Community</category>
+      <description>Meet Horizon UI 系列收官篇：用一个环境变量驱动的容器启动 Horizon，指向已有 OAP；如果你还在使用上一代 UI，也可以把 Horizon 平滑替换进去。文中还说明 OAP 10.x 和 11.x 的兼容边界：哪些功能只需要 query port，哪些需要 OAP 11 的 admin host。</description>
+    </item>
+    <item>
+      <title>Meet Horizon UI · 1/17: SkyWalking&#39;s New Observability Console</title>
+      <link>https://skywalking.apache.org/blog/2026-06-21-skywalking-horizon-ui-introduction/</link>
+      <pubDate>Sun, 21 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2026-06-21-skywalking-horizon-ui-introduction/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sheng Wu</dc:creator>
+      <category>Release</category>
+      <category>Cloud Native</category>
+      <description>Introducing Apache SkyWalking Horizon UI — the next-generation web UI. A greenfield rewrite on the same OAP backend that you can observe, operate, govern, and customize, starting with a sidebar that mirrors your whole estate.</description>
+    </item>
+    <item>
+      <title>认识 Horizon UI · 1/17：SkyWalking 新一代可观测性控制台</title>
+      <link>https://skywalking.apache.org/zh/2026-06-21-skywalking-horizon-ui-introduction/</link>
+      <pubDate>Sun, 21 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/zh/2026-06-21-skywalking-horizon-ui-introduction/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">吴晟</dc:creator>
+      <category>Release</category>
+      <category>Cloud Native</category>
+      <description>介绍 Apache SkyWalking Horizon UI：它沿用现有 OAP 后端协议，重新设计前端控制台，让观测、运维、治理和定制回到同一个入口。</description>
+    </item>
+    <item>
+      <title>Apache SkyWalking 2025 in Review: Making BanyanDB Ready for Production</title>
+      <link>https://skywalking.apache.org/blog/2026-01-01-skywalking-2025-year-in-review/</link>
+      <pubDate>Thu, 01 Jan 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2026-01-01-skywalking-2025-year-in-review/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sheng Wu</dc:creator>
+      <category>Release</category>
+      <category>Storage</category>
+      <category>Community</category>
+      <description>A review of Apache SkyWalking community work in 2025, with a focus on BanyanDB becoming the production-grade native storage for SkyWalking.</description>
+    </item>
+    <item>
+      <title>BanyanDB 0.6 版本发布：性能和效率的提升</title>
+      <link>https://skywalking.apache.org/zh/2024-06-04-banyandb-0.6-release/</link>
+      <pubDate>Wed, 12 Jun 2024 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/zh/2024-06-04-banyandb-0.6-release/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">高洪涛、吴晟（tetrate.io）</dc:creator>
+      <category>Release</category>
+      <category>Storage</category>
+      <description>介绍 BanyanDB v0.6 的新功能以及与 Elasticsearch 的基准测试。</description>
+    </item>
+    <item>
+      <title>BanyanDB 0.6 Release: Enhanced Performance and Efficiency</title>
+      <link>https://skywalking.apache.org/blog/2024-06-04-banyandb-0.6-release/</link>
+      <pubDate>Tue, 04 Jun 2024 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2024-06-04-banyandb-0.6-release/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Hongtao Gao, Sheng Wu. tetrate.io</dc:creator>
+      <category>Release</category>
+      <category>Storage</category>
+      <description>Introducing What&#39;s New in BanyanDB v0.6 and a Benchmark Test Against Elasticsearch</description>
+    </item>
+    <item>
+      <title>SkyWalking 10 Release: Service Hierarchy, Kubernetes Network Monitoring by eBPF, BanyanDB, and More</title>
+      <link>https://skywalking.apache.org/blog/2024-05-13-skywalking-10-release/</link>
+      <pubDate>Mon, 13 May 2024 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2024-05-13-skywalking-10-release/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Kai Wan, Sheng Wu. tetrate.io</dc:creator>
+      <category>Release</category>
+      <category>Cloud Native</category>
+      <category>Profiling</category>
+      <description>Introduce what&#39;s new in SkyWalking 10, including Service Hierarchy, Kubernetes Network Monitoring by eBPF, BanyanDB, and more.</description>
+    </item>
+    <item>
+      <title>SkyWalking 10 发布：服务层次结构、基于 eBPF 的 Kubernetes 网络监控、BanyanDB 等</title>
+      <link>https://skywalking.apache.org/zh/2024-05-13-skywalking-10-release/</link>
+      <pubDate>Mon, 13 May 2024 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/zh/2024-05-13-skywalking-10-release/</guid>
+      <category>Release</category>
+      <category>Profiling</category>
+      <category>Storage</category>
+      <description>介绍 SkyWalking 10 的新特性，包括服务层次结构、基于 eBPF 的 Kubernetes 网络监控、BanyanDB 等。</description>
+    </item>
+    <item>
+      <title>Apache SkyWalking 8.4: Logs, VM Monitoring, and Dynamic Configurations at Agent Side</title>
+      <link>https://skywalking.apache.org/blog/skywalking8-4-release/</link>
+      <pubDate>Fri, 05 Feb 2021 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/skywalking8-4-release/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Zhenxu Ke, Sheng Wu. tetrate.io</dc:creator>
+      <category>Release</category>
+      <category>Logging</category>
+      <description>Logs, VM Monitoring, and Dynamic Configurations at Agent Side</description>
+    </item>
+    <item>
+      <title>Features in SkyWalking 8.2: Browser Side Monitoring; Query Traces by Tags; Meter Analysis Language</title>
+      <link>https://skywalking.apache.org/blog/2020-10-29-skywalking8-2-release/</link>
+      <pubDate>Thu, 29 Oct 2020 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2020-10-29-skywalking8-2-release/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Zhenxu Ke, Sheng Wu, Hongtao Gao, and Tevah Platt. tetrate.io</dc:creator>
+      <category>Release</category>
+      <category>Agents</category>
+      <description>Browser Side Monitoring; Query Traces by Tags; Meter Analysis Language; Composite Alert Rules</description>
+    </item>
+    <item>
+      <title>Features in SkyWalking 8.1: SpringSleuth metrics, endpoint dependency detection, Kafka transport traces and metrics</title>
+      <link>https://skywalking.apache.org/blog/2020-08-03-skywalking8-1-release/</link>
+      <pubDate>Mon, 03 Aug 2020 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2020-08-03-skywalking8-1-release/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Srinivasan Ramaswamy(Tetrate)</dc:creator>
+      <category>Release</category>
+      <category>Agents</category>
+      <description> SpringSleuth metrics, endpoint dependency detection, Kafka transport traces and metrics.</description>
+    </item>
+    <item>
+      <title>SkyWalking v6 is Service Mesh ready</title>
+      <link>https://skywalking.apache.org/blog/2018-12-12-skywalking-service-mesh-ready/</link>
+      <pubDate>Wed, 05 Dec 2018 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2018-12-12-skywalking-service-mesh-ready/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Wu Sheng, tetrate</dc:creator>
+      <category>Release</category>
+      <category>Cloud Native</category>
+      <description>The integration of SkyWalking and Istio Service Mesh yields an essential open-source tool for resolving the chaos created by the proliferation of siloed, cloud-based services.</description>
+    </item>
+  </channel>
+</rss>

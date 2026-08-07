@@ -1,140 +1,209 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Apache SkyWalking – Community</title>
-    <link>/tags/community/</link>
-    <description>Recent content in Community on Apache SkyWalking</description>
+    <link>https://skywalking.apache.org/tags/community/</link>
+    <description>Recent community posts from Apache SkyWalking</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
-    <lastBuildDate>Thu, 01 Jan 2026 00:00:00 +0000</lastBuildDate>
-    
-	  <atom:link href="/tags/community/feed.xml" rel="self" type="application/rss+xml" />
-    
-    
-      
-        
-      
-    
-    
+    <language>en-US</language>
+    <lastBuildDate>Tue, 30 Jun 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://skywalking.apache.org/tags/community/feed.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Blog: Apache SkyWalking 2025 in Review: Making BanyanDB Ready for Production</title>
-      <link>/blog/2026-01-01-skywalking-2025-year-in-review/</link>
-      <pubDate>Thu, 01 Jan 2026 00:00:00 +0000</pubDate>
-      <guid>/blog/2026-01-01-skywalking-2025-year-in-review/</guid>
-      <description>
-        
-        
-        &lt;p&gt;2025 was a very focused year for the Apache SkyWalking community: &lt;strong&gt;moving BanyanDB from “native storage” to a “production-ready default”&lt;/strong&gt;, and making SkyWalking APM fully benefit from that foundation.&lt;/p&gt;
-&lt;p&gt;This post summarizes the key milestones, with an emphasis on BanyanDB.&lt;/p&gt;
-&lt;h2 id=&#34;storage-strategy-saying-goodbye-to-h2&#34;&gt;Storage strategy: saying goodbye to H2&lt;/h2&gt;
-&lt;p&gt;We started 2025 with a clear direction: the &lt;strong&gt;H2 storage option is permanently removed&lt;/strong&gt;.
-This change reduced long-term maintenance burden and removed a storage choice that was not aligned with production and cloud-native deployments.&lt;/p&gt;
-&lt;h2 id=&#34;banyandb-from-080-foundations-to-090-production-features&#34;&gt;BanyanDB: from 0.8.0 foundations to 0.9.0 production features&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;BanyanDB 0.8.0&lt;/strong&gt; delivered the “day-2 operations” foundation that a default storage backend needs. The community put a lot of effort into making queries faster and more predictable (for example &lt;code&gt;index_mode&lt;/code&gt;, numeric index types, and multiple query-path optimizations), while also making the system safer under real production pressure. Disk-usage thresholds and a query &lt;strong&gt;memory protector&lt;/strong&gt; were added as guardrails, and the operational toolbox matured with snapshot/backup/restore utilities and improved metadata synchronization.&lt;/p&gt;
-&lt;p&gt;Just as importantly, 0.8.0 started filling in the missing pieces of a full platform: native property storage and lifecycle-related capabilities that later enabled stronger HA and stage-based deployment patterns.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;BanyanDB 0.9.0&lt;/strong&gt; was the “production features” milestone. It introduced the &lt;strong&gt;Trace&lt;/strong&gt; data model as a first-class citizen, which unlocked much deeper trace storage and query capabilities. On the reliability and scaling side, the release brought configurable replicas, liaison-side improvements (including load balancing and moving some TopN flow), and broader correctness work such as migrations, version compatibility checks, and access logs.&lt;/p&gt;
-&lt;p&gt;It also made long-term operations more cloud-friendly with backup/restore support for AWS S3, GCS, and Azure Blob Storage, and added authentication primitives needed in shared environments. In short, 0.9.0 is where BanyanDB clearly moved beyond a “fast storage engine” into a “production platform”.&lt;/p&gt;
-&lt;h2 id=&#34;skywalking-apm-banyandb-becomes-the-default-path&#34;&gt;SkyWalking APM: BanyanDB becomes the default path&lt;/h2&gt;
-&lt;p&gt;With &lt;strong&gt;APM 10.2.0&lt;/strong&gt;, the project made the strategic shift official: H2 was removed permanently, and BanyanDB 0.8.0 became the default path that SkyWalking invests in. A lot of the work here was not flashy, but essential — refining OAP behavior (group settings, index model changes, Progressive TTL, query limits, and more) so running BanyanDB in production felt stable and predictable.&lt;/p&gt;
-&lt;p&gt;With &lt;strong&gt;APM 10.3.0&lt;/strong&gt;, SkyWalking and BanyanDB moved forward together: BanyanDB 0.9.0’s new trace model was adopted end-to-end, reducing inefficient query round-trips and enabling new query views that significantly lowered page latency. The integration also expanded into lifecycle-aware operations with hot/warm/cold stage configuration (including TTL and query support), and added BanyanDB &lt;strong&gt;self-monitoring&lt;/strong&gt; through OAP and the UI — the kind of end-to-end polish that turns a storage backend into a truly native solution.&lt;/p&gt;
-&lt;p&gt;If you’d like this review to cover &lt;strong&gt;APM 10.4.x&lt;/strong&gt; as well, please point me to the corresponding release content in this repo (I didn’t find an APM 10.4.0 release announcement in the current checkout).&lt;/p&gt;
-&lt;h2 id=&#34;packaging-and-deployment-ecosystem-helm&#34;&gt;Packaging and deployment ecosystem (Helm)&lt;/h2&gt;
-&lt;p&gt;BanyanDB’s production readiness is not only server features — it also depends on deployment maturity.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Helm charts:
-&lt;ul&gt;
-&lt;li&gt;SkyWalking Kubernetes Helm Chart 4.8.0 improved BanyanDB deployment defaults by updating the bundled BanyanDB Helm dependency, fixing an init-job volume-mount mismatch, and aligning OAP/UI images with the APM 10.3.0 line.&lt;/li&gt;
-&lt;li&gt;BanyanDB Helm 0.4.0 added backup/restore sidecars and a default volume for property storage.&lt;/li&gt;
-&lt;li&gt;BanyanDB Helm 0.5.0 introduced stage-aware patterns (hot/warm/cold), improved lifecycle-sidecar scheduling, moved liaison to StatefulSet, refined internal networking, and expanded configuration options.&lt;/li&gt;
-&lt;li&gt;BanyanDB Helm 0.5.1 refined liaison configuration and fixed restore-init environment issues.&lt;/li&gt;
-&lt;li&gt;BanyanDB Helm 0.5.3 fixed a liaison/data-node port issue.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;the-rest-of-the-community-agents-and-tooling-kept-moving&#34;&gt;The rest of the community: agents and tooling kept moving&lt;/h2&gt;
-&lt;p&gt;While storage was the “main storyline”, the community shipped releases across agents, clients, and surrounding components throughout 2025.&lt;/p&gt;
-&lt;p&gt;Below is a consolidated view of the other releases, grouped by project, with the most important notes.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;SkyWalking Java Agent&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;9.4.0&lt;/strong&gt;: agent self-observability; async-profiler support; broader plugin improvements.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;9.5.0&lt;/strong&gt;: virtual thread executor plugin; compatibility and stability fixes; dependency upgrades.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;SkyWalking Go&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;0.6.0&lt;/strong&gt;: richer manual APIs (events/logs/metrics, set span error); goframev2 plugin; bug fixes including Redis cluster mode.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;SkyWalking for NodeJS&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;0.8.0&lt;/strong&gt;: Express 4/5 compatibility, keep-alive HTTP trace fix, and test/dependency maintenance.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;SkyWalking Python&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;1.2.0&lt;/strong&gt;: sampling service, &lt;code&gt;sw_grpc&lt;/code&gt; plugin, async/profiling stability fixes, Python 3.13 support, and dropping Python 3.7.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;SkyWalking PHP&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;1.0.0&lt;/strong&gt;: reach 1.0; add PSR-3 log reporting; upgrade toolchain/dependencies.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;SkyWalking Rust&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;0.9.0&lt;/strong&gt;: migrate to Rust edition 2024 and upgrade dependencies.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;0.10.0&lt;/strong&gt;: Kafka client configuration refactor, &lt;code&gt;rdkafka&lt;/code&gt; upgrade, CI maintenance.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;SkyWalking Ruby&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;0.1.0&lt;/strong&gt;: initialize agent core and e2e tests; add plugins for Sinatra, redis-rb, net-http, memcached, and Elasticsearch.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;SkyWalking Client JS&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;1.0.0&lt;/strong&gt;: add Core Web Vitals and static resource metrics; fix fetch/resource error handling; dependency and e2e/test improvements.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;SkyWalking Satellite&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;1.3.0&lt;/strong&gt;: support native eBPF Access Log protocol and async-profiler protocol; upgrade Go toolchain.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;SkyWalking Eyes&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;0.7.0&lt;/strong&gt;: improve installation/docs, respect gitignore behavior, upgrade Go, and simplify release steps.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;0.8.0&lt;/strong&gt;: add Elixir support and stronger dependency-license scanning (notably Ruby via Gemfile.lock), plus stability fixes.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;looking-ahead-possible-directions-in-2026&#34;&gt;Looking ahead: possible directions in 2026&lt;/h2&gt;
-&lt;p&gt;2025 was about making BanyanDB ready for production. In 2026, the community is exploring the next set of improvements that could make the whole stack simpler to operate, more stable under stress, and easier to integrate into broader observability ecosystems.&lt;/p&gt;
-&lt;p&gt;Possible areas include:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;BanyanDB: remove the etcd dependency&lt;/strong&gt;: the direction under discussion is to move away from etcd (given ecosystem activity and maintenance concerns) and rely more on DNS-based discovery plus BanyanDB’s native property capabilities.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;BanyanDB: stronger stability testing&lt;/strong&gt;: more systematic testing, including chaos testing, to validate behavior under failures and noisy conditions.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;BanyanDB: better observability export&lt;/strong&gt;: introducing First Occurrence Data Collection (FODC) as a sidecar and proxy server to provide a unified stream of observability data to third-party systems.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;SkyWalking APM: broader runtime and query capabilities&lt;/strong&gt;: cold-stage data query support, a newer Java runtime (Java 25), and consideration of TraceQL protocol (Temper) support.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;closing&#34;&gt;Closing&lt;/h2&gt;
-&lt;p&gt;Thanks to everyone who contributed to SkyWalking in 2025. Every contribution is high-value — code, documentation, reviews, testing, issue triage, and operational experience — and each of them helped move the project forward.&lt;/p&gt;
-&lt;p&gt;We also want to say a special thank you to the countless end users across global companies. Many of the most valuable improvements don’t start from a pull request: they start from real-world use cases, performance investigations, production feedback, bug reports, and the patience to help us reproduce and validate fixes.&lt;/p&gt;
-&lt;p&gt;As another milestone, SkyWalking reached &lt;strong&gt;968 GitHub contributors&lt;/strong&gt; globally, and we expect the &lt;strong&gt;1000th&lt;/strong&gt; contributor milestone to arrive soon in 2026. But the community is much larger than the number suggests, and SkyWalking’s progress has always been driven by collaboration between contributors, adopters, and maintainers.&lt;/p&gt;
-&lt;p&gt;Apache SkyWalking was originally created by Sheng Wu as a personal project in May 2015. It would never have grown into what it is today without the whole community — and it will keep moving forward because of the community.&lt;/p&gt;
-
-      </description>
+      <title>Meet Horizon UI · 16/17: Localization in Eight Languages</title>
+      <link>https://skywalking.apache.org/blog/2026-06-30-horizon-ui-localization-i18n/</link>
+      <pubDate>Tue, 30 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2026-06-30-horizon-ui-localization-i18n/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sheng Wu</dc:creator>
+      <category>Engineering</category>
+      <category>Community</category>
+      <description>Part 16 of the Meet Horizon UI series: Horizon speaks eight languages, not by re-translating on every render but as server-side overlays merged onto the same templates. Pick a language from the topbar, or click any widget on the Translations admin to translate it — while every value OAP supplies stays verbatim.</description>
     </item>
-    
+    <item>
+      <title>Meet Horizon UI · 17/17: Getting Started &amp; Migration</title>
+      <link>https://skywalking.apache.org/blog/2026-06-30-horizon-ui-getting-started-and-migration/</link>
+      <pubDate>Tue, 30 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2026-06-30-horizon-ui-getting-started-and-migration/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sheng Wu</dc:creator>
+      <category>Release</category>
+      <category>Community</category>
+      <description>The finale of the Meet Horizon UI series: install Horizon as a single env-driven container, point it at your OAP, and — if you&#39;re on the old UI — swap it in drop-in. Plus the OAP 10.x vs 11.x compatibility matrix: what works on the query port, and what needs OAP 11&#39;s admin host.</description>
+    </item>
+    <item>
+      <title>认识 Horizon UI · 16/17：八种语言的本地化</title>
+      <link>https://skywalking.apache.org/zh/2026-06-30-horizon-ui-localization-i18n/</link>
+      <pubDate>Tue, 30 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/zh/2026-06-30-horizon-ui-localization-i18n/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">吴晟</dc:creator>
+      <category>Engineering</category>
+      <category>Community</category>
+      <description>Horizon UI 系列第十六篇：Horizon 支持八种语言。本地化不是每次渲染时重新翻译，而是在服务端把翻译 overlay 合并到同一套 template 上；用户可以从顶栏切换语言，也可以在 Translations 管理页点选任意 widget 直接补翻译，而 OAP 返回的数据始终保持原样。</description>
+    </item>
+    <item>
+      <title>认识 Horizon UI · 17/17：安装与迁移</title>
+      <link>https://skywalking.apache.org/zh/2026-06-30-horizon-ui-getting-started-and-migration/</link>
+      <pubDate>Tue, 30 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/zh/2026-06-30-horizon-ui-getting-started-and-migration/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">吴晟</dc:creator>
+      <category>Release</category>
+      <category>Community</category>
+      <description>Meet Horizon UI 系列收官篇：用一个环境变量驱动的容器启动 Horizon，指向已有 OAP；如果你还在使用上一代 UI，也可以把 Horizon 平滑替换进去。文中还说明 OAP 10.x 和 11.x 的兼容边界：哪些功能只需要 query port，哪些需要 OAP 11 的 admin host。</description>
+    </item>
+    <item>
+      <title>Monitoring WeChat and Alipay Mini Programs with SkyWalking</title>
+      <link>https://skywalking.apache.org/blog/2026-04-30-mini-program-monitoring-with-skywalking/</link>
+      <pubDate>Thu, 30 Apr 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2026-04-30-mini-program-monitoring-with-skywalking/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sheng Wu</dc:creator>
+      <category>Metrics</category>
+      <category>Agents</category>
+      <category>Community</category>
+      <description>SkyAPM/mini-program-monitor and SkyWalking OAP together extend SkyWalking&#39;s end-user monitoring to WeChat and Alipay Mini Programs. This post focuses on the data path, the cross-platform abstraction, and the OAP-side integration.</description>
+    </item>
+    <item>
+      <title>用 SkyWalking 监控微信和支付宝小程序</title>
+      <link>https://skywalking.apache.org/zh/2026-04-30-mini-program-monitoring-with-skywalking/</link>
+      <pubDate>Thu, 30 Apr 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/zh/2026-04-30-mini-program-monitoring-with-skywalking/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">吴晟</dc:creator>
+      <category>Agents</category>
+      <category>Community</category>
+      <category>Tracing</category>
+      <description>SkyAPM/mini-program-monitor 与 SkyWalking OAP 配合，把微信和支付宝小程序纳入 SkyWalking 的端用户体验监控。本文聚焦数据通路、双平台抽象与 OAP 端集成。</description>
+    </item>
+    <item>
+      <title>Agentic Vibe Coding in a Mature OSS Project: What Worked, What Didn&#39;t</title>
+      <link>https://skywalking.apache.org/blog/2026-03-08-agentic-vibe-coding/</link>
+      <pubDate>Sun, 08 Mar 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2026-03-08-agentic-vibe-coding/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sheng Wu</dc:creator>
+      <category>AI</category>
+      <category>Engineering</category>
+      <category>Community</category>
+      <description>What happens when you apply agentic AI coding to a mature open-source project with real users, real compatibility contracts, and real consequences? 77K lines changed in 5 weeks — here&#39;s what I learned.</description>
+    </item>
+    <item>
+      <title>在成熟开源大型项目中实践 Agentic Vibe Coding：软件工程与工程控制论还在延续</title>
+      <link>https://skywalking.apache.org/zh/2026-03-08-agentic-vibe-coding/</link>
+      <pubDate>Sun, 08 Mar 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/zh/2026-03-08-agentic-vibe-coding/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">吴晟</dc:creator>
+      <category>AI</category>
+      <category>Engineering</category>
+      <category>Community</category>
+      <description>当你把 AI 智能体编程应用到一个有真实用户、广泛运用、API 被充分集成的成熟开源项目时，我在 5 周改了 7.7 万行代码，里面到底用到了哪些方法？这是我的实战总结。</description>
+    </item>
+    <item>
+      <title>Apache SkyWalking 2025 in Review: Making BanyanDB Ready for Production</title>
+      <link>https://skywalking.apache.org/blog/2026-01-01-skywalking-2025-year-in-review/</link>
+      <pubDate>Thu, 01 Jan 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2026-01-01-skywalking-2025-year-in-review/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sheng Wu</dc:creator>
+      <category>Release</category>
+      <category>Storage</category>
+      <category>Community</category>
+      <description>A review of Apache SkyWalking community work in 2025, with a focus on BanyanDB becoming the production-grade native storage for SkyWalking.</description>
+    </item>
+    <item>
+      <title>Improving Alert Accuracy with Dynamic Baselines</title>
+      <link>https://skywalking.apache.org/blog/2025-02-24-improving-alert-accuracy-with-dynamic-baselines/</link>
+      <pubDate>Mon, 24 Feb 2025 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2025-02-24-improving-alert-accuracy-with-dynamic-baselines/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Han Liu</dc:creator>
+      <category>Community</category>
+      <description>This article explores how to leverage history metrics to generate dynamic baselines for a future period, thereby enhancing the accuracy of alerts.</description>
+    </item>
+    <item>
+      <title>开源之夏 2024 SkyWalking 社区项目情况公示</title>
+      <link>https://skywalking.apache.org/zh/2024-12-10-ospp-summary/</link>
+      <pubDate>Tue, 10 Dec 2024 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/zh/2024-12-10-ospp-summary/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Apache SkyWalking</dc:creator>
+      <category>Community</category>
+      <description>开源之夏是由中科院软件所“开源软件供应链点亮计划”发起并长期支持的一项暑期开源活动，旨在鼓励在校学生积极参与开源软件的开发维护，培养和发掘更多优秀的开发者，促进优秀开源软件社区的蓬勃发展，助力开源软件供应链建设。12月9日，官方完成最终审核和官方评优，并发布结果。</description>
+    </item>
+    <item>
+      <title>引入 R3 识别 RESTFul URI</title>
+      <link>https://skywalking.apache.org/zh/2024-010-15-introduce-r3-to-recognition-restful-url/</link>
+      <pubDate>Thu, 17 Oct 2024 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/zh/2024-010-15-introduce-r3-to-recognition-restful-url/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">刘晗</dc:creator>
+      <category>Tracing</category>
+      <category>Community</category>
+      <description>本文将介绍如何使用 R3 识别 RESTFul URI 并将其集成到 SkyWalking 中。</description>
+    </item>
+    <item>
+      <title>[Video] Coffee &#43; Software with Josh Long - Apache SkyWalking with Sheng Wu and Apache ShardingSphere with Trista Pan</title>
+      <link>https://skywalking.apache.org/blog/2023-12-04-coffee&#43;software-with-josh-long/</link>
+      <pubDate>Mon, 04 Dec 2023 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2023-12-04-coffee&#43;software-with-josh-long/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sheng Wu, Josh Long, Trista Pan</dc:creator>
+      <category>Community</category>
+      <description>🚀 Dive into the World of Cutting-Edge Technology with Apache&rsquo;s Finest! 🌐 Join me today as we embark on an exhilarating journey with two of Apache&rsquo;s most brilliant minds - Sheng Wu and Trista Pan. We&rsquo;re exploring the realms of Apache SkyWalking and Apache ShardingSphere, two groundbreaking initiatives that are reshaping the landscape of open-source technology. 🌟
+In this exclusive …</description>
+    </item>
+    <item>
+      <title>开源之夏 2023 SkyWalking 社区项目情况公示</title>
+      <link>https://skywalking.apache.org/zh/2023-11-09-ospp-summary/</link>
+      <pubDate>Thu, 09 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/zh/2023-11-09-ospp-summary/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Apache SkyWalking</dc:creator>
+      <category>Community</category>
+      <description>开源之夏是由中科院软件所“开源软件供应链点亮计划”发起并长期支持的一项暑期开源活动，旨在鼓励在校学生积极参与开源软件的开发维护，培养和发掘更多优秀的开发者，促进优秀开源软件社区的蓬勃发展，助力开源软件供应链建设。11月9日，官方完成最终审核，并发布结果。</description>
+    </item>
+    <item>
+      <title>The Statement for SkyWalking users on HashiCorp license changes</title>
+      <link>https://skywalking.apache.org/blog/2023-08-13-hashicorp-bsl/</link>
+      <pubDate>Sun, 13 Aug 2023 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2023-08-13-hashicorp-bsl/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Apache SkyWalking</dc:creator>
+      <category>Community</category>
+      <description>HashiCorp announced to adopt the Business Source License from Mozilla Public License v2.0 (MPL 2.0). SkyWalking community posts the statement for our own users to explain the evaluation of the potential implications.</description>
+    </item>
+    <item>
+      <title>Celebrate 22k stars</title>
+      <link>https://skywalking.apache.org/blog/2023-06-13-celebrate-22k-stars/</link>
+      <pubDate>Tue, 13 Jun 2023 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2023-06-13-celebrate-22k-stars/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Apache SkyWalking</dc:creator>
+      <category>Community</category>
+      <description>The Apache SkyWalking community is thrilled to reach the milestone of 22k stars on GitHub!</description>
+    </item>
+    <item>
+      <title>Monitoring DynamoDB with SkyWalking</title>
+      <link>https://skywalking.apache.org/blog/2023-03-13-skywalking-aws-dynamodb/</link>
+      <pubDate>Mon, 13 Mar 2023 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2023-03-13-skywalking-aws-dynamodb/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Yueqin Zhang</dc:creator>
+      <category>Community</category>
+      <description>This article shows how to use SkyWalking to monitor DynamoDB.</description>
+    </item>
+    <item>
+      <title>Monitoring AWS EKS and S3 with SkyWalking</title>
+      <link>https://skywalking.apache.org/blog/2023-03-12-skywalking-aws-s3-eks/</link>
+      <pubDate>Sun, 12 Mar 2023 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2023-03-12-skywalking-aws-s3-eks/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Puguang Yang</dc:creator>
+      <category>Community</category>
+      <description>This article shows how to use SkyWalking to monitor EKS and S3.</description>
+    </item>
+    <item>
+      <title>[License Issue] Aliyun(阿里云)&#39;s trace analysis service copied SkyWalking&#39;s trace profiling page.</title>
+      <link>https://skywalking.apache.org/blog/2023-01-03-aliyun-copy-page/</link>
+      <pubDate>Tue, 03 Jan 2023 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2023-01-03-aliyun-copy-page/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Apache SkyWalking</dc:creator>
+      <category>Community</category>
+      <description>Aliyun&#39;s trace analysis service copied SkyWalking&#39;s UI design but declares it as their codes, rather than a fork.</description>
+    </item>
+    <item>
+      <title>[Video] Distributed tracing demo using Apache SkyWalking and Kong API Gateway</title>
+      <link>https://skywalking.apache.org/blog/2022-08-11-kongcast-20-distributed-tracing-using-skywalking-kong/</link>
+      <pubDate>Thu, 11 Aug 2022 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2022-08-11-kongcast-20-distributed-tracing-using-skywalking-kong/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Andrew Kew. QuadCorps Founder [GitHub](https://github.com/andrewgkew) [Linkedin](https://www.linkedin.com/in/andrewgkew) [Website](https://quadcorps.co.uk)</dc:creator>
+      <category>Agents</category>
+      <category>Engineering</category>
+      <category>Community</category>
+      <description>Kongcast Episode 20 - Distributed Tracing on Kubernetes</description>
+    </item>
   </channel>
 </rss>
