@@ -21,26 +21,23 @@
 <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#5bbad5">
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
-<title>Watchdog And Flight Recorder Development Design | Apache SkyWalking</title><meta property="og:url" content="https://skywalking.apache.org/docs/skywalking-banyandb/next/design/fodc/watchdog-and-flight-recoder/">
+<title>Context-Aware Panic Diagnostics Development Design | Apache SkyWalking</title><meta property="og:url" content="https://skywalking.apache.org/docs/skywalking-banyandb/next/design/archive/0.10.0/fodc/context-aware-panic-diagnostics/">
   <meta property="og:site_name" content="Apache SkyWalking">
-  <meta property="og:title" content="Watchdog And Flight Recorder Development Design">
-  <meta property="og:description" content="Watchdog And Flight Recorder Development Design Table of Contents Overview Component Design Data Flow Testing Strategy Appendix Overview The First Occurrence Data Collection (FODC) infrastructure consists of two main components working together to ensure metrics data survivability in BanyanDB:
-Watchdog: Periodically polls metrics from the BanyanDB container and forwards them to the Flight Recorder for buffering.
-Flight Recorder: Buffers metrics data using fixed-size circular buffers (RingBuffer) with in-memory storage, ensuring data persists even when the main BanyanDB process crashes.">
+  <meta property="og:title" content="Context-Aware Panic Diagnostics Development Design">
+  <meta property="og:description" content="Context-Aware Panic Diagnostics Development Design Table of Contents Overview Current Implementation Status Architecture Component Design Crash Artifacts Proxy API and Collection Semantics Deployment and Operations Testing Strategy Appendix Overview Context-aware panic diagnostics in BanyanDB and FODC provide two complementary capabilities:
+Recover selected panics with structured diagnostics and persisted artifacts. Surface those artifacts through the FODC agent and proxy for centralized inspection. The implementation is no longer just a file-watching sidecar concept. The current codebase has an end-to-end flow:">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="article">
     <meta property="article:section" content="docs">
 
-  <meta itemprop="name" content="Watchdog And Flight Recorder Development Design">
-  <meta itemprop="description" content="Watchdog And Flight Recorder Development Design Table of Contents Overview Component Design Data Flow Testing Strategy Appendix Overview The First Occurrence Data Collection (FODC) infrastructure consists of two main components working together to ensure metrics data survivability in BanyanDB:
-Watchdog: Periodically polls metrics from the BanyanDB container and forwards them to the Flight Recorder for buffering.
-Flight Recorder: Buffers metrics data using fixed-size circular buffers (RingBuffer) with in-memory storage, ensuring data persists even when the main BanyanDB process crashes.">
-  <meta itemprop="wordCount" content="2576">
+  <meta itemprop="name" content="Context-Aware Panic Diagnostics Development Design">
+  <meta itemprop="description" content="Context-Aware Panic Diagnostics Development Design Table of Contents Overview Current Implementation Status Architecture Component Design Crash Artifacts Proxy API and Collection Semantics Deployment and Operations Testing Strategy Appendix Overview Context-aware panic diagnostics in BanyanDB and FODC provide two complementary capabilities:
+Recover selected panics with structured diagnostics and persisted artifacts. Surface those artifacts through the FODC agent and proxy for centralized inspection. The implementation is no longer just a file-watching sidecar concept. The current codebase has an end-to-end flow:">
+  <meta itemprop="wordCount" content="1764">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Watchdog And Flight Recorder Development Design">
-  <meta name="twitter:description" content="Watchdog And Flight Recorder Development Design Table of Contents Overview Component Design Data Flow Testing Strategy Appendix Overview The First Occurrence Data Collection (FODC) infrastructure consists of two main components working together to ensure metrics data survivability in BanyanDB:
-Watchdog: Periodically polls metrics from the BanyanDB container and forwards them to the Flight Recorder for buffering.
-Flight Recorder: Buffers metrics data using fixed-size circular buffers (RingBuffer) with in-memory storage, ensuring data persists even when the main BanyanDB process crashes.">
+  <meta name="twitter:title" content="Context-Aware Panic Diagnostics Development Design">
+  <meta name="twitter:description" content="Context-Aware Panic Diagnostics Development Design Table of Contents Overview Current Implementation Status Architecture Component Design Crash Artifacts Proxy API and Collection Semantics Deployment and Operations Testing Strategy Appendix Overview Context-aware panic diagnostics in BanyanDB and FODC provide two complementary capabilities:
+Recover selected panics with structured diagnostics and persisted artifacts. Surface those artifacts through the FODC agent and proxy for centralized inspection. The implementation is no longer just a file-watching sidecar concept. The current codebase has an end-to-end flow:">
 
 
 
@@ -55,10 +52,10 @@ Flight Recorder: Buffers metrics data using fixed-size circular buffers (RingBuf
 
 <script src="/js/jquery-3.6.0.min.js"></script>
 
-<link rel="canonical" href="https://skywalking.apache.org/docs/skywalking-banyandb/next/design/fodc/watchdog-and-flight-recoder/">
-<meta name="description" content="Watchdog And Flight Recorder Development Design Table of Contents Overview Component Design Data Flow Testing Strategy Appendix Overview The First Occurrence…">
+<link rel="canonical" href="https://skywalking.apache.org/docs/skywalking-banyandb/next/design/archive/0.10.0/fodc/context-aware-panic-diagnostics/">
+<meta name="description" content="Context-Aware Panic Diagnostics Development Design Table of Contents Overview Current Implementation Status Architecture Component Design Crash Artifacts Proxy…">
 
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@id":"https://skywalking.apache.org/#organization","@type":"Organization","logo":"https://skywalking.apache.org/images/skywalking_400x400.png","name":"Apache SkyWalking","parentOrganization":{"@type":"Organization","name":"The Apache Software Foundation","url":"https://www.apache.org/"},"sameAs":["https://github.com/apache/skywalking","https://twitter.com/asfskywalking","https://projects.apache.org/project.html?skywalking"],"url":"https://skywalking.apache.org/"},{"@type":"TechArticle","headline":"Watchdog And Flight Recorder Development Design","inLanguage":"en","mainEntityOfPage":{"@id":"https://skywalking.apache.org/docs/skywalking-banyandb/next/design/fodc/watchdog-and-flight-recoder/","@type":"WebPage"},"publisher":{"@id":"https://skywalking.apache.org/#organization"},"url":"https://skywalking.apache.org/docs/skywalking-banyandb/next/design/fodc/watchdog-and-flight-recoder/"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://skywalking.apache.org/","name":"Apache SkyWalking","position":1},{"@type":"ListItem","item":"https://skywalking.apache.org/docs/","name":"Documentation","position":2},{"@type":"ListItem","item":"https://skywalking.apache.org/docs/skywalking-banyandb/next/design/fodc/watchdog-and-flight-recoder/","name":"Watchdog And Flight Recorder Development Design","position":3}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@id":"https://skywalking.apache.org/#organization","@type":"Organization","logo":"https://skywalking.apache.org/images/skywalking_400x400.png","name":"Apache SkyWalking","parentOrganization":{"@type":"Organization","name":"The Apache Software Foundation","url":"https://www.apache.org/"},"sameAs":["https://github.com/apache/skywalking","https://twitter.com/asfskywalking","https://projects.apache.org/project.html?skywalking"],"url":"https://skywalking.apache.org/"},{"@type":"TechArticle","headline":"Context-Aware Panic Diagnostics Development Design","inLanguage":"en","mainEntityOfPage":{"@id":"https://skywalking.apache.org/docs/skywalking-banyandb/next/design/archive/0.10.0/fodc/context-aware-panic-diagnostics/","@type":"WebPage"},"publisher":{"@id":"https://skywalking.apache.org/#organization"},"url":"https://skywalking.apache.org/docs/skywalking-banyandb/next/design/archive/0.10.0/fodc/context-aware-panic-diagnostics/"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://skywalking.apache.org/","name":"Apache SkyWalking","position":1},{"@type":"ListItem","item":"https://skywalking.apache.org/docs/","name":"Documentation","position":2},{"@type":"ListItem","item":"https://skywalking.apache.org/docs/skywalking-banyandb/next/design/archive/0.10.0/fodc/context-aware-panic-diagnostics/","name":"Context-Aware Panic Diagnostics Development Design","position":3}]}]}</script>
 
 
 <link rel="alternate" type="application/rss+xml" href="https://skywalking.apache.org/feed.xml" title="Apache SkyWalking">
@@ -1442,7 +1439,7 @@ Flight Recorder: Buffers metrics data using fixed-size circular buffers (RingBuf
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 3b83e18</div>
+                  <div class="commit-id">Commit Id: e7bb0d3</div>
                 
 
 
@@ -1455,610 +1452,409 @@ Flight Recorder: Buffers metrics data using fixed-size circular buffers (RingBuf
               <i class="iconfont icon-menu-doc doc-menu-button"></i>
               
 <div class="td-content">
-	<h1 id="watchdog-and-flight-recorder-development-design">Watchdog And Flight Recorder Development Design</h1>
+	<h1 id="context-aware-panic-diagnostics-development-design">Context-Aware Panic Diagnostics Development Design</h1>
 <h2 id="table-of-contents">Table of Contents</h2>
 <ol>
 <li><a href="#overview">Overview</a></li>
+<li><a href="#current-implementation-status">Current Implementation Status</a></li>
+<li><a href="#architecture">Architecture</a></li>
 <li><a href="#component-design">Component Design</a></li>
-<li><a href="#data-flow">Data Flow</a></li>
+<li><a href="#crash-artifacts">Crash Artifacts</a></li>
+<li><a href="#proxy-api-and-collection-semantics">Proxy API and Collection Semantics</a></li>
+<li><a href="#deployment-and-operations">Deployment and Operations</a></li>
 <li><a href="#testing-strategy">Testing Strategy</a></li>
 <li><a href="#appendix">Appendix</a></li>
 </ol>
 <h2 id="overview">Overview</h2>
-<p>The First Occurrence Data Collection (FODC) infrastructure consists of two main components working together to ensure metrics data survivability in BanyanDB:</p>
-<p><strong>Watchdog</strong>: Periodically polls metrics from the BanyanDB container and forwards them to the Flight Recorder for buffering.</p>
-<p><strong>Flight Recorder</strong>: Buffers metrics data using fixed-size circular buffers (RingBuffer) with in-memory storage, ensuring data persists even when the main BanyanDB process crashes.</p>
-<p>Together, these components capture and preserve metrics data to ensure that critical observability data is not lost during process crashes.</p>
-<h3 id="responsibilities">Responsibilities</h3>
-<p><strong>Watchdog Component</strong></p>
-<ul>
-<li>Polls metrics from BanyanDB at configurable intervals</li>
-<li>Parses Prometheus text format metrics efficiently</li>
-<li>Forwards collected metrics to Flight Recorder for buffering</li>
-<li>Handles connection failures and retries gracefully</li>
-<li>Monitors BanyanDB process health</li>
-</ul>
-<p><strong>Flight Recorder Component</strong></p>
-<ul>
-<li>Maintains a fixed-size circular buffer (RingBuffer) per metric in the <code>metrics</code> map</li>
-<li>Uses a shared <code>timestamps</code> RingBuffer to store timestamps for each polling cycle</li>
-<li>Stores metric descriptions in the <code>descriptions</code> map, keyed by metric name+labels</li>
-<li>Stores metrics in-memory to ensure fast access and persistence across process crashes</li>
-<li>Manages buffer capacity and handles overflow scenarios using circular overwrite behavior</li>
-<li>Tracks write positions using <code>next</code>, <code>count</code>, and <code>n</code> fields for circular buffer management</li>
-<li>Ensures data integrity and prevents data loss during crashes</li>
-</ul>
-<h3 id="component-interaction-flow">Component Interaction Flow</h3>
-<pre tabindex="0"><code>BanyanDB Metrics Endpoint
-         │
-         │ (HTTP GET /metrics)
-         ▼
-    Watchdog Component
-         │
-         │ (Poll at interval)
-         │
-         │ Parse Prometheus Format
-         │
-         │ Forward Metrics
-         ▼
-    Flight Recorder Component
-         │
-         │ Write to RingBuffer
-         │
-         │ (Per-metric buffers)
-         ▼
-    In-Memory Storage (Datasources)
-         │
-         │ (Read metrics)
-         ▼
-    Prometheus Metrics Exporter
-         │
-         │ (Collect via prometheus.Collector)
-         │
-         │ Convert to Prometheus Format
-         ▼
-    Prometheus Registry
-         │
-         │ (HTTP GET /metrics)
-         ▼
-    Prometheus Scraper
-</code></pre><h2 id="component-design">Component Design</h2>
-<h3 id="1-watchdog-component">1. Watchdog Component</h3>
-<p><strong>Purpose</strong>: Periodically polls metrics from BanyanDB and forwards them to Flight Recorder</p>
-<h4 id="core-responsibilities">Core Responsibilities</h4>
-<ul>
-<li><strong>Metrics Polling</strong>: Polls metrics from BanyanDB metrics endpoint at configurable intervals</li>
-<li><strong>Metrics Parsing</strong>: Uses metrics package to parse Prometheus text format efficiently</li>
-<li><strong>Error Handling</strong>: Implements exponential backoff for transient failures</li>
-<li><strong>Health Monitoring</strong>: Tracks BanyanDB process health and reports status</li>
-</ul>
-<h4 id="core-types">Core Types</h4>
-<p><strong><code>Watchdog</code></strong></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#cf222e">type</span><span style="color:#fff"> </span><span style="color:#1f2328">Watchdog</span><span style="color:#fff"> </span><span style="color:#cf222e">struct</span><span style="color:#fff"> </span><span style="color:#1f2328">{</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">client</span><span style="color:#fff">       </span><span style="color:#0550ae">*</span><span style="color:#1f2328">http</span><span style="color:#1f2328">.</span><span style="color:#1f2328">Client</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">url</span><span style="color:#fff">          </span><span style="color:#cf222e">string</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">interval</span><span style="color:#fff">     </span><span style="color:#1f2328">time</span><span style="color:#1f2328">.</span><span style="color:#1f2328">Duration</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#1f2328">}</span><span style="color:#fff">
-</span></span></span></code></pre></div><h4 id="key-functions">Key Functions</h4>
-<p><strong><code>Start(ctx context.Context) error</code></strong></p>
-<ul>
-<li>Initializes the watchdog component</li>
-<li>Starts polling loop with configurable interval</li>
-<li>Sets up HTTP client with connection reuse</li>
-<li>Begins periodic metrics collection</li>
-</ul>
-<p><strong><code>Stop(ctx context.Context) error</code></strong></p>
-<ul>
-<li>Gracefully stops the polling loop</li>
-<li>Closes HTTP connections</li>
-<li>Ensures in-flight requests complete</li>
-</ul>
-<p><strong><code>pollMetrics(ctx context.Context) ([]metrics.RawMetric, error)</code></strong></p>
-<ul>
-<li>Fetches raw metrics text from endpoint</li>
-<li>Uses metrics package to parse Prometheus text format</li>
-<li>Returns parsed metrics or error</li>
-<li>Implements retry logic with exponential backoff</li>
-</ul>
-<h4 id="configuration-flags">Configuration Flags</h4>
-<p><strong><code>--poll-metrics-interval</code></strong></p>
-<ul>
-<li><strong>Type</strong>: <code>duration</code></li>
-<li><strong>Default</strong>: <code>10s</code></li>
-<li><strong>Description</strong>: Interval at which the Watchdog polls metrics from the BanyanDB container</li>
-</ul>
-<p><strong><code>--metrics-endpoint</code></strong></p>
-<ul>
-<li><strong>Type</strong>: <code>string</code></li>
-<li><strong>Default</strong>: <code>http://localhost:2121/metrics</code></li>
-<li><strong>Description</strong>: URL of the BanyanDB metrics endpoint to poll from</li>
-</ul>
-<p><strong><code>--max-metrics-memory-usage-percentage</code></strong></p>
-<ul>
-<li><strong>Type</strong>: <code>int</code></li>
-<li><strong>Default</strong>: <code>10</code></li>
-<li><strong>Description</strong>: Maximum percentage of available memory (based on cgroup memory limit) that can be used for storing metrics in the Flight Recorder. The memory limit is obtained from the container&rsquo;s cgroup configuration (see <code>pkg/cgroups/memory.go</code>). When metrics memory usage exceeds this percentage, the Flight Recorder will stop accepting new metrics or evict older data. Valid range: 0-100.</li>
-</ul>
-<h3 id="2-flight-recorder-component">2. Flight Recorder Component</h3>
-<p><strong>Purpose</strong>: Buffers metrics data using fixed-size circular buffers with in-memory storage</p>
-<h4 id="core-responsibilities-1">Core Responsibilities</h4>
-<ul>
-<li><strong>Metrics Buffering</strong>: Maintains a fixed-size RingBuffer per metric</li>
-<li><strong>Data Persistence</strong>: Ensures metrics survive process crashes</li>
-<li><strong>Overflow Handling</strong>: Implements circular overwrite behavior when buffers are full</li>
-</ul>
-<h4 id="core-types-1">Core Types</h4>
-<p><strong><code>RingBuffer[T]</code></strong> (Generic Ring Buffer)</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#cf222e">type</span><span style="color:#fff"> </span><span style="color:#1f2328">RingBuffer</span><span style="color:#1f2328">[</span><span style="color:#1f2328">T</span><span style="color:#fff"> </span><span style="color:#cf222e">any</span><span style="color:#1f2328">]</span><span style="color:#fff"> </span><span style="color:#cf222e">struct</span><span style="color:#fff"> </span><span style="color:#1f2328">{</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">   </span><span style="color:#1f2328">next</span><span style="color:#fff">   </span><span style="color:#cf222e">int</span><span style="color:#fff">         </span><span style="color:#57606a">// Next write position in the circular buffer</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">   </span><span style="color:#1f2328">values</span><span style="color:#fff"> </span><span style="color:#1f2328">[]</span><span style="color:#1f2328">T</span><span style="color:#fff">         </span><span style="color:#57606a">// Fixed-size buffer for values of type T</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#1f2328">}</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#57606a">// NewRingBuffer creates a new RingBuffer.</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#cf222e">func</span><span style="color:#fff"> </span><span style="color:#1f2328">NewRingBuffer</span><span style="color:#1f2328">[</span><span style="color:#1f2328">T</span><span style="color:#fff"> </span><span style="color:#cf222e">any</span><span style="color:#1f2328">](..</span><span style="color:#0550ae">/</span><span style="color:#1f2328">)</span><span style="color:#fff"> </span><span style="color:#0550ae">*</span><span style="color:#1f2328">RingBuffer</span><span style="color:#1f2328">[</span><span style="color:#1f2328">T</span><span style="color:#1f2328">]</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#57606a">// Add adds a value to the ring buffer.</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#cf222e">func</span><span style="color:#fff"> </span><span style="color:#1f2328">(</span><span style="color:#1f2328">rb</span><span style="color:#fff"> </span><span style="color:#0550ae">*</span><span style="color:#1f2328">RingBuffer</span><span style="color:#1f2328">[</span><span style="color:#1f2328">T</span><span style="color:#1f2328">])</span><span style="color:#fff"> </span><span style="color:#6639ba">Add</span><span style="color:#1f2328">(</span><span style="color:#1f2328">v</span><span style="color:#fff"> </span><span style="color:#1f2328">T</span><span style="color:#1f2328">)</span><span style="color:#fff">
-</span></span></span></code></pre></div><ul>
-<li>Stores values of any type T in a circular buffer</li>
-<li>Implements circular overwrite behavior when buffer is full</li>
-<li>Provides type-safe operations for both float64 and int64 values</li>
-</ul>
-<p><strong><code>MetricRingBuffer</code></strong></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#cf222e">type</span><span style="color:#fff"> </span><span style="color:#1f2328">MetricRingBuffer</span><span style="color:#fff"> </span><span style="color:#1f2328">=</span><span style="color:#fff"> </span><span style="color:#1f2328">RingBuffer</span><span style="color:#1f2328">[</span><span style="color:#cf222e">float64</span><span style="color:#1f2328">]</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#57606a">// NewMetricRingBuffer creates a new MetricRingBuffer.</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#cf222e">func</span><span style="color:#fff"> </span><span style="color:#6639ba">NewMetricRingBuffer</span><span style="color:#1f2328">()</span><span style="color:#fff"> </span><span style="color:#0550ae">*</span><span style="color:#1f2328">MetricRingBuffer</span><span style="color:#fff">
-</span></span></span></code></pre></div><p><strong><code>TimestampRingBuffer</code></strong></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#cf222e">type</span><span style="color:#fff"> </span><span style="color:#1f2328">TimestampRingBuffer</span><span style="color:#fff"> </span><span style="color:#1f2328">=</span><span style="color:#fff"> </span><span style="color:#1f2328">RingBuffer</span><span style="color:#1f2328">[</span><span style="color:#cf222e">int64</span><span style="color:#1f2328">]</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#57606a">// NewTimestampRingBuffer creates a new TimestampRingBuffer.</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#cf222e">func</span><span style="color:#fff"> </span><span style="color:#6639ba">NewTimestampRingBuffer</span><span style="color:#1f2328">()</span><span style="color:#fff"> </span><span style="color:#0550ae">*</span><span style="color:#1f2328">TimestampRingBuffer</span><span style="color:#fff">
-</span></span></span></code></pre></div><ul>
-<li>Type alias for RingBuffer[int64] for storing timestamps</li>
-<li>Stores timestamps in a circular buffer</li>
-<li>Implements circular overwrite behavior when buffer is full</li>
-</ul>
-<p><strong><code>FlightRecorder</code></strong></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#cf222e">type</span><span style="color:#fff"> </span><span style="color:#1f2328">Datasource</span><span style="color:#fff"> </span><span style="color:#cf222e">struct</span><span style="color:#fff"> </span><span style="color:#1f2328">{</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">   </span><span style="color:#1f2328">metrics</span><span style="color:#fff">        </span><span style="color:#cf222e">map</span><span style="color:#1f2328">[</span><span style="color:#cf222e">string</span><span style="color:#1f2328">]</span><span style="color:#0550ae">*</span><span style="color:#1f2328">MetricRingBuffer</span><span style="color:#fff"> </span><span style="color:#57606a">// Map from metric name+labels to RingBuffer storing metric values</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">   </span><span style="color:#1f2328">timestamps</span><span style="color:#fff">     </span><span style="color:#1f2328">TimestampRingBuffer</span><span style="color:#fff">          </span><span style="color:#57606a">// RingBuffer storing timestamps for each polling cycle</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">   </span><span style="color:#1f2328">descriptions</span><span style="color:#fff">   </span><span style="color:#cf222e">map</span><span style="color:#1f2328">[</span><span style="color:#cf222e">string</span><span style="color:#1f2328">]</span><span style="color:#cf222e">string</span><span style="color:#fff">            </span><span style="color:#57606a">// Map from metric name to HELP content descriptions</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">   </span><span style="color:#1f2328">Capacity</span><span style="color:#fff">       </span><span style="color:#cf222e">int</span><span style="color:#fff">                          </span><span style="color:#57606a">// Number of writable metrics length</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">   </span><span style="color:#1f2328">TotalWritten</span><span style="color:#fff">   </span><span style="color:#cf222e">uint64</span><span style="color:#fff">                       </span><span style="color:#57606a">// Total number of values written (wraps around)</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#1f2328">}</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#cf222e">type</span><span style="color:#fff"> </span><span style="color:#1f2328">FlightRecorder</span><span style="color:#fff"> </span><span style="color:#cf222e">struct</span><span style="color:#fff"> </span><span style="color:#1f2328">{</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">Datasources</span><span style="color:#fff">   </span><span style="color:#1f2328">[]</span><span style="color:#0550ae">*</span><span style="color:#1f2328">Datasource</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">CapacitySize</span><span style="color:#fff">  </span><span style="color:#cf222e">int</span><span style="color:#fff">                           </span><span style="color:#57606a">// memory limit</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#1f2328">}</span><span style="color:#fff">
-</span></span></span></code></pre></div><h4 id="key-functions-1">Key Functions</h4>
-<p><strong><code>RingBuffer[T].Add(v T, capacity int)</code></strong></p>
-<ul>
-<li>Generic method that adds a value of type T to the ring buffer</li>
-<li>Implements circular overwrite behavior when buffers are full, compare the capacity with  current MetricRingBuffer capacity, and manage the buffer with FIFO based on the next write position</li>
-<li>Updates the next write position</li>
-<li>Works for both <code>RingBuffer[float64]</code> and <code>RingBuffer[int64]</code></li>
-</ul>
-<p><strong><code>MetricRingBuffer.Update(v float64, capacity int)</code></strong></p>
-<ul>
-<li>Adds a metric value to the metric ring buffer</li>
-<li>Updates the embedded RingBuffer[float64]</li>
-</ul>
-<p><strong><code>TimestampRingBuffer.Update(v int64, capacity int)</code></strong></p>
-<ul>
-<li>Adds a timestamp value to the timestamp ring buffer</li>
-<li>Uses the generic RingBuffer[int64].Add() method</li>
-</ul>
-<p><strong><code>Datasource.Update(m *metric.RawMetric)</code></strong></p>
-<ul>
-<li>Sorts labels for consistent key generation</li>
-<li>Creates MetricKey string from metric name and labels (e.g., &ldquo;http_requests{method=&quot;get&quot;}&rdquo;)</li>
-<li>Update Datasource.MetricBuffers with MetricKey. Please don&rsquo;t add any values</li>
-<li>Get the total count of each RingBuffer based on the capacity of the Datasource.MetricBuffers and the memory limitation</li>
-<li>Create or update the RingBuffer’s total count. Remove data using FIFO strategy if its original size exceeds the new total count</li>
-<li>Uses MetricRingBuffer.Update() method to add values</li>
-</ul>
-<p><strong><code>Datasource.ComputeCapacity(capacitySize int) int</code></strong></p>
-<ul>
-<li>Computes the maximum capacity (number of entries) for ring buffers based on available memory constraints</li>
-<li>Takes <code>capacitySize</code> (in bytes) as the total memory limit available for this Datasource</li>
-<li>Returns the maximum number of entries that can be stored in each RingBuffer while staying within memory limits</li>
-<li>Calculates capacity by accounting for all memory overheads and solving for the maximum number of entries</li>
-</ul>
-<p><strong>Calculation Steps:</strong></p>
+<p>Context-aware panic diagnostics in BanyanDB and FODC provide two complementary capabilities:</p>
 <ol>
-<li>
-<p><strong>Fixed Overheads</strong> (independent of capacity):</p>
-<ul>
-<li>Metrics Map Overhead: Base map structure overhead (~48 bytes) + per-entry overhead (~16 bytes per metric key)</li>
-<li>Descriptions Map Overhead: Base map structure overhead (~48 bytes) + per-entry overhead (~24 bytes per description)</li>
-<li>String Storage: Sum of all metric key strings and description strings (16 bytes string header + actual string length for each)</li>
-<li>RingBuffer Internal Structures: For each RingBuffer (metrics + timestamps), account for:
-<ul>
-<li><code>next</code> field (int = 8 bytes on 64-bit systems)</li>
-<li>Slice header (24 bytes: pointer + length + capacity)</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>
-<p><strong>Variable Costs</strong> (per capacity entry):</p>
-<ul>
-<li>Float64 Values: <code>numMetrics * 8 bytes</code> (one float64 per metric RingBuffer)</li>
-<li>Timestamp RingBuffer: <code>8 bytes</code> (one int64 per entry)</li>
-<li>Total bytes per entry: <code>(numMetrics * 8) + 8</code></li>
-</ul>
-</li>
-<li>
-<p><strong>Capacity Calculation</strong>:</p>
-<pre tabindex="0"><code>Available Memory = capacitySize - Fixed Overheads
-Max Capacity = Available Memory / Bytes Per Entry
-</code></pre></li>
-<li>
-<p><strong>Edge Cases</strong>:</p>
-<ul>
-<li>If <code>capacitySize &lt;= 0</code>, return 0</li>
-<li>If no metrics exist yet (<code>len(metrics) == 0</code>), return a default capacity (e.g., 1000)</li>
-<li>If fixed overheads exceed <code>capacitySize</code>, return 0</li>
-<li>Ensure the result is non-negative</li>
-</ul>
-</li>
+<li>Recover selected panics with structured diagnostics and persisted artifacts.</li>
+<li>Surface those artifacts through the FODC agent and proxy for centralized inspection.</li>
 </ol>
-<h3 id="3-metrics-package-fodcinternalmetrics">3. Metrics Package (<code>fodc/internal/metrics</code>)</h3>
-<p><strong>Purpose</strong>: Parsing Prometheus text format metrics into structured Go types</p>
-<h4 id="core-types-2">Core Types</h4>
-<p><strong><code>Label</code></strong></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#cf222e">type</span><span style="color:#fff"> </span><span style="color:#1f2328">Label</span><span style="color:#fff"> </span><span style="color:#cf222e">struct</span><span style="color:#fff"> </span><span style="color:#1f2328">{</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">Name</span><span style="color:#fff">  </span><span style="color:#cf222e">string</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">Value</span><span style="color:#fff"> </span><span style="color:#cf222e">string</span><span style="color:#fff">
+<p>The implementation is no longer just a file-watching sidecar concept. The current codebase has an end-to-end flow:</p>
+<ol>
+<li><code>pkg/panicdiag</code> captures panic context, breadcrumbs, stack traces, and optional state dumps.</li>
+<li>Recovered panics are written to an artifact directory on disk.</li>
+<li>The FODC agent collects crash records from both in-process panic reports and an optional watched artifact directory.</li>
+<li>The FODC proxy requests crash collections from connected agents over the crash diagnostics gRPC stream.</li>
+<li>The proxy caches deduplicated crash records and exposes them via <code>GET /diagnostics</code>.</li>
+</ol>
+<p>This document describes the current behavior implemented in code and highlights the parts that remain operational guidance rather than shipped features.</p>
+<h2 id="current-implementation-status">Current Implementation Status</h2>
+<h3 id="implemented">Implemented</h3>
+<ul>
+<li><code>panicdiag.WithRecovery</code> and <code>panicdiag.GoWithRecovery</code> recover panics, capture stack traces, and persist structured artifacts.</li>
+<li><code>panicdiag.WithBreadcrumb</code> and <code>panicdiag.BreadcrumbsFromContext</code> preserve semantic execution markers.</li>
+<li><code>panicdiag.StateDumper</code> supports bounded JSON state dumps.</li>
+<li><code>panicdiag.CrashOutputConfig.InstallGlobalCrashOutput</code> configures the default artifact root and retention for structured panic artifacts.</li>
+<li>The FODC agent aggregates crash collections from:
+<ul>
+<li>An in-process panic reporter.</li>
+<li>An optional filesystem watcher over the configured crash directory.</li>
+</ul>
+</li>
+<li>The FODC proxy requests diagnostics from agents over <code>StreamCrashDiagnostics</code>.</li>
+<li>The proxy caches crash records keyed by <code>agentID::artifactDir</code>.</li>
+<li><code>GET /diagnostics</code> returns the proxy cache and supports filtering by <code>role</code> and <code>pod_name</code>.</li>
+</ul>
+<h3 id="not-implemented-here">Not Implemented Here</h3>
+<ul>
+<li>Automatic upload of crash artifacts from the proxy or agent to OAP.</li>
+<li>Alert fan-out such as Slack or webhook notifications.</li>
+<li>Proxy-side artifact completeness markers or remote retention coordination.</li>
+</ul>
+<p>Those remain future integration possibilities, not current behavior.</p>
+<h2 id="architecture">Architecture</h2>
+<h3 id="end-to-end-flow">End-to-End Flow</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Managed goroutine / instrumented code path
+</span></span><span style="display:flex;"><span>        │
+</span></span><span style="display:flex;"><span>        ├── Breadcrumbs added to context.Context
+</span></span><span style="display:flex;"><span>        │
+</span></span><span style="display:flex;"><span>        └── panicdiag.WithRecovery / GoWithRecovery
+</span></span><span style="display:flex;"><span>                │
+</span></span><span style="display:flex;"><span>                ├── Recover panic value
+</span></span><span style="display:flex;"><span>                ├── Capture goroutine stack
+</span></span><span style="display:flex;"><span>                ├── Read breadcrumbs from context
+</span></span><span style="display:flex;"><span>                ├── Optionally dump bounded state
+</span></span><span style="display:flex;"><span>                └── Write artifact directory on disk
+</span></span><span style="display:flex;"><span>                        │
+</span></span><span style="display:flex;"><span>                        ├── panic.json
+</span></span><span style="display:flex;"><span>                        └── deep-dump.json         (optional)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>FODC agent
+</span></span><span style="display:flex;"><span>        │
+</span></span><span style="display:flex;"><span>        ├── In-process panic store
+</span></span><span style="display:flex;"><span>        ├── Optional filesystem watcher over crash directory
+</span></span><span style="display:flex;"><span>        └── MultiCollectionProvider deduplicates by artifactDir
+</span></span><span style="display:flex;"><span>                │
+</span></span><span style="display:flex;"><span>                └── Crash diagnostics gRPC stream to proxy
+</span></span><span style="display:flex;"><span>                        │
+</span></span><span style="display:flex;"><span>                        ├── Proxy sends RequestDiagnostics=true
+</span></span><span style="display:flex;"><span>                        ├── Agent streams one message per collection
+</span></span><span style="display:flex;"><span>                        └── Proxy caches records by agentID::artifactDir
+</span></span><span style="display:flex;"><span>                                │
+</span></span><span style="display:flex;"><span>                                └── HTTP GET /diagnostics
+</span></span></code></pre></div><h3 id="why-the-layers-are-separate">Why the Layers Are Separate</h3>
+<ul>
+<li><code>panicdiag</code> is responsible for local panic capture and artifact persistence.</li>
+<li>The FODC agent is responsible for discovering crash collections from local sources.</li>
+<li>The FODC proxy is responsible for requesting, caching, filtering, and serving fleet-wide diagnostics.</li>
+<li>Global crash output remains the last-resort path for fatal runtime crashes that bypass recovery in processes that enable it, such as the FODC agent.</li>
+</ul>
+<h2 id="component-design">Component Design</h2>
+<h3 id="1-recovery-runtime">1. Recovery Runtime</h3>
+<p><strong>Purpose</strong>: Recover managed panics and persist structured diagnostics.</p>
+<h4 id="core-types">Core Types</h4>
+<p><strong><code>RecoveryOptions</code></strong></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#cf222e">type</span><span style="color:#fff"> </span><span style="color:#1f2328">RecoveryOptions</span><span style="color:#fff"> </span><span style="color:#cf222e">struct</span><span style="color:#fff"> </span><span style="color:#1f2328">{</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">Counter</span><span style="color:#fff">         </span><span style="color:#1f2328">meter</span><span style="color:#1f2328">.</span><span style="color:#1f2328">Counter</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">Logger</span><span style="color:#fff">          </span><span style="color:#0550ae">*</span><span style="color:#1f2328">logger</span><span style="color:#1f2328">.</span><span style="color:#1f2328">Logger</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">StateDumper</span><span style="color:#fff">     </span><span style="color:#1f2328">StateDumper</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">ProcessMetadata</span><span style="color:#fff"> </span><span style="color:#cf222e">map</span><span style="color:#1f2328">[</span><span style="color:#cf222e">string</span><span style="color:#1f2328">]</span><span style="color:#cf222e">string</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">Component</span><span style="color:#fff">       </span><span style="color:#cf222e">string</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">ArtifactRoot</span><span style="color:#fff">    </span><span style="color:#cf222e">string</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">StateLimitBytes</span><span style="color:#fff"> </span><span style="color:#cf222e">int64</span><span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#1f2328">}</span><span style="color:#fff">
-</span></span></span></code></pre></div><p><strong><code>RawMetric</code></strong></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#cf222e">type</span><span style="color:#fff"> </span><span style="color:#1f2328">RawMetric</span><span style="color:#fff"> </span><span style="color:#cf222e">struct</span><span style="color:#fff"> </span><span style="color:#1f2328">{</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">   </span><span style="color:#1f2328">Name</span><span style="color:#fff">        </span><span style="color:#cf222e">string</span><span style="color:#fff">      </span><span style="color:#57606a">// Metric name</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">   </span><span style="color:#1f2328">Labels</span><span style="color:#fff">      </span><span style="color:#1f2328">[]</span><span style="color:#1f2328">Label</span><span style="color:#fff">     </span><span style="color:#57606a">// Metric labels as key-value pairs</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">   </span><span style="color:#1f2328">Value</span><span style="color:#fff">       </span><span style="color:#cf222e">float64</span><span style="color:#fff">     </span><span style="color:#57606a">// Metric value</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">   </span><span style="color:#1f2328">Desc</span><span style="color:#fff">        </span><span style="color:#cf222e">string</span><span style="color:#fff">      </span><span style="color:#57606a">// HELP text description if available</span><span style="color:#fff">
+</span></span></span></code></pre></div><p><strong><code>StateDumper</code></strong></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#cf222e">type</span><span style="color:#fff"> </span><span style="color:#1f2328">StateDumper</span><span style="color:#fff"> </span><span style="color:#cf222e">interface</span><span style="color:#fff"> </span><span style="color:#1f2328">{</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#6639ba">DumpState</span><span style="color:#1f2328">(</span><span style="color:#1f2328">context</span><span style="color:#1f2328">.</span><span style="color:#1f2328">Context</span><span style="color:#1f2328">)</span><span style="color:#fff"> </span><span style="color:#1f2328">(</span><span style="color:#cf222e">any</span><span style="color:#1f2328">,</span><span style="color:#fff"> </span><span style="color:#cf222e">error</span><span style="color:#1f2328">)</span><span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#1f2328">}</span><span style="color:#fff">
-</span></span></span></code></pre></div><p><strong><code>MetricKey</code></strong></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#cf222e">type</span><span style="color:#fff"> </span><span style="color:#1f2328">MetricKey</span><span style="color:#fff"> </span><span style="color:#cf222e">struct</span><span style="color:#fff"> </span><span style="color:#1f2328">{</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">   </span><span style="color:#1f2328">Name</span><span style="color:#fff">   </span><span style="color:#cf222e">string</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">   </span><span style="color:#1f2328">Labels</span><span style="color:#fff"> </span><span style="color:#1f2328">[]</span><span style="color:#1f2328">Label</span><span style="color:#fff">
+</span></span></span></code></pre></div><p><strong><code>PanicRecord</code></strong></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#cf222e">type</span><span style="color:#fff"> </span><span style="color:#1f2328">PanicRecord</span><span style="color:#fff"> </span><span style="color:#cf222e">struct</span><span style="color:#fff"> </span><span style="color:#1f2328">{</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">ProcessMetadata</span><span style="color:#fff"> </span><span style="color:#cf222e">map</span><span style="color:#1f2328">[</span><span style="color:#cf222e">string</span><span style="color:#1f2328">]</span><span style="color:#cf222e">string</span><span style="color:#fff"> </span><span style="color:#0a3069">`json:&#34;processMetadata,omitempty&#34;`</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">StateDump</span><span style="color:#fff">       </span><span style="color:#0550ae">*</span><span style="color:#1f2328">StateDumpStatus</span><span style="color:#fff">  </span><span style="color:#0a3069">`json:&#34;stateDump,omitempty&#34;`</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">Component</span><span style="color:#fff">       </span><span style="color:#cf222e">string</span><span style="color:#fff">            </span><span style="color:#0a3069">`json:&#34;component&#34;`</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">PanicValue</span><span style="color:#fff">      </span><span style="color:#cf222e">string</span><span style="color:#fff">            </span><span style="color:#0a3069">`json:&#34;panicValue&#34;`</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">GoroutineStack</span><span style="color:#fff">  </span><span style="color:#cf222e">string</span><span style="color:#fff">            </span><span style="color:#0a3069">`json:&#34;goroutineStack&#34;`</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">OccurredAt</span><span style="color:#fff">      </span><span style="color:#1f2328">time</span><span style="color:#1f2328">.</span><span style="color:#1f2328">Time</span><span style="color:#fff">         </span><span style="color:#0a3069">`json:&#34;occurredAt&#34;`</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">Breadcrumbs</span><span style="color:#fff">     </span><span style="color:#1f2328">[]</span><span style="color:#1f2328">Breadcrumb</span><span style="color:#fff">      </span><span style="color:#0a3069">`json:&#34;breadcrumbs,omitempty&#34;`</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">Recovered</span><span style="color:#fff">       </span><span style="color:#cf222e">bool</span><span style="color:#fff">              </span><span style="color:#0a3069">`json:&#34;recovered&#34;`</span><span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#1f2328">}</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#cf222e">func</span><span style="color:#fff"> </span><span style="color:#1f2328">(</span><span style="color:#1f2328">mk</span><span style="color:#fff"> </span><span style="color:#1f2328">MetricKey</span><span style="color:#1f2328">)</span><span style="color:#fff"> </span><span style="color:#6639ba">String</span><span style="color:#1f2328">()</span><span style="color:#fff"> </span><span style="color:#cf222e">string</span><span style="color:#fff">
-</span></span></span></code></pre></div><ul>
-<li>Used for uniquely identifying metrics in FlightRecorder</li>
-<li>Labels are sorted for consistent key generation</li>
-<li>String() method generates a canonical representation</li>
-</ul>
-<h4 id="key-functions-2">Key Functions</h4>
-<p><strong><code>Parse(text string) ([]RawMetric, error)</code></strong></p>
+</span></span></span></code></pre></div><h4 id="current-behavior">Current Behavior</h4>
 <ul>
-<li>Parses Prometheus text format metrics</li>
-<li>Handles HELP and TYPE lines</li>
-<li>Parses metric lines with labels and values</li>
-<li>Handles comments and empty lines</li>
-<li>Returns structured RawMetric objects or error</li>
-</ul>
-<h3 id="4-prometheus-metrics-exporter-component-fodcinternalexporter">4. Prometheus Metrics Exporter Component (<code>fodc/internal/exporter</code>)</h3>
-<p><strong>Purpose</strong>: Exposes Datasource metrics from FlightRecorder to Prometheus using the <code>prometheus/client_golang</code> library</p>
-<h4 id="core-responsibilities-2">Core Responsibilities</h4>
+<li><code>WithRecovery</code> recovers panics with <code>defer</code> and <code>recover</code>.</li>
+<li>The active <code>context.Context</code> is passed by pointer so breadcrumbs appended during execution are visible to recovery.</li>
+<li>If configured, a panic counter is incremented with a <code>component</code> label.</li>
+<li>If an artifact root is available, <code>panic.json</code> is written immediately.</li>
+<li>If a <code>StateDumper</code> is configured, the runtime writes:
 <ul>
-<li><strong>Metrics Export</strong>: Implements Prometheus Collector interface to expose Datasource metrics</li>
-<li><strong>Metrics Conversion</strong>: Converts internal Datasource metrics format to Prometheus metric format</li>
-<li><strong>Registry Integration</strong>: Registers with Prometheus registry for metrics scraping</li>
-<li><strong>Label Handling</strong>: Preserves metric labels and descriptions when exporting</li>
+<li><code>deep-dump.json</code></li>
 </ul>
-<h4 id="core-types-3">Core Types</h4>
-<p><strong><code>DatasourceCollector</code></strong></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#cf222e">type</span><span style="color:#fff"> </span><span style="color:#1f2328">DatasourceCollector</span><span style="color:#fff"> </span><span style="color:#cf222e">struct</span><span style="color:#fff"> </span><span style="color:#1f2328">{</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">flightRecorder</span><span style="color:#fff"> </span><span style="color:#0550ae">*</span><span style="color:#1f2328">FlightRecorder</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">descs</span><span style="color:#fff">          </span><span style="color:#cf222e">map</span><span style="color:#1f2328">[</span><span style="color:#cf222e">string</span><span style="color:#1f2328">]</span><span style="color:#0550ae">*</span><span style="color:#1f2328">prometheus</span><span style="color:#1f2328">.</span><span style="color:#1f2328">Desc</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">mu</span><span style="color:#fff">             </span><span style="color:#1f2328">sync</span><span style="color:#1f2328">.</span><span style="color:#1f2328">RWMutex</span><span style="color:#fff">
+</li>
+<li>The in-process panic report includes breadcrumbs and state-dump status. Filesystem-backed collections derive their structured record from <code>panic.json</code> and list dump files separately.</li>
+</ul>
+<h3 id="2-global-panic-diagnostics">2. Global Panic Diagnostics</h3>
+<p><strong>Purpose</strong>: Configure structured panic artifacts for failures that pass through <code>WithRecovery</code>.</p>
+<h4 id="current-behavior-1">Current Behavior</h4>
+<ul>
+<li><code>CrashOutputConfig.InstallGlobalCrashOutput</code> does not create <code>runtime-crash-&lt;pid&gt;.txt</code> files.</li>
+<li>Installing panic diagnostics sets:
+<ul>
+<li>the default artifact root used by <code>panicdiag</code></li>
+<li>the default maximum number of retained artifact directories</li>
+</ul>
+</li>
+<li><code>--max-diagnosis-memory-usage-percentage</code> can reserve memory headroom for post-panic diagnostics.</li>
+</ul>
+<p>In the current FODC code, this crash-output path is enabled by the FODC agent, not the FODC proxy.</p>
+<p>This is the safety net for fatal runtime failures and escaped panics.</p>
+<h3 id="3-diagnostic-breadcrumbs">3. Diagnostic Breadcrumbs</h3>
+<p><strong>Purpose</strong>: Preserve the semantic path that led to a panic.</p>
+<h4 id="core-type">Core Type</h4>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#cf222e">type</span><span style="color:#fff"> </span><span style="color:#1f2328">Breadcrumb</span><span style="color:#fff"> </span><span style="color:#cf222e">struct</span><span style="color:#fff"> </span><span style="color:#1f2328">{</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">Fields</span><span style="color:#fff">    </span><span style="color:#cf222e">map</span><span style="color:#1f2328">[</span><span style="color:#cf222e">string</span><span style="color:#1f2328">]</span><span style="color:#cf222e">string</span><span style="color:#fff"> </span><span style="color:#0a3069">`json:&#34;fields,omitempty&#34;`</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">Time</span><span style="color:#fff">      </span><span style="color:#1f2328">time</span><span style="color:#1f2328">.</span><span style="color:#1f2328">Time</span><span style="color:#fff">         </span><span style="color:#0a3069">`json:&#34;time&#34;`</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">Stage</span><span style="color:#fff">     </span><span style="color:#cf222e">string</span><span style="color:#fff">            </span><span style="color:#0a3069">`json:&#34;stage&#34;`</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">Component</span><span style="color:#fff"> </span><span style="color:#cf222e">string</span><span style="color:#fff">            </span><span style="color:#0a3069">`json:&#34;component,omitempty&#34;`</span><span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#1f2328">}</span><span style="color:#fff">
-</span></span></span></code></pre></div><ul>
-<li>Implements <code>prometheus.Collector</code> interface</li>
-<li>Holds reference to FlightRecorder for accessing Datasource metrics</li>
-<li>Caches Prometheus metric descriptors for performance</li>
-<li>Thread-safe access to FlightRecorder data</li>
+</span></span></span></code></pre></div><h4 id="current-behavior-2">Current Behavior</h4>
+<ul>
+<li><code>WithBreadcrumb(ctx, stage, component, fields)</code> returns a derived context with one additional immutable marker.</li>
+<li><code>BreadcrumbsFromContext(ctx)</code> returns markers ordered oldest-to-newest.</li>
+<li>The implementation clones field maps so callers cannot mutate already-recorded breadcrumb data.</li>
+<li>Breadcrumbs are already used in several query and service paths, including FODC lifecycle collection and BanyanDB stream and measure query handling.</li>
 </ul>
-<h4 id="key-functions-3">Key Functions</h4>
-<p><strong><code>NewDatasourceCollector(fr *FlightRecorder) *DatasourceCollector</code></strong></p>
+<h3 id="4-deep-state-serialization">4. Deep State Serialization</h3>
+<p><strong>Purpose</strong>: Persist bounded state that helps explain the crash input and runtime state.</p>
+<h4 id="current-behavior-3">Current Behavior</h4>
 <ul>
-<li>Creates a new DatasourceCollector instance</li>
-<li>Initializes the descriptor cache map</li>
-<li>Returns initialized collector ready for registration</li>
+<li><code>StateDumper.DumpState</code> is called only after a panic has been recovered.</li>
+<li>The runtime writes a bounded JSON dump.</li>
+<li>Serialization status is recorded in <code>PanicRecord.StateDump</code>.</li>
+<li>Serialization failure does not prevent panic recovery or artifact creation.</li>
 </ul>
-<p><strong><code>Describe(ch chan&lt;- *prometheus.Desc)</code></strong></p>
+<h4 id="statedump-status">StateDump Status</h4>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#cf222e">type</span><span style="color:#fff"> </span><span style="color:#1f2328">StateDumpStatus</span><span style="color:#fff"> </span><span style="color:#cf222e">struct</span><span style="color:#fff"> </span><span style="color:#1f2328">{</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">Path</span><span style="color:#fff">      </span><span style="color:#cf222e">string</span><span style="color:#fff"> </span><span style="color:#0a3069">`json:&#34;path,omitempty&#34;`</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">Error</span><span style="color:#fff">     </span><span style="color:#cf222e">string</span><span style="color:#fff"> </span><span style="color:#0a3069">`json:&#34;error,omitempty&#34;`</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">Truncated</span><span style="color:#fff"> </span><span style="color:#cf222e">bool</span><span style="color:#fff">   </span><span style="color:#0a3069">`json:&#34;truncated,omitempty&#34;`</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#1f2328">}</span><span style="color:#fff">
+</span></span></span></code></pre></div><h3 id="5-artifact-writer">5. Artifact Writer</h3>
+<p><strong>Purpose</strong>: Write crash diagnostics into a stable per-panic directory.</p>
+<h4 id="current-layout">Current Layout</h4>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>&lt;panic-diagnostics-dir&gt;/
+</span></span><span style="display:flex;"><span>  &lt;timestamp&gt;-&lt;component&gt;-&lt;pid&gt;/
+</span></span><span style="display:flex;"><span>    panic.json
+</span></span><span style="display:flex;"><span>    deep-dump.json        (optional)
+</span></span></code></pre></div><h4 id="naming-and-retention">Naming and Retention</h4>
 <ul>
-<li>Implements <code>prometheus.Collector</code> interface</li>
-<li>Sends metric descriptors to the channel for Prometheus registry</li>
-<li>Describes all metrics that will be exposed from Datasources</li>
-<li>Creates descriptors dynamically based on metrics stored in Datasources</li>
-<li>Uses metric name and labels to generate unique descriptor keys</li>
-<li>Includes HELP text from Datasource descriptions map</li>
+<li>Artifact directories are named as <code>&lt;UTC timestamp&gt;-&lt;sanitized component&gt;-&lt;pid&gt;</code>.</li>
+<li>Components are sanitized for safe filesystem names.</li>
+<li>Retention pruning removes the oldest artifact directories first.</li>
+<li>Only directories containing <code>panic.json</code> are treated as crash artifacts for pruning.</li>
 </ul>
-<p><strong><code>Collect(ch chan&lt;- prometheus.Metric)</code></strong></p>
+<h3 id="6-fodc-agent-collection">6. FODC Agent Collection</h3>
+<p><strong>Purpose</strong>: Merge locally available crash collections into one streamable view.</p>
+<h4 id="sources">Sources</h4>
 <ul>
-<li>Implements <code>prometheus.Collector</code> interface</li>
-<li>Iterates through all Datasources in FlightRecorder</li>
-<li>For each Datasource:
+<li><code>InProcessPanicStore</code>
 <ul>
-<li>Iterates through all metrics in the <code>metrics</code> map</li>
-<li>Extracts metric values from RingBuffers</li>
-<li>Creates Prometheus Gauge metrics with current values</li>
-<li>Preserves original metric labels from MetricKey</li>
-<li>Includes timestamps from TimestampRingBuffer when available</li>
-</ul>
-</li>
-<li>Sends Prometheus metrics to the channel</li>
-<li>Handles concurrent access safely using mutex</li>
-</ul>
-<p><strong><code>DatasourceCollector.registerMetricDesc(name string, labels []string, help string) *prometheus.Desc</code></strong></p>
-<ul>
-<li>Creates or retrieves cached Prometheus descriptor for a metric</li>
-<li>Uses metric name and sorted labels as cache key</li>
-<li>Returns Prometheus descriptor for metric registration</li>
-<li>Reuses descriptors to minimize memory allocation</li>
-</ul>
-<h4 id="integration-with-observability-service">Integration with Observability Service</h4>
-<p>The DatasourceCollector integrates with the existing observability service (<code>banyand/observability</code>) to expose metrics:</p>
-<p><strong>Registration Flow</strong>:</p>
-<pre tabindex="0"><code>1. FlightRecorder instance created
-   ↓
-2. DatasourceCollector created with FlightRecorder reference
-   ↓
-3. Collector registered with Prometheus registry
-   (promReg.MustRegister(dataSourceCollector))
-   ↓
-4. Metrics endpoint handler exposes metrics
-   (registerMetricsEndpoint(promReg, metricsMux))
-   ↓
-5. Prometheus scrapes /metrics endpoint
-   ↓
-6. DatasourceCollector.Collect() called
-   ↓
-7. Metrics from Datasources exposed in Prometheus format
-</code></pre><p><strong>Metric Format</strong>:</p>
-<ul>
-<li>Metrics are exposed as Prometheus Gauge metrics</li>
-<li>Original metric names are preserved</li>
-<li>Labels from MetricKey are converted to Prometheus label format</li>
-<li>HELP text from descriptions map is included</li>
-<li>Current values from RingBuffers are exported</li>
-</ul>
-<p><strong>Example Exported Metrics</strong>:</p>
-<pre tabindex="0"><code># HELP banyandb_stream_tst_inverted_index_total_doc_count Total document count
-# TYPE banyandb_stream_tst_inverted_index_total_doc_count gauge
-banyandb_stream_tst_inverted_index_total_doc_count{index=&#34;test&#34;} 12345
-</code></pre><h4 id="dependencies">Dependencies</h4>
-<ul>
-<li><strong><code>github.com/prometheus/client_golang/prometheus</code></strong>: Core Prometheus client library</li>
-<li><strong>FlightRecorder</strong>: Source of Datasource metrics data</li>
-<li><strong>Thread Safety</strong>: Uses mutex for concurrent access protection</li>
-</ul>
-<h4 id="configuration">Configuration</h4>
-<p>The exporter component uses the existing Prometheus configuration from the observability service:</p>
-<ul>
-<li><strong>Metrics Endpoint</strong>: <code>/metrics</code> (default)</li>
-<li><strong>Listen Address</strong>: Configured via <code>--observability-listener-addr</code> flag</li>
-<li><strong>Prometheus Mode</strong>: Enabled via <code>--observability-modes=prometheus</code> flag</li>
-</ul>
-<h2 id="data-flow">Data Flow</h2>
-<h3 id="metrics-collection-flow">Metrics Collection Flow</h3>
-<pre tabindex="0"><code>1. Watchdog Polling Timer Triggers
-   ↓
-2. HTTP GET Request to Metrics Endpoint
-   (http://localhost:2121/metrics)
-   ↓
-3. Read Response Body (Prometheus Text Format)
-   ↓
-4. Parse Metrics Using metrics.Parse()
-   - Parse HELP lines for descriptions
-   - Parse metric lines with labels and values
-   ↓
-5. Convert to RawMetric Structures
-   ↓
-6. Forward to Flight Recorder
-   ↓
-7. Flight Recorder.Update() Called
-   ↓
-8. For Each Metric:
-   a. Create MetricKey from metric name and sorted labels (e.g., &#34;http_requests{method=\&#34;get\&#34;}&#34;)
-   b. Ensure the RingBuffer[float64] exists in Datasource.metrics for the MetricKey
-     - If it doesn&#39;t exist, create a new RingBuffer[float64] (do not add values yet)
-   c. Calculate the target capacity for each RingBuffer based on:
-     - The capacity of Datasource.metrics map
-     - Available memory limitations
-   d. Adjust RingBuffer capacity if needed:
-     - If the RingBuffer&#39;s current size exceeds the new target capacity, remove oldest data using FIFO (First-In-First-Out) strategy
-     - Update the RingBuffer&#39;s capacity to match the target capacity
-   e. Add the metric value to the RingBuffer in Datasource.metrics
-   f. Store the metric description in Datasource.descriptions map using the MetricKey
-   g. Add timestamp to Datasource.timestamps RingBuffer (once per polling cycle, not per metric)
-   ↓
-9. Metrics Buffered in Memory via FlightRecorder
-</code></pre><h3 id="metrics-export-flow">Metrics Export Flow</h3>
-<pre tabindex="0"><code>1. Prometheus Scraper Requests Metrics
-   (HTTP GET /metrics endpoint)
-   ↓
-2. Prometheus HTTP Handler Invoked
-   (promhttp.HandlerFor with registry)
-   ↓
-3. Prometheus Registry Calls Collectors
-   ↓
-4. DatasourceCollector.Collect() Called
-   ↓
-5. For Each Datasource in FlightRecorder:
-   a. Acquire read lock on FlightRecorder
-   b. Iterate through Datasource.metrics map
-   c. For each MetricKey and RingBuffer:
-      - Extract current metric value from RingBuffer
-      - Retrieve metric description from Datasource.descriptions
-      - Parse MetricKey to extract metric name and labels
-      - Create Prometheus Gauge metric with:
-        * Metric name (from MetricKey)
-        * Labels (from MetricKey labels)
-        * Current value (from RingBuffer)
-        * HELP text (from descriptions map)
-   d. Send Prometheus metrics to channel
-   ↓
-6. Prometheus Registry Aggregates Metrics
-   ↓
-7. Metrics Exposed in Prometheus Text Format
-   ↓
-8. Prometheus Scraper Receives Metrics
-</code></pre><h2 id="testing-strategy">Testing Strategy</h2>
-<h3 id="unit-testing">Unit Testing</h3>
-<p><strong>Metrics Package</strong></p>
-<ul>
-<li>Test <code>Parse()</code> with various Prometheus formats</li>
-<li>Test HELP line parsing</li>
-<li>Test label parsing (quoted values, special characters)</li>
-<li>Test edge cases (empty labels, invalid formats, comments)</li>
-<li>Test performance with large metrics outputs</li>
-</ul>
-<p><strong>Flight Recorder Package</strong></p>
-<ul>
-<li>Test RingBuffer[T].Add() write operations for both float64 and int64 types</li>
-<li>Test MetricRingBuffer.Update()</li>
-<li>Test TimestampRingBuffer.Update() operations</li>
-<li>Test FlightRecorder.Update() with new and existing metrics</li>
-<li>Test circular overwrite behavior</li>
-<li>Test histogram storage and retrieval</li>
-<li>Test concurrent writes</li>
-<li>Test error handling</li>
-<li>Test generic RingBuffer[T] type safety</li>
-</ul>
-<p><strong>Watchdog Package</strong></p>
-<ul>
-<li>Test polling interval accuracy</li>
-<li>Test HTTP client connection reuse</li>
-<li>Test exponential backoff retry logic</li>
-<li>Test error handling for connection failures</li>
-<li>Test metrics forwarding to Flight Recorder</li>
-</ul>
-<p><strong>Prometheus Metrics Exporter Package</strong></p>
-<ul>
-<li>Test <code>DatasourceCollector.Describe()</code> method
-<ul>
-<li>Verify all metric descriptors are described correctly</li>
-<li>Test descriptor caching behavior</li>
-<li>Test with empty FlightRecorder</li>
-<li>Test with multiple Datasources</li>
+<li>receives reports directly from <code>panicdiag</code> through the default reporter</li>
 </ul>
 </li>
-<li>Test <code>DatasourceCollector.Collect()</code> method
+<li><code>DirectoryWatcher</code>
 <ul>
-<li>Verify metrics are collected from all Datasources</li>
-<li>Test label preservation from MetricKey</li>
-<li>Test HELP text inclusion from descriptions map</li>
-<li>Test metric value extraction from RingBuffers</li>
-<li>Test concurrent access safety</li>
-<li>Test with empty RingBuffers</li>
-<li>Test with multiple metrics per Datasource</li>
-</ul>
-</li>
-<li>Test Prometheus registry integration
-<ul>
-<li>Verify collector registration</li>
-<li>Test metrics exposure via HTTP endpoint</li>
-<li>Verify Prometheus text format compliance</li>
-</ul>
-</li>
-<li>Test error handling
-<ul>
-<li>Test with nil FlightRecorder</li>
-<li>Test with corrupted metric data</li>
-<li>Test with invalid label values</li>
+<li>scans a crash directory using filesystem notifications plus periodic rescans</li>
+<li>waits until <code>panic.json</code> exists before storing a filesystem-backed collection</li>
 </ul>
 </li>
 </ul>
-<h3 id="e2e-testing">E2E Testing</h3>
-<p><strong>Test Case 1: Basic Metrics Buffering</strong></p>
+<h4 id="merging">Merging</h4>
+<p><code>MultiCollectionProvider</code> deduplicates by <code>Collection.ArtifactDir</code> so the same artifact is not reported twice when it is seen by both the in-process store and the directory watcher.</p>
+<h4 id="collection-record">Collection Record</h4>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#cf222e">type</span><span style="color:#fff"> </span><span style="color:#1f2328">CollectionRecord</span><span style="color:#fff"> </span><span style="color:#cf222e">struct</span><span style="color:#fff"> </span><span style="color:#1f2328">{</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">FetchedAt</span><span style="color:#fff">      </span><span style="color:#1f2328">time</span><span style="color:#1f2328">.</span><span style="color:#1f2328">Time</span><span style="color:#fff">            </span><span style="color:#0a3069">`json:&#34;fetchedAt&#34;`</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">SourceEndpoint</span><span style="color:#fff"> </span><span style="color:#cf222e">string</span><span style="color:#fff">               </span><span style="color:#0a3069">`json:&#34;sourceEndpoint&#34;`</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">	</span><span style="color:#1f2328">Collection</span><span style="color:#fff">     </span><span style="color:#1f2328">panicdiag</span><span style="color:#1f2328">.</span><span style="color:#1f2328">Collection</span><span style="color:#fff"> </span><span style="color:#0a3069">`json:&#34;collection&#34;`</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#1f2328">}</span><span style="color:#fff">
+</span></span></span></code></pre></div><h3 id="7-fodc-proxy-aggregation">7. FODC Proxy Aggregation</h3>
+<p><strong>Purpose</strong>: Collect diagnostics from connected agents on demand and expose a filtered fleet view.</p>
+<h4 id="current-behavior-4">Current Behavior</h4>
 <ul>
-<li>Start BanyanDB</li>
-<li>Generate metrics by performing operations</li>
-<li>Wait for Watchdog to poll metrics</li>
-<li>Verify metrics are buffered correctly through internal checks</li>
+<li>The proxy creates the diagnostics aggregator before the gRPC service exists.</li>
+<li><code>SetGRPCService</code> wires the gRPC sender after service construction.</li>
+<li><code>CollectDiagnostics</code> reads <code>grpcService</code> under lock.</li>
+<li>If <code>grpcService</code> is still <code>nil</code> during startup, the proxy logs a warning and returns the cached snapshot instead of failing.</li>
+<li>On each <code>GET /diagnostics</code> request, the proxy:
+<ol>
+<li>filters agents by <code>role</code> and optional <code>pod_name</code></li>
+<li>sends <code>RequestDiagnostics(agentID)</code> to each matching agent</li>
+<li>waits a short fixed collection window</li>
+<li>returns the current cached snapshot</li>
+</ol>
+</li>
 </ul>
-<p><strong>Test Case 2: Buffer Overflow Handling</strong></p>
+<h4 id="cache-semantics">Cache Semantics</h4>
 <ul>
-<li>Start BanyanDB</li>
-<li>Generate large number of metric values (exceeding buffer size)</li>
-<li>Verify circular overwrite behavior</li>
-<li>Verify newest metrics are preserved</li>
-<li>Verify oldest metrics are overwritten correctly</li>
+<li>Each incoming <code>StreamCrashDiagnosticsRequest</code> represents one artifact.</li>
+<li>The proxy cache key is <code>agentID::artifactDir</code>.</li>
+<li>Repeated sends update the cached record in place.</li>
+<li>Removing an agent removes all cached records for that agent.</li>
+<li>Request failures are non-fatal and are logged as agent capability or stream-availability issues.</li>
 </ul>
-<p><strong>Test Case 3: Metrics Export to Prometheus</strong></p>
+<h2 id="crash-artifacts">Crash Artifacts</h2>
+<h3 id="persisted-panicjson-example">Persisted <code>panic.json</code> Example</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>BanyanDB panic recovered
+</span></span><span style="display:flex;"><span>OccurredAt: 2026-04-01T10:11:12Z
+</span></span><span style="display:flex;"><span>Component: measure-query-worker
+</span></span><span style="display:flex;"><span>Recovered: true
+</span></span><span style="display:flex;"><span>Panic: runtime error: index out of range [7] with length 4
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Stack:
+</span></span><span style="display:flex;"><span>goroutine 9123 [running]:
+</span></span><span style="display:flex;"><span>...
+</span></span></code></pre></div><h3 id="files-in-a-collection">Files in a Collection</h3>
 <ul>
-<li>Start BanyanDB with Prometheus mode enabled</li>
-<li>Generate metrics and wait for Watchdog to collect them</li>
-<li>Verify metrics are stored in FlightRecorder Datasources</li>
-<li>Scrape <code>/metrics</code> endpoint using Prometheus client</li>
-<li>Verify exported metrics match buffered metrics</li>
-<li>Verify metric labels are preserved correctly</li>
-<li>Verify HELP text is included in exported metrics</li>
-<li>Verify metric values are current (from RingBuffers)</li>
-<li>Test concurrent scraping while metrics are being updated</li>
+<li><code>panic.json</code> is the required structured summary written by the artifact writer. Filesystem collection parses its core fields into <code>panic_record</code>.</li>
+<li><code>deep-dump.json</code> is optional.</li>
+</ul>
+<h3 id="completeness-rules">Completeness Rules</h3>
+<ul>
+<li><code>panic.json</code> is required for a directory to be recognized as a crash collection by <code>panicdiag.ListCollections</code>.</li>
+<li>The agent-side <code>DirectoryWatcher</code> treats <code>panic.json</code> as the required file for a complete artifact.</li>
+<li>Directories without <code>panic.json</code> are ignored until a later scan observes the summary file.</li>
+</ul>
+<h2 id="proxy-api-and-collection-semantics">Proxy API and Collection Semantics</h2>
+<h3 id="http-endpoint">HTTP Endpoint</h3>
+<p>The proxy exposes:</p>
+<ul>
+<li><code>GET /diagnostics</code></li>
+</ul>
+<p>Supported query parameters:</p>
+<ul>
+<li><code>role</code></li>
+<li><code>pod_name</code></li>
+</ul>
+<p>The endpoint returns an array of aggregated records.</p>
+<h3 id="returned-record-shape">Returned Record Shape</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-json" data-lang="json"><span style="display:flex;"><span><span style="color:#1f2328">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#0550ae">&#34;fetched_at&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;2026-04-20T10:00:00Z&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#0550ae">&#34;panic_record&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0550ae">&#34;occurred_at&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;2026-04-20T09:59:30Z&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0550ae">&#34;component&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;watchdog&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0550ae">&#34;goroutine_stack&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;goroutine 100 [running]:\n...&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0550ae">&#34;panic_value&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;boom&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0550ae">&#34;recovered&#34;</span><span style="color:#1f2328">:</span> <span style="color:#cf222e">true</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#1f2328">},</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#0550ae">&#34;agent_id&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;agent-1&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#0550ae">&#34;pod_name&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;banyand-datanode-0&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#0550ae">&#34;role&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;datanode&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#0550ae">&#34;source_endpoint&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;file:///crash&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#0550ae">&#34;artifact_dir&#34;</span><span style="color:#1f2328">:</span> <span style="color:#0a3069">&#34;20260420T095930.000000000Z-watchdog-1234&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#0550ae">&#34;files&#34;</span><span style="color:#1f2328">:</span> <span style="color:#1f2328">[</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0a3069">&#34;panic.json&#34;</span><span style="color:#1f2328">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0a3069">&#34;deep-dump.json&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#1f2328">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">}</span>
+</span></span></code></pre></div><h3 id="requestresponse-model">Request/Response Model</h3>
+<ul>
+<li>The proxy does not continuously mirror all agent crash collections.</li>
+<li>Diagnostics are refreshed on demand when the HTTP endpoint is called.</li>
+<li>Agents respond by listing their currently known collections and streaming them one-by-one to the proxy.</li>
+<li>The proxy then serves a cached snapshot after waiting for a short response window.</li>
+</ul>
+<p>This model avoids requiring a batch-end marker in the current proto while still giving the HTTP caller a coherent fleet snapshot.</p>
+<h2 id="deployment-and-operations">Deployment and Operations</h2>
+<h3 id="shared-directory-model">Shared Directory Model</h3>
+<p>The local crash artifact directory is still important, but it now primarily feeds the FODC agent rather than a separate sidecar uploader.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>+---------------------------+        +---------------------------+
+</span></span><span style="display:flex;"><span>| BanyanDB / FODC process   |        | FODC agent               |
+</span></span><span style="display:flex;"><span>|                           |        |                           |
+</span></span><span style="display:flex;"><span>| panicdiag writes artifacts| -----&gt; | In-process store          |
+</span></span><span style="display:flex;"><span>|                           | local  | Directory watcher         |
+</span></span><span style="display:flex;"><span>|                           | dir    | gRPC crash stream client  |
+</span></span><span style="display:flex;"><span>+---------------------------+        +-------------+-------------+
+</span></span><span style="display:flex;"><span>                                                  |
+</span></span><span style="display:flex;"><span>                                                  v
+</span></span><span style="display:flex;"><span>                                        +-----------------------+
+</span></span><span style="display:flex;"><span>                                        | FODC proxy            |
+</span></span><span style="display:flex;"><span>                                        | diagnostics cache     |
+</span></span><span style="display:flex;"><span>                                        | GET /diagnostics      |
+</span></span><span style="display:flex;"><span>                                        +-----------------------+
+</span></span></code></pre></div><h3 id="relevant-flags">Relevant Flags</h3>
+<p>From the current implementation:</p>
+<ul>
+<li><code>--panic-diagnostics-enabled</code></li>
+<li><code>--panic-diagnostics-dir</code></li>
+<li><code>--panic-diagnostics-max-artifacts</code></li>
+<li><code>--max-diagnosis-memory-usage-percentage</code></li>
+</ul>
+<p>These flags are part of the FODC agent&rsquo;s CLI surface. Agent crash collection also depends on the configured watched crash source directory when filesystem-backed collection is enabled.</p>
+<h3 id="operational-notes">Operational Notes</h3>
+<ul>
+<li>The artifact directory should be writable by the process generating artifacts.</li>
+<li>Retention is directory-count based, not total-byte based.</li>
+<li><code>GOMEMLIMIT</code> headroom helps the process finish diagnostic work under memory pressure.</li>
+<li>Incomplete artifacts may appear transiently while files are still being written.</li>
+<li>During proxy startup, <code>/diagnostics</code> can return a cached snapshot even before the gRPC service has been wired into the aggregator.</li>
+</ul>
+<h2 id="testing-strategy">Testing Strategy</h2>
+<h3 id="unit-tests">Unit Tests</h3>
+<ul>
+<li><code>WithRecovery</code> captures panic value, stack trace, breadcrumbs, and optional state dump status.</li>
+<li>Breadcrumb helpers preserve ordering and clone field maps.</li>
+<li>Artifact writing creates <code>panic.json</code>.</li>
+<li>Panic diagnostics installation does not create runtime crash text files.</li>
+<li>Directory watching detects artifact directories once <code>panic.json</code> is present.</li>
+<li>Proxy aggregation returns a cached snapshot when the gRPC service is unset.</li>
+</ul>
+<h3 id="integration-tests">Integration Tests</h3>
+<ul>
+<li>State dump files are surfaced in collection <code>Files</code>.</li>
+<li>Breadcrumbs written during recovered panics remain available through the in-process panic report.</li>
+<li>Incomplete artifact directories are ignored until <code>panic.json</code> appears.</li>
+<li>Proxy diagnostics requests collect records from connected agents and expose them through <code>GET /diagnostics</code>.</li>
 </ul>
 <h2 id="appendix">Appendix</h2>
-<h3 id="code-organization">Code Organization</h3>
-<p><strong>Package Structure</strong></p>
-<pre tabindex="0"><code>fodc/
-  internal/
-    metrics/      - Prometheus metrics parsing
-    watchdog/     - Watchdog component
-    flightrecorder/ - Flight Recorder component
-banyand/
-  observability/ - Integration with observability service
-  liaison/
-    http/        - HTTP API endpoints
-</code></pre><h3 id="integration-points">Integration Points</h3>
-<p><strong>Existing Components</strong></p>
+<h3 id="layer-summary">Layer Summary</h3>
+<table>
+  <thead>
+      <tr>
+          <th>Layer</th>
+          <th>Name</th>
+          <th>Current Outcome</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>0</td>
+          <td>Recovery Runtime</td>
+          <td>Recover managed panics and persist <code>panic.json</code></td>
+      </tr>
+      <tr>
+          <td>1</td>
+          <td>Global Panic Diagnostics</td>
+          <td>Configure artifact root, retention, and memory headroom</td>
+      </tr>
+      <tr>
+          <td>2</td>
+          <td>Breadcrumbs</td>
+          <td>Preserve semantic execution history in the in-process panic report</td>
+      </tr>
+      <tr>
+          <td>3</td>
+          <td>State Dump</td>
+          <td>Persist bounded JSON state snapshots</td>
+      </tr>
+      <tr>
+          <td>4</td>
+          <td>Agent Collection</td>
+          <td>Merge in-process and filesystem-backed crash collections</td>
+      </tr>
+      <tr>
+          <td>5</td>
+          <td>Proxy Aggregation</td>
+          <td>Request, cache, filter, and serve fleet-wide diagnostics</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="expected-operator-value">Expected Operator Value</h3>
 <ul>
-<li><strong>Observability Service</strong>: Integrates with <code>banyand/observability</code> package</li>
-<li><strong>HTTP Server</strong>: Uses existing HTTP server infrastructure from <code>banyand/liaison/http</code></li>
-<li><strong>Flag Management</strong>: Uses existing flag system from <code>pkg/run</code></li>
-<li><strong>Logging</strong>: Uses existing logging infrastructure from <code>pkg/logger</code></li>
+<li>Faster root-cause analysis because crash records include stack traces, breadcrumbs, and optional state dumps.</li>
+<li>Less filesystem noise because runtime crash text files are not created for normal recovered panic diagnostics.</li>
+<li>Fleet-level visibility because the proxy can serve crash diagnostics aggregated from connected agents through a single endpoint.</li>
 </ul>
-<p><strong>Dependencies</strong></p>
-<ul>
-<li>Standard library: <code>net/http</code>, <code>context</code>, <code>time</code>, <code>fmt</code>, etc.</li>
-<li>Minimal external dependencies</li>
-<li>Prefer standard library when possible</li>
-</ul>
-<h3 id="prometheus-text-format-reference">Prometheus Text Format Reference</h3>
-<p><strong>Format</strong>: <code>metric_name{label1=&quot;value1&quot;, label2=&quot;value2&quot;} value</code></p>
-<p><strong>Example</strong>:</p>
-<pre tabindex="0"><code># HELP banyandb_stream_tst_inverted_index_total_doc_count Total document count
-# TYPE banyandb_stream_tst_inverted_index_total_doc_count gauge
-banyandb_stream_tst_inverted_index_total_doc_count{index=&#34;test&#34;} 12345
-cpu_usage{host=&#34;server1&#34;} 75.5
-</code></pre><p><strong>Histogram Format</strong>:</p>
-<pre tabindex="0"><code># HELP http_request_duration_seconds Request duration histogram
-# TYPE http_request_duration_seconds histogram
-http_request_duration_seconds_bucket{le=&#34;0.1&#34;} 100
-http_request_duration_seconds_bucket{le=&#34;0.5&#34;} 200
-http_request_duration_seconds_bucket{le=&#34;+Inf&#34;} 300
-http_request_duration_seconds_count 300
-http_request_duration_seconds_sum 45.2
-</code></pre><p><strong>Summary Format</strong>:</p>
-<pre tabindex="0"><code># HELP http_request_duration_seconds Request duration summary
-# TYPE http_request_duration_seconds summary
-http_request_duration_seconds{quantile=&#34;0.5&#34;} 0.052
-http_request_duration_seconds{quantile=&#34;0.9&#34;} 0.120
-http_request_duration_seconds{quantile=&#34;0.99&#34;} 0.250
-http_request_duration_seconds_sum 45.2
-http_request_duration_seconds_count 300
-</code></pre><p><strong>Counter Format</strong>:</p>
-<pre tabindex="0"><code># HELP http_requests_total Total number of HTTP requests
-# TYPE http_requests_total counter
-http_requests_total{method=&#34;GET&#34;,status=&#34;200&#34;} 1234
-http_requests_total{method=&#34;POST&#34;,status=&#34;200&#34;} 567
-http_requests_total{method=&#34;GET&#34;,status=&#34;404&#34;} 89
-http_requests_total{method=&#34;POST&#34;,status=&#34;500&#34;} 12
-</code></pre>
+
 </div>
 
             </main>
@@ -2090,40 +1886,64 @@ http_requests_total{method=&#34;POST&#34;,status=&#34;500&#34;} 12
 <div class="td-toc-label">On this page</div>
 <nav id="TableOfContents">
   <ul>
-    <li><a href="#watchdog-and-flight-recorder-development-design">Watchdog And Flight Recorder Development Design</a>
+    <li><a href="#context-aware-panic-diagnostics-development-design">Context-Aware Panic Diagnostics Development Design</a>
       <ul>
         <li><a href="#table-of-contents">Table of Contents</a></li>
-        <li><a href="#overview">Overview</a>
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#current-implementation-status">Current Implementation Status</a>
           <ul>
-            <li><a href="#responsibilities">Responsibilities</a></li>
-            <li><a href="#component-interaction-flow">Component Interaction Flow</a></li>
+            <li><a href="#implemented">Implemented</a></li>
+            <li><a href="#not-implemented-here">Not Implemented Here</a></li>
+          </ul>
+        </li>
+        <li><a href="#architecture">Architecture</a>
+          <ul>
+            <li><a href="#end-to-end-flow">End-to-End Flow</a></li>
+            <li><a href="#why-the-layers-are-separate">Why the Layers Are Separate</a></li>
           </ul>
         </li>
         <li><a href="#component-design">Component Design</a>
           <ul>
-            <li><a href="#1-watchdog-component">1. Watchdog Component</a></li>
-            <li><a href="#2-flight-recorder-component">2. Flight Recorder Component</a></li>
-            <li><a href="#3-metrics-package-fodcinternalmetrics">3. Metrics Package (<code>fodc/internal/metrics</code>)</a></li>
-            <li><a href="#4-prometheus-metrics-exporter-component-fodcinternalexporter">4. Prometheus Metrics Exporter Component (<code>fodc/internal/exporter</code>)</a></li>
+            <li><a href="#1-recovery-runtime">1. Recovery Runtime</a></li>
+            <li><a href="#2-global-panic-diagnostics">2. Global Panic Diagnostics</a></li>
+            <li><a href="#3-diagnostic-breadcrumbs">3. Diagnostic Breadcrumbs</a></li>
+            <li><a href="#4-deep-state-serialization">4. Deep State Serialization</a></li>
+            <li><a href="#5-artifact-writer">5. Artifact Writer</a></li>
+            <li><a href="#6-fodc-agent-collection">6. FODC Agent Collection</a></li>
+            <li><a href="#7-fodc-proxy-aggregation">7. FODC Proxy Aggregation</a></li>
           </ul>
         </li>
-        <li><a href="#data-flow">Data Flow</a>
+        <li><a href="#crash-artifacts">Crash Artifacts</a>
           <ul>
-            <li><a href="#metrics-collection-flow">Metrics Collection Flow</a></li>
-            <li><a href="#metrics-export-flow">Metrics Export Flow</a></li>
+            <li><a href="#persisted-panicjson-example">Persisted <code>panic.json</code> Example</a></li>
+            <li><a href="#files-in-a-collection">Files in a Collection</a></li>
+            <li><a href="#completeness-rules">Completeness Rules</a></li>
+          </ul>
+        </li>
+        <li><a href="#proxy-api-and-collection-semantics">Proxy API and Collection Semantics</a>
+          <ul>
+            <li><a href="#http-endpoint">HTTP Endpoint</a></li>
+            <li><a href="#returned-record-shape">Returned Record Shape</a></li>
+            <li><a href="#requestresponse-model">Request/Response Model</a></li>
+          </ul>
+        </li>
+        <li><a href="#deployment-and-operations">Deployment and Operations</a>
+          <ul>
+            <li><a href="#shared-directory-model">Shared Directory Model</a></li>
+            <li><a href="#relevant-flags">Relevant Flags</a></li>
+            <li><a href="#operational-notes">Operational Notes</a></li>
           </ul>
         </li>
         <li><a href="#testing-strategy">Testing Strategy</a>
           <ul>
-            <li><a href="#unit-testing">Unit Testing</a></li>
-            <li><a href="#e2e-testing">E2E Testing</a></li>
+            <li><a href="#unit-tests">Unit Tests</a></li>
+            <li><a href="#integration-tests">Integration Tests</a></li>
           </ul>
         </li>
         <li><a href="#appendix">Appendix</a>
           <ul>
-            <li><a href="#code-organization">Code Organization</a></li>
-            <li><a href="#integration-points">Integration Points</a></li>
-            <li><a href="#prometheus-text-format-reference">Prometheus Text Format Reference</a></li>
+            <li><a href="#layer-summary">Layer Summary</a></li>
+            <li><a href="#expected-operator-value">Expected Operator Value</a></li>
           </ul>
         </li>
       </ul>
@@ -2236,6 +2056,26 @@ http_requests_total{method=&#34;POST&#34;,status=&#34;500&#34;} 12
 
     </div>
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

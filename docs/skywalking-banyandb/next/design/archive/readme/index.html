@@ -21,29 +21,23 @@
 <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#5bbad5">
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
-<title>Trace Merge Drop-Set Bounding — Execution Plan | Apache SkyWalking</title><meta property="og:url" content="https://skywalking.apache.org/docs/skywalking-banyandb/next/design/trace-drop-set-bounding-plan/">
+<title>Archived Design Documents | Apache SkyWalking</title><meta property="og:url" content="https://skywalking.apache.org/docs/skywalking-banyandb/next/design/archive/readme/">
   <meta property="og:site_name" content="Apache SkyWalking">
-  <meta property="og:title" content="Trace Merge Drop-Set Bounding — Execution Plan">
-  <meta property="og:description" content="Trace Merge Drop-Set Bounding — Execution Plan Execution plan for trace-drop-set-bounding.md. That document holds the rationale, measurements, and rejected alternatives; this one holds the work. Read the spec’s sections 3 and 5 before starting any ticket.
-Status DS-1, DS-1b, DS-2, DS-3, DS-4 and DS-5 are implemented, plus the production instruments of spec §6. The ceiling is active on every merge.
-Outstanding:
-DS-5’s validation has not been executed. It now rides the Phase 10 SkyWalking acceptance workload as two runs — one at default settings for the headroom measurement, one at --allowed-bytes=256MiB to exercise the capped path. Until both produce reports the ticket is code-complete but not closed, and the memory bound rests on unit-level residency checks. This is the one item that gates calling the series done. DS-9 (arena-backed IDs) not started. Optional, but it raises the ceiling ~24% and so improves the deletion bound DS-5’s validation runs will measure — worth landing before those runs rather than after. DS-11 (documentation) not started. Shape of the work Eight tickets. One PR each; CI runs on pull requests, not on pushes.">
+  <meta property="og:title" content="Archived Design Documents">
+  <meta property="og:description" content="Archived Design Documents Design documents are grouped by their introducing milestone. They are historical records; preserve their technical content when reorganizing them.
+0.10.0 — FODC and KTM designs. 0.11.0 — trace-pipeline and trace-merge designs. 0.12.0 — native inverted-index replacement design package.">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="article">
     <meta property="article:section" content="docs">
 
-  <meta itemprop="name" content="Trace Merge Drop-Set Bounding — Execution Plan">
-  <meta itemprop="description" content="Trace Merge Drop-Set Bounding — Execution Plan Execution plan for trace-drop-set-bounding.md. That document holds the rationale, measurements, and rejected alternatives; this one holds the work. Read the spec’s sections 3 and 5 before starting any ticket.
-Status DS-1, DS-1b, DS-2, DS-3, DS-4 and DS-5 are implemented, plus the production instruments of spec §6. The ceiling is active on every merge.
-Outstanding:
-DS-5’s validation has not been executed. It now rides the Phase 10 SkyWalking acceptance workload as two runs — one at default settings for the headroom measurement, one at --allowed-bytes=256MiB to exercise the capped path. Until both produce reports the ticket is code-complete but not closed, and the memory bound rests on unit-level residency checks. This is the one item that gates calling the series done. DS-9 (arena-backed IDs) not started. Optional, but it raises the ceiling ~24% and so improves the deletion bound DS-5’s validation runs will measure — worth landing before those runs rather than after. DS-11 (documentation) not started. Shape of the work Eight tickets. One PR each; CI runs on pull requests, not on pushes.">
-  <meta itemprop="wordCount" content="3171">
+  <meta itemprop="name" content="Archived Design Documents">
+  <meta itemprop="description" content="Archived Design Documents Design documents are grouped by their introducing milestone. They are historical records; preserve their technical content when reorganizing them.
+0.10.0 — FODC and KTM designs. 0.11.0 — trace-pipeline and trace-merge designs. 0.12.0 — native inverted-index replacement design package.">
+  <meta itemprop="wordCount" content="41">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Trace Merge Drop-Set Bounding — Execution Plan">
-  <meta name="twitter:description" content="Trace Merge Drop-Set Bounding — Execution Plan Execution plan for trace-drop-set-bounding.md. That document holds the rationale, measurements, and rejected alternatives; this one holds the work. Read the spec’s sections 3 and 5 before starting any ticket.
-Status DS-1, DS-1b, DS-2, DS-3, DS-4 and DS-5 are implemented, plus the production instruments of spec §6. The ceiling is active on every merge.
-Outstanding:
-DS-5’s validation has not been executed. It now rides the Phase 10 SkyWalking acceptance workload as two runs — one at default settings for the headroom measurement, one at --allowed-bytes=256MiB to exercise the capped path. Until both produce reports the ticket is code-complete but not closed, and the memory bound rests on unit-level residency checks. This is the one item that gates calling the series done. DS-9 (arena-backed IDs) not started. Optional, but it raises the ceiling ~24% and so improves the deletion bound DS-5’s validation runs will measure — worth landing before those runs rather than after. DS-11 (documentation) not started. Shape of the work Eight tickets. One PR each; CI runs on pull requests, not on pushes.">
+  <meta name="twitter:title" content="Archived Design Documents">
+  <meta name="twitter:description" content="Archived Design Documents Design documents are grouped by their introducing milestone. They are historical records; preserve their technical content when reorganizing them.
+0.10.0 — FODC and KTM designs. 0.11.0 — trace-pipeline and trace-merge designs. 0.12.0 — native inverted-index replacement design package.">
 
 
 
@@ -58,10 +52,10 @@ DS-5’s validation has not been executed. It now rides the Phase 10 SkyWalking 
 
 <script src="/js/jquery-3.6.0.min.js"></script>
 
-<link rel="canonical" href="https://skywalking.apache.org/docs/skywalking-banyandb/next/design/trace-drop-set-bounding-plan/">
-<meta name="description" content="Trace Merge Drop-Set Bounding — Execution Plan Execution plan for trace-drop-set-bounding.md. That document holds the rationale, measurements, and rejected…">
+<link rel="canonical" href="https://skywalking.apache.org/docs/skywalking-banyandb/next/design/archive/readme/">
+<meta name="description" content="Archived Design Documents Design documents are grouped by their introducing milestone. They are historical records; preserve their technical content when…">
 
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@id":"https://skywalking.apache.org/#organization","@type":"Organization","logo":"https://skywalking.apache.org/images/skywalking_400x400.png","name":"Apache SkyWalking","parentOrganization":{"@type":"Organization","name":"The Apache Software Foundation","url":"https://www.apache.org/"},"sameAs":["https://github.com/apache/skywalking","https://twitter.com/asfskywalking","https://projects.apache.org/project.html?skywalking"],"url":"https://skywalking.apache.org/"},{"@type":"TechArticle","headline":"Trace Merge Drop-Set Bounding — Execution Plan","inLanguage":"en","mainEntityOfPage":{"@id":"https://skywalking.apache.org/docs/skywalking-banyandb/next/design/trace-drop-set-bounding-plan/","@type":"WebPage"},"publisher":{"@id":"https://skywalking.apache.org/#organization"},"url":"https://skywalking.apache.org/docs/skywalking-banyandb/next/design/trace-drop-set-bounding-plan/"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://skywalking.apache.org/","name":"Apache SkyWalking","position":1},{"@type":"ListItem","item":"https://skywalking.apache.org/docs/","name":"Documentation","position":2},{"@type":"ListItem","item":"https://skywalking.apache.org/docs/skywalking-banyandb/next/design/trace-drop-set-bounding-plan/","name":"Trace Merge Drop-Set Bounding — Execution Plan","position":3}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@id":"https://skywalking.apache.org/#organization","@type":"Organization","logo":"https://skywalking.apache.org/images/skywalking_400x400.png","name":"Apache SkyWalking","parentOrganization":{"@type":"Organization","name":"The Apache Software Foundation","url":"https://www.apache.org/"},"sameAs":["https://github.com/apache/skywalking","https://twitter.com/asfskywalking","https://projects.apache.org/project.html?skywalking"],"url":"https://skywalking.apache.org/"},{"@type":"TechArticle","headline":"Archived Design Documents","inLanguage":"en","mainEntityOfPage":{"@id":"https://skywalking.apache.org/docs/skywalking-banyandb/next/design/archive/readme/","@type":"WebPage"},"publisher":{"@id":"https://skywalking.apache.org/#organization"},"url":"https://skywalking.apache.org/docs/skywalking-banyandb/next/design/archive/readme/"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://skywalking.apache.org/","name":"Apache SkyWalking","position":1},{"@type":"ListItem","item":"https://skywalking.apache.org/docs/","name":"Documentation","position":2},{"@type":"ListItem","item":"https://skywalking.apache.org/docs/skywalking-banyandb/next/design/archive/readme/","name":"Archived Design Documents","position":3}]}]}</script>
 
 
 <link rel="alternate" type="application/rss+xml" href="https://skywalking.apache.org/feed.xml" title="Apache SkyWalking">
@@ -1445,7 +1439,7 @@ DS-5’s validation has not been executed. It now rides the Phase 10 SkyWalking 
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 3b83e18</div>
+                  <div class="commit-id">Commit Id: e7bb0d3</div>
                 
 
 
@@ -1458,352 +1452,13 @@ DS-5’s validation has not been executed. It now rides the Phase 10 SkyWalking 
               <i class="iconfont icon-menu-doc doc-menu-button"></i>
               
 <div class="td-content">
-	<h1 id="trace-merge-drop-set-bounding--execution-plan">Trace Merge Drop-Set Bounding — Execution Plan</h1>
-<p>Execution plan for <a href="../trace-drop-set-bounding">trace-drop-set-bounding.md</a>. That document holds the rationale,
-measurements, and rejected alternatives; this one holds the work. Read the spec&rsquo;s sections 3 and 5 before starting any
-ticket.</p>
-<h2 id="status">Status</h2>
-<p>DS-1, DS-1b, DS-2, DS-3, DS-4 and DS-5 are implemented, plus the production instruments of spec §6. The ceiling is
-active on every merge.</p>
-<p>Outstanding:</p>
+	<h1 id="archived-design-documents">Archived Design Documents</h1>
+<p>Design documents are grouped by their introducing milestone. They are historical records; preserve their technical content when reorganizing them.</p>
 <ul>
-<li><strong>DS-5&rsquo;s validation has not been executed.</strong> It now rides the Phase 10 SkyWalking acceptance workload as two runs — one
-at default settings for the headroom measurement, one at <code>--allowed-bytes=256MiB</code> to exercise the capped path. Until
-both produce reports the ticket is code-complete but not closed, and the memory bound rests on unit-level residency
-checks. This is the one item that gates calling the series done.</li>
-<li><strong>DS-9</strong> (arena-backed IDs) not started. Optional, but it raises the ceiling ~24% and so improves the deletion bound
-DS-5&rsquo;s validation runs will measure — worth landing before those runs rather than after.</li>
-<li><strong>DS-11</strong> (documentation) not started.</li>
+<li><a href="../0.10.0/readme">0.10.0</a> — FODC and KTM designs.</li>
+<li><a href="../0.11.0/readme">0.11.0</a> — trace-pipeline and trace-merge designs.</li>
+<li><a href="../0.12.0/readme">0.12.0</a> — native inverted-index replacement design package.</li>
 </ul>
-<h2 id="shape-of-the-work">Shape of the work</h2>
-<p>Eight tickets. One PR each; CI runs on pull requests, not on pushes.</p>
-<p>The series is deliberately small. A finalize round is treated as one more merge, so nothing touches
-<code>banyand/trace/finalize_state.go</code>, <code>banyand/trace/finalize_scanner.go</code>, the round scheduling, or any query path. The four
-features that would recover the deletion bounded by spec §5.2 are deferred, listed at the end of this document as
-prospective tickets with their prerequisites.</p>
-<p><strong>The mechanism lands inert.</strong> DS-3 wires the ceiling into the decision loop while the production budget stays zero,
-which <code>dropTracker</code> treats as unlimited. Nothing in production behaviour changes until DS-5 activates it. That
-single-ticket activation boundary is the rollback plan for the whole series — revert DS-5 and the mechanism is dormant
-again with no code removed.</p>
-<pre tabindex="0"><code>DS-1 ──&gt; DS-1b ──&gt; DS-3 ──&gt; DS-4 ──┐
-DS-2 ──────────────────────────────┴──&gt; DS-5 ──&gt; DS-11
-DS-9 (independent, any time after DS-1; best before DS-5)
-</code></pre><p><strong>Definition of done for every ticket:</strong> its own tests pass; <code>make lint</code> clean; the existing <code>banyand/trace</code> suite passes
-<strong>unmodified</strong> unless the ticket explicitly lists a test it changes; and the diff touches neither <code>pkg/query/...</code> nor the
-two finalize files named above.</p>
-<h2 id="stage-1--mechanism-inert">Stage 1 — Mechanism, inert</h2>
-<h3 id="ds-1--droptracker-with-exact-residency-accounting">DS-1 — <code>dropTracker</code> with exact residency accounting</h3>
-<p><strong>Size.</strong> S. <strong>Depends on.</strong> Nothing.</p>
-<p><strong>Scope.</strong> A self-contained structure and its arithmetic. No call sites.</p>
-<ul>
-<li><code>dropTracker</code> wrapping the existing <code>*droppedTraceIDs</code>, with <code>canAccept() bool</code> and a one-way <code>full</code> flag.</li>
-<li><code>liveBytes()</code> extending the pool&rsquo;s existing sizing (<code>banyand/trace/drop_set.go:35-37</code>) with the ID-body bytes.</li>
-<li><code>projectedIndexBytes(n int) int64</code> returning exactly what <code>buildIndex</code> will allocate for <code>n</code> entries.</li>
-<li><code>maxIDsForBudget(budget uint64) int</code>, where <strong><code>budget == 0</code> means unlimited</strong> — this is what keeps DS-3 inert. DS-1b
-adds the observed-ID-length parameter; land the sentinel and the <code>max(1, …)</code> clamp here.</li>
-<li>A residency benchmark reporting bytes per entry.</li>
-</ul>
-<p><strong>Out of scope.</strong> Any change to <code>merger.go</code>. Reading the protector. The arena (DS-9).</p>
-<p><strong>Files.</strong> <code>banyand/trace/drop_set.go</code>, <code>banyand/trace/drop_set_test.go</code>.</p>
-<p><strong>Tests.</strong></p>
-<ul>
-<li><code>TestProjectedIndexBytesMatchesBuildIndex</code> — for <code>n</code> in <code>{0, 1, 2, 3, 4, 5, 7, 8, 9, 1023, 1024, 1025, 65535, 65536, 65537}</code>, build a real set of <code>n</code> IDs, call <code>buildIndex</code>, assert <code>projectedIndexBytes(n) == int64(len(slots))*8</code>. The
-power-of-two boundaries are the point: <code>nextPow2(2n)</code> is discontinuous and the projection must be exact, not
-conservative.</li>
-<li><code>TestCanAcceptStopsAtBudget</code> — for budgets 1 MiB / 8 MiB / 32 MiB, add IDs until <code>canAccept</code> is false; assert (a) it
-never returns true again, (b) <code>liveBytes() + projectedIndexBytes(len+1)</code> is at or below the budget at the stop point,
-(c) <code>buildIndex</code> then leaves measured residency at or below the budget.</li>
-<li><code>TestZeroBudgetIsUnlimited</code> — <code>maxIDsForBudget(0)</code> yields a tracker that accepts far past any ceiling.</li>
-<li><code>BenchmarkDropSetResidency</code> — <code>b.ReportMetric</code> bytes per entry at 100 k and 1 M entries, so DS-9 has a baseline.</li>
-</ul>
-<p><strong>Exit.</strong> Projection exact at every tested <code>n</code>. Measured residency at or below budget for all three budgets.</p>
-<p><strong>Rollback.</strong> Dead code; safe to leave.</p>
-<hr>
-<h3 id="ds-1b--derive-bytesentry-from-the-observed-id-length">DS-1b — Derive bytes/entry from the observed ID length</h3>
-<p><strong>Size.</strong> S. <strong>Depends on.</strong> DS-1.</p>
-<p><strong>Scope.</strong> A fixed bytes/entry constant priced for the 42-byte ID of spec §1.1 lets longer trace IDs overshoot the budget
-proportionally, so the ceiling is not a ceiling (about 1.4x at 96 bytes, 3x at 256). Replace it with a price derived from
-an observed length.</p>
-<ul>
-<li><code>allocClassBytes(n)</code> — round up to the allocator&rsquo;s size-class stride (16 below 256 bytes, 32 above), an upper bound
-because a ceiling must never under-count.</li>
-<li><code>dropSetBytesPerEntry(idLen)</code> = header + slack + <code>allocClassBytes(idLen)</code> + worst-case slots. At <code>idLen == 42</code> this is
-exactly 100, so the change generalizes the old constant rather than re-tuning it and §3.4&rsquo;s ceilings are unchanged for
-that case.</li>
-<li>The tracker carries <code>budget</code> instead of a precomputed <code>maxIDs</code> and derives <code>maxIDs</code> when the first ID is recorded, via
-a <code>record</code> method. Three states stay distinct: <code>budget == 0</code> unlimited, <code>maxIDs == 0</code> with a non-zero budget &ldquo;not yet
-derived, admit the entry that derives it&rdquo;, and the <code>max(1, …)</code> clamp keeps a non-zero budget bounding.</li>
-<li><code>record</code> re-derives if a longer ID appears, so per-shard uniformity is self-correcting rather than load-bearing.</li>
-<li><code>liveBytes</code> prices bodies with <code>allocClassBytes</code> too, so the predicate and the derivation speak in the same units.</li>
-</ul>
-<p><strong>Out of scope.</strong> The arena layout (DS-9), which later replaces only the body term.</p>
-<p><strong>Files.</strong> <code>banyand/trace/drop_set.go</code>, <code>banyand/trace/drop_set_test.go</code>.</p>
-<p><strong>Tests.</strong></p>
-<ul>
-<li><code>TestBytesPerEntryTracksIDLength</code> — the regression test. At lengths 42/64/96/128/256, drive a tracker to its ceiling and
-assert <code>residentBytes()</code> stays at or below the budget, and that a longer ID yields a strictly smaller ceiling.</li>
-<li><code>TestTrackerRederivesOnLongerID</code> — a longer ID lowers the ceiling; a subsequent shorter one does not raise it.</li>
-<li><code>TestTinyBudgetStillBounds</code> and <code>TestZeroBudgetIsUnlimited</code> updated for the derived form: the clamp and the unlimited
-sentinel must both survive it.</li>
-</ul>
-<p><strong>Exit.</strong> Residency at or below budget at every tested ID length — the invariant that is false with a fixed constant.</p>
-<hr>
-<h3 id="ds-2--budget-resolution">DS-2 — Budget resolution</h3>
-<p><strong>Size.</strong> XS. <strong>Depends on.</strong> Nothing (parallel to DS-1).</p>
-<p><strong>Scope.</strong> One resolver, no consumers.</p>
-<ul>
-<li><code>resolveDropSetBudget(opt option)</code> — <code>limit/(dropSetAggregateDivisor*CPUs)</code>, floor <code>minimumDropSetBudget</code>,
-<code>defaultDropSetBudget</code> when the limit is zero. <strong>No lane parameter and no second function</strong>: finalize is charged the
-same as a hot merge (spec §3.4).</li>
-<li><code>testDropSetBudgetOverride</code>, mirroring <code>testStageBudgetOverride</code> (<code>banyand/trace/merger.go:189</code>).</li>
-<li>Constants, with comments covering why the floor is 1 MiB rather than staging&rsquo;s 16 MiB and when it binds, why there is
-no independent entry cap, and — pointing at spec §9.1 — why finalize is not given a larger ceiling despite being
-concurrency-1.</li>
-</ul>
-<p><strong>Out of scope.</strong> Wiring the budget into a filter (DS-5).</p>
-<p><strong>Files.</strong> <code>banyand/trace/merger.go</code> (budget block near <code>:194-243</code>), new <code>banyand/trace/drop_set_budget_test.go</code>.</p>
-<p><strong>Tests.</strong></p>
-<ul>
-<li><code>TestResolveDropSetBudget</code> — table over <code>(limit, CPUs)</code> covering 0, 512 MiB, 4 GiB, 16 GiB × 1, 4, 8, 16 CPUs; exact
-expected bytes including the zero-limit fallback and the minimum clamp.</li>
-<li><code>TestDropSetAggregateBoundHolds</code> — for each row, assert <code>budget*(CPUs/2+2) &lt;= limit/8</code>, and assert the documented
-small-node overshoot explicitly for CPUs 1 and 2 rather than letting it look like a failure. The aggregate invariant
-becomes a test rather than a comment in the spec.</li>
-<li><code>TestDropSetFloorBoundRegime</code> — the floor-bound regime the rows above are all too large to reach: assert the floor
-binds, that the aggregate bound still holds above a plausible smallest limit, and that below it the floor dominates.
-Without this, the floor&rsquo;s effect on the bound is untested.</li>
-<li><code>TestDropSetBudgetOverrideWins</code>.</li>
-</ul>
-<p><strong>Exit.</strong> Table passes. Aggregate bound asserted, including the small-CPU exception.</p>
-<p><strong>Rollback.</strong> Unused function; safe.</p>
-<hr>
-<h3 id="ds-3--ceiling-enforcement-in-the-decision-loop-inert">DS-3 — Ceiling enforcement in the decision loop (inert)</h3>
-<p><strong>Size.</strong> M. <strong>Depends on.</strong> DS-1.</p>
-<p><strong>Scope.</strong> The behavioural seam, with the production budget still zero so the ceiling is unreachable outside tests.</p>
-<ul>
-<li><code>traceEvaluationStager</code> holds a <code>dropTracker</code> instead of a bare <code>*droppedTraceIDs</code>
-(<code>banyand/trace/merger.go:2050-2066</code>).</li>
-<li>In <code>resolveStagedDrops</code> (<code>banyand/trace/merger.go:1945-1996</code>): a ceiling check placed <strong>before the guard and before both
-<code>recordDroppedTraceID</code> sites</strong>. When the tracker is full, set <code>keepMask[traceIdx] = true</code>, run the retained accounting,
-increment a new retained-by-ceiling counter, and <code>continue</code> — the guard is not consulted for a trace that will be kept.</li>
-<li><code>incPipelineTracesRetainedByCeiling</code> in <code>banyand/trace/metrics.go</code> (alongside <code>:318-334</code>), plus the <code>observation</code> hook.</li>
-<li><code>filter.budget</code> plumbed through <code>mergeFilter</code>, left at zero by both construction sites.</li>
-</ul>
-<p><strong>Out of scope.</strong> Activating the budget (DS-5). Benchmark-event fields and the warning log (DS-4). Any change to
-<code>keepEncoded</code>, <code>filterBlockPointer</code>, the SIDX merge signature, the output part&rsquo;s <code>traceIDFilter</code>, the finalize state or
-scanner, or any query path.</p>
-<p><strong>Files.</strong> <code>banyand/trace/merger.go</code>, <code>banyand/trace/metrics.go</code>, the merge-observation type.</p>
-<p><strong>Tests.</strong></p>
-<ul>
-<li><code>TestMergeCeilingPrunesSidxExactly</code> — the load-bearing test. Force a two-entry ceiling on a merge whose sampler proposes
-five drops. Assert the output part contains exactly the three spared traces plus all verdict-retained ones, and that for
-<strong>each</strong> sidx instance the element set equals the output part&rsquo;s trace-ID set — strict equality in both directions, so
-both an orphan and a missing entry fail.</li>
-<li><code>TestMergeCeilingRetainsTheAscendingTail</code> — the spared traces are the lexicographically largest of the proposed drops,
-pinning the bias of spec §4 as observed behaviour rather than a claim.</li>
-<li><code>TestMergeCeilingSkipsGuard</code> — the guard&rsquo;s bloom-probe count equals the number of <em>pre-ceiling</em> proposed drops.</li>
-<li><code>TestMergeCeilingStillRevalidatesGuard</code> — a capped merge that dropped at least one trace still runs
-<code>filter.guard.revalidate</code> (<code>banyand/trace/merger.go:926</code>). This is the regression the rejected bloom design would have
-introduced; assert it even though this design cannot reach it.</li>
-<li><code>TestMergeCeilingCounterAccounting</code> — retained-by-ceiling equals proposed drops beyond the ceiling; total retained
-equals verdict-retained plus ceiling-retained.</li>
-<li><code>TestCappedFinalizeRoundLeavesStateUnchanged</code> — a capped finalize round writes the same <code>finalize.json</code> fields a normal
-round does: generation advanced, counter reset, no new fields, <code>FinalizeRounds</code> incremented once. Guards the spec §11
-invariant 7 that finalize scheduling is untouched.</li>
-<li><code>TestMergeCeilingInertWithoutOverride</code> — with no override, a merge proposing many drops records every one; nothing is
-retained by ceiling.</li>
-<li>Unmodified: <code>TestMergeFilter_CoupledSidxPrune</code> (<code>banyand/trace/pipeline_chain_test.go:997</code>),
-<code>TestMergeFilter_IdempotentReMerge</code>, <code>banyand/trace/pipeline_chain_filter_test.go:508</code>.</li>
-</ul>
-<p><strong>Exit.</strong> All of the above, with zero edits to existing tests.</p>
-<hr>
-<h3 id="ds-4--observability">DS-4 — Observability</h3>
-<p><strong>Size.</strong> S. <strong>Depends on.</strong> DS-3.</p>
-<p><strong>Scope.</strong> Making the ceiling visible before it can fire in production. With no continuation mechanism this is the only
-signal that a shard is under-deleting, so it is part of the series rather than a follow-up.</p>
-<ul>
-<li>Benchmark-event fields beside <code>StagingHardLimit</code> (<code>banyand/trace/merger.go:712-716</code>): resolved budget, capped flag,
-retained-by-ceiling count.</li>
-<li>A capped-merge counter split by lane.</li>
-<li>One <code>Warn</code> per capped finalize round, naming group, shard, and retained-by-ceiling count. Exactly one: not per batch,
-not per trace.</li>
-</ul>
-<p><strong>Out of scope.</strong> Budget activation. Anything that changes a merge decision. Anything persisted.</p>
-<p><strong>Files.</strong> <code>banyand/trace/merger.go</code>, <code>banyand/trace/merge_benchmark_observer.go</code>, <code>banyand/trace/metrics.go</code>,
-<code>banyand/trace/finalizer.go</code> (log call only).</p>
-<p><strong>Tests.</strong></p>
-<ul>
-<li><code>TestBenchmarkEventCarriesDropSetCeiling</code> — forced ceiling; all three fields populated and consistent with the counters.</li>
-<li><code>TestCappedFinalizeRoundWarnsOnce</code> — log capture asserts exactly one warning for a capped round and none for an uncapped
-one.</li>
-</ul>
-<p><strong>Exit.</strong> Both tests, plus the new fields visible in a forced-ceiling run&rsquo;s report.</p>
-<hr>
-<h2 id="stage-2--activation">Stage 2 — Activation</h2>
-<h3 id="ds-5--activate-the-budget">DS-5 — Activate the budget</h3>
-<p><strong>Size.</strong> XS (the diff). Validation rides the Phase 10 SkyWalking acceptance workload rather than standing up its own
-harness, so it costs one extra run of an existing workload plus a flag. <strong>Depends on.</strong> DS-2, DS-4.</p>
-<p><strong>Scope.</strong> The only ticket in the series that changes production behaviour.</p>
-<ul>
-<li>Hot filter construction (<code>banyand/trace/merger.go:638-650</code>) and finalize filter construction
-(<code>banyand/trace/finalizer.go:156-168</code>) both carry <code>resolveDropSetBudget</code>. Same call, same value.</li>
-<li>No operator flag, matching the staging budget&rsquo;s precedent (<code>banyand/trace/merger.go:191-193</code>).</li>
-</ul>
-<p><strong>Files.</strong> <code>banyand/trace/merger.go</code>, <code>banyand/trace/finalizer.go</code>.</p>
-<p><strong>Tests.</strong></p>
-<ul>
-<li><code>TestFiltersCarryResolvedDropSetBudget</code> — both construction sites carry the resolver&rsquo;s value, and they are equal. The
-equality assertion is deliberate: it is what would fail if someone reintroduced a lane-specific budget without updating
-spec §3.4.</li>
-<li><code>TestProductionBudgetMergeReachesNoCeiling</code> — an ordinary-sized merge at the resolved budget records every drop. Assert
-the <em>derived ceiling</em> the budget yields, not merely that this merge did not cap, or the test passes for any budget above
-a few kilobytes and stops guarding the default constant.</li>
-<li><code>TestLosslessRetryClearsCeilingReporting</code> — a capped attempt rejected by the fragment guard is retried without
-sampling, and the retry&rsquo;s published output drops nothing; the capped-merge counter, <code>DropSetCapped</code>, and the finalize
-warning must all describe that published output, not the discarded attempt. Verify this test fails without the fix.</li>
-<li>An in-process residency check over a few hundred proposed drops is worth adding, clearly labelled as <strong>not</strong> a
-workload-level measurement.</li>
-</ul>
-<h3 id="ds-5-validation-two-skywalking-integration-runs">DS-5 validation: two SkyWalking integration runs</h3>
-<p>Validation rides the Phase 10 SkyWalking acceptance workload of the
-<a href="../trace-pipeline-merge-optimization-plan">merge optimization plan</a> rather than the containerised controlled run that
-earlier drafts of this plan specified. Section &ldquo;Why not the controlled run&rdquo; below records that decision.</p>
-<p>Both runs read the instruments of spec §6; without them neither run can answer anything about the ceiling.</p>
-<p><strong>Run A — default settings, the headroom measurement.</strong> The standard serialized 24-hour workload, unmodified. At a 4 GiB
-limit and <code>GOMAXPROCS=2</code> the budget is 128 MiB, a ceiling near 1.34 million traces in one merge, so real traffic will not
-reach it. That is the result, not a failure to test:</p>
-<ul>
-<li><input disabled="" type="checkbox"> <code>pipeline_drop_set_entries</code> p99 recorded against <code>pipeline_drop_set_budget_bytes / dropSetBytesPerEntry</code>. <strong>This
-ratio is the deliverable</strong> — it is how much headroom production-shaped traffic actually has, and therefore whether
-the ceiling is load-bearing at default settings at all.</li>
-<li><input disabled="" type="checkbox"> <code>pipeline_traces_retained_by_ceiling</code> is zero for the group, confirming activation is behaviour-neutral here.</li>
-<li><input disabled="" type="checkbox"> Phase 10&rsquo;s existing gates still pass: correct core and secondary-index ledgers, no OOM, no unexpected lossless
-retry, no regression against the pipeline-disabled baseline.</li>
-<li><input disabled="" type="checkbox"> Observed trace-ID length recorded. Real SkyWalking IDs are the first workload test of DS-1b&rsquo;s derived
-bytes/entry and of the per-shard uniformity it expects; an ID longer than the 42 bytes spec §1.1 measured is
-exactly the case the derived price exists for.</li>
-</ul>
-<p><strong>Run B — <code>--allowed-bytes=256MiB</code>, the capped-path measurement.</strong> <code>resolveDropSetBudget</code> reads the protector limit and
-<code>--allowed-bytes</code> sets it directly, so this is a supported production flag, not a test seam. At 2 CPUs it yields an 8 MiB
-budget and a ceiling near 84,000 traces, which the same workload reaches comfortably. This is the only run that
-exercises the code this ticket adds:</p>
-<ul>
-<li><input disabled="" type="checkbox"> <code>pipeline_traces_retained_by_ceiling</code> is non-zero for the group, and <code>pipeline_merges_ceiling_reached{lane=&quot;finalize&quot;}</code> identifies the affected lane.</li>
-<li><input disabled="" type="checkbox"> For every shard, secondary-index contents equal exactly the retained-trace set — spec invariant 9, now under real
-trace IDs, real drop ratios, real fragment-guard behaviour and live query traffic rather than one frozen selection.</li>
-<li><input disabled="" type="checkbox"> Queries ordered by <code>latency</code> and <code>start_time</code> return the same traces as the pipeline-disabled baseline for the
-traces both retain. No short result sets, which is what a violation of the &ldquo;no orphan index entries&rdquo; invariant
-would look like from outside.</li>
-<li><input disabled="" type="checkbox"> Peak heap and RSS bounded, with drop-set residency attributable via <code>pipeline_drop_set_entries</code> ×
-<code>dropSetBytesPerEntry</code> and at or below the resolved budget.</li>
-<li><input disabled="" type="checkbox"> Traces left undeleted recorded as a number — this quantifies spec §5.2 on a real workload and is the input to any
-later decision to take a deferred feature (spec §9).</li>
-<li><input disabled="" type="checkbox"> <code>finalize_rounds</code> progression and any <code>finalize_terminal</code> transitions recorded.</li>
-<li><input disabled="" type="checkbox"> No OOM, panic, malformed verdict, or unexpected lossless retry.</li>
-</ul>
-<p>Report both runs under <code>.scratch/trace-drop-set-bounding/ds5-&lt;n&gt;</code>.</p>
-<p><strong>Why not the controlled run.</strong> <code>banyand/cmd/trace-merge-benchmark</code> over <code>banyand/internal/benchmark/tracebaseline</code> runs
-ten alternating single-merge container processes on a frozen seed, five per variant, under a canonical
-<code>GOMAXPROCS=2</code> / <code>MemoryMax=4 GiB</code> readiness gate. Its unique contribution is a reproducible paired comparison with exact
-oracles and CV bounds. But at canonical resources the ceiling sits near 1.34 million traces while the existing frozen
-selection holds 33,353 — roughly 40x too small to make a merge cap. Reaching it would need capturing a ~1.4 million-trace
-seed, and shrinking container memory instead would fail the readiness gate and make the result incomparable to the
-Phase 6 series.</p>
-<p>The integration runs cover more of what matters here and cost far less: aggregate concurrency across hot lanes and the
-finalize round, which a single-merge run never exercises; real trace IDs; and end-to-end query behaviour. What they give
-up is reproducibility — live traffic is not replayable, so there is no byte-identical paired comparison. That trade is
-accepted deliberately: the claims at stake are about a ceiling that either fires or does not, and about index exactness
-when it does, neither of which needs byte-identical inputs to establish.</p>
-<p><strong>Exit.</strong> Run A&rsquo;s headroom ratio recorded; Run B&rsquo;s capped path clean on index exactness, query results, and bounded
-residency; undeleted-trace count recorded. Until both runs have reports, DS-5 is code-complete but <strong>not</strong> closed: the
-ceiling is live in production with no workload-level evidence behind it.</p>
-<p><strong>Rollback.</strong> Revert this ticket alone. The mechanism returns to inert; no other ticket needs touching.</p>
-<hr>
-<h2 id="independent">Independent</h2>
-<h3 id="ds-9--arena-backed-ids">DS-9 — Arena-backed IDs</h3>
-<p><strong>Size.</strong> M. <strong>Depends on.</strong> DS-1. Independent of everything else, but worth landing <strong>before</strong> DS-5: it raises the
-ceiling by about 24 percent, so it directly improves the deletion bound that DS-5 will measure.</p>
-<p><strong>Scope.</strong> Replace <code>ids []string</code> with a byte arena plus <code>uint32</code> offsets. The Phase 6 index, the fingerprint check, and
-the exact <code>bytes.Equal</code> confirmation are untouched — the probe becomes <code>arena[offs[i]:offs[i+1]]</code> instead of
-<code>convert.StringToBytes(ids[i])</code>, same single probe and single comparison. <code>bodyBytes</code> becomes exactly <code>len(arena)</code>, so
-<code>maxIDsForBudget</code> stops depending on a size-class estimate.</p>
-<p><strong>Out of scope.</strong> Replacing the index with binary search. Explicitly rejected: spec §10.</p>
-<p><strong>Files.</strong> <code>banyand/trace/drop_set.go</code>, <code>banyand/trace/drop_set_test.go</code>.</p>
-<p><strong>Tests.</strong></p>
-<ul>
-<li>Existing <code>drop_set_test.go</code> assertions pass unchanged, including prefix/extension non-matching, fail-open on malformed
-input, and the ascending-order and duplicate-suppression behaviour of <code>add</code>.</li>
-<li><code>BenchmarkDropSetLookup</code> at 1 / 35 / 99 percent shows no regression against DS-1&rsquo;s baseline; the ticket states the
-tolerance and sample count it used. A regression outside noise blocks the ticket — this path was tuned in Phase 6 and is
-not worth trading for memory the ceiling already bounds.</li>
-<li><code>BenchmarkDropSetResidency</code> shows the expected bytes-per-entry reduction; <code>maxIDsForBudget</code> rises accordingly.</li>
-<li><code>TestProjectedIndexBytesMatchesBuildIndex</code> still exact.</li>
-</ul>
-<p><strong>Exit.</strong> No lookup regression; residency reduced; DS-1&rsquo;s projection test still exact.</p>
-<hr>
-<h3 id="ds-11--documentation">DS-11 — Documentation</h3>
-<p><strong>Size.</strong> S. <strong>Depends on.</strong> DS-5.</p>
-<p><strong>Scope.</strong></p>
-<ul>
-<li><code>docs/design/post-trace-pipeline.md:630-632</code> — a merge may stop dropping at its ceiling; the pruning predicate, lockstep
-publication, and atomicity are unchanged.</li>
-<li><code>docs/design/trace-pipeline-merge-optimization-plan.md</code> Phase 6 — the collector is now ceiling-bounded; the phase&rsquo;s
-exactness invariant is unchanged, not revised.</li>
-<li>Operator documentation: the retained-by-ceiling counter and what to do about it (raise memory), the ordering bias of
-spec §4, and — the item an operator is most likely to be surprised by — that a ceiling-bound shard will not shrink as
-much as the sampler&rsquo;s configuration implies (spec §12 risk 2).</li>
-</ul>
-<p><strong>Tests.</strong> None. Review-only.</p>
-<hr>
-<h2 id="deferred">Deferred</h2>
-<p>Prospective tickets, not part of this series. Each corresponds to a spec §9 subsection, which holds the numbers and the
-reasoning. Listed in prerequisite order; none is required for the series above to be complete and correct.</p>
-<table>
-  <thead>
-      <tr>
-          <th>Ticket</th>
-          <th>Buys</th>
-          <th>Prerequisite</th>
-          <th>Spec</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td><strong>DF-1</strong> Per-lane finalize ceiling</td>
-          <td>~<code>CPUs</code>x the lifetime deletion bound (~2.7 M to ~21 M traces per shard at 4 GiB / 8 CPUs)</td>
-          <td>DS-5&rsquo;s retained-by-ceiling number showing the bound is being hit</td>
-          <td>§9.1</td>
-      </tr>
-      <tr>
-          <td><strong>DF-2</strong> Continuation rounds</td>
-          <td>Removes the ingest gate so leftover work clears itself</td>
-          <td>DF-1 — raising the ceiling is cheaper per unit of deletion recovered than adding rounds</td>
-          <td>§9.2</td>
-      </tr>
-      <tr>
-          <td><strong>DF-3</strong> Sampling watermark</td>
-          <td>Makes DF-2&rsquo;s round count <code>ceil(droppable / maxIDs)</code> and its plugin cost proportional to the shard rather than to shard × rounds</td>
-          <td>DF-2</td>
-          <td>§9.3</td>
-      </tr>
-      <tr>
-          <td><strong>DF-4</strong> Bloom-filter pruning</td>
-          <td>Removes the deletion bound entirely rather than raising it</td>
-          <td>A refillable Phase-1 query limit — a query-layer change, worth doing on its own merits</td>
-          <td>§9.4, §8</td>
-      </tr>
-  </tbody>
-</table>
-<p>DF-2 is the one to scope carefully when its turn comes: it adds persisted finalize state, changes two scanner predicates
-that must move together, and reintroduces the finalize write amplification that spec §5.3 currently avoids.</p>
-<hr>
-<h2 id="decisions-to-settle-before-ds-5">Decisions to settle before DS-5</h2>
-<ol>
-<li><code>dropSetAggregateDivisor = 16</code>. It sets both the memory bound and, through spec §5.2, the lifetime deletion bound.
-DS-2&rsquo;s table encodes whatever is chosen, so changing it later means changing that table.</li>
-<li>Whether DS-9 lands before DS-5. Recommended: yes, so the deletion bound DS-5 measures is the one the design will
-actually ship with.</li>
-</ol>
 
 </div>
 
@@ -1832,41 +1487,6 @@ actually ship with.</li>
 
 
 
-
-<div class="td-toc-label">On this page</div>
-<nav id="TableOfContents">
-  <ul>
-    <li><a href="#trace-merge-drop-set-bounding--execution-plan">Trace Merge Drop-Set Bounding — Execution Plan</a>
-      <ul>
-        <li><a href="#status">Status</a></li>
-        <li><a href="#shape-of-the-work">Shape of the work</a></li>
-        <li><a href="#stage-1--mechanism-inert">Stage 1 — Mechanism, inert</a>
-          <ul>
-            <li><a href="#ds-1--droptracker-with-exact-residency-accounting">DS-1 — <code>dropTracker</code> with exact residency accounting</a></li>
-            <li><a href="#ds-1b--derive-bytesentry-from-the-observed-id-length">DS-1b — Derive bytes/entry from the observed ID length</a></li>
-            <li><a href="#ds-2--budget-resolution">DS-2 — Budget resolution</a></li>
-            <li><a href="#ds-3--ceiling-enforcement-in-the-decision-loop-inert">DS-3 — Ceiling enforcement in the decision loop (inert)</a></li>
-            <li><a href="#ds-4--observability">DS-4 — Observability</a></li>
-          </ul>
-        </li>
-        <li><a href="#stage-2--activation">Stage 2 — Activation</a>
-          <ul>
-            <li><a href="#ds-5--activate-the-budget">DS-5 — Activate the budget</a></li>
-            <li><a href="#ds-5-validation-two-skywalking-integration-runs">DS-5 validation: two SkyWalking integration runs</a></li>
-          </ul>
-        </li>
-        <li><a href="#independent">Independent</a>
-          <ul>
-            <li><a href="#ds-9--arena-backed-ids">DS-9 — Arena-backed IDs</a></li>
-            <li><a href="#ds-11--documentation">DS-11 — Documentation</a></li>
-          </ul>
-        </li>
-        <li><a href="#deferred">Deferred</a></li>
-        <li><a href="#decisions-to-settle-before-ds-5">Decisions to settle before DS-5</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav>
 
 
 
@@ -1973,6 +1593,26 @@ actually ship with.</li>
 
     </div>
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

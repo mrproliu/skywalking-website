@@ -21,26 +21,29 @@
 <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#5bbad5">
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
-<title>Trace Fragment Guard for Sampling Design | Apache SkyWalking</title><meta property="og:url" content="https://skywalking.apache.org/docs/skywalking-banyandb/next/design/trace-fragment-sampling-guard/">
+<title>Trace Merge Drop-Set Bounding — Execution Plan | Apache SkyWalking</title><meta property="og:url" content="https://skywalking.apache.org/docs/skywalking-banyandb/next/design/archive/0.11.0/trace-drop-set-bounding-plan/">
   <meta property="og:site_name" content="Apache SkyWalking">
-  <meta property="og:title" content="Trace Fragment Guard for Sampling Design">
-  <meta property="og:description" content="Trace Fragment Guard for Sampling Design Status Core enforcement implemented using the resolved merge-grace safety contract.
-Context and Problem Statement BanyanDB’s trace merge policy selects file parts primarily by compressed size to control write amplification. The selected parts are merged in trace-ID order, and an enabled post-trace sampler may discard traces from the merge output.
-A trace can have fragments in both selected and unselected parts. Sampling only the selected fragments can therefore produce an incorrect partial decision: the selected fragment may be dropped while another fragment remains visible in an unselected part. Expanding every merge selection to all timestamp-connected parts avoids some partial decisions, but production data shows that broad and transitively overlapping part ranges can expand a small merge into a full-shard rewrite.">
+  <meta property="og:title" content="Trace Merge Drop-Set Bounding — Execution Plan">
+  <meta property="og:description" content="Trace Merge Drop-Set Bounding — Execution Plan Execution plan for trace-drop-set-bounding.md. That document holds the rationale, measurements, and rejected alternatives; this one holds the work. Read the spec’s sections 3 and 5 before starting any ticket.
+Status DS-1, DS-1b, DS-2, DS-3, DS-4 and DS-5 are implemented, plus the production instruments of spec §6. The ceiling is active on every merge.
+Outstanding:
+DS-5’s validation has not been executed. It now rides the Phase 10 SkyWalking acceptance workload as two runs — one at default settings for the headroom measurement, one at --allowed-bytes=256MiB to exercise the capped path. Until both produce reports the ticket is code-complete but not closed, and the memory bound rests on unit-level residency checks. This is the one item that gates calling the series done. DS-9 (arena-backed IDs) not started. Optional, but it raises the ceiling ~24% and so improves the deletion bound DS-5’s validation runs will measure — worth landing before those runs rather than after. DS-11 (documentation) not started. Shape of the work Eight tickets. One PR each; CI runs on pull requests, not on pushes.">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="article">
     <meta property="article:section" content="docs">
 
-  <meta itemprop="name" content="Trace Fragment Guard for Sampling Design">
-  <meta itemprop="description" content="Trace Fragment Guard for Sampling Design Status Core enforcement implemented using the resolved merge-grace safety contract.
-Context and Problem Statement BanyanDB’s trace merge policy selects file parts primarily by compressed size to control write amplification. The selected parts are merged in trace-ID order, and an enabled post-trace sampler may discard traces from the merge output.
-A trace can have fragments in both selected and unselected parts. Sampling only the selected fragments can therefore produce an incorrect partial decision: the selected fragment may be dropped while another fragment remains visible in an unselected part. Expanding every merge selection to all timestamp-connected parts avoids some partial decisions, but production data shows that broad and transitively overlapping part ranges can expand a small merge into a full-shard rewrite.">
-  <meta itemprop="wordCount" content="4848">
+  <meta itemprop="name" content="Trace Merge Drop-Set Bounding — Execution Plan">
+  <meta itemprop="description" content="Trace Merge Drop-Set Bounding — Execution Plan Execution plan for trace-drop-set-bounding.md. That document holds the rationale, measurements, and rejected alternatives; this one holds the work. Read the spec’s sections 3 and 5 before starting any ticket.
+Status DS-1, DS-1b, DS-2, DS-3, DS-4 and DS-5 are implemented, plus the production instruments of spec §6. The ceiling is active on every merge.
+Outstanding:
+DS-5’s validation has not been executed. It now rides the Phase 10 SkyWalking acceptance workload as two runs — one at default settings for the headroom measurement, one at --allowed-bytes=256MiB to exercise the capped path. Until both produce reports the ticket is code-complete but not closed, and the memory bound rests on unit-level residency checks. This is the one item that gates calling the series done. DS-9 (arena-backed IDs) not started. Optional, but it raises the ceiling ~24% and so improves the deletion bound DS-5’s validation runs will measure — worth landing before those runs rather than after. DS-11 (documentation) not started. Shape of the work Eight tickets. One PR each; CI runs on pull requests, not on pushes.">
+  <meta itemprop="wordCount" content="3171">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Trace Fragment Guard for Sampling Design">
-  <meta name="twitter:description" content="Trace Fragment Guard for Sampling Design Status Core enforcement implemented using the resolved merge-grace safety contract.
-Context and Problem Statement BanyanDB’s trace merge policy selects file parts primarily by compressed size to control write amplification. The selected parts are merged in trace-ID order, and an enabled post-trace sampler may discard traces from the merge output.
-A trace can have fragments in both selected and unselected parts. Sampling only the selected fragments can therefore produce an incorrect partial decision: the selected fragment may be dropped while another fragment remains visible in an unselected part. Expanding every merge selection to all timestamp-connected parts avoids some partial decisions, but production data shows that broad and transitively overlapping part ranges can expand a small merge into a full-shard rewrite.">
+  <meta name="twitter:title" content="Trace Merge Drop-Set Bounding — Execution Plan">
+  <meta name="twitter:description" content="Trace Merge Drop-Set Bounding — Execution Plan Execution plan for trace-drop-set-bounding.md. That document holds the rationale, measurements, and rejected alternatives; this one holds the work. Read the spec’s sections 3 and 5 before starting any ticket.
+Status DS-1, DS-1b, DS-2, DS-3, DS-4 and DS-5 are implemented, plus the production instruments of spec §6. The ceiling is active on every merge.
+Outstanding:
+DS-5’s validation has not been executed. It now rides the Phase 10 SkyWalking acceptance workload as two runs — one at default settings for the headroom measurement, one at --allowed-bytes=256MiB to exercise the capped path. Until both produce reports the ticket is code-complete but not closed, and the memory bound rests on unit-level residency checks. This is the one item that gates calling the series done. DS-9 (arena-backed IDs) not started. Optional, but it raises the ceiling ~24% and so improves the deletion bound DS-5’s validation runs will measure — worth landing before those runs rather than after. DS-11 (documentation) not started. Shape of the work Eight tickets. One PR each; CI runs on pull requests, not on pushes.">
 
 
 
@@ -55,10 +58,10 @@ A trace can have fragments in both selected and unselected parts. Sampling only 
 
 <script src="/js/jquery-3.6.0.min.js"></script>
 
-<link rel="canonical" href="https://skywalking.apache.org/docs/skywalking-banyandb/next/design/trace-fragment-sampling-guard/">
-<meta name="description" content="Trace Fragment Guard for Sampling Design Status Core enforcement implemented using the resolved merge-grace safety contract. Context and Problem Statement…">
+<link rel="canonical" href="https://skywalking.apache.org/docs/skywalking-banyandb/next/design/archive/0.11.0/trace-drop-set-bounding-plan/">
+<meta name="description" content="Trace Merge Drop-Set Bounding — Execution Plan Execution plan for trace-drop-set-bounding.md. That document holds the rationale, measurements, and rejected…">
 
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@id":"https://skywalking.apache.org/#organization","@type":"Organization","logo":"https://skywalking.apache.org/images/skywalking_400x400.png","name":"Apache SkyWalking","parentOrganization":{"@type":"Organization","name":"The Apache Software Foundation","url":"https://www.apache.org/"},"sameAs":["https://github.com/apache/skywalking","https://twitter.com/asfskywalking","https://projects.apache.org/project.html?skywalking"],"url":"https://skywalking.apache.org/"},{"@type":"TechArticle","headline":"Trace Fragment Guard for Sampling Design","inLanguage":"en","mainEntityOfPage":{"@id":"https://skywalking.apache.org/docs/skywalking-banyandb/next/design/trace-fragment-sampling-guard/","@type":"WebPage"},"publisher":{"@id":"https://skywalking.apache.org/#organization"},"url":"https://skywalking.apache.org/docs/skywalking-banyandb/next/design/trace-fragment-sampling-guard/"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://skywalking.apache.org/","name":"Apache SkyWalking","position":1},{"@type":"ListItem","item":"https://skywalking.apache.org/docs/","name":"Documentation","position":2},{"@type":"ListItem","item":"https://skywalking.apache.org/docs/skywalking-banyandb/next/design/trace-fragment-sampling-guard/","name":"Trace Fragment Guard for Sampling Design","position":3}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@id":"https://skywalking.apache.org/#organization","@type":"Organization","logo":"https://skywalking.apache.org/images/skywalking_400x400.png","name":"Apache SkyWalking","parentOrganization":{"@type":"Organization","name":"The Apache Software Foundation","url":"https://www.apache.org/"},"sameAs":["https://github.com/apache/skywalking","https://twitter.com/asfskywalking","https://projects.apache.org/project.html?skywalking"],"url":"https://skywalking.apache.org/"},{"@type":"TechArticle","headline":"Trace Merge Drop-Set Bounding — Execution Plan","inLanguage":"en","mainEntityOfPage":{"@id":"https://skywalking.apache.org/docs/skywalking-banyandb/next/design/archive/0.11.0/trace-drop-set-bounding-plan/","@type":"WebPage"},"publisher":{"@id":"https://skywalking.apache.org/#organization"},"url":"https://skywalking.apache.org/docs/skywalking-banyandb/next/design/archive/0.11.0/trace-drop-set-bounding-plan/"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://skywalking.apache.org/","name":"Apache SkyWalking","position":1},{"@type":"ListItem","item":"https://skywalking.apache.org/docs/","name":"Documentation","position":2},{"@type":"ListItem","item":"https://skywalking.apache.org/docs/skywalking-banyandb/next/design/archive/0.11.0/trace-drop-set-bounding-plan/","name":"Trace Merge Drop-Set Bounding — Execution Plan","position":3}]}]}</script>
 
 
 <link rel="alternate" type="application/rss+xml" href="https://skywalking.apache.org/feed.xml" title="Apache SkyWalking">
@@ -1442,7 +1445,7 @@ A trace can have fragments in both selected and unselected parts. Sampling only 
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 3b83e18</div>
+                  <div class="commit-id">Commit Id: e7bb0d3</div>
                 
 
 
@@ -1455,579 +1458,351 @@ A trace can have fragments in both selected and unselected parts. Sampling only 
               <i class="iconfont icon-menu-doc doc-menu-button"></i>
               
 <div class="td-content">
-	<h1 id="trace-fragment-guard-for-sampling-design">Trace Fragment Guard for Sampling Design</h1>
+	<h1 id="trace-merge-drop-set-bounding--execution-plan">Trace Merge Drop-Set Bounding — Execution Plan</h1>
+<p>Execution plan for <a href="../trace-drop-set-bounding">trace-drop-set-bounding.md</a>. That document holds the rationale,
+measurements, and rejected alternatives; this one holds the work. Read the spec&rsquo;s sections 3 and 5 before starting any
+ticket.</p>
 <h2 id="status">Status</h2>
-<p>Core enforcement implemented using the resolved merge-grace safety contract.</p>
-<h2 id="context-and-problem-statement">Context and Problem Statement</h2>
-<p>BanyanDB&rsquo;s trace merge policy selects file parts primarily by compressed size to control write amplification. The
-selected parts are merged in trace-ID order, and an enabled post-trace sampler may discard traces from the merge output.</p>
-<p>A trace can have fragments in both selected and unselected parts. Sampling only the selected fragments can therefore
-produce an incorrect partial decision: the selected fragment may be dropped while another fragment remains visible in an
-unselected part. Expanding every merge selection to all timestamp-connected parts avoids some partial decisions, but
-production data shows that broad and transitively overlapping part ranges can expand a small merge into a full-shard
-rewrite.</p>
-<p>This design retains the existing size-based part selection and adds a per-trace boundary guard. Part timestamps cheaply
-identify the unselected parts that could contain another fragment. Existing trace-ID Bloom filters then confirm whether
-those candidate parts might contain the trace. Bloom filters are consulted only for traces that the sampler
-provisionally wants to drop.</p>
-<p>This document refines the in-merge filtering semantics described in the post-trace pipeline design. In particular, grace
-time is not treated as proof of trace completeness unless the deployment enforces a corresponding fragment-gap or
-sealing contract.</p>
-<h2 id="design-boundary">Design Boundary</h2>
-<h3 id="execution-boundary">Execution Boundary</h3>
-<p>The guard applies to destructive trace filtering during both the Hot-stage merge event and finalization. It does not
-change the current size-tiered merge picker, merge fan-out, output part structure, or the lossless behavior of merges
-that have no active sampler. Finalization-wide selection and scheduling remain separate concerns, but a finalization
-DROP is subject to the same outside-catalog and publication checks as an ordinary merge DROP.</p>
-<h3 id="data-visibility-boundary">Data-Visibility Boundary</h3>
-<p>The guard reasons about a pinned shard snapshot. Its universe includes:</p>
+<p>DS-1, DS-1b, DS-2, DS-3, DS-4 and DS-5 are implemented, plus the production instruments of spec §6. The ceiling is
+active on every merge.</p>
+<p>Outstanding:</p>
 <ul>
-<li>selected file parts;</li>
-<li>unselected file parts;</li>
-<li>hot parts;</li>
-<li>memparts;</li>
-<li>parts already participating in another in-flight merge;</li>
-<li>newly visible parts discovered during pre-publication revalidation.</li>
+<li><strong>DS-5&rsquo;s validation has not been executed.</strong> It now rides the Phase 10 SkyWalking acceptance workload as two runs — one
+at default settings for the headroom measurement, one at <code>--allowed-bytes=256MiB</code> to exercise the capped path. Until
+both produce reports the ticket is code-complete but not closed, and the memory bound rests on unit-level residency
+checks. This is the one item that gates calling the series done.</li>
+<li><strong>DS-9</strong> (arena-backed IDs) not started. Optional, but it raises the ceiling ~24% and so improves the deletion bound
+DS-5&rsquo;s validation runs will measure — worth landing before those runs rather than after.</li>
+<li><strong>DS-11</strong> (documentation) not started.</li>
 </ul>
-<p>Parts that cannot be inspected remain uncertainty sources and cause affected traces to be retained for the current
-merge.</p>
-<h3 id="time-boundary">Time Boundary</h3>
-<p>Part minimum and maximum timestamps are span event-time bounds, not ingestion-time bounds. The temporal pruning step is
-strictly safe only when grace is at least an enforced maximum separation between fragments of the same trace. Sealing
-an event-time range prevents future arrivals, but does not prove that an already-visible same-trace fragment is absent
-from a part farther than grace.</p>
-<p>This document calls the value used for interval expansion guard grace. The implementation uses the resolved per-group
-<code>merge_grace</code> for both interval expansion and the per-trace maturity delay. A deployment must ensure fragments of one
-trace do not arrive farther apart than this grace; the engine cannot infer or enforce that ingestion property.</p>
-<p>The engine default for merge grace is 2h when a group does not configure a positive override. A merge must resolve the
-group override or engine default once and carry that immutable value through filtering and publication revalidation.
-The runtime uses selected-part minimum timestamps only to avoid building a filter when no selected part can contain a
-mature trace. Once staging groups by <code>trace_id</code>, it sends only groups whose maximum timestamp is at or before
-<code>now − grace</code> to the sampler; newer groups are retained unchanged. Because compaction is part-count-driven rather than
-timer-driven, an ineligible trace is not guaranteed to be reconsidered at the two-hour frontier. Finalization remains
-an independent backstop.</p>
-<p>Using one value makes the configured maturity contract match the boundary checked before a destructive DROP. It also
-permits an early whole-merge bypass when no selected part can contain a mature trace,
-avoiding projection, staging, sampler, and Bloom work when no DROP could be authorized. Without a trustworthy
-fragment-arrival contract, operators should not enable destructive sampling for that group.</p>
-<p>The design uses symmetric time expansion because the size-based picker can select an arbitrary temporal subset. An
-outside fragment may be earlier or later than the selected fragment.</p>
-<h3 id="concurrency-boundary">Concurrency Boundary</h3>
-<p>A stable snapshot and pre-publication epoch validation cover parts that become visible while a merge is running. They do
-not prove that no future late or backdated fragment will arrive after publication.</p>
-<p>Strict protection against future arrivals requires an ingestion watermark, a sealed segment, or a policy that rejects or
-quarantines late fragments. Defining that cluster-wide late-write protocol is outside this design.</p>
-<h3 id="segment-boundary">Segment Boundary</h3>
-<p>The current trace table is scoped to an event-time segment, while one trace can cross adjacent segments. A trace whose
-grace-expanded range reaches a segment boundary is retained unless the relevant neighboring segment is included under
-the same visibility and ownership fence.</p>
-<h3 id="failure-boundary">Failure Boundary</h3>
-<p>All uncertainty fails open. A missing timestamp, invalid range, missing or corrupt Bloom filter, sampler failure,
-snapshot conflict, ownership change, or incomplete fragment assembly causes retention rather than destructive deletion.</p>
-<p>Retention by this guard is merge-local deferral. It is not a permanent KEEP decision and does not prevent the trace from
-being evaluated in a later merge or finalization pass.</p>
-<h2 id="goals">Goals</h2>
-<ol>
-<li>Prevent a sampler DROP from removing selected fragments when a currently visible unselected part may contain the same
-trace ID.</li>
-<li>Preserve the existing size-based input selection, input fan-out, and direct rewrite scope.</li>
-<li>Avoid probing every unselected Bloom filter for every merged trace.</li>
-<li>Apply Bloom confirmation only to provisional sampler DROP traces and only against time-relevant outside parts.</li>
-<li>Assemble all selected physical fragments of a trace before calculating its time range or invoking the sampler.</li>
-<li>Keep core-part and secondary-index publication consistent when a trace is deferred or dropped.</li>
-<li>Bound additional CPU and memory through per-merge indexes, batching, and early termination.</li>
-<li>Make uncertainty observable and fail open.</li>
-</ol>
-<h2 id="non-goals">Non-Goals</h2>
-<ol>
-<li>Replacing the current size-tiered merge policy with leveled compaction.</li>
-<li>Physically colocating every fragment of a trace in one part.</li>
-<li>Guaranteeing that no fragment can arrive after a merge commits.</li>
-<li>Defining a cluster-wide event watermark or late-write rejection protocol.</li>
-<li>Eliminating Bloom-filter false positives.</li>
-<li>Removing the need for finalization as a backstop.</li>
-<li>Changing sampler policy, plugin ordering, or plugin projection semantics.</li>
-<li>Providing permanent trace-level KEEP or DROP tombstones.</li>
-<li>Solving arbitrary trace-ID reuse within the retention period.</li>
-<li>Specifying backward compatibility for file parts that do not contain persisted per-trace timestamp bounds.</li>
-<li>Guaranteeing unchanged output bytes or lifetime write amplification when conservative deferrals retain more traces.</li>
-</ol>
-<h2 id="terminology">Terminology</h2>
-<table>
-  <thead>
-      <tr>
-          <th>Term</th>
-          <th>Meaning</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td>Selected parts</td>
-          <td>File parts chosen by the existing merge policy.</td>
-      </tr>
-      <tr>
-          <td>Outside parts</td>
-          <td>All visible parts in the relevant shard and segment scope that are not selected by this merge.</td>
-      </tr>
-      <tr>
-          <td>Selected trace range</td>
-          <td>The minimum and maximum event timestamps across every selected physical fragment with the same trace ID.</td>
-      </tr>
-      <tr>
-          <td>Guard grace</td>
-          <td>The interval expansion used to find time-relevant outside parts.</td>
-      </tr>
-      <tr>
-          <td>Guard range</td>
-          <td>The selected trace range expanded earlier and later by guard grace.</td>
-      </tr>
-      <tr>
-          <td>Candidate outside part</td>
-          <td>An outside part whose part-level event-time range intersects the guard range.</td>
-      </tr>
-      <tr>
-          <td>Provisional DROP</td>
-          <td>A DROP returned by the sampler before boundary confirmation.</td>
-      </tr>
-      <tr>
-          <td>Deferred trace</td>
-          <td>A trace retained in this merge because an outside fragment is possible or the guard is uncertain.</td>
-      </tr>
-      <tr>
-          <td>Base epoch</td>
-          <td>The snapshot epoch used to select inputs and construct the boundary guard.</td>
-      </tr>
-  </tbody>
-</table>
-<h2 id="design-invariants">Design Invariants</h2>
-<ol>
-<li>The merge picker receives the same eligible file parts and produces the same selected input set as it did before this
-guard.</li>
-<li>All physical blocks with the same trace ID in the selected inputs form one logical evaluation unit.</li>
-<li>A sampler KEEP is final for the current merge and requires no Bloom check.</li>
-<li>A sampler DROP becomes effective only after boundary confirmation.</li>
-<li>Bloom filters are never used as evidence of absence when they are missing, unreadable, or incompatible.</li>
-<li>A Bloom positive causes deferral unless an optional exact metadata lookup proves the trace ID absent.</li>
-<li>A valid Bloom filter contains every trace ID in its immutable part and cannot produce a false negative.</li>
-<li>Part-level time ranges may create false candidates but must not exclude timestamps actually stored in that part.</li>
-<li>A trace with missing or invalid per-trace timestamps is deferred.</li>
-<li>A selected trace is never partially written to the output.</li>
-<li>Secondary-index entries are removed only for trace IDs whose DROP survives boundary confirmation.</li>
-<li>A merge output is not published against an invalidated snapshot without successful revalidation.</li>
-<li>Exhausting a boundary-check CPU, memory, I/O, or probe budget causes deferral.</li>
-</ol>
-<h2 id="design-overview">Design Overview</h2>
-<p>The merge request captures and pins the selected inputs, the base snapshot epoch, the event-time coverage of the pinned
-catalog, and lightweight metadata for every outside part. Outside metadata consists of the part identity, minimum and
-maximum event timestamps, segment identity, availability state, and a reference to its trace-ID Bloom filter. The
-catalog also records the enforced fragment gap, which is the same resolved merge grace used by the maturity gate.</p>
-<p>Before incurring sampler work, the runtime also checks that native sampling is enabled, a sampler exists, the relevant
-event is enabled, the segment has a non-empty merge-grace-expanded interior, and at least one selected part may contain
-a mature trace. Trace-ID staging then applies the maturity boundary to each assembled trace. Finalization uses the
-greater of merge grace and finalize grace for maturity. Failure of any check leaves the lossless path unchanged.</p>
-<p>The merge assembles selected blocks by trace ID and computes one selected trace range. The sampler evaluates the
-assembled trace. Sampler KEEP traces are written immediately according to normal ordered-output rules. For each
-provisional DROP, the guard identifies only outside parts whose event-time envelopes intersect the grace-expanded
-selected trace range. It probes the Bloom filters of those candidates and stops at the first positive or uncertainty.</p>
-<p>If no candidate part exists, or all candidate Bloom filters are negative, the trace may be dropped within the documented
-time and snapshot boundary. If any candidate filter is positive or unavailable, the trace is written to the output and
-deferred for later evaluation.</p>
-<p>The outside interval index is created once per merge. With the normal small part count, a compact sorted array and
-integer comparisons are preferred. An interval tree is warranted only if profiling shows that part counts make linear
-candidate discovery material.</p>
-<h2 id="key-process">Key Process</h2>
-<h3 id="1-select-and-pin-inputs">1. Select and Pin Inputs</h3>
-<p>The existing merge policy selects file parts without modification. Selection and in-flight pinning retain their current
-atomic exclusion behavior.</p>
-<p>The dispatcher also captures the base snapshot epoch and the identity of every visible part. Parts excluded from merge
-eligibility still remain in the outside-part universe.</p>
-<h3 id="2-build-the-outside-part-guard">2. Build the Outside-Part Guard</h3>
-<p>The merge request records the part-level time range and Bloom-filter reference for every outside part. Outside intervals
-are ordered and indexed once.</p>
-<p>The index preserves the identity of each overlapping part rather than only the union of time intervals because Bloom
-confirmation must be directed to individual parts.</p>
-<p>Invalid part bounds, unavailable filters, and segment or ownership ambiguity are recorded as uncertainty rather than
-silently omitted.</p>
-<h3 id="3-assemble-a-complete-selected-trace">3. Assemble a Complete Selected Trace</h3>
-<p>The merge stream groups all selected physical blocks with the same trace ID. The selected trace range is the minimum and
-maximum across all grouped blocks.</p>
-<p>The sampler receives the complete selected trace projection, not only the first staged block. Batch boundaries may occur
-only between trace IDs.</p>
-<p>Persisted per-block minimum and maximum timestamps are required for an efficient implementation. The current in-memory
-timestamp fields are not serialized in block metadata. New file parts must persist these bounds, or the merge must
-reconstruct them from the configured timestamp column. Failure to reconstruct them causes deferral.</p>
-<p>Projection handling must enter the decoded assembly path whenever tags, span IDs, or spans are requested. Timestamp
-aggregation and sampler input assembly must cover the same complete set of physical blocks.</p>
-<h3 id="4-obtain-the-sampler-verdict">4. Obtain the Sampler Verdict</h3>
-<p>The sampler chain runs with its existing fail-open behavior. A sampler error, panic, timeout, malformed mask, or
-incomplete projection retains the affected batch.</p>
-<p>A KEEP requires no boundary work. Only provisional DROP traces enter temporal pruning and Bloom confirmation.</p>
-<h3 id="5-discover-time-candidates">5. Discover Time Candidates</h3>
-<p>The guard symmetrically expands the selected trace range by grace. It finds every outside part whose part range
-intersects that guard range.</p>
-<p>The check is inclusive at the configured boundary and uses overflow-safe timestamp arithmetic. It does not consider only
-an immediate predecessor or successor because outside intervals can be nested and the selected parts are not temporally
-contiguous.</p>
-<p>If the guard range reaches a segment boundary and the neighboring segment is not covered by the same snapshot fence, the
-trace is deferred.</p>
-<h3 id="6-confirm-with-bloom-filters">6. Confirm with Bloom Filters</h3>
-<p>The trace ID is tested only against candidate outside parts. Candidate checks terminate at the first positive, missing
-filter, or corrupt filter.</p>
-<p>For cache locality, a merge implementation may group provisional DROP trace IDs by candidate part and probe one part&rsquo;s
-filter in a batch. This optimization must preserve early deferral semantics.</p>
-<p>An optional exact lookup in sorted primary metadata may verify Bloom positives. Exact verification is an optimization
-for reducing false deferrals, not a correctness requirement.</p>
-<p>Cancellation or exhaustion of the merge&rsquo;s boundary-check resource budget defers every unresolved trace.</p>
-<h3 id="7-apply-the-final-merge-action">7. Apply the Final Merge Action</h3>
-<p>The action matrix is:</p>
-<table>
-  <thead>
-      <tr>
-          <th>Sampler result</th>
-          <th style="text-align: right">Time candidates</th>
-          <th>Bloom confirmation</th>
-          <th>Merge action</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td>KEEP</td>
-          <td style="text-align: right">Not evaluated</td>
-          <td>Not evaluated</td>
-          <td>Write the trace.</td>
-      </tr>
-      <tr>
-          <td>DROP</td>
-          <td style="text-align: right">None</td>
-          <td>Not evaluated</td>
-          <td>Drop within the documented grace assumption.</td>
-      </tr>
-      <tr>
-          <td>DROP</td>
-          <td style="text-align: right">One or more</td>
-          <td>All negative</td>
-          <td>Drop.</td>
-      </tr>
-      <tr>
-          <td>DROP</td>
-          <td style="text-align: right">One or more</td>
-          <td>Any positive</td>
-          <td>Write and defer the trace.</td>
-      </tr>
-      <tr>
-          <td>DROP</td>
-          <td style="text-align: right">One or more</td>
-          <td>Missing or corrupt filter</td>
-          <td>Write and defer the trace.</td>
-      </tr>
-      <tr>
-          <td>DROP or unknown</td>
-          <td style="text-align: right">Invalid trace range or incomplete assembly</td>
-          <td>Not trusted</td>
-          <td>Write and defer the trace.</td>
-      </tr>
-      <tr>
-          <td>DROP or unknown</td>
-          <td style="text-align: right">Boundary-check budget exhausted or canceled</td>
-          <td>Incomplete</td>
-          <td>Write and defer every unresolved trace.</td>
-      </tr>
-  </tbody>
-</table>
-<p>The guard records each confirmed DROP together with the authoritative aggregate trace range it calculated. Only those
-guard-owned confirmed DROP tokens are passed to secondary-index pruning and publication revalidation.</p>
-<h3 id="8-revalidate-before-publication">8. Revalidate Before Publication</h3>
-<p>Before the core and secondary-index outputs are introduced, the merge worker compares a pinned current snapshot,
-selected-input presence, and table-lifecycle ownership with the captured base state. If new parts appeared, provisional
-DROP trace IDs are revalidated against those parts using the same time-candidate and Bloom rules. This potentially
-expensive work runs outside the serialized introducer.</p>
-<p>The introducer then holds the publication fence and performs a constant-time epoch and ownership check. Publication is
-allowed only when the epoch is exactly the one successfully prevalidated. Unavailable metadata, ownership changes, or
-an epoch change after prevalidation rejects the filtered output.</p>
-<p>Because dropped payload is already absent from a provisional output, an unsafe output cannot be repaired in place. It is
-discarded, while the pinned inputs remain authoritative, and the merge is retried or performed losslessly.</p>
-<h3 id="9-release-and-retry">9. Release and Retry</h3>
-<p>Successful publication releases input pins through the existing lifecycle. Rejected output files and secondary-index
-artifacts are removed. The same pinned inputs are then merged once without a sampler or guard, guaranteeing compaction
-progress without another destructive decision. A failed lossless retry is reported as the merge error and the original
-inputs remain authoritative.</p>
-<h2 id="correctness-properties-and-limitations">Correctness Properties and Limitations</h2>
-<h3 id="visible-snapshot-protection">Visible-Snapshot Protection</h3>
-<p>Under accurate part bounds, complete selected-trace assembly, and a stable snapshot, a Bloom-negative result for every
-candidate part proves that none of those candidate parts contains the trace ID.</p>
-<p>Temporal pruning proves that non-candidate parts can be ignored only when guard grace is at least an enforced maximum
-same-trace fragment separation. A seal alone is insufficient because it says nothing about fragments already present
-outside grace. Without the maximum-gap proof, enforcement defers or uses a future all-outside-filter fallback.</p>
-<h3 id="false-positives">False Positives</h3>
-<p>Part time ranges are envelopes over unrelated traces and can span minutes or hours. They may nominate parts that cannot
-contain the selected trace. Bloom confirmation removes most resulting false deferrals. Remaining Bloom false positives
-safely defer sampling.</p>
-<h3 id="late-arrivals">Late Arrivals</h3>
-<p>Epoch validation covers concurrent part introductions visible before publication. It does not cover a future fragment
-arriving afterward. Operators requiring strict whole-trace semantics must pair this design with sealing or late-write
-quarantine.</p>
-<h3 id="convergence">Convergence</h3>
-<p>Broad part envelopes can repeatedly nominate the same outside parts. Bloom negatives allow unrelated traces to progress,
-while Bloom positives defer possible fragments until a later merge includes them together. Finalization remains the
-backstop for traces that do not converge through ordinary merge selection, but it uses the same guard rather than
-treating a cooled partial selection as complete.</p>
-<h2 id="cost-model">Cost Model</h2>
-<p>The baseline all-part Bloom strategy performs approximately the number of selected traces multiplied by the number of
-outside parts in Bloom probes.</p>
-<p>The hybrid strategy performs cheap integer interval comparisons first, then probes approximately the number of
-provisional DROP traces multiplied by their average number of time-candidate parts. Sampler KEEP traces incur no Bloom
-work.</p>
-<p>The captured 26-part production shard provides an initial validation fixture. Its per-trace time map contains 37,288
-unique trace IDs and has SHA-256 <code>02eda3eed08d17590527d02fd5f56610fba5fe0bd7252f9575df9bbdd6c9df7f</code>.
-The replay uses the latest fixture event time, <code>2026-07-29T23:59:56.171Z</code>, as its deterministic active-ingestion clock.
-Using the later download time would incorrectly classify every tail part as cooled and would not reproduce the state in
-which the small files were new.</p>
-<p>With the 2h merge-grace default, the maturity frontier is <code>2026-07-29T21:59:56.171Z</code>. The twelve-part small-file window previously
-used by the prototype is newer than that frontier. Production would merge it losslessly without calling the sampler or
-guard: all 254 traces are retained, and drops and Bloom probes are both zero. It is also only the best scoring window,
-not a dispatched default-policy merge; the frozen fixture&rsquo;s default picker selects no merge.</p>
-<p>The corrected guard replay derives its inputs from metadata by selecting the six parts at or before the frontier:
-<code>05ee</code>, <code>0b5b</code>, <code>1002</code>, <code>1191</code>, <code>165a</code>, and <code>1c36</code>. They are 34,856,465 compressed bytes and contain 31,832 selected
-trace IDs. All 20 newer parts remain in the outside catalog. For this conservative replay, the declared maximum
-fragment gap is also 2h. Only <code>21d4</code> intersects any selected trace&rsquo;s 2h guard range;
-it contains all 31 exact selected/outside crossings.</p>
-<table>
-  <thead>
-      <tr>
-          <th>Strategy over all provisional DROP traces</th>
-          <th style="text-align: right">Candidate pairs</th>
-          <th style="text-align: right">Bloom probes</th>
-          <th style="text-align: right">Retained</th>
-          <th style="text-align: right">Dropped</th>
-          <th style="text-align: right">False deferrals</th>
-          <th style="text-align: right">False negatives</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td>Hybrid, 2h</td>
-          <td style="text-align: right">6,652</td>
-          <td style="text-align: right">6,652</td>
-          <td style="text-align: right">34</td>
-          <td style="text-align: right">31,798</td>
-          <td style="text-align: right">3</td>
-          <td style="text-align: right">0</td>
-      </tr>
-      <tr>
-          <td>Time only, 2h</td>
-          <td style="text-align: right">6,652</td>
-          <td style="text-align: right">0</td>
-          <td style="text-align: right">6,652</td>
-          <td style="text-align: right">25,180</td>
-          <td style="text-align: right">6,621</td>
-          <td style="text-align: right">0</td>
-      </tr>
-      <tr>
-          <td>All outside Bloom filters</td>
-          <td style="text-align: right">Not pruned</td>
-          <td style="text-align: right">629,241</td>
-          <td style="text-align: right">900</td>
-          <td style="text-align: right">30,932</td>
-          <td style="text-align: right">869</td>
-          <td style="text-align: right">0</td>
-      </tr>
-  </tbody>
-</table>
-<p>The corrected hybrid uses approximately 1.1 percent of the all-Bloom probes while preserving every observed crossing.
-A recent small part added to the six cooled inputs makes the whole selection hot, so sampling and guard work return to
-zero. A large part can also be recent; event-time maturity, not file size alone, controls the gate.</p>
-<p>In a 100-iteration, three-run prototype benchmark, median guard time was 1.09ms for the hybrid, 0.45ms for time-only,
-and 33.17ms for all-Bloom. The hot small-part maturity check took approximately 31ns and performed no sampling or
-guard work. All four prototype paths reported zero allocations. These numbers exclude merge I/O and sampler execution.</p>
-<p>The cooled six-part selection is a maturity-and-guard fixture, not evidence that the default ordinary picker dispatched
-those exact inputs. A production-realistic picker replay requires a historical pre-merge snapshot or a synthetic tier
-with enough similarly sized, cooled parts to pass the dispatch threshold.</p>
-<p>The maximum observed adjacent same-trace fragment gap in this fixture was 71.225s. The 2h range therefore covered the
-observation, while this remains workload evidence rather than the enforced maximum-gap proof required for destructive
-temporal pruning.</p>
-<p>The merge still reads only the inputs selected by the existing policy, so the guard does not directly increase input
-fan-out or rewrite scope. More conservative deferrals can enlarge output parts and cause more bytes to survive into
-later merges. Total lifetime write amplification can therefore increase indirectly and must be measured.</p>
-<h2 id="observability">Observability</h2>
-<p>The implementation must expose bounded-cardinality metrics for:</p>
+<h2 id="shape-of-the-work">Shape of the work</h2>
+<p>Eight tickets. One PR each; CI runs on pull requests, not on pushes.</p>
+<p>The series is deliberately small. A finalize round is treated as one more merge, so nothing touches
+<code>banyand/trace/finalize_state.go</code>, <code>banyand/trace/finalize_scanner.go</code>, the round scheduling, or any query path. The four
+features that would recover the deletion bounded by spec §5.2 are deferred, listed at the end of this document as
+prospective tickets with their prerequisites.</p>
+<p><strong>The mechanism lands inert.</strong> DS-3 wires the ceiling into the decision loop while the production budget stays zero,
+which <code>dropTracker</code> treats as unlimited. Nothing in production behaviour changes until DS-5 activates it. That
+single-ticket activation boundary is the rollback plan for the whole series — revert DS-5 and the mechanism is dormant
+again with no code removed.</p>
+<pre tabindex="0"><code>DS-1 ──&gt; DS-1b ──&gt; DS-3 ──&gt; DS-4 ──┐
+DS-2 ──────────────────────────────┴──&gt; DS-5 ──&gt; DS-11
+DS-9 (independent, any time after DS-1; best before DS-5)
+</code></pre><p><strong>Definition of done for every ticket:</strong> its own tests pass; <code>make lint</code> clean; the existing <code>banyand/trace</code> suite passes
+<strong>unmodified</strong> unless the ticket explicitly lists a test it changes; and the diff touches neither <code>pkg/query/...</code> nor the
+two finalize files named above.</p>
+<h2 id="stage-1--mechanism-inert">Stage 1 — Mechanism, inert</h2>
+<h3 id="ds-1--droptracker-with-exact-residency-accounting">DS-1 — <code>dropTracker</code> with exact residency accounting</h3>
+<p><strong>Size.</strong> S. <strong>Depends on.</strong> Nothing.</p>
+<p><strong>Scope.</strong> A self-contained structure and its arithmetic. No call sites.</p>
 <ul>
-<li>traces evaluated by the sampler;</li>
-<li>provisional KEEP and DROP verdicts;</li>
-<li>traces with no time candidate;</li>
-<li>time-candidate trace-part pairs;</li>
-<li>Bloom probes;</li>
-<li>Bloom negatives and early positive exits;</li>
-<li>Bloom-positive deferrals;</li>
-<li>missing or corrupt filter deferrals;</li>
-<li>invalid timestamp deferrals;</li>
-<li>segment-boundary deferrals;</li>
-<li>boundary-check budget deferrals;</li>
-<li>immature traces retained past the eligibility frontier;</li>
-<li>confirmed drops;</li>
-<li>snapshot revalidation attempts and failures;</li>
-<li>discarded provisional outputs;</li>
-<li>retries performed losslessly;</li>
-<li>candidate parts per provisional DROP;</li>
-<li>filter bytes loaded;</li>
-<li>boundary-guard latency.</li>
+<li><code>dropTracker</code> wrapping the existing <code>*droppedTraceIDs</code>, with <code>canAccept() bool</code> and a one-way <code>full</code> flag.</li>
+<li><code>liveBytes()</code> extending the pool&rsquo;s existing sizing (<code>banyand/trace/drop_set.go:35-37</code>) with the ID-body bytes.</li>
+<li><code>projectedIndexBytes(n int) int64</code> returning exactly what <code>buildIndex</code> will allocate for <code>n</code> entries.</li>
+<li><code>maxIDsForBudget(budget uint64) int</code>, where <strong><code>budget == 0</code> means unlimited</strong> — this is what keeps DS-3 inert. DS-1b
+adds the observed-ID-length parameter; land the sentinel and the <code>max(1, …)</code> clamp here.</li>
+<li>A residency benchmark reporting bytes per entry.</li>
 </ul>
-<p>Logs should identify the group, shard, segment, merge type, input count, base epoch, and failure reason. Trace IDs must
-not be used as unbounded metric labels.</p>
-<p>The current enforcement path exposes bounded counters for guard bypasses, Bloom probes, deferred traces, budget
-exhaustion, publication rejection, and lossless retries, in addition to the existing sampler evaluated/retained/dropped
-counters. Publication rejection logs include the group, shard, merge type, reason, rechecked trace count, and Bloom
-probe count. Per-reason trace-level labels are intentionally avoided.</p>
-<h2 id="test-plan">Test Plan</h2>
-<h3 id="unit-tests">Unit Tests</h3>
+<p><strong>Out of scope.</strong> Any change to <code>merger.go</code>. Reading the protector. The arena (DS-9).</p>
+<p><strong>Files.</strong> <code>banyand/trace/drop_set.go</code>, <code>banyand/trace/drop_set_test.go</code>.</p>
+<p><strong>Tests.</strong></p>
+<ul>
+<li><code>TestProjectedIndexBytesMatchesBuildIndex</code> — for <code>n</code> in <code>{0, 1, 2, 3, 4, 5, 7, 8, 9, 1023, 1024, 1025, 65535, 65536, 65537}</code>, build a real set of <code>n</code> IDs, call <code>buildIndex</code>, assert <code>projectedIndexBytes(n) == int64(len(slots))*8</code>. The
+power-of-two boundaries are the point: <code>nextPow2(2n)</code> is discontinuous and the projection must be exact, not
+conservative.</li>
+<li><code>TestCanAcceptStopsAtBudget</code> — for budgets 1 MiB / 8 MiB / 32 MiB, add IDs until <code>canAccept</code> is false; assert (a) it
+never returns true again, (b) <code>liveBytes() + projectedIndexBytes(len+1)</code> is at or below the budget at the stop point,
+(c) <code>buildIndex</code> then leaves measured residency at or below the budget.</li>
+<li><code>TestZeroBudgetIsUnlimited</code> — <code>maxIDsForBudget(0)</code> yields a tracker that accepts far past any ceiling.</li>
+<li><code>BenchmarkDropSetResidency</code> — <code>b.ReportMetric</code> bytes per entry at 100 k and 1 M entries, so DS-9 has a baseline.</li>
+</ul>
+<p><strong>Exit.</strong> Projection exact at every tested <code>n</code>. Measured residency at or below budget for all three budgets.</p>
+<p><strong>Rollback.</strong> Dead code; safe to leave.</p>
+<hr>
+<h3 id="ds-1b--derive-bytesentry-from-the-observed-id-length">DS-1b — Derive bytes/entry from the observed ID length</h3>
+<p><strong>Size.</strong> S. <strong>Depends on.</strong> DS-1.</p>
+<p><strong>Scope.</strong> A fixed bytes/entry constant priced for the 42-byte ID of spec §1.1 lets longer trace IDs overshoot the budget
+proportionally, so the ceiling is not a ceiling (about 1.4x at 96 bytes, 3x at 256). Replace it with a price derived from
+an observed length.</p>
+<ul>
+<li><code>allocClassBytes(n)</code> — round up to the allocator&rsquo;s size-class stride (16 below 256 bytes, 32 above), an upper bound
+because a ceiling must never under-count.</li>
+<li><code>dropSetBytesPerEntry(idLen)</code> = header + slack + <code>allocClassBytes(idLen)</code> + worst-case slots. At <code>idLen == 42</code> this is
+exactly 100, so the change generalizes the old constant rather than re-tuning it and §3.4&rsquo;s ceilings are unchanged for
+that case.</li>
+<li>The tracker carries <code>budget</code> instead of a precomputed <code>maxIDs</code> and derives <code>maxIDs</code> when the first ID is recorded, via
+a <code>record</code> method. Three states stay distinct: <code>budget == 0</code> unlimited, <code>maxIDs == 0</code> with a non-zero budget &ldquo;not yet
+derived, admit the entry that derives it&rdquo;, and the <code>max(1, …)</code> clamp keeps a non-zero budget bounding.</li>
+<li><code>record</code> re-derives if a longer ID appears, so per-shard uniformity is self-correcting rather than load-bearing.</li>
+<li><code>liveBytes</code> prices bodies with <code>allocClassBytes</code> too, so the predicate and the derivation speak in the same units.</li>
+</ul>
+<p><strong>Out of scope.</strong> The arena layout (DS-9), which later replaces only the body term.</p>
+<p><strong>Files.</strong> <code>banyand/trace/drop_set.go</code>, <code>banyand/trace/drop_set_test.go</code>.</p>
+<p><strong>Tests.</strong></p>
+<ul>
+<li><code>TestBytesPerEntryTracksIDLength</code> — the regression test. At lengths 42/64/96/128/256, drive a tracker to its ceiling and
+assert <code>residentBytes()</code> stays at or below the budget, and that a longer ID yields a strictly smaller ceiling.</li>
+<li><code>TestTrackerRederivesOnLongerID</code> — a longer ID lowers the ceiling; a subsequent shorter one does not raise it.</li>
+<li><code>TestTinyBudgetStillBounds</code> and <code>TestZeroBudgetIsUnlimited</code> updated for the derived form: the clamp and the unlimited
+sentinel must both survive it.</li>
+</ul>
+<p><strong>Exit.</strong> Residency at or below budget at every tested ID length — the invariant that is false with a fixed constant.</p>
+<hr>
+<h3 id="ds-2--budget-resolution">DS-2 — Budget resolution</h3>
+<p><strong>Size.</strong> XS. <strong>Depends on.</strong> Nothing (parallel to DS-1).</p>
+<p><strong>Scope.</strong> One resolver, no consumers.</p>
+<ul>
+<li><code>resolveDropSetBudget(opt option)</code> — <code>limit/(dropSetAggregateDivisor*CPUs)</code>, floor <code>minimumDropSetBudget</code>,
+<code>defaultDropSetBudget</code> when the limit is zero. <strong>No lane parameter and no second function</strong>: finalize is charged the
+same as a hot merge (spec §3.4).</li>
+<li><code>testDropSetBudgetOverride</code>, mirroring <code>testStageBudgetOverride</code> (<code>banyand/trace/merger.go:189</code>).</li>
+<li>Constants, with comments covering why the floor is 1 MiB rather than staging&rsquo;s 16 MiB and when it binds, why there is
+no independent entry cap, and — pointing at spec §9.1 — why finalize is not given a larger ceiling despite being
+concurrency-1.</li>
+</ul>
+<p><strong>Out of scope.</strong> Wiring the budget into a filter (DS-5).</p>
+<p><strong>Files.</strong> <code>banyand/trace/merger.go</code> (budget block near <code>:194-243</code>), new <code>banyand/trace/drop_set_budget_test.go</code>.</p>
+<p><strong>Tests.</strong></p>
+<ul>
+<li><code>TestResolveDropSetBudget</code> — table over <code>(limit, CPUs)</code> covering 0, 512 MiB, 4 GiB, 16 GiB × 1, 4, 8, 16 CPUs; exact
+expected bytes including the zero-limit fallback and the minimum clamp.</li>
+<li><code>TestDropSetAggregateBoundHolds</code> — for each row, assert <code>budget*(CPUs/2+2) &lt;= limit/8</code>, and assert the documented
+small-node overshoot explicitly for CPUs 1 and 2 rather than letting it look like a failure. The aggregate invariant
+becomes a test rather than a comment in the spec.</li>
+<li><code>TestDropSetFloorBoundRegime</code> — the floor-bound regime the rows above are all too large to reach: assert the floor
+binds, that the aggregate bound still holds above a plausible smallest limit, and that below it the floor dominates.
+Without this, the floor&rsquo;s effect on the bound is untested.</li>
+<li><code>TestDropSetBudgetOverrideWins</code>.</li>
+</ul>
+<p><strong>Exit.</strong> Table passes. Aggregate bound asserted, including the small-CPU exception.</p>
+<p><strong>Rollback.</strong> Unused function; safe.</p>
+<hr>
+<h3 id="ds-3--ceiling-enforcement-in-the-decision-loop-inert">DS-3 — Ceiling enforcement in the decision loop (inert)</h3>
+<p><strong>Size.</strong> M. <strong>Depends on.</strong> DS-1.</p>
+<p><strong>Scope.</strong> The behavioural seam, with the production budget still zero so the ceiling is unreachable outside tests.</p>
+<ul>
+<li><code>traceEvaluationStager</code> holds a <code>dropTracker</code> instead of a bare <code>*droppedTraceIDs</code>
+(<code>banyand/trace/merger.go:2050-2066</code>).</li>
+<li>In <code>resolveStagedDrops</code> (<code>banyand/trace/merger.go:1945-1996</code>): a ceiling check placed <strong>before the guard and before both
+<code>recordDroppedTraceID</code> sites</strong>. When the tracker is full, set <code>keepMask[traceIdx] = true</code>, run the retained accounting,
+increment a new retained-by-ceiling counter, and <code>continue</code> — the guard is not consulted for a trace that will be kept.</li>
+<li><code>incPipelineTracesRetainedByCeiling</code> in <code>banyand/trace/metrics.go</code> (alongside <code>:318-334</code>), plus the <code>observation</code> hook.</li>
+<li><code>filter.budget</code> plumbed through <code>mergeFilter</code>, left at zero by both construction sites.</li>
+</ul>
+<p><strong>Out of scope.</strong> Activating the budget (DS-5). Benchmark-event fields and the warning log (DS-4). Any change to
+<code>keepEncoded</code>, <code>filterBlockPointer</code>, the SIDX merge signature, the output part&rsquo;s <code>traceIDFilter</code>, the finalize state or
+scanner, or any query path.</p>
+<p><strong>Files.</strong> <code>banyand/trace/merger.go</code>, <code>banyand/trace/metrics.go</code>, the merge-observation type.</p>
+<p><strong>Tests.</strong></p>
+<ul>
+<li><code>TestMergeCeilingPrunesSidxExactly</code> — the load-bearing test. Force a two-entry ceiling on a merge whose sampler proposes
+five drops. Assert the output part contains exactly the three spared traces plus all verdict-retained ones, and that for
+<strong>each</strong> sidx instance the element set equals the output part&rsquo;s trace-ID set — strict equality in both directions, so
+both an orphan and a missing entry fail.</li>
+<li><code>TestMergeCeilingRetainsTheAscendingTail</code> — the spared traces are the lexicographically largest of the proposed drops,
+pinning the bias of spec §4 as observed behaviour rather than a claim.</li>
+<li><code>TestMergeCeilingSkipsGuard</code> — the guard&rsquo;s bloom-probe count equals the number of <em>pre-ceiling</em> proposed drops.</li>
+<li><code>TestMergeCeilingStillRevalidatesGuard</code> — a capped merge that dropped at least one trace still runs
+<code>filter.guard.revalidate</code> (<code>banyand/trace/merger.go:926</code>). This is the regression the rejected bloom design would have
+introduced; assert it even though this design cannot reach it.</li>
+<li><code>TestMergeCeilingCounterAccounting</code> — retained-by-ceiling equals proposed drops beyond the ceiling; total retained
+equals verdict-retained plus ceiling-retained.</li>
+<li><code>TestCappedFinalizeRoundLeavesStateUnchanged</code> — a capped finalize round writes the same <code>finalize.json</code> fields a normal
+round does: generation advanced, counter reset, no new fields, <code>FinalizeRounds</code> incremented once. Guards the spec §11
+invariant 7 that finalize scheduling is untouched.</li>
+<li><code>TestMergeCeilingInertWithoutOverride</code> — with no override, a merge proposing many drops records every one; nothing is
+retained by ceiling.</li>
+<li>Unmodified: <code>TestMergeFilter_CoupledSidxPrune</code> (<code>banyand/trace/pipeline_chain_test.go:997</code>),
+<code>TestMergeFilter_IdempotentReMerge</code>, <code>banyand/trace/pipeline_chain_filter_test.go:508</code>.</li>
+</ul>
+<p><strong>Exit.</strong> All of the above, with zero edits to existing tests.</p>
+<hr>
+<h3 id="ds-4--observability">DS-4 — Observability</h3>
+<p><strong>Size.</strong> S. <strong>Depends on.</strong> DS-3.</p>
+<p><strong>Scope.</strong> Making the ceiling visible before it can fire in production. With no continuation mechanism this is the only
+signal that a shard is under-deleting, so it is part of the series rather than a follow-up.</p>
+<ul>
+<li>Benchmark-event fields beside <code>StagingHardLimit</code> (<code>banyand/trace/merger.go:712-716</code>): resolved budget, capped flag,
+retained-by-ceiling count.</li>
+<li>A capped-merge counter split by lane.</li>
+<li>One <code>Warn</code> per capped finalize round, naming group, shard, and retained-by-ceiling count. Exactly one: not per batch,
+not per trace.</li>
+</ul>
+<p><strong>Out of scope.</strong> Budget activation. Anything that changes a merge decision. Anything persisted.</p>
+<p><strong>Files.</strong> <code>banyand/trace/merger.go</code>, <code>banyand/trace/merge_benchmark_observer.go</code>, <code>banyand/trace/metrics.go</code>,
+<code>banyand/trace/finalizer.go</code> (log call only).</p>
+<p><strong>Tests.</strong></p>
+<ul>
+<li><code>TestBenchmarkEventCarriesDropSetCeiling</code> — forced ceiling; all three fields populated and consistent with the counters.</li>
+<li><code>TestCappedFinalizeRoundWarnsOnce</code> — log capture asserts exactly one warning for a capped round and none for an uncapped
+one.</li>
+</ul>
+<p><strong>Exit.</strong> Both tests, plus the new fields visible in a forced-ceiling run&rsquo;s report.</p>
+<hr>
+<h2 id="stage-2--activation">Stage 2 — Activation</h2>
+<h3 id="ds-5--activate-the-budget">DS-5 — Activate the budget</h3>
+<p><strong>Size.</strong> XS (the diff). Validation rides the Phase 10 SkyWalking acceptance workload rather than standing up its own
+harness, so it costs one extra run of an existing workload plus a flag. <strong>Depends on.</strong> DS-2, DS-4.</p>
+<p><strong>Scope.</strong> The only ticket in the series that changes production behaviour.</p>
+<ul>
+<li>Hot filter construction (<code>banyand/trace/merger.go:638-650</code>) and finalize filter construction
+(<code>banyand/trace/finalizer.go:156-168</code>) both carry <code>resolveDropSetBudget</code>. Same call, same value.</li>
+<li>No operator flag, matching the staging budget&rsquo;s precedent (<code>banyand/trace/merger.go:191-193</code>).</li>
+</ul>
+<p><strong>Files.</strong> <code>banyand/trace/merger.go</code>, <code>banyand/trace/finalizer.go</code>.</p>
+<p><strong>Tests.</strong></p>
+<ul>
+<li><code>TestFiltersCarryResolvedDropSetBudget</code> — both construction sites carry the resolver&rsquo;s value, and they are equal. The
+equality assertion is deliberate: it is what would fail if someone reintroduced a lane-specific budget without updating
+spec §3.4.</li>
+<li><code>TestProductionBudgetMergeReachesNoCeiling</code> — an ordinary-sized merge at the resolved budget records every drop. Assert
+the <em>derived ceiling</em> the budget yields, not merely that this merge did not cap, or the test passes for any budget above
+a few kilobytes and stops guarding the default constant.</li>
+<li><code>TestLosslessRetryClearsCeilingReporting</code> — a capped attempt rejected by the fragment guard is retried without
+sampling, and the retry&rsquo;s published output drops nothing; the capped-merge counter, <code>DropSetCapped</code>, and the finalize
+warning must all describe that published output, not the discarded attempt. Verify this test fails without the fix.</li>
+<li>An in-process residency check over a few hundred proposed drops is worth adding, clearly labelled as <strong>not</strong> a
+workload-level measurement.</li>
+</ul>
+<h3 id="ds-5-validation-two-skywalking-integration-runs">DS-5 validation: two SkyWalking integration runs</h3>
+<p>Validation rides the Phase 10 SkyWalking acceptance workload of the
+<a href="../trace-pipeline-merge-optimization-plan">merge optimization plan</a> rather than the containerised controlled run that
+earlier drafts of this plan specified. Section &ldquo;Why not the controlled run&rdquo; below records that decision.</p>
+<p>Both runs read the instruments of spec §6; without them neither run can answer anything about the ceiling.</p>
+<p><strong>Run A — default settings, the headroom measurement.</strong> The standard serialized 24-hour workload, unmodified. At a 4 GiB
+limit and <code>GOMAXPROCS=2</code> the budget is 128 MiB, a ceiling near 1.34 million traces in one merge, so real traffic will not
+reach it. That is the result, not a failure to test:</p>
+<ul>
+<li><input disabled="" type="checkbox"> <code>pipeline_drop_set_entries</code> p99 recorded against <code>pipeline_drop_set_budget_bytes / dropSetBytesPerEntry</code>. <strong>This
+ratio is the deliverable</strong> — it is how much headroom production-shaped traffic actually has, and therefore whether
+the ceiling is load-bearing at default settings at all.</li>
+<li><input disabled="" type="checkbox"> <code>pipeline_traces_retained_by_ceiling</code> is zero for the group, confirming activation is behaviour-neutral here.</li>
+<li><input disabled="" type="checkbox"> Phase 10&rsquo;s existing gates still pass: correct core and secondary-index ledgers, no OOM, no unexpected lossless
+retry, no regression against the pipeline-disabled baseline.</li>
+<li><input disabled="" type="checkbox"> Observed trace-ID length recorded. Real SkyWalking IDs are the first workload test of DS-1b&rsquo;s derived
+bytes/entry and of the per-shard uniformity it expects; an ID longer than the 42 bytes spec §1.1 measured is
+exactly the case the derived price exists for.</li>
+</ul>
+<p><strong>Run B — <code>--allowed-bytes=256MiB</code>, the capped-path measurement.</strong> <code>resolveDropSetBudget</code> reads the protector limit and
+<code>--allowed-bytes</code> sets it directly, so this is a supported production flag, not a test seam. At 2 CPUs it yields an 8 MiB
+budget and a ceiling near 84,000 traces, which the same workload reaches comfortably. This is the only run that
+exercises the code this ticket adds:</p>
+<ul>
+<li><input disabled="" type="checkbox"> <code>pipeline_traces_retained_by_ceiling</code> is non-zero for the group, and <code>pipeline_merges_ceiling_reached{lane=&quot;finalize&quot;}</code> identifies the affected lane.</li>
+<li><input disabled="" type="checkbox"> For every shard, secondary-index contents equal exactly the retained-trace set — spec invariant 9, now under real
+trace IDs, real drop ratios, real fragment-guard behaviour and live query traffic rather than one frozen selection.</li>
+<li><input disabled="" type="checkbox"> Queries ordered by <code>latency</code> and <code>start_time</code> return the same traces as the pipeline-disabled baseline for the
+traces both retain. No short result sets, which is what a violation of the &ldquo;no orphan index entries&rdquo; invariant
+would look like from outside.</li>
+<li><input disabled="" type="checkbox"> Peak heap and RSS bounded, with drop-set residency attributable via <code>pipeline_drop_set_entries</code> ×
+<code>dropSetBytesPerEntry</code> and at or below the resolved budget.</li>
+<li><input disabled="" type="checkbox"> Traces left undeleted recorded as a number — this quantifies spec §5.2 on a real workload and is the input to any
+later decision to take a deferred feature (spec §9).</li>
+<li><input disabled="" type="checkbox"> <code>finalize_rounds</code> progression and any <code>finalize_terminal</code> transitions recorded.</li>
+<li><input disabled="" type="checkbox"> No OOM, panic, malformed verdict, or unexpected lossless retry.</li>
+</ul>
+<p>Report both runs under <code>.scratch/trace-drop-set-bounding/ds5-&lt;n&gt;</code>.</p>
+<p><strong>Why not the controlled run.</strong> <code>banyand/cmd/trace-merge-benchmark</code> over <code>banyand/internal/benchmark/tracebaseline</code> runs
+ten alternating single-merge container processes on a frozen seed, five per variant, under a canonical
+<code>GOMAXPROCS=2</code> / <code>MemoryMax=4 GiB</code> readiness gate. Its unique contribution is a reproducible paired comparison with exact
+oracles and CV bounds. But at canonical resources the ceiling sits near 1.34 million traces while the existing frozen
+selection holds 33,353 — roughly 40x too small to make a merge cap. Reaching it would need capturing a ~1.4 million-trace
+seed, and shrinking container memory instead would fail the readiness gate and make the result incomparable to the
+Phase 6 series.</p>
+<p>The integration runs cover more of what matters here and cost far less: aggregate concurrency across hot lanes and the
+finalize round, which a single-merge run never exercises; real trace IDs; and end-to-end query behaviour. What they give
+up is reproducibility — live traffic is not replayable, so there is no byte-identical paired comparison. That trade is
+accepted deliberately: the claims at stake are about a ceiling that either fires or does not, and about index exactness
+when it does, neither of which needs byte-identical inputs to establish.</p>
+<p><strong>Exit.</strong> Run A&rsquo;s headroom ratio recorded; Run B&rsquo;s capped path clean on index exactness, query results, and bounded
+residency; undeleted-trace count recorded. Until both runs have reports, DS-5 is code-complete but <strong>not</strong> closed: the
+ceiling is live in production with no workload-level evidence behind it.</p>
+<p><strong>Rollback.</strong> Revert this ticket alone. The mechanism returns to inert; no other ticket needs touching.</p>
+<hr>
+<h2 id="independent">Independent</h2>
+<h3 id="ds-9--arena-backed-ids">DS-9 — Arena-backed IDs</h3>
+<p><strong>Size.</strong> M. <strong>Depends on.</strong> DS-1. Independent of everything else, but worth landing <strong>before</strong> DS-5: it raises the
+ceiling by about 24 percent, so it directly improves the deletion bound that DS-5 will measure.</p>
+<p><strong>Scope.</strong> Replace <code>ids []string</code> with a byte arena plus <code>uint32</code> offsets. The Phase 6 index, the fingerprint check, and
+the exact <code>bytes.Equal</code> confirmation are untouched — the probe becomes <code>arena[offs[i]:offs[i+1]]</code> instead of
+<code>convert.StringToBytes(ids[i])</code>, same single probe and single comparison. <code>bodyBytes</code> becomes exactly <code>len(arena)</code>, so
+<code>maxIDsForBudget</code> stops depending on a size-class estimate.</p>
+<p><strong>Out of scope.</strong> Replacing the index with binary search. Explicitly rejected: spec §10.</p>
+<p><strong>Files.</strong> <code>banyand/trace/drop_set.go</code>, <code>banyand/trace/drop_set_test.go</code>.</p>
+<p><strong>Tests.</strong></p>
+<ul>
+<li>Existing <code>drop_set_test.go</code> assertions pass unchanged, including prefix/extension non-matching, fail-open on malformed
+input, and the ascending-order and duplicate-suppression behaviour of <code>add</code>.</li>
+<li><code>BenchmarkDropSetLookup</code> at 1 / 35 / 99 percent shows no regression against DS-1&rsquo;s baseline; the ticket states the
+tolerance and sample count it used. A regression outside noise blocks the ticket — this path was tuned in Phase 6 and is
+not worth trading for memory the ceiling already bounds.</li>
+<li><code>BenchmarkDropSetResidency</code> shows the expected bytes-per-entry reduction; <code>maxIDsForBudget</code> rises accordingly.</li>
+<li><code>TestProjectedIndexBytesMatchesBuildIndex</code> still exact.</li>
+</ul>
+<p><strong>Exit.</strong> No lookup regression; residency reduced; DS-1&rsquo;s projection test still exact.</p>
+<hr>
+<h3 id="ds-11--documentation">DS-11 — Documentation</h3>
+<p><strong>Size.</strong> S. <strong>Depends on.</strong> DS-5.</p>
+<p><strong>Scope.</strong></p>
+<ul>
+<li><code>post-trace-pipeline.md:630-632</code> — a merge may stop dropping at its ceiling; the pruning predicate, lockstep
+publication, and atomicity are unchanged.</li>
+<li><code>trace-pipeline-merge-optimization-plan.md</code> Phase 6 — the collector is now ceiling-bounded; the phase&rsquo;s
+exactness invariant is unchanged, not revised.</li>
+<li>Operator documentation: the retained-by-ceiling counter and what to do about it (raise memory), the ordering bias of
+spec §4, and — the item an operator is most likely to be surprised by — that a ceiling-bound shard will not shrink as
+much as the sampler&rsquo;s configuration implies (spec §12 risk 2).</li>
+</ul>
+<p><strong>Tests.</strong> None. Review-only.</p>
+<hr>
+<h2 id="deferred">Deferred</h2>
+<p>Prospective tickets, not part of this series. Each corresponds to a spec §9 subsection, which holds the numbers and the
+reasoning. Listed in prerequisite order; none is required for the series above to be complete and correct.</p>
+<table>
+  <thead>
+      <tr>
+          <th>Ticket</th>
+          <th>Buys</th>
+          <th>Prerequisite</th>
+          <th>Spec</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>DF-1</strong> Per-lane finalize ceiling</td>
+          <td>~<code>CPUs</code>x the lifetime deletion bound (~2.7 M to ~21 M traces per shard at 4 GiB / 8 CPUs)</td>
+          <td>DS-5&rsquo;s retained-by-ceiling number showing the bound is being hit</td>
+          <td>§9.1</td>
+      </tr>
+      <tr>
+          <td><strong>DF-2</strong> Continuation rounds</td>
+          <td>Removes the ingest gate so leftover work clears itself</td>
+          <td>DF-1 — raising the ceiling is cheaper per unit of deletion recovered than adding rounds</td>
+          <td>§9.2</td>
+      </tr>
+      <tr>
+          <td><strong>DF-3</strong> Sampling watermark</td>
+          <td>Makes DF-2&rsquo;s round count <code>ceil(droppable / maxIDs)</code> and its plugin cost proportional to the shard rather than to shard × rounds</td>
+          <td>DF-2</td>
+          <td>§9.3</td>
+      </tr>
+      <tr>
+          <td><strong>DF-4</strong> Bloom-filter pruning</td>
+          <td>Removes the deletion bound entirely rather than raising it</td>
+          <td>A refillable Phase-1 query limit — a query-layer change, worth doing on its own merits</td>
+          <td>§9.4, §8</td>
+      </tr>
+  </tbody>
+</table>
+<p>DF-2 is the one to scope carefully when its turn comes: it adds persisted finalize state, changes two scanner predicates
+that must move together, and reintroduces the finalize write amplification that spec §5.3 currently avoids.</p>
+<hr>
+<h2 id="decisions-to-settle-before-ds-5">Decisions to settle before DS-5</h2>
 <ol>
-<li>Verify symmetric interval intersection for earlier and later outside parts.</li>
-<li>Verify inclusive grace-boundary behavior.</li>
-<li>Verify overflow-safe handling near minimum and maximum timestamp values.</li>
-<li>Verify nested outside intervals and non-contiguous selected parts.</li>
-<li>Verify temporal pruning is rejected when guard grace is smaller than the catalog&rsquo;s enforced gap.</li>
-<li>Verify that sampler KEEP performs no Bloom probes.</li>
-<li>Verify that provisional DROP with no time candidate is dropped.</li>
-<li>Verify that all-negative candidate filters permit DROP.</li>
-<li>Verify that a positive, missing, or corrupt candidate filter defers the trace.</li>
-<li>Verify that optional exact lookup can clear a Bloom false positive without changing negative-filter semantics.</li>
-<li>Verify that invalid or missing per-trace timestamps fail open.</li>
-<li>Verify aggregation of minimum and maximum timestamps across multiple selected blocks with the same trace ID.</li>
-<li>Verify that a trace larger than the staging budget remains one decision unit.</li>
-<li>Verify that only guard-owned confirmed DROP tokens reach secondary-index pruning and revalidation.</li>
-<li>Verify persisted per-trace timestamp bounds and their presence marker after close and reopen.</li>
-<li>Verify sequential block reads and slow multi-block merges preserve and aggregate those timestamp bounds.</li>
-<li>Verify that each persisted part Bloom filter contains every trace ID written to that part.</li>
-<li>Verify that cancellation and every boundary-check budget limit fail open.</li>
-<li>Verify that closing a guard releases its pinned catalog exactly once.</li>
-<li>Verify that an unset group value resolves to the 2h engine default and an explicit group value takes precedence.</li>
-<li>Verify per-trace maturity at one nanosecond before, exactly at, and one nanosecond after the 2h frontier.</li>
-<li>Verify exact earlier and later 2h guard boundaries.</li>
-<li>Verify that finalization applies the same outside-part guard and defers a trace found in a skipped part.</li>
-<li>Verify that a segment with no guardable interior bypasses projection, sampler, and Bloom work.</li>
-</ol>
-<h3 id="property-and-randomized-tests">Property and Randomized Tests</h3>
-<ol>
-<li>Generate random part intervals, trace fragment placements, selections, and grace values. Under an enforced
-fragment-gap bound, assert that every trace crossing selected and outside parts is either deferred or retained by the
-sampler.</li>
-<li>Randomize nested intervals to ensure candidate discovery does not depend on monotonic maximum timestamps.</li>
-<li>Randomize Bloom false positives and assert that they can only increase retention.</li>
-<li>Inject missing metadata and assert that no uncertain trace is dropped.</li>
-<li>Compare the hybrid result with an exhaustive exact trace-ID oracle for a stable snapshot.</li>
-</ol>
-<h3 id="integration-tests">Integration Tests</h3>
-<ol>
-<li>Place one trace in selected and unselected file parts and verify deferral after a provisional DROP.</li>
-<li>Place unrelated traces in time-overlapping parts and verify that Bloom negatives allow sampling.</li>
-<li>Place an outside fragment earlier than every selected fragment and verify symmetric protection.</li>
-<li>Include memparts, hot parts, and in-flight parts in the outside universe.</li>
-<li>Verify ordered core output when provisional drops are overridden to deferral.</li>
-<li>Verify core and secondary-index consistency for mixed confirmed drops and deferred traces.</li>
-<li>Verify fail-open behavior for sampler timeout, panic, invalid mask, and projection failure.</li>
-<li>Verify segment-boundary deferral when an adjacent segment is unavailable.</li>
-<li>Verify adjacent-segment confirmation when both segments are covered by a common fence.</li>
-<li>Verify tags-only, span-ID-only, and full-span projections use complete multi-block trace input.</li>
-<li>Verify an outside mempart without a usable filter causes deferral.</li>
-<li>Verify an outside in-flight part remains represented by a conservative catalog entry.</li>
-<li>Verify both segment edges at exactly the 2h guard boundary and one nanosecond on either side.</li>
-</ol>
-<h3 id="concurrency-and-recovery-tests">Concurrency and Recovery Tests</h3>
-<ol>
-<li>Introduce an overlapping part after selection and before publication; verify epoch revalidation prevents unsafe
-publication.</li>
-<li>Introduce an unrelated part during the same window; verify successful revalidation is possible.</li>
-<li>Change shard ownership during the merge; verify the provisional output is rejected.</li>
-<li>Crash before output completion, after core output, after secondary-index output, and before introduction; verify the
-old snapshot remains authoritative.</li>
-<li>Fail provisional-output cleanup and verify recovery removes orphan artifacts without losing input parts.</li>
-<li>Race ordinary merge selection, finalization, mempart flushing, and handoff.</li>
-<li>Block pre-publication Bloom revalidation and verify the serialized introducer continues accepting new parts.</li>
-<li>Change the snapshot after successful prevalidation and verify the filtered output is discarded and the same pinned
-inputs are retried losslessly.</li>
-</ol>
-<h3 id="captured-shard-regression">Captured-Shard Regression</h3>
-<ol>
-<li>Replay all 26 captured parts and their 37,288 unique trace IDs at the deterministic active-ingestion clock.</li>
-<li>Verify that the default picker dispatches no merge from the frozen snapshot; do not label a scoring candidate as an
-ordinary merge selection.</li>
-<li>Verify that the recent twelve-part small-file window contains no mature trace, so it bypasses the sampler and guard
-with zero drops and Bloom probes.</li>
-<li>Derive the six cooled inputs from the 2h frontier, assert their exact identities and 34,856,465-byte total, and retain
-all 20 other parts in the outside catalog.</li>
-<li>Compare every selected/outside decision with the exact trace-placement oracle and require zero false negatives.</li>
-<li>Assert 6,652 candidate pairs and Bloom probes, 34 retained traces, 31,798 drops, and three false deferrals for the
-hybrid guard.</li>
-<li>Add one recent small part to the cooled selection and verify that mature traces are sampled while traces newer than
-the frontier pass through unchanged.</li>
-<li>Verify the observed 71.225s fragment gap and document that fixture observation is not a maximum-gap proof.</li>
-<li>Add a synthetic narrow outside part whose same-trace fragment is beyond grace and document that it falls outside the
-time-safety contract.</li>
-</ol>
-<h3 id="performance-tests">Performance Tests</h3>
-<ol>
-<li>Benchmark merge CPU with no guard, all-part Bloom probing, temporal-only guarding, and the hybrid guard.</li>
-<li>Measure Bloom probes, hash cost, cache misses, and candidate discovery time as trace and part counts grow.</li>
-<li>Measure sampler DROP ratios from zero to one hundred percent.</li>
-<li>Benchmark linear interval scanning against an interval tree and retain the simpler structure until profiling
-justifies replacement.</li>
-<li>Measure memory added by staged trace ranges, candidate mappings, and batched Bloom probes.</li>
-<li>Confirm that selected input parts, merged input bytes, and output fan-out are unchanged from the current policy.</li>
-<li>Run sustained ingestion with concurrent merges and verify that epoch conflicts do not cause retry storms.</li>
-<li>Profile the 2h hybrid, time-only, and all-Bloom strategies over cooled inputs, plus the constant-time maturity bypass
-over recent small inputs. Measure retained output bytes, later rewrite bytes, probe-budget deferrals, finalization
-backlog, and time from maturity frontier to the next eligible compaction.</li>
-</ol>
-<h2 id="acceptance-criteria">Acceptance Criteria</h2>
-<ol>
-<li>The selected input set is identical with the guard enabled and disabled.</li>
-<li>No provisional DROP is published when a candidate outside Bloom filter is positive or uncertain.</li>
-<li>All selected fragments with the same trace ID receive one final action.</li>
-<li>Core and secondary-index snapshots agree on every confirmed DROP.</li>
-<li>Snapshot conflicts fail open without losing input data.</li>
-<li>The captured-shard regression has zero false negatives against the exact placement oracle.</li>
-<li>With 2h merge grace used for both maturity and boundary expansion, the cooled captured-shard case produces
-exactly 6,652 time-candidate pairs and Bloom probes, versus 629,241 probes for all-Bloom confirmation.</li>
-<li>Missing timestamp metadata and segment-boundary ambiguity never produce destructive deletion.</li>
-<li>Benchmarks show no increase in selected merge bytes or merge fan-out.</li>
-<li>Probe-budget exhaustion retains affected traces.</li>
-<li>A selected part newer than the maturity frontier does not suppress eligible traces; only trace groups whose maximum
-timestamp is newer than the frontier bypass sampler and guard calls.</li>
-<li>Finalization cannot publish a DROP that the ordinary merge guard would defer for the same visible catalog.</li>
-<li>Publication rejection leaves the selected inputs authoritative and completes one lossless retry.</li>
-</ol>
-<h2 id="tdd-implementation-sequence">TDD Implementation Sequence</h2>
-<ol>
-<li>Persist the timestamp presence marker and bounds, restore them during sequential reads, and aggregate them during slow
-block merges.</li>
-<li>Assemble every selected physical block for one trace into a complete sampler and guard input.</li>
-<li>Build and pin the outside catalog with conservative coverage, fallible membership adapters, the base epoch, and an
-enforced gap equal to resolved merge grace.</li>
-<li>Implement provisional DROP resolution, including validation, saturating expansion, interval candidate discovery,
-tri-state membership checks, cumulative probe budgets, and guard-owned confirmed DROP tokens.</li>
-<li>Drive core and secondary-index pruning only from those tokens.</li>
-<li>Revalidate every token against a pinned current snapshot outside the introducer, rejecting changed ownership, missing
-selected inputs, incomplete deltas, positive or uncertain filters, and exhausted budgets. Carry the validated epoch to
-the introducer for a constant-time publication-fence check.</li>
-<li>Add captured-shard replay and shadow-mode integration before enabling destructive enforcement.</li>
-</ol>
-<h2 id="rollout">Rollout</h2>
-<p>The feature should first run in shadow mode. Shadow mode records provisional sampler results, temporal candidates, Bloom
-outcomes, and the final action that enforcement would take, but it does not drop traces.</p>
-<p>After captured-shard replay and production shadow metrics confirm acceptable candidate and deferral rates, enforcement
-can be enabled for a limited set of trace groups whose verified fragment-arrival bound fits within their resolved merge
-grace. Rollout should monitor Bloom probes, deferred traces, epoch conflicts, merge latency, sampler
-effectiveness, and finalization backlog.</p>
-<p>Rollback disables boundary-aware destructive filtering and returns merges to fail-open retention without changing the
-part-selection policy or invalidating existing parts.</p>
-<h2 id="open-questions">Open Questions</h2>
-<ol>
-<li>How the system will establish and expose the enforced maximum fragment-gap contract required before destructive
-enforcement is enabled.</li>
-<li>Whether exact primary-metadata verification is worthwhile for Bloom positives.</li>
-<li>Whether adjacent-segment metadata can be fenced cheaply enough to reduce boundary deferrals.</li>
-<li>Whether persisted per-trace timestamp bounds require a format version change or can be reconstructed during
-transitional merges.</li>
-<li>Whether repeated Bloom-positive deferrals require a dedicated finalization priority signal.</li>
+<li><code>dropSetAggregateDivisor = 16</code>. It sets both the memory bound and, through spec §5.2, the lifetime deletion bound.
+DS-2&rsquo;s table encodes whatever is chosen, so changing it later means changing that table.</li>
+<li>Whether DS-9 lands before DS-5. Recommended: yes, so the deletion bound DS-5 measures is the one the design will
+actually ship with.</li>
 </ol>
 
 </div>
@@ -2061,62 +1836,33 @@ transitional merges.</li>
 <div class="td-toc-label">On this page</div>
 <nav id="TableOfContents">
   <ul>
-    <li><a href="#trace-fragment-guard-for-sampling-design">Trace Fragment Guard for Sampling Design</a>
+    <li><a href="#trace-merge-drop-set-bounding--execution-plan">Trace Merge Drop-Set Bounding — Execution Plan</a>
       <ul>
         <li><a href="#status">Status</a></li>
-        <li><a href="#context-and-problem-statement">Context and Problem Statement</a></li>
-        <li><a href="#design-boundary">Design Boundary</a>
+        <li><a href="#shape-of-the-work">Shape of the work</a></li>
+        <li><a href="#stage-1--mechanism-inert">Stage 1 — Mechanism, inert</a>
           <ul>
-            <li><a href="#execution-boundary">Execution Boundary</a></li>
-            <li><a href="#data-visibility-boundary">Data-Visibility Boundary</a></li>
-            <li><a href="#time-boundary">Time Boundary</a></li>
-            <li><a href="#concurrency-boundary">Concurrency Boundary</a></li>
-            <li><a href="#segment-boundary">Segment Boundary</a></li>
-            <li><a href="#failure-boundary">Failure Boundary</a></li>
+            <li><a href="#ds-1--droptracker-with-exact-residency-accounting">DS-1 — <code>dropTracker</code> with exact residency accounting</a></li>
+            <li><a href="#ds-1b--derive-bytesentry-from-the-observed-id-length">DS-1b — Derive bytes/entry from the observed ID length</a></li>
+            <li><a href="#ds-2--budget-resolution">DS-2 — Budget resolution</a></li>
+            <li><a href="#ds-3--ceiling-enforcement-in-the-decision-loop-inert">DS-3 — Ceiling enforcement in the decision loop (inert)</a></li>
+            <li><a href="#ds-4--observability">DS-4 — Observability</a></li>
           </ul>
         </li>
-        <li><a href="#goals">Goals</a></li>
-        <li><a href="#non-goals">Non-Goals</a></li>
-        <li><a href="#terminology">Terminology</a></li>
-        <li><a href="#design-invariants">Design Invariants</a></li>
-        <li><a href="#design-overview">Design Overview</a></li>
-        <li><a href="#key-process">Key Process</a>
+        <li><a href="#stage-2--activation">Stage 2 — Activation</a>
           <ul>
-            <li><a href="#1-select-and-pin-inputs">1. Select and Pin Inputs</a></li>
-            <li><a href="#2-build-the-outside-part-guard">2. Build the Outside-Part Guard</a></li>
-            <li><a href="#3-assemble-a-complete-selected-trace">3. Assemble a Complete Selected Trace</a></li>
-            <li><a href="#4-obtain-the-sampler-verdict">4. Obtain the Sampler Verdict</a></li>
-            <li><a href="#5-discover-time-candidates">5. Discover Time Candidates</a></li>
-            <li><a href="#6-confirm-with-bloom-filters">6. Confirm with Bloom Filters</a></li>
-            <li><a href="#7-apply-the-final-merge-action">7. Apply the Final Merge Action</a></li>
-            <li><a href="#8-revalidate-before-publication">8. Revalidate Before Publication</a></li>
-            <li><a href="#9-release-and-retry">9. Release and Retry</a></li>
+            <li><a href="#ds-5--activate-the-budget">DS-5 — Activate the budget</a></li>
+            <li><a href="#ds-5-validation-two-skywalking-integration-runs">DS-5 validation: two SkyWalking integration runs</a></li>
           </ul>
         </li>
-        <li><a href="#correctness-properties-and-limitations">Correctness Properties and Limitations</a>
+        <li><a href="#independent">Independent</a>
           <ul>
-            <li><a href="#visible-snapshot-protection">Visible-Snapshot Protection</a></li>
-            <li><a href="#false-positives">False Positives</a></li>
-            <li><a href="#late-arrivals">Late Arrivals</a></li>
-            <li><a href="#convergence">Convergence</a></li>
+            <li><a href="#ds-9--arena-backed-ids">DS-9 — Arena-backed IDs</a></li>
+            <li><a href="#ds-11--documentation">DS-11 — Documentation</a></li>
           </ul>
         </li>
-        <li><a href="#cost-model">Cost Model</a></li>
-        <li><a href="#observability">Observability</a></li>
-        <li><a href="#test-plan">Test Plan</a>
-          <ul>
-            <li><a href="#unit-tests">Unit Tests</a></li>
-            <li><a href="#property-and-randomized-tests">Property and Randomized Tests</a></li>
-            <li><a href="#integration-tests">Integration Tests</a></li>
-            <li><a href="#concurrency-and-recovery-tests">Concurrency and Recovery Tests</a></li>
-            <li><a href="#captured-shard-regression">Captured-Shard Regression</a></li>
-            <li><a href="#performance-tests">Performance Tests</a></li>
-          </ul>
-        </li>
-        <li><a href="#acceptance-criteria">Acceptance Criteria</a></li>
-        <li><a href="#tdd-implementation-sequence">TDD Implementation Sequence</a></li>
-        <li><a href="#rollout">Rollout</a></li>
-        <li><a href="#open-questions">Open Questions</a></li>
+        <li><a href="#deferred">Deferred</a></li>
+        <li><a href="#decisions-to-settle-before-ds-5">Decisions to settle before DS-5</a></li>
       </ul>
     </li>
   </ul>
@@ -2227,6 +1973,26 @@ transitional merges.</li>
 
     </div>
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
