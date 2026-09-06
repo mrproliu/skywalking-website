@@ -31,7 +31,7 @@
 
   <meta itemprop="name" content="1.1.0">
   <meta itemprop="description" content="1.1.0 Breaking changes and migration Breaking: Each of the six Dashboard setup pages now has its own read/write permission pair, and three permissions are retired. dashboard:read / dashboard:write become layer-template:read / layer-template:write; overview:write splits into overview-template:write, translation:write, alarm-setup:write, infra-3d-setup:write and setup:write; overview:read keeps only its original meaning, the rendered overview dashboards. The built-in roles are updated for you, and a role still naming a retired permission keeps working — the old names, and the dashboard:* / overview:* wildcards, are accepted for this release and expand to what they used to gate. Rename them in your horizon.yaml before the next one; Horizon now logs a warning at startup naming any permission it does not recognise, which it previously ignored in silence. Two consequences worth checking: viewer and maintainer no longer read stored template configuration (they keep every dashboard they could see), and a role granted overview:read alone no longer reaches the template-administration pages.">
-  <meta itemprop="wordCount" content="4770">
+  <meta itemprop="wordCount" content="4866">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="1.1.0">
   <meta name="twitter:description" content="1.1.0 Breaking changes and migration Breaking: Each of the six Dashboard setup pages now has its own read/write permission pair, and three permissions are retired. dashboard:read / dashboard:write become layer-template:read / layer-template:write; overview:write splits into overview-template:write, translation:write, alarm-setup:write, infra-3d-setup:write and setup:write; overview:read keeps only its original meaning, the rendered overview dashboards. The built-in roles are updated for you, and a role still naming a retired permission keeps working — the old names, and the dashboard:* / overview:* wildcards, are accepted for this release and expand to what they used to gate. Rename them in your horizon.yaml before the next one; Horizon now logs a warning at startup naming any permission it does not recognise, which it previously ignored in silence. Two consequences worth checking: viewer and maintainer no longer read stored template configuration (they keep every dashboard they could see), and a role granted overview:read alone no longer reaches the template-administration pages.">
@@ -1564,7 +1564,7 @@
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 4622885</div>
+                  <div class="commit-id">Commit Id: bb27b7c</div>
                 
 
 
@@ -1648,6 +1648,8 @@
 <h3 id="features-2">Features</h3>
 <p><strong>Changing what you are looking at says what it is loading.</strong> Picking a different service, endpoint, depth or time range names its target — <em>Loading topology for &ldquo;checkout&rdquo;…</em> — instead of leaving the previous answer under the new heading while the next one is fetched.</p>
 <h3 id="fixes-2">Fixes</h3>
+<p>The <strong>3D Infra Map</strong> follows the theme: its canvas, tier slabs, rims, cube edges, panels and cards took their colours from a fixed dark palette, so a light theme such as Daybreak showed dark panels with unreadable text. They now come from the theme tokens and change with the theme.</p>
+<p>The <strong>3D Infra Map</strong> opens framed on the tiers that hold services. A deployment with one populated tier had its slab at the top edge of the view, because the default pose aimed between empty planes; the default and <strong>Reset</strong> views now frame what is there.</p>
 <p><strong>An expansion on the API dependency graph could land in a graph you had left.</strong> Nothing stopped you switching endpoints while one was loading, and the branch then arrived in whatever graph had replaced it. Expanding now shows its pending state and holds the endpoint picker and the other expand handles until it lands. An expansion started while an admin preview is open also resolves against the draft being previewed, rather than against the published template the rest of the graph is not showing.</p>
 <p><strong>A map that failed its FIRST read showed a loading line for ever.</strong> With nothing cached to fall back on there was no way to tell a read still in progress from one that had already failed, so the graph sat on &ldquo;Reading data…&rdquo; indefinitely. It now says the read failed and offers Retry.</p>
 <p><strong>The maps blanked on every refresh.</strong> The Topology, Deployment, API dependency and instance-relationship graphs dropped to a loading line and came back on each tick, taking your zoom, pan and any nodes you had dragged with them. They redraw in place now, and are re-framed only when the question changes — a different layer, service, endpoint, focus, depth or time range. A service appearing or disappearing no longer re-frames the canvas or discards placements.</p>
