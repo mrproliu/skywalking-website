@@ -2912,6 +2912,10 @@
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url><url>
+    <loc>https://skywalking.apache.org/docs/skywalking-horizon-ui/next/dashboards/ai_agent/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url><url>
     <loc>https://skywalking.apache.org/docs/skywalking-horizon-ui/next/dashboards/airflow/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
@@ -3089,6 +3093,10 @@
     <priority>0.5</priority>
   </url><url>
     <loc>https://skywalking.apache.org/docs/skywalking-horizon-ui/next/dashboards/wechat_mini_program/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://skywalking.apache.org/docs/skywalking-horizon-ui/next/operate/ai-agent-conversations/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url><url>
@@ -4953,6 +4961,10 @@
     <priority>0.5</priority>
   </url><url>
     <loc>https://skywalking.apache.org/docs/skywalking-java/v9.6.0/en/setup/service-agent/java-agent/agent-self-observability/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://skywalking.apache.org/docs/main/next/en/setup/backend/ai-agent-conversation/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url><url>
