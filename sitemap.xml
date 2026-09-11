@@ -3112,6 +3112,10 @@
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url><url>
+    <loc>https://skywalking.apache.org/docs/skywalking-horizon-ui/next/operate/genai-evaluation/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url><url>
     <loc>https://skywalking.apache.org/docs/skywalking-horizon-ui/next/operate/infra-3d-map/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
