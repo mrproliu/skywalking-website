@@ -21,24 +21,24 @@
 <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#5bbad5">
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
-<title>SkyWalking 10.x showcase | Apache SkyWalking</title><meta property="og:url" content="https://skywalking.apache.org/docs/skywalking-showcase/next/readme/">
+<title>SkyWalking 11.x showcase | Apache SkyWalking</title><meta property="og:url" content="https://skywalking.apache.org/docs/skywalking-showcase/next/readme/">
   <meta property="og:site_name" content="Apache SkyWalking">
-  <meta property="og:title" content="SkyWalking 10.x showcase">
-  <meta property="og:description" content="SkyWalking 10.x showcase This showcase would follow the latest changes of SkyWalking 10.x, even before the official release.
+  <meta property="og:title" content="SkyWalking 11.x showcase">
+  <meta property="og:description" content="SkyWalking 11.x showcase This showcase follows the latest changes of SkyWalking 11.x and the Horizon UI, even before the official releases.
 This showcase repository includes an example music application and other manifests to demonstrate the main features of SkyWalking. The music application is composed of several microservices that are written in different programming languages. Here is the architecture:
 %% please read this doc in our official website, otherwise the graph is not correctly rendered. graph LR; loadgen[load generator] --&gt; ui(&#34;UI (React)&#34;) --&gt; Traffic1(&#34;HTTP Request for backend serv&#34;) --&gt; apisix(&#34;APISIX as UI container&#34;) --&gt; app(&#34;app server (NodeJS)&#34;) --&gt; gateway(&#34;gateway (Spring)&#34;); ui(&#34;UI (React)&#34;) --&gt; Traffic2(&#34;HTTP Request for UI codes&#34;) --&gt; apisix(&#34;APISIX with UI container&#34;) gateway --&gt; songs(&#34;songs (Spring)&#34;) &amp; rcmd(&#34;recommendations (Python)&#34;); rcmd --&gt; rating(&#34;rating (Go)&#34;); songs --&gt; activeMQ activeMQ --&gt; songs rcmd --&gt; songs; songs --&gt; db(&#34;database (H2)&#34;); Usage Please run the showcase in a brand new test cluster, otherwise the undeploy process may delete some resources that you have installed before running this showcase (for example cert-manager). If you don’t do this in a new test cluster, it’s all on your own risks!">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="article">
     <meta property="article:section" content="docs">
 
-  <meta itemprop="name" content="SkyWalking 10.x showcase">
-  <meta itemprop="description" content="SkyWalking 10.x showcase This showcase would follow the latest changes of SkyWalking 10.x, even before the official release.
+  <meta itemprop="name" content="SkyWalking 11.x showcase">
+  <meta itemprop="description" content="SkyWalking 11.x showcase This showcase follows the latest changes of SkyWalking 11.x and the Horizon UI, even before the official releases.
 This showcase repository includes an example music application and other manifests to demonstrate the main features of SkyWalking. The music application is composed of several microservices that are written in different programming languages. Here is the architecture:
 %% please read this doc in our official website, otherwise the graph is not correctly rendered. graph LR; loadgen[load generator] --&gt; ui(&#34;UI (React)&#34;) --&gt; Traffic1(&#34;HTTP Request for backend serv&#34;) --&gt; apisix(&#34;APISIX as UI container&#34;) --&gt; app(&#34;app server (NodeJS)&#34;) --&gt; gateway(&#34;gateway (Spring)&#34;); ui(&#34;UI (React)&#34;) --&gt; Traffic2(&#34;HTTP Request for UI codes&#34;) --&gt; apisix(&#34;APISIX with UI container&#34;) gateway --&gt; songs(&#34;songs (Spring)&#34;) &amp; rcmd(&#34;recommendations (Python)&#34;); rcmd --&gt; rating(&#34;rating (Go)&#34;); songs --&gt; activeMQ activeMQ --&gt; songs rcmd --&gt; songs; songs --&gt; db(&#34;database (H2)&#34;); Usage Please run the showcase in a brand new test cluster, otherwise the undeploy process may delete some resources that you have installed before running this showcase (for example cert-manager). If you don’t do this in a new test cluster, it’s all on your own risks!">
-  <meta itemprop="wordCount" content="1528">
+  <meta itemprop="wordCount" content="1578">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="SkyWalking 10.x showcase">
-  <meta name="twitter:description" content="SkyWalking 10.x showcase This showcase would follow the latest changes of SkyWalking 10.x, even before the official release.
+  <meta name="twitter:title" content="SkyWalking 11.x showcase">
+  <meta name="twitter:description" content="SkyWalking 11.x showcase This showcase follows the latest changes of SkyWalking 11.x and the Horizon UI, even before the official releases.
 This showcase repository includes an example music application and other manifests to demonstrate the main features of SkyWalking. The music application is composed of several microservices that are written in different programming languages. Here is the architecture:
 %% please read this doc in our official website, otherwise the graph is not correctly rendered. graph LR; loadgen[load generator] --&gt; ui(&#34;UI (React)&#34;) --&gt; Traffic1(&#34;HTTP Request for backend serv&#34;) --&gt; apisix(&#34;APISIX as UI container&#34;) --&gt; app(&#34;app server (NodeJS)&#34;) --&gt; gateway(&#34;gateway (Spring)&#34;); ui(&#34;UI (React)&#34;) --&gt; Traffic2(&#34;HTTP Request for UI codes&#34;) --&gt; apisix(&#34;APISIX with UI container&#34;) gateway --&gt; songs(&#34;songs (Spring)&#34;) &amp; rcmd(&#34;recommendations (Python)&#34;); rcmd --&gt; rating(&#34;rating (Go)&#34;); songs --&gt; activeMQ activeMQ --&gt; songs rcmd --&gt; songs; songs --&gt; db(&#34;database (H2)&#34;); Usage Please run the showcase in a brand new test cluster, otherwise the undeploy process may delete some resources that you have installed before running this showcase (for example cert-manager). If you don’t do this in a new test cluster, it’s all on your own risks!">
 
@@ -56,9 +56,9 @@ This showcase repository includes an example music application and other manifes
 <script src="/js/jquery-3.6.0.min.js"></script>
 
 <link rel="canonical" href="https://skywalking.apache.org/docs/skywalking-showcase/next/readme/">
-<meta name="description" content="SkyWalking 10.x showcase This showcase would follow the latest changes of SkyWalking 10.x, even before the official release. This showcase repository includes…">
+<meta name="description" content="SkyWalking 11.x showcase This showcase follows the latest changes of SkyWalking 11.x and the Horizon UI, even before the official releases. This showcase…">
 
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@id":"https://skywalking.apache.org/#organization","@type":"Organization","logo":"https://skywalking.apache.org/images/skywalking_400x400.png","name":"Apache SkyWalking","parentOrganization":{"@type":"Organization","name":"The Apache Software Foundation","url":"https://www.apache.org/"},"sameAs":["https://github.com/apache/skywalking","https://twitter.com/asfskywalking","https://projects.apache.org/project.html?skywalking"],"url":"https://skywalking.apache.org/"},{"@type":"TechArticle","headline":"SkyWalking 10.x showcase","inLanguage":"en","mainEntityOfPage":{"@id":"https://skywalking.apache.org/docs/skywalking-showcase/next/readme/","@type":"WebPage"},"publisher":{"@id":"https://skywalking.apache.org/#organization"},"url":"https://skywalking.apache.org/docs/skywalking-showcase/next/readme/"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://skywalking.apache.org/","name":"Apache SkyWalking","position":1},{"@type":"ListItem","item":"https://skywalking.apache.org/docs/","name":"Documentation","position":2},{"@type":"ListItem","item":"https://skywalking.apache.org/docs/skywalking-showcase/next/readme/","name":"SkyWalking 10.x showcase","position":3}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@id":"https://skywalking.apache.org/#organization","@type":"Organization","logo":"https://skywalking.apache.org/images/skywalking_400x400.png","name":"Apache SkyWalking","parentOrganization":{"@type":"Organization","name":"The Apache Software Foundation","url":"https://www.apache.org/"},"sameAs":["https://github.com/apache/skywalking","https://twitter.com/asfskywalking","https://projects.apache.org/project.html?skywalking"],"url":"https://skywalking.apache.org/"},{"@type":"TechArticle","headline":"SkyWalking 11.x showcase","inLanguage":"en","mainEntityOfPage":{"@id":"https://skywalking.apache.org/docs/skywalking-showcase/next/readme/","@type":"WebPage"},"publisher":{"@id":"https://skywalking.apache.org/#organization"},"url":"https://skywalking.apache.org/docs/skywalking-showcase/next/readme/"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://skywalking.apache.org/","name":"Apache SkyWalking","position":1},{"@type":"ListItem","item":"https://skywalking.apache.org/docs/","name":"Documentation","position":2},{"@type":"ListItem","item":"https://skywalking.apache.org/docs/skywalking-showcase/next/readme/","name":"SkyWalking 11.x showcase","position":3}]}]}</script>
 
 
 <link rel="alternate" type="application/rss+xml" href="https://skywalking.apache.org/feed.xml" title="Apache SkyWalking">
@@ -335,7 +335,7 @@ This showcase repository includes an example music application and other manifes
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: a58c5e6</div>
+                  <div class="commit-id">Commit Id: 84eff94</div>
                 
 
 
@@ -399,8 +399,8 @@ This showcase repository includes an example music application and other manifes
               <i class="iconfont icon-menu-doc doc-menu-button"></i>
               
 <div class="td-content">
-	<h1 id="skywalking-10x-showcase">SkyWalking 10.x showcase</h1>
-<p><strong>This showcase would follow the latest changes of SkyWalking 10.x, even before the official release.</strong></p>
+	<h1 id="skywalking-11x-showcase">SkyWalking 11.x showcase</h1>
+<p><strong>This showcase follows the latest changes of SkyWalking 11.x and the Horizon UI, even before the official releases.</strong></p>
 <p>This showcase repository includes an example music application and other manifests to demonstrate the main features of
 SkyWalking. The music application is composed of several microservices that are written in different programming
 languages. Here is the architecture:</p>
@@ -439,7 +439,7 @@ SkyWalking self observability.</p>
 <p>Notice, when run this showcase locally such as KinD, the images are downloaded inside the KinD, which could take over 10 mins(depend on local network).
 Rerun <code>make deploy.kubernetes</code> if some timeout errors break the process.</p>
 <h3 id="customization">Customization</h3>
-<p>The variables defined in <a href="https://github.com/apache/skywalking-showcase/tree/a58c5e69ece47f08f7f21e3c5d00cecf882c3d73/Makefile.in"><code>Makefile.in</code></a> can be overridden to customize the showcase, by specifying an
+<p>The variables defined in <a href="https://github.com/apache/skywalking-showcase/tree/84eff9424a4c41eaae631c5caa0806e3d4b8bd5d/Makefile.in"><code>Makefile.in</code></a> can be overridden to customize the showcase, by specifying an
 environment variable with the same name, e.g.:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#6639ba">export</span> <span style="color:#953800">ES_VERSION</span><span style="color:#0550ae">=</span>7.14.0
 </span></span><span style="display:flex;"><span>make &lt;target&gt; <span style="color:#953800">FEATURE_FLAGS</span><span style="color:#0550ae">=</span>single-node,agent,elasticsearch
@@ -450,7 +450,7 @@ and exclude the <code>banyandb</code> feature flag from the default feature flag
 <p>Run <code>make help</code> to get more information.</p>
 <h3 id="features">Features</h3>
 <p>The showcase is composed of a set of scenarios with feature flags, you can deploy some of them that interest you by
-overriding the <code>FEATURE_FLAGS</code> variable defined in <a href="https://github.com/apache/skywalking-showcase/tree/a58c5e69ece47f08f7f21e3c5d00cecf882c3d73/Makefile.in"><code>Makefile.in</code></a>, as documented
+overriding the <code>FEATURE_FLAGS</code> variable defined in <a href="https://github.com/apache/skywalking-showcase/tree/84eff9424a4c41eaae631c5caa0806e3d4b8bd5d/Makefile.in"><code>Makefile.in</code></a>, as documented
 in <a href="#customization">Customization</a>, e.g.:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>make deploy.kubernetes <span style="color:#953800">FEATURE_FLAGS</span><span style="color:#0550ae">=</span>single-node,agent
 </span></span></code></pre></div><p>Feature flags for different platforms (<a href="#kubernetes">Kubernetes</a> and <a href="#docker-compose">Docker Compose</a>) are not
@@ -630,6 +630,11 @@ necessarily the same so make sure to specify the right feature flags.</p>
           <td>Deploy OpenTelemetry and export BanyanDB monitoring metrics to SkyWalking for analysis and display on UI.</td>
           <td></td>
       </tr>
+      <tr>
+          <td><code>asz</code></td>
+          <td>Deploy the <a href="https://github.com/apache/skywalking-ai-sessionizer">SkyWalking AI Sessionizer</a> and feed the <code>AI_AGENT</code> layer from its scenario feed: one generated Claude Code conversation every 30 minutes, picked at random from ten scenarios.</td>
+          <td>No real agent runs in the showcase: the conversations are generated. Only support deployment in the Kubernetes environment.</td>
+      </tr>
   </tbody>
 </table>
 <h3 id="kubernetes">Kubernetes</h3>
@@ -701,7 +706,7 @@ graph LR;
 <div class="td-toc-label">On this page</div>
 <nav id="TableOfContents">
   <ul>
-    <li><a href="#skywalking-10x-showcase">SkyWalking 10.x showcase</a>
+    <li><a href="#skywalking-11x-showcase">SkyWalking 11.x showcase</a>
       <ul>
         <li><a href="#usage">Usage</a>
           <ul>

@@ -4952,6 +4952,10 @@
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url><url>
+    <loc>https://skywalking.apache.org/docs/main/next/en/setup/backend/backend-envoy-ai-gateway-monitoring/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url><url>
     <loc>https://skywalking.apache.org/docs/skywalking-java/latest/en/setup/service-agent/java-agent/agent-self-observability/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
@@ -8971,10 +8975,6 @@
     <priority>0.5</priority>
   </url><url>
     <loc>https://skywalking.apache.org/docs/main/latest/en/setup/backend/backend-envoy-ai-gateway-monitoring/</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>https://skywalking.apache.org/docs/main/next/en/setup/backend/backend-envoy-ai-gateway-monitoring/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url><url>
