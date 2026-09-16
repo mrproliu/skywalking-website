@@ -11823,10 +11823,6 @@
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://skywalking.apache.org/docs/skywalking-banyandb/next/operation/troubleshooting/measure-vec-flag-off-rollback/</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.5</priority>
-  </url><url>
     <loc>https://skywalking.apache.org/docs/skywalking-horizon-ui/latest/customization/menu-structure/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
