@@ -31,7 +31,7 @@
 
   <meta itemprop="name" content="RBAC： Roles & Verbs">
   <meta itemprop="description" content="RBAC: Roles &amp; Verbs Horizon enforces access at the BFF on every HTTP request. The UI hides controls based on the verbs the session reports, but the enforcement is server-side — a forged UI cannot escalate. The UI also gates whole pages by verb: navigating to a restricted page you lack the verb for (by URL or a stray link) redirects you home, so a viewer can’t land on a maintainer page even if its data comes from a shared endpoint. This page is the full reference for the verb vocabulary, the four built-in roles, and how grants are matched against requests.">
-  <meta itemprop="wordCount" content="2023">
+  <meta itemprop="wordCount" content="3063">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="RBAC： Roles & Verbs">
   <meta name="twitter:description" content="RBAC: Roles &amp; Verbs Horizon enforces access at the BFF on every HTTP request. The UI hides controls based on the verbs the session reports, but the enforcement is server-side — a forged UI cannot escalate. The UI also gates whole pages by verb: navigating to a restricted page you lack the verb for (by URL or a stray link) redirects you home, so a viewer can’t land on a maintainer page even if its data comes from a shared endpoint. This page is the full reference for the verb vocabulary, the four built-in roles, and how grants are matched against requests.">
@@ -1614,7 +1614,7 @@
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 43235ad</div>
+                  <div class="commit-id">Commit Id: 1286ff8</div>
                 
 
 
@@ -1835,7 +1835,7 @@
   <tbody>
       <tr>
           <td><code>cluster:read</code></td>
-          <td>Cluster Status page (<code>/operate/cluster</code>).</td>
+          <td>Cluster Status page (<code>/operate/cluster</code>), and the <strong>Platform monitoring layers</strong> — the OAP, BanyanDB, agent and Satellite self-observability dashboards, and any other layer whose template sets <code>visibility: operate</code>. A role that reads layer data (<code>metrics:read</code>, <code>traces:read</code>, …) without <code>cluster:read</code> does not see those layers and cannot read their services, by page, by URL or through the AI assistant, and their services&rsquo; rows are left out of the all-services Logs and Events views; an explicit <a href="#limiting-a-verb-to-layers-and-service-groups">layer grant</a> such as <code>metrics:read@BANYANDB</code> opens one without it.</td>
       </tr>
       <tr>
           <td><code>ttl:read</code></td>
@@ -1933,6 +1933,61 @@
   </tbody>
 </table>
 <p>Effective verbs for a session are the <strong>union</strong> of all grants from all roles.</p>
+<h2 id="limiting-a-verb-to-layers-and-service-groups">Limiting a verb to layers and service groups</h2>
+<p>A data verb can carry the layer it applies to, and optionally one or more of the layer&rsquo;s OAP service groups:</p>
+<pre tabindex="0"><code>&lt;verb&gt;@&lt;LAYER&gt;                          # every service of the layer
+&lt;verb&gt;@&lt;LAYER&gt;[&lt;group1&gt;, &lt;group2&gt;, …]   # only the services of these groups
+</code></pre><p>The role then reads those services only, and the sidebar shows that layer only:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Grant</th>
+          <th>Reaches</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>metrics:read@GENERAL</code></td>
+          <td>Every service of the GENERAL layer.</td>
+      </tr>
+      <tr>
+          <td><code>metrics:read@GENERAL[payments]</code></td>
+          <td>The GENERAL services whose OAP service group is <code>payments</code> — the <code>payments::</code> prefix of the service name.</td>
+      </tr>
+      <tr>
+          <td><code>metrics:read@GENERAL[payments,risk]</code></td>
+          <td>Both groups.</td>
+      </tr>
+      <tr>
+          <td><code>metrics:read@GENERAL[-]</code></td>
+          <td>The GENERAL services that have no group.</td>
+      </tr>
+      <tr>
+          <td><code>&quot;*:read@GENERAL[payments]&quot;</code></td>
+          <td>Every read that can carry a layer, on those services. Quote a grant that starts with <code>*</code>.</td>
+      </tr>
+      <tr>
+          <td><code>metrics:read</code> (no <code>@</code>)</td>
+          <td>What it has always meant: every layer, except the Platform monitoring layers, which also need <code>cluster:read</code>.</td>
+      </tr>
+  </tbody>
+</table>
+<p>Layer keys are the ones the sidebar and the layer templates use (<code>GENERAL</code>, <code>K8S_SERVICE</code>, <code>VIRTUAL_DATABASE</code>, …), in any case. A group is OAP&rsquo;s own service group, so a layer that is <a href="../../customization/layer-templates">split by service group</a> shows one sidebar entry per group, and each entry can be granted to a different role.</p>
+<p>Only verbs whose data belongs to a service can carry a layer: <code>metrics:read</code>, <code>traces:read</code>, <code>logs:read</code>, <code>browser-errors:read</code>, <code>ai-conversation:read</code>, <code>events:read</code>, <code>alarms:read</code>, <code>topology:read</code>, <code>profile:read</code> and <code>profile:enable</code>. Any other verb written with <code>@</code> grants nothing, and Horizon names it in a startup warning.</p>
+<p><strong>What the role sees.</strong> The sidebar lists the layers, and the group entries, that the role&rsquo;s layer grants reach — each with all of its pages, as for any role; a page whose data the role cannot read answers with a refusal. The Zipkin and TraceQL pages have no per-service control of their own and follow the layer&rsquo;s visibility. Every request is checked on its own: a page, an API call, and every read the AI assistant or an MCP agent makes on the role&rsquo;s behalf must name a service the grant covers, whichever layer&rsquo;s page or URL it arrives through. A service that reports into several layers is one service to OAP, so granting any of those layers grants it. An explicit grant on a Platform monitoring layer, such as <code>metrics:read@BANYANDB</code>, opens that layer without <code>cluster:read</code>.</p>
+<p><strong>What the role still sees of other services.</strong> Links between services are navigation, not access: the page a link opens is checked like any other. The views that draw relationships still show what OAP returns for the role&rsquo;s own service — the topology map shows its neighbours in other layers or groups with their names and headline metrics, the hierarchy view names the same workload&rsquo;s services in other layers, and an instance map or a network-profiling edge between two services opens when the role reads either one. An MQE expression is read through its entity&rsquo;s service: a relation metric is readable from the service that makes the call. <code>baseline(...)</code> is looked up by service name alone, so it needs every service of that name to be readable. Pod logs are read per pod, the way Kubernetes grants them: an instance the role may read opens every container of its pod, sidecars included.</p>
+<p><strong>Traces cross layers.</strong> A trace follows a request through services of any layer, so Horizon does not narrow traces by layer. A role with <code>traces:read</code> on a layer reads that layer&rsquo;s trace tabs — the SkyWalking trace list for the service picked on the page, and the Zipkin and TraceQL stores the layer lists — and opens any trace by its id, every span included.</p>
+<p><strong>Alarms.</strong> With <code>alarms:read</code> limited to layers, the Alarms page lists the granted layers; pick one and a service in it, and the page shows that service&rsquo;s alarms. The alarm count in the top bar and the page&rsquo;s all-services view need <code>alarms:read</code> without a layer.</p>
+<p><strong>Evaluation records.</strong> They belong to a call from an application service to a GenAI provider and are read on the VIRTUAL_GENAI layer, so the role needs that layer granted: add <code>logs:read@VIRTUAL_GENAI</code>. With it, a record is readable when the role reads either the provider or the calling service.</p>
+<p><strong>What needs the verb without a layer.</strong> A query that would read every service cannot be narrowed, so a layer-limited role cannot use it:</p>
+<ul>
+<li>the SkyWalking trace list, the Logs tab and the Browser Logs tab need a service picked (there is no &ldquo;all services&rdquo; choice);</li>
+<li>totals across a whole layer — the overview KPI tiles computed across a layer;</li>
+<li>log tag autocomplete, source maps, the alarm counts and the unfiltered alarm list, and any alarm list from an OAP older than the <code>queryAlarms</code> API, which cannot filter alarms by service;</li>
+<li>profiling results looked up by segment or schedule id, and keeping a network-profiling task alive.</li>
+</ul>
+<p><strong>Combining roles.</strong> Grants from all of a user&rsquo;s roles are pooled, and a verb without a layer in ANY role lifts the limit for that verb: a user who also holds the built-in <code>viewer</code> role reads every layer. An OAuth scope narrows by verb and keeps the layer: <code>horizon:read</code> over <code>metrics:*@GENERAL</code> leaves <code>metrics:read@GENERAL</code>.</p>
+<p>A role with no <code>@</code> grant is unaffected by any of this: it sees the menu and the data it always has.</p>
 <h2 id="built-in-roles">Built-in roles</h2>
 <p>Default definitions (used when <code>rbac.roles</code> is not overridden):</p>
 <h3 id="viewer"><code>viewer</code></h3>
@@ -1987,7 +2042,7 @@ profile:enable
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">  </span><span style="color:#0550ae">admin</span><span style="color:#1f2328">:</span><span style="color:#fff">      </span>/operate/cluster<span style="color:#fff">
 </span></span></span></code></pre></div><p>When a user has multiple roles, the <strong>first role on the user</strong> wins. Order matters in <code>auth.local.users[].roles</code> and in LDAP group-mapping resolution.</p>
 <h2 id="enforcement">Enforcement</h2>
-<p>Access is enforced server-side, not in the browser. Every protected request is checked for a valid session (an unauthenticated request is rejected with <code>401</code>) and then for the verb that request requires (a session lacking the verb is rejected with <code>403</code>). The UI hides controls a session cannot use, but a forged UI cannot bypass these checks.</p>
+<p>Access is enforced server-side, not in the browser. Every protected request is checked for a valid session (an unauthenticated request is rejected with <code>401</code>), then for the verb that request requires, and then — for a request that reads a layer or a service — for the layer and every service it names (a session lacking any of these is rejected with <code>403</code>). The UI hides controls a session cannot use, but a forged UI cannot bypass these checks.</p>
 <p>Enforcement is fail-safe: a request with no explicit verb still requires a valid session, so a misconfiguration cannot accidentally expose a protected endpoint to anonymous callers.</p>
 <h2 id="disabling-rbac-for-dev">Disabling RBAC for dev</h2>
 <div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#0550ae">rbac</span><span style="color:#1f2328">:</span><span style="color:#fff">
@@ -2009,7 +2064,18 @@ profile:enable
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span>- inspect:read      <span style="color:#fff"> </span><span style="color:#57606a"># so they can browse the catalog</span><span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#0550ae">landingByRole</span><span style="color:#1f2328">:</span><span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">  </span><span style="color:#0550ae">on-call</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>/alarms      <span style="color:#fff"> </span><span style="color:#57606a"># land on the alarm board</span><span style="color:#fff">
-</span></span></span></code></pre></div><h3 id="lockdown-for-an-external-auditor">Lockdown for an external auditor</h3>
+</span></span></span></code></pre></div><h3 id="a-team-that-sees-only-its-own-services">A team that sees only its own services</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#0550ae">roles</span><span style="color:#1f2328">:</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">  </span><span style="color:#0550ae">payments-viewer</span><span style="color:#1f2328">:</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span>- <span style="color:#0a3069">&#34;metrics:read@GENERAL[payments]&#34;</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span>- <span style="color:#0a3069">&#34;traces:read@GENERAL[payments]&#34;</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span>- <span style="color:#0a3069">&#34;logs:read@GENERAL[payments]&#34;</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span>- <span style="color:#0a3069">&#34;topology:read@GENERAL[payments]&#34;</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span>- <span style="color:#0a3069">&#34;alarms:read@GENERAL[payments]&#34;</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span>- <span style="color:#0a3069">&#34;metrics:read@K8S_SERVICE&#34;</span><span style="color:#fff">   </span><span style="color:#57606a"># the team&#39;s Kubernetes services, if K8S_SERVICE holds only theirs</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span>- ai:read                     <span style="color:#fff"> </span><span style="color:#57606a"># the assistant reads what the grants above allow, no more</span><span style="color:#fff">
+</span></span></span></code></pre></div><p>Service groups come from the service name (<code>payments::checkout</code>), so this works when every service the team runs carries the prefix. Kubernetes service names carry a namespace rather than a group; grant the whole <code>K8S_SERVICE</code> layer only when it holds the team&rsquo;s services alone.</p>
+<h3 id="lockdown-for-an-external-auditor">Lockdown for an external auditor</h3>
 <div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#0550ae">roles</span><span style="color:#1f2328">:</span><span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">  </span><span style="color:#0550ae">reviewer</span><span style="color:#1f2328">:</span><span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span>- <span style="color:#0a3069">&#34;*:read&#34;</span><span style="color:#fff">           </span><span style="color:#57606a"># all reads only</span><span style="color:#fff">
@@ -2082,6 +2148,7 @@ profile:enable
           </ul>
         </li>
         <li><a href="#grant-matching">Grant matching</a></li>
+        <li><a href="#limiting-a-verb-to-layers-and-service-groups">Limiting a verb to layers and service groups</a></li>
         <li><a href="#built-in-roles">Built-in roles</a>
           <ul>
             <li><a href="#viewer"><code>viewer</code></a></li>
@@ -2098,6 +2165,7 @@ profile:enable
         <li><a href="#common-patterns">Common patterns</a>
           <ul>
             <li><a href="#read-only-role-for-a-new-team">Read-only role for a new team</a></li>
+            <li><a href="#a-team-that-sees-only-its-own-services">A team that sees only its own services</a></li>
             <li><a href="#lockdown-for-an-external-auditor">Lockdown for an external auditor</a></li>
             <li><a href="#separate-alarm-triage-role">Separate alarm-triage role</a></li>
           </ul>
