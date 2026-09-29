@@ -33,7 +33,7 @@ What Controls the Sidebar Source What it controls OAP layers Whether a layer exi
   <meta itemprop="name" content="Menu and Layers">
   <meta itemprop="description" content="Menu and Layers Horizon’s sidebar follows the data OAP reports. You do not hand-build a menu tree in Horizon; you make OAP expose layers, then use layer templates to control how those layers appear.
 What Controls the Sidebar Source What it controls OAP layers Whether a layer exists and whether it has services. Layer templates Display name, color, group, visible tabs, service-list columns, trace/log behavior, and dashboard widgets. RBAC Whether operate, dashboard setup, and admin pages are visible for the signed-in user. The result is intentionally reactive: when OAP starts reporting data for a layer, Horizon shows it; when a user lacks a permission, Horizon hides the page link.">
-  <meta itemprop="wordCount" content="1202">
+  <meta itemprop="wordCount" content="1213">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Menu and Layers">
   <meta name="twitter:description" content="Menu and Layers Horizon’s sidebar follows the data OAP reports. You do not hand-build a menu tree in Horizon; you make OAP expose layers, then use layer templates to control how those layers appear.
@@ -1434,6 +1434,14 @@ What Controls the Sidebar Source What it controls OAP layers Whether a layer exi
 
     <li>
         
+            <a href="/docs/skywalking-horizon-ui/next/customization/alarm-pages">Alarm Pages</a>
+        
+    </li>
+
+    
+
+    <li>
+        
             <a href="/docs/skywalking-horizon-ui/next/customization/adding-a-new-layer">Add a Layer</a>
         
     </li>
@@ -1617,7 +1625,7 @@ What Controls the Sidebar Source What it controls OAP layers Whether a layer exi
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 1286ff8</div>
+                  <div class="commit-id">Commit Id: 0231285</div>
                 
 
 
@@ -1705,7 +1713,7 @@ What Controls the Sidebar Source What it controls OAP layers Whether a layer exi
       </tr>
       <tr>
           <td>Alarms</td>
-          <td>The active alarm board, when the user has <code>alarms:read</code>.</td>
+          <td>The active alarm board, when the user has <code>alarms:read</code>, followed by one row per named <a href="../alarm-pages">alarm page</a> the user&rsquo;s role reaches.</td>
       </tr>
       <tr>
           <td>Layers</td>
@@ -1721,7 +1729,7 @@ What Controls the Sidebar Source What it controls OAP layers Whether a layer exi
       </tr>
       <tr>
           <td>Dashboard setup</td>
-          <td>Overview templates, Layer dashboards, Alert page setup, and Global defaults.</td>
+          <td>Overview templates, Layer dashboards, Alarm pages, and Global defaults.</td>
       </tr>
       <tr>
           <td>Admin</td>
@@ -2009,22 +2017,6 @@ What Controls the Sidebar Source What it controls OAP layers Whether a layer exi
 
     </div>
     
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
