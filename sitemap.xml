@@ -17725,6 +17725,10 @@
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url><url>
+    <loc>https://skywalking.apache.org/docs/skywalking-banyandb/next/design/0.12.0/native-index-time-pruning/readme/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url><url>
     <loc>https://skywalking.apache.org/docs/skywalking-banyandb/latest/concept/tsdb/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
