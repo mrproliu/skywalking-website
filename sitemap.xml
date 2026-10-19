@@ -12459,6 +12459,10 @@
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url><url>
+    <loc>https://skywalking.apache.org/docs/skywalking-banyandb/next/soak/stream-index-findings/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url><url>
     <loc>https://skywalking.apache.org/docs/skywalking-horizon-ui/latest/compatibility/ports/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
