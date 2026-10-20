@@ -5000,6 +5000,10 @@
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url><url>
+    <loc>https://skywalking.apache.org/docs/skywalking-banyandb/next/design/0.12.0/measure-aggregation-mv/readme/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url><url>
     <loc>https://skywalking.apache.org/docs/main/next/en/setup/backend/ai-agent-conversation/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
@@ -11823,6 +11827,18 @@
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url><url>
+    <loc>https://skywalking.apache.org/docs/skywalking-banyandb/next/design/0.12.0/measure-batch-v2/readme/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://skywalking.apache.org/docs/skywalking-banyandb/next/design/0.12.0/measure-ql-gaps/readme/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://skywalking.apache.org/docs/skywalking-banyandb/next/design/0.12.0/measure-scan-path-v2/readme/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url><url>
     <loc>https://skywalking.apache.org/docs/skywalking-horizon-ui/latest/customization/menu-structure/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
@@ -14384,6 +14400,10 @@
     <priority>0.5</priority>
   </url><url>
     <loc>https://skywalking.apache.org/docs/skywalking-banyandb/v0.10.3/concept/property-repair/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://skywalking.apache.org/docs/skywalking-banyandb/next/design/0.12.0/bydbql-plan-cache/readme/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url><url>
@@ -17029,6 +17049,10 @@
     <priority>0.5</priority>
   </url><url>
     <loc>https://skywalking.apache.org/docs/skywalking-swck/v0.10.0/examples/storage/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://skywalking.apache.org/docs/skywalking-banyandb/next/design/0.12.0/streaming-api/readme/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url><url>
