@@ -1329,7 +1329,7 @@ Recommendation and boundaries Adopt DataFusion’s separation of expressions, re
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 28b9a64</div>
+                  <div class="commit-id">Commit Id: b54a9fc</div>
                 
 
 
@@ -1483,10 +1483,10 @@ columns, selection vectors, constant columns and explicit owners. Its bitmap
 uses one for null, strings use Go slices, and selection/constant representations
 are project-specific. It is Arrow style, not an Arrow SDK record batch or proof
 of IPC/C Data Interface compatibility.
-<a href="https://github.com/apache/skywalking-banyandb/tree/28b9a64ccc084e712903f9c6960758dfdc4a0943/pkg/query/vectorized/batch.go">Batch</a>,
-<a href="https://github.com/apache/skywalking-banyandb/tree/28b9a64ccc084e712903f9c6960758dfdc4a0943/pkg/query/vectorized/column.go">column/null representation</a>,
-<a href="https://github.com/apache/skywalking-banyandb/tree/28b9a64ccc084e712903f9c6960758dfdc4a0943/pkg/query/vectorized/typed_column.go">typed slices</a>,
-<a href="https://github.com/apache/skywalking-banyandb/tree/28b9a64ccc084e712903f9c6960758dfdc4a0943/pkg/query/vectorized/const_column.go">constant columns</a></p>
+<a href="https://github.com/apache/skywalking-banyandb/tree/b54a9fc76e74baa1c0ecbf75513a082c32649a72/pkg/query/vectorized/batch.go">Batch</a>,
+<a href="https://github.com/apache/skywalking-banyandb/tree/b54a9fc76e74baa1c0ecbf75513a082c32649a72/pkg/query/vectorized/column.go">column/null representation</a>,
+<a href="https://github.com/apache/skywalking-banyandb/tree/b54a9fc76e74baa1c0ecbf75513a082c32649a72/pkg/query/vectorized/typed_column.go">typed slices</a>,
+<a href="https://github.com/apache/skywalking-banyandb/tree/b54a9fc76e74baa1c0ecbf75513a082c32649a72/pkg/query/vectorized/const_column.go">constant columns</a></p>
 <p>Reuse that carrier for B with a QL schema/slot layer. Adapt existing native results
 once at the liaison boundary; do not create protobuf cells between every operator.
 Honor <code>ActiveLen</code>, distinguish nil from empty selections, and retain owners or copy
@@ -1510,7 +1510,7 @@ solve those requirements. <a href="https://github.com/apache/datafusion/blob/070
 when dropped and remain responsive to cancellation. Map this onto existing Go
 operator <code>Close</code>, context checks and query ownership; do not introduce a Rust-like
 scheduler. <a href="https://github.com/apache/datafusion/blob/07077ff83ffe1d44f61ff7557a3b2d8b927220b3/datafusion/physical-plan/src/execution_plan.rs">ExecutionPlan lifecycle</a>,
-<a href="https://github.com/apache/skywalking-banyandb/tree/28b9a64ccc084e712903f9c6960758dfdc4a0943/pkg/query/vectorized/operator.go">existing Go operators</a></p>
+<a href="https://github.com/apache/skywalking-banyandb/tree/b54a9fc76e74baa1c0ecbf75513a082c32649a72/pkg/query/vectorized/operator.go">existing Go operators</a></p>
 <p>Its <code>MemoryReservation</code> supports fallible growth and releases reserved bytes on
 drop. Reuse the principle through existing BanyanDB admission/tracking: charge
 retained native frames/batches, computed columns, groups, distinct keys, retained sort
@@ -1681,6 +1681,38 @@ serve a Catalog B acceptance case instead of building a general SQL framework.</
 
     </div>
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

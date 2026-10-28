@@ -6315,6 +6315,14 @@
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url><url>
+    <loc>https://skywalking.apache.org/docs/skywalking-banyandb/next/design/0.12.0/measure-ql-core-sql/pr3-verification/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://skywalking.apache.org/docs/skywalking-banyandb/next/design/0.12.0/measure-ql-core-sql/pr4-verification/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url><url>
     <loc>https://skywalking.apache.org/docs/skywalking-java/latest/en/setup/service-agent/java-agent/configuration-discovery/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
@@ -6832,6 +6840,10 @@
     <priority>0.5</priority>
   </url><url>
     <loc>https://skywalking.apache.org/docs/main/v9.7.0/en/setup/service-agent/agent-compatibility/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://skywalking.apache.org/docs/skywalking-banyandb/next/design/0.12.0/measure-ql-core-sql/compatibility-performance/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url><url>
@@ -11383,6 +11395,10 @@
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url><url>
+    <loc>https://skywalking.apache.org/docs/skywalking-banyandb/next/design/0.12.0/measure-ql-core-sql/legacy-integration-verification/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url><url>
     <loc>https://skywalking.apache.org/docs/skywalking-python/latest/en/setup/intrusive/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
@@ -14571,6 +14587,10 @@
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url><url>
+    <loc>https://skywalking.apache.org/docs/skywalking-banyandb/next/design/0.12.0/measure-ql-core-sql/pagination-research/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url><url>
     <loc>https://skywalking.apache.org/docs/main/latest/en/api/query-protocol/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
@@ -17537,6 +17557,50 @@
     <priority>0.5</priority>
   </url><url>
     <loc>https://skywalking.apache.org/docs/skywalking-banyandb/next/design/0.12.0/measure-ql-core-sql/t08-verification/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://skywalking.apache.org/docs/skywalking-banyandb/next/design/0.12.0/measure-ql-core-sql/t10-verification/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://skywalking.apache.org/docs/skywalking-banyandb/next/design/0.12.0/measure-ql-core-sql/t12-verification/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://skywalking.apache.org/docs/skywalking-banyandb/next/design/0.12.0/measure-ql-core-sql/t14-verification/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://skywalking.apache.org/docs/skywalking-banyandb/next/design/0.12.0/measure-ql-core-sql/t15-memory-verification/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://skywalking.apache.org/docs/skywalking-banyandb/next/design/0.12.0/measure-ql-core-sql/t15-verification/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://skywalking.apache.org/docs/skywalking-banyandb/next/design/0.12.0/measure-ql-core-sql/t16-verification/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://skywalking.apache.org/docs/skywalking-banyandb/next/design/0.12.0/measure-ql-core-sql/t17-admission-diagnosis/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://skywalking.apache.org/docs/skywalking-banyandb/next/design/0.12.0/measure-ql-core-sql/t17-1m-readiness-fix/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://skywalking.apache.org/docs/skywalking-banyandb/next/design/0.12.0/measure-ql-core-sql/t17-acceptance-verification/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://skywalking.apache.org/docs/skywalking-banyandb/next/design/0.12.0/measure-ql-core-sql/t17-benchmark-campaign/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://skywalking.apache.org/docs/skywalking-banyandb/next/design/0.12.0/measure-ql-core-sql/t17-verification/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url><url>
