@@ -24,20 +24,20 @@
 <title>Measure QL Catalog B： Core SQL Implementation Plan | Apache SkyWalking</title><meta property="og:url" content="https://skywalking.apache.org/docs/skywalking-banyandb/next/design/0.12.0/measure-ql-core-sql/readme/">
   <meta property="og:site_name" content="Apache SkyWalking">
   <meta property="og:title" content="Measure QL Catalog B： Core SQL Implementation Plan">
-  <meta property="og:description" content="Measure QL Catalog B: Core SQL Implementation Plan This branch prepares PR 4 of 4: visible-tuple DISTINCT, computed/ordinal grouping, selectable time buckets, multi-key ordering, compact top-k pagination and exact count-distinct composition (T15/T16/T17 and the composition follow-up). It depends on open PR #1432 for expressions and filtering, with main at 86659118 as the integration baseline. See the PR 4 verification record for isolated scope and current validation status.
-Status: all original Catalog B capabilities are implemented in this branch. PRs #1417 and #1424 provide the merged foundation and aggregation; PR #1432 provides expressions, raw WHERE and HAVING. PR 4 completes grouping and output composition. This does not fulfill all SQL requirements in DPO #81/#79: relational joins, CTEs, computed aggregate arguments, aggregate FILTER, additional string functions and exact decimal arithmetic remain outside this PR.">
+  <meta property="og:description" content="Measure QL Catalog B: Core SQL Implementation Plan The current follow-up combines three capabilities on merged PR #1438 (b54a9fc76):
+Scalar expressions around aggregate results and computed aggregate inputs, including COALESCE(SUM(value), 0) and SUM(value &#43; 1). Exact bounded decimal sums through SUM(DECIMAL_FROM_SCALED(value, 10)), with numeric comparison and ordering before final decimal-text serialization. Indexed LIKE and ILIKE, backed by the shared native wildcard engine with tracked allocations and bounded work. The combined verification record distinguishes current checks from the historical benchmarks accompanying each capability. Protobuf definitions and persisted formats are unchanged. Calendar rollups are deferred to upstream pipeline design; calendar TIME_BUCKET syntax, disk spilling, retained-result sessions and the withdrawn index-recovery experiment are not included. The original PR 4 scope and verification below remain historical records.">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="article">
     <meta property="article:section" content="docs">
 
   <meta itemprop="name" content="Measure QL Catalog B： Core SQL Implementation Plan">
-  <meta itemprop="description" content="Measure QL Catalog B: Core SQL Implementation Plan This branch prepares PR 4 of 4: visible-tuple DISTINCT, computed/ordinal grouping, selectable time buckets, multi-key ordering, compact top-k pagination and exact count-distinct composition (T15/T16/T17 and the composition follow-up). It depends on open PR #1432 for expressions and filtering, with main at 86659118 as the integration baseline. See the PR 4 verification record for isolated scope and current validation status.
-Status: all original Catalog B capabilities are implemented in this branch. PRs #1417 and #1424 provide the merged foundation and aggregation; PR #1432 provides expressions, raw WHERE and HAVING. PR 4 completes grouping and output composition. This does not fulfill all SQL requirements in DPO #81/#79: relational joins, CTEs, computed aggregate arguments, aggregate FILTER, additional string functions and exact decimal arithmetic remain outside this PR.">
-  <meta itemprop="wordCount" content="3726">
+  <meta itemprop="description" content="Measure QL Catalog B: Core SQL Implementation Plan The current follow-up combines three capabilities on merged PR #1438 (b54a9fc76):
+Scalar expressions around aggregate results and computed aggregate inputs, including COALESCE(SUM(value), 0) and SUM(value &#43; 1). Exact bounded decimal sums through SUM(DECIMAL_FROM_SCALED(value, 10)), with numeric comparison and ordering before final decimal-text serialization. Indexed LIKE and ILIKE, backed by the shared native wildcard engine with tracked allocations and bounded work. The combined verification record distinguishes current checks from the historical benchmarks accompanying each capability. Protobuf definitions and persisted formats are unchanged. Calendar rollups are deferred to upstream pipeline design; calendar TIME_BUCKET syntax, disk spilling, retained-result sessions and the withdrawn index-recovery experiment are not included. The original PR 4 scope and verification below remain historical records.">
+  <meta itemprop="wordCount" content="3856">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Measure QL Catalog B： Core SQL Implementation Plan">
-  <meta name="twitter:description" content="Measure QL Catalog B: Core SQL Implementation Plan This branch prepares PR 4 of 4: visible-tuple DISTINCT, computed/ordinal grouping, selectable time buckets, multi-key ordering, compact top-k pagination and exact count-distinct composition (T15/T16/T17 and the composition follow-up). It depends on open PR #1432 for expressions and filtering, with main at 86659118 as the integration baseline. See the PR 4 verification record for isolated scope and current validation status.
-Status: all original Catalog B capabilities are implemented in this branch. PRs #1417 and #1424 provide the merged foundation and aggregation; PR #1432 provides expressions, raw WHERE and HAVING. PR 4 completes grouping and output composition. This does not fulfill all SQL requirements in DPO #81/#79: relational joins, CTEs, computed aggregate arguments, aggregate FILTER, additional string functions and exact decimal arithmetic remain outside this PR.">
+  <meta name="twitter:description" content="Measure QL Catalog B: Core SQL Implementation Plan The current follow-up combines three capabilities on merged PR #1438 (b54a9fc76):
+Scalar expressions around aggregate results and computed aggregate inputs, including COALESCE(SUM(value), 0) and SUM(value &#43; 1). Exact bounded decimal sums through SUM(DECIMAL_FROM_SCALED(value, 10)), with numeric comparison and ordering before final decimal-text serialization. Indexed LIKE and ILIKE, backed by the shared native wildcard engine with tracked allocations and bounded work. The combined verification record distinguishes current checks from the historical benchmarks accompanying each capability. Protobuf definitions and persisted formats are unchanged. Calendar rollups are deferred to upstream pipeline design; calendar TIME_BUCKET syntax, disk spilling, retained-result sessions and the withdrawn index-recovery experiment are not included. The original PR 4 scope and verification below remain historical records.">
 
 
 
@@ -53,7 +53,7 @@ Status: all original Catalog B capabilities are implemented in this branch. PRs 
 <script src="/js/jquery-3.6.0.min.js"></script>
 
 <link rel="canonical" href="https://skywalking.apache.org/docs/skywalking-banyandb/next/design/0.12.0/measure-ql-core-sql/readme/">
-<meta name="description" content="Measure QL Catalog B: Core SQL Implementation Plan This branch prepares PR 4 of 4: visible-tuple DISTINCT, computed/ordinal grouping, selectable time buckets,…">
+<meta name="description" content="Measure QL Catalog B: Core SQL Implementation Plan The current follow-up combines three capabilities on merged PR #1438 (b54a9fc76): Scalar expressions around…">
 
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@id":"https://skywalking.apache.org/#organization","@type":"Organization","logo":"https://skywalking.apache.org/images/skywalking_400x400.png","name":"Apache SkyWalking","parentOrganization":{"@type":"Organization","name":"The Apache Software Foundation","url":"https://www.apache.org/"},"sameAs":["https://github.com/apache/skywalking","https://twitter.com/asfskywalking","https://projects.apache.org/project.html?skywalking"],"url":"https://skywalking.apache.org/"},{"@type":"TechArticle","headline":"Measure QL Catalog B： Core SQL Implementation Plan","inLanguage":"en","mainEntityOfPage":{"@id":"https://skywalking.apache.org/docs/skywalking-banyandb/next/design/0.12.0/measure-ql-core-sql/readme/","@type":"WebPage"},"publisher":{"@id":"https://skywalking.apache.org/#organization"},"url":"https://skywalking.apache.org/docs/skywalking-banyandb/next/design/0.12.0/measure-ql-core-sql/readme/"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://skywalking.apache.org/","name":"Apache SkyWalking","position":1},{"@type":"ListItem","item":"https://skywalking.apache.org/docs/","name":"Documentation","position":2},{"@type":"ListItem","item":"https://skywalking.apache.org/docs/skywalking-banyandb/next/design/0.12.0/measure-ql-core-sql/readme/","name":"Measure QL Catalog B： Core SQL Implementation Plan","position":3}]}]}</script>
 
@@ -1329,7 +1329,7 @@ Status: all original Catalog B capabilities are implemented in this branch. PRs 
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: b54a9fc</div>
+                  <div class="commit-id">Commit Id: 3bd5e73</div>
                 
 
 
@@ -1343,19 +1343,36 @@ Status: all original Catalog B capabilities are implemented in this branch. PRs 
               
 <div class="td-content">
 	<h1 id="measure-ql-catalog-b-core-sql-implementation-plan">Measure QL Catalog B: Core SQL Implementation Plan</h1>
-<p>This branch prepares <strong>PR 4 of 4</strong>: visible-tuple DISTINCT, computed/ordinal
+<p>The current follow-up combines three capabilities on merged PR #1438 (<code>b54a9fc76</code>):</p>
+<ul>
+<li>Scalar expressions around aggregate results and computed aggregate inputs,
+including <code>COALESCE(SUM(value), 0)</code> and <code>SUM(value + 1)</code>.</li>
+<li>Exact bounded decimal sums through <code>SUM(DECIMAL_FROM_SCALED(value, 10))</code>,
+with numeric comparison and ordering before final decimal-text serialization.</li>
+<li><a href="../indexed-patterns">Indexed LIKE and ILIKE</a>, backed by the shared native
+wildcard engine with tracked allocations and bounded work.</li>
+</ul>
+<p>The <a href="../follow-up-verification">combined verification record</a> distinguishes
+current checks from the historical benchmarks accompanying each capability.
+Protobuf definitions and persisted formats are unchanged. Calendar rollups are
+deferred to upstream pipeline design; calendar TIME_BUCKET syntax, disk spilling,
+retained-result sessions and the withdrawn index-recovery experiment are not
+included. The original PR 4 scope and verification below remain historical records.</p>
+<h2 id="original-pr-4-scope">Original PR 4 scope</h2>
+<p>Merged <strong>PR 4 of 4 (#1438)</strong> delivered visible-tuple DISTINCT, computed/ordinal
 grouping, selectable time buckets, multi-key ordering, compact top-k pagination
 and exact count-distinct composition (T15/T16/T17 and the composition follow-up).
-It depends on open <a href="https://github.com/apache/skywalking-banyandb/pull/1432">PR #1432</a>
-for expressions and filtering, with main at <code>86659118</code> as the integration baseline.
+It used <a href="https://github.com/apache/skywalking-banyandb/pull/1432">PR #1432</a>
+for expressions and filtering, with main at <code>86659118</code> as its integration baseline.
 See the <a href="../pr4-verification">PR 4 verification record</a> for isolated scope and
 current validation status.</p>
-<p>Status: <strong>all original Catalog B capabilities are implemented in this branch.</strong>
+<p>Status: <strong>all original Catalog B capabilities are merged.</strong>
 PRs #1417 and #1424 provide the merged foundation and aggregation; PR #1432
 provides expressions, raw WHERE and HAVING. PR 4 completes grouping and output
 composition. This does not fulfill all SQL requirements in DPO #81/#79: relational
-joins, CTEs, computed aggregate arguments, aggregate FILTER, additional string
-functions and exact decimal arithmetic remain outside this PR.</p>
+joins, CTEs, aggregate FILTER and additional string functions were outside that
+PR. Computed aggregate arguments and bounded decimal sums belong to the current
+follow-up described above; this does not promise general PostgreSQL NUMERIC support.</p>
 <p>DISTINCT keys the visible tuple, computed grouping evaluates keys before
 aggregation, and sorting runs after HAVING and deduplication. Finite LIMIT uses
 at most OFFSET + LIMIT owned candidates; unlimited sorting and exact distinct
@@ -1827,6 +1844,7 @@ gate. Missing/skipped tests or zero matching benchmark records cannot count as a
   <ul>
     <li><a href="#measure-ql-catalog-b-core-sql-implementation-plan">Measure QL Catalog B: Core SQL Implementation Plan</a>
       <ul>
+        <li><a href="#original-pr-4-scope">Original PR 4 scope</a></li>
         <li><a href="#1-base-and-fixed-scope">1. Base and fixed scope</a></li>
         <li><a href="#2-reuse-pr-1412s-ql-and-scan-infrastructure">2. Reuse PR #1412&rsquo;s QL and scan infrastructure</a></li>
         <li><a href="#3-existing-request-and-response-contract">3. Existing request and response contract</a>
@@ -1957,6 +1975,16 @@ gate. Missing/skipped tests or zero matching benchmark records cannot count as a
 
     </div>
     
+
+
+
+
+
+
+
+
+
+
 
 
 
