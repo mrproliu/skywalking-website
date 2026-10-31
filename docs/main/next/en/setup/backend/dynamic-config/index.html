@@ -39,7 +39,7 @@ At the same time, some of them support dynamic settings from an upstream managem
 Currently, SkyWalking supports two types of dynamic configurations: Single and Group.
 This feature depends on upstream service, so it is DISABLED by default.
 configuration: selector: ${SW_CONFIGURATION:none} none: grpc: host: ${SW_DCS_SERVER_HOST:&#34;&#34;} port: ${SW_DCS_SERVER_PORT:80} clusterName: ${SW_DCS_CLUSTER_NAME:SkyWalking} period: ${SW_DCS_PERIOD:20} # ... other implementations Single Configuration Single Configuration is a config key that corresponds to a specific config value. The logic structure is:">
-  <meta itemprop="wordCount" content="323">
+  <meta itemprop="wordCount" content="332">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Dynamic Configuration">
   <meta name="twitter:description" content="Dynamic Configuration SkyWalking Configurations are mostly set through application.yml and OS system environment variables.
@@ -1540,6 +1540,14 @@ configuration: selector: ${SW_CONFIGURATION:none} none: grpc: host: ${SW_DCS_SER
 
     <li>
         
+            <a href="/docs/main/next/en/setup/backend/server-clusters">Server Clusters</a>
+        
+    </li>
+
+    
+
+    <li>
+        
             <a href="/docs/main/next/en/setup/backend/zipkin-trace">Zipkin Trace</a>
         
     </li>
@@ -1548,7 +1556,18 @@ configuration: selector: ${SW_CONFIGURATION:none} none: grpc: host: ${SW_DCS_SER
 
     <li>
         
-            <a href="/docs/main/next/en/setup/backend/otlp-trace">OpenTelemetry Trace</a>
+
+            
+            <a href="#">OpenTelemetry Trace<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/otlp-trace">Setup</a>
         
     </li>
 
@@ -1556,7 +1575,7 @@ configuration: selector: ${SW_CONFIGURATION:none} none: grpc: host: ${SW_DCS_SER
 
     <li>
         
-            <a href="/docs/main/next/en/setup/backend/trace-analyzer">OpenTelemetry Trace Analysis</a>
+            <a href="/docs/main/next/en/setup/backend/trace-analyzer">Analysis</a>
         
     </li>
 
@@ -1564,7 +1583,98 @@ configuration: selector: ${SW_CONFIGURATION:none} none: grpc: host: ${SW_DCS_SER
 
     <li>
         
-            <a href="/docs/main/next/en/setup/backend/trace-analyzer-practices">OpenTelemetry Trace Analysis Practices</a>
+
+            
+            <a href="#">Best Practices<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+
+            
+            <a href="#">Gateway<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/otlp-trace-practices/gateway-overview">Overview</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/otlp-trace-practices/gateway-envoy">Envoy</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/otlp-trace-practices/gateway-nginx">nginx</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/otlp-trace-practices/gateway-without-instrumentation">Gateways Without Instrumentation</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/otlp-trace-practices/gateway-canary">Canary Releases</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/otlp-trace-practices/message-queue">Message Queue</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/next/en/setup/backend/otlp-trace-practices/database-and-cache">Database and Cache</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+</ul>
+
         
     </li>
 
@@ -3107,7 +3217,7 @@ configuration: selector: ${SW_CONFIGURATION:none} none: grpc: host: ${SW_DCS_SER
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 456199a</div>
+                  <div class="commit-id">Commit Id: f4d38fd</div>
                 
 
 
@@ -3223,6 +3333,11 @@ configuration: selector: ${SW_CONFIGURATION:none} none: grpc: host: ${SW_DCS_SER
           <td style="text-align: center">core.default.endpoint-name-grouping</td>
           <td style="text-align: center">The endpoint name grouping setting. Overrides <code>endpoint-name-grouping.yml</code>.</td>
           <td style="text-align: center">Same as <a href="../endpoint-grouping-rules"><code>endpoint-name-grouping.yml</code></a>.</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">core.default.serverClusters</td>
+          <td style="text-align: center">The server clusters. Overrides <code>server-clusters.yml</code>.</td>
+          <td style="text-align: center">Same as <a href="../server-clusters#configuration-format"><code>server-clusters.yml</code></a>.</td>
       </tr>
       <tr>
           <td style="text-align: center">core.default.log4j-xml</td>
@@ -3433,6 +3548,20 @@ configuration: selector: ${SW_CONFIGURATION:none} none: grpc: host: ${SW_DCS_SER
 
     </div>
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
