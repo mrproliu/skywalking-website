@@ -1,0 +1,27 @@
+Architectures: amd64 arm64
+Codename: stable
+Components: main
+Date: Sun, 25 Oct 2026 14:54:47 +0000
+Label: Apache SkyWalking AI Sessionizer
+Origin: Apache SkyWalking
+Suite: stable
+MD5Sum:
+ 16e7ba8213cade8e966308343fe5d7ec             4865 main/binary-amd64/Packages
+ 21b4ee5abc5e9f1bc0fe6bdcfaaa0c11             1752 main/binary-amd64/Packages.gz
+ cbd52040693cbae937e66a24feea0c1f             4865 main/binary-arm64/Packages
+ 62bf0a2e54112fb30d57428baca6ebd9             1755 main/binary-arm64/Packages.gz
+SHA1:
+ ab3f8fea04866ad34affa68c575e428d97a7c673             4865 main/binary-amd64/Packages
+ d6823f97ce886a5024454fe4594673bd58bb3836             1752 main/binary-amd64/Packages.gz
+ a3f4dfa6776bf6b82f9b8d4502ec8dd7694fb0b6             4865 main/binary-arm64/Packages
+ a749e79eb8a1827a99bdcfa11679155b75070bda             1755 main/binary-arm64/Packages.gz
+SHA256:
+ f4cf03e9dc93ba133e04d8ff1f2f91045a3872b545450a41ef7e52cf26c7e4f6             4865 main/binary-amd64/Packages
+ 2d9f2565af1e26cb99a2afa7ecd6c26f0dec3f6c83464eb5441f46352aeee99b             1752 main/binary-amd64/Packages.gz
+ 122cfa604f5ea9ab03310d065e98a9c89f60acdc49ac6baf3477d233f265b411             4865 main/binary-arm64/Packages
+ 56c4c9c348a4a4913f2e39cd4df06b2d36b9153d41bd456481cfd6848ceb40c0             1755 main/binary-arm64/Packages.gz
+SHA512:
+ 34e5f7827acb1bf4609d38d6d52bc447279998bdb3c35646f42d023ad2847a414576cc2264851d4dfbc69c342f91902e4901f0ce305252f613a31c6076c3ea15             4865 main/binary-amd64/Packages
+ 5de1204215c33b3d7acefd7d51c09077e36b79d0a0289059988740fdec33165ae63610575649a4d27a00de2ba150ff2fdabdd544bddda6dd4cc55baff18d1a28             1752 main/binary-amd64/Packages.gz
+ 3a72e4dfaf407aad5f0c25847741ca4a31b625e0f7370f88f205169467ff8f3927dfc1009beae7694f861c0b4b1087770538bb08593a098e8b19f8419c142369             4865 main/binary-arm64/Packages
+ b88fe3b47e73eb5bb9fbb895a2140c689321a81a1f49aa185851313d84e2c0003607f73de91444c3a21269ee52487161f43c8dd3ea75789d6e890c6b447eb4ac             1755 main/binary-arm64/Packages.gz

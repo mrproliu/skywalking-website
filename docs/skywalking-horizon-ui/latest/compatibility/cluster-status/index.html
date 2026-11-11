@@ -24,31 +24,29 @@
 <title>Cluster Status Check Sequence | Apache SkyWalking</title><meta property="og:url" content="https://skywalking.apache.org/docs/skywalking-horizon-ui/latest/compatibility/cluster-status/">
   <meta property="og:site_name" content="Apache SkyWalking">
   <meta property="og:title" content="Cluster Status Check Sequence">
-  <meta property="og:description" content="Cluster Status Check Sequence The Cluster Status page (/operate/cluster, sidebar Operate → Cluster) is the operator’s single pane for “is the OAP backend healthy and configured correctly?” It runs three independent checks in parallel — the Query and Admin OAP ports plus a Zipkin/OTLP trace-source probe — they do not block each other, and the page surfaces each pane’s result independently.
-The panes are independent: a healthy :12800 with broken :17128 is a real and recoverable state (forgot to expose the admin port behind a Kubernetes Service), and Horizon makes that diagnosis obvious. The Zipkin/OTLP pane is informational for the trace menu — a red dot there is not a cluster-wide outage.">
+  <meta property="og:description" content="Cluster Status Check Sequence The Cluster Status page (/operate/cluster, sidebar Operate → Cluster) is the operator’s single pane for “is the OAP backend healthy and configured correctly?” It runs its checks in parallel — the Query and Admin OAP ports, plus one probe per trace API (the Zipkin endpoint and each TraceQL datasource) — they do not block each other, and the page surfaces each pane’s result independently.
+The panes are independent: a healthy :12800 with broken :17128 is a real and recoverable state (forgot to expose the admin port behind a Kubernetes Service), and Horizon makes that diagnosis obvious. The Trace APIs pane is informational for the trace rows it feeds — a red dot there is not a cluster-wide outage.">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="article">
     <meta property="article:section" content="docs">
 
   <meta itemprop="name" content="Cluster Status Check Sequence">
-  <meta itemprop="description" content="Cluster Status Check Sequence The Cluster Status page (/operate/cluster, sidebar Operate → Cluster) is the operator’s single pane for “is the OAP backend healthy and configured correctly?” It runs three independent checks in parallel — the Query and Admin OAP ports plus a Zipkin/OTLP trace-source probe — they do not block each other, and the page surfaces each pane’s result independently.
-The panes are independent: a healthy :12800 with broken :17128 is a real and recoverable state (forgot to expose the admin port behind a Kubernetes Service), and Horizon makes that diagnosis obvious. The Zipkin/OTLP pane is informational for the trace menu — a red dot there is not a cluster-wide outage.">
-  <meta itemprop="wordCount" content="679">
+  <meta itemprop="description" content="Cluster Status Check Sequence The Cluster Status page (/operate/cluster, sidebar Operate → Cluster) is the operator’s single pane for “is the OAP backend healthy and configured correctly?” It runs its checks in parallel — the Query and Admin OAP ports, plus one probe per trace API (the Zipkin endpoint and each TraceQL datasource) — they do not block each other, and the page surfaces each pane’s result independently.
+The panes are independent: a healthy :12800 with broken :17128 is a real and recoverable state (forgot to expose the admin port behind a Kubernetes Service), and Horizon makes that diagnosis obvious. The Trace APIs pane is informational for the trace rows it feeds — a red dot there is not a cluster-wide outage.">
+  <meta itemprop="wordCount" content="1632">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Cluster Status Check Sequence">
-  <meta name="twitter:description" content="Cluster Status Check Sequence The Cluster Status page (/operate/cluster, sidebar Operate → Cluster) is the operator’s single pane for “is the OAP backend healthy and configured correctly?” It runs three independent checks in parallel — the Query and Admin OAP ports plus a Zipkin/OTLP trace-source probe — they do not block each other, and the page surfaces each pane’s result independently.
-The panes are independent: a healthy :12800 with broken :17128 is a real and recoverable state (forgot to expose the admin port behind a Kubernetes Service), and Horizon makes that diagnosis obvious. The Zipkin/OTLP pane is informational for the trace menu — a red dot there is not a cluster-wide outage.">
+  <meta name="twitter:description" content="Cluster Status Check Sequence The Cluster Status page (/operate/cluster, sidebar Operate → Cluster) is the operator’s single pane for “is the OAP backend healthy and configured correctly?” It runs its checks in parallel — the Query and Admin OAP ports, plus one probe per trace API (the Zipkin endpoint and each TraceQL datasource) — they do not block each other, and the page surfaces each pane’s result independently.
+The panes are independent: a healthy :12800 with broken :17128 is a real and recoverable state (forgot to expose the admin port behind a Kubernetes Service), and Horizon makes that diagnosis obvious. The Trace APIs pane is informational for the trace rows it feeds — a red dot there is not a cluster-wide outage.">
 
 
 
-<link rel="preload" href="/scss/main.min.75b3855349f4480c60036369f115ecf9ae08f3fff28f5b2de980d22a7fac93ef.css" as="style">
-<link href="/scss/main.min.75b3855349f4480c60036369f115ecf9ae08f3fff28f5b2de980d22a7fac93ef.css" rel="stylesheet" integrity="">
+<link rel="preload" href="/scss/main.min.b350fb8c42fee31880305a4433cf2325b5cefc4e06a4d17342698fbbcf354d7b.css" as="style">
+<link href="/scss/main.min.b350fb8c42fee31880305a4433cf2325b5cefc4e06a4d17342698fbbcf354d7b.css" rel="stylesheet" integrity="">
 
 
 
-<link rel="stylesheet" href="/css/docSearch.css" />
 <link rel="stylesheet" href="/css/highlight-github.css" />
-
 
 <script src="/js/jquery-3.6.0.min.js"></script>
 
@@ -66,16 +64,88 @@ The panes are independent: a healthy :12800 with broken :17128 is a real and rec
   <body class="td-page  project-doc">
     <header>
       
-<nav class="js-navbar-scroll navbar navbar-expand  flex-column flex-md-row td-navbar">
-    <div class="sidebar-button">
-      <i class="iconfont icon-menu"></i>
-    </div>
+
+
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    
+  
+
+  
+  
+
+  
+  
+
+
+
+
+  
+    
+    
+    
+    
+    
+    
+  
+
+  
+    
+    
+    
+    
+    
+    
+  
+
+  
+    
+    
+    
+    
+    
+    
+  
+
+  
+    
+    
+    
+    
+    
+    
+  
+
+  
+    
+    
+    
+    
+    
+    
+  
+
+<nav class="js-navbar-scroll navbar navbar-expand td-navbar" aria-label="Main navigation">
+  <div class="sw-navbar-inner">
+    <button type="button" class="sidebar-button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-navigation-drawer">
+      <i class="iconfont icon-menu" aria-hidden="true"></i>
+    </button>
     <a class="navbar-brand" href="/">
         <span class="navbar-logo"><img width="130" src="/images/logo.svg" alt="SkyWalking"></span> 
     </a>
     <div class="td-navbar-nav-scroll navbar-nav-wrapper" id="navigation">
         <ul class="navbar-nav mt-lg-0">
-             
+            
             
             <li class="nav-item mr-3 mb-lg-0">
 				
@@ -84,90 +154,1007 @@ The panes are independent: a healthy :12800 with broken :17128 is a real and rec
 				
 				
 				
-				<a class="nav-link active" href="/docs" ><span class="active">Documentation</span></a>
+				
+				
+                
+                <a class="nav-link" href="/" ><span>Home</span></a>
 			</li>
             
             
             
-            <li class="nav-item mr-3 mb-lg-0">
-				
-				
-				
-				
-				
-				
-				<a class="nav-link" href="/events" ><span>Events</span></a>
-			</li>
-            
-            
-            
-            <li class="nav-item mr-3 mb-lg-0">
-				
-				
-				
-				
-				
-				
-				<a class="nav-link" href="/blog" ><span>Blogs</span></a>
-			</li>
-            
-            
-            
-            <li class="nav-item mr-3 mb-lg-0">
-				
-				
-				
-				
-				
-				
-				<a class="nav-link" href="/downloads" ><span>Downloads</span></a>
-			</li>
-            
-            
-            
-            <li class="nav-item mr-3 mb-lg-0">
-				
-				
-				
-				
-				
-				
-				<a class="nav-link" href="/team" ><span>Team</span></a>
-			</li>
-            
-            
-            
-            <li class="nav-item mr-3 mb-lg-0">
-				
-				
-				
-				
-				
-				
-				<a class="nav-link" href="/users" ><span>Users</span></a>
-			</li>
-            
-            
-            
-            
-            
-            
-            <li class="nav-item mr-3 mb-lg-0">
-                <a class="nav-link" href="/zh/"><span>中文博客</span></a>
-            </li>
+            <li class="nav-item dropdown sw-projects-item">
+                <button type="button" class="nav-link dropdown-toggle sw-projects-toggle active" id="projects-menu-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Projects</button>
+                <div class="dropdown-menu sw-projects-menu" aria-labelledby="projects-menu-toggle">
+                    
 
+
+<div class="sw-projects-content">
+  <a class="dropdown-item sw-projects-intro" href="/get-started/">
+    <span><strong>Get started in minutes</strong><span>Try the Showcase or install SkyWalking</span></span>
+    <span aria-hidden="true">→</span>
+  </a>
+  <div class="sw-projects-groups">
+    
+    
+    
+      
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+      
+    
+    
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+    
+    
+    <div class="sw-projects-group">
+      <p class="sw-projects-label">Platform</p>
+    
+      <div class="sw-projects-group-links">
+        <div class="sw-projects-columns">
+        
+        <div class="sw-projects-column">
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#SkyWalking">
+          <img src="/images/project/skywalking.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking</strong><span class="sw-project-description">Core observability server</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#BanyanDB">
+          <img src="/images/project/banyan-db.svg" width="28" height="28" alt="">
+          <span><strong>BanyanDB</strong><span class="sw-project-description">Observability database</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link active" href="/docs/#HorizonUI">
+          <img src="/images/project/skywalking.svg" width="28" height="28" alt="">
+          <span><strong>Horizon UI</strong><span class="sw-project-description">Next-generation UI</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#AISessionizer">
+          <img src="/images/project/skywalking.svg" width="28" height="28" alt="">
+          <span><strong>AI Sessionizer</strong><span class="sw-project-description">AI agent observability</span></span>
+        </a>
+        
+        
+        </div>
+        
+        </div>
+        
+        <a class="dropdown-item sw-projects-more" href="/docs/#SkyWalkingServers">All platform projects <span aria-hidden="true">→</span></a>
+        
+      </div>
+    </div>
+    
+    
+    
+      
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+      
+    
+      
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+      
+    
+    
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+    
+    
+    <div class="sw-projects-group sw-projects-group-wide">
+      <p class="sw-projects-label">Agents &amp; collection</p>
+    
+      <div class="sw-projects-group-links">
+        <div class="sw-projects-columns">
+        
+        <div class="sw-projects-column">
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#JavaAgent">
+          <img src="/images/project/java-agent.svg" width="28" height="28" alt="">
+          <span><strong>Java Agent</strong><span class="sw-project-description">Java tracing and profiling</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#GoAgent">
+          <img src="/images/project/skywalking-go.svg" width="28" height="28" alt="">
+          <span><strong>Go Agent</strong><span class="sw-project-description">Go tracing and metrics</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#PythonAgent">
+          <img src="/images/project/python-agent.svg" width="28" height="28" alt="">
+          <span><strong>Python Agent</strong><span class="sw-project-description">Python tracing and profiling</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#NodeJSAgent">
+          <img src="/images/project/nodejs-agent.svg" width="28" height="28" alt="">
+          <span><strong>NodeJS Agent</strong><span class="sw-project-description">Node.js distributed tracing</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#PHPAgent">
+          <img src="/images/project/php-agent.svg" width="28" height="28" alt="">
+          <span><strong>PHP Agent</strong><span class="sw-project-description">PHP distributed tracing</span></span>
+        </a>
+        
+        
+        </div>
+        
+        <div class="sw-projects-column">
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#OpenTelemetryOTLP">
+          <img src="/images/project/otlp.svg" width="28" height="28" alt="">
+          <span><strong>OpenTelemetry (OTLP)</strong><span class="sw-project-description">OTLP traces, metrics, and logs</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#SkyWalkingRover">
+          <img src="/images/project/skywalking.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking Rover</strong><span class="sw-project-description">eBPF metrics and profiling</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#SkyWalkingSatellite">
+          <img src="/images/project/skywalking-satellite.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking Satellite</strong><span class="sw-project-description">Lightweight telemetry collector</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#KubernetesEventExporter">
+          <img src="/images/project/kubernetes.svg" width="28" height="28" alt="">
+          <span><strong>Kubernetes Event Exporter</strong><span class="sw-project-description">Kubernetes event collection</span></span>
+        </a>
+        
+        
+        </div>
+        
+        </div>
+        
+        <a class="dropdown-item sw-projects-more" href="/docs/#Agents">View all agents &amp; collectors <span aria-hidden="true">→</span></a>
+        
+      </div>
+    </div>
+    
+    
+    
+      
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+      
+    
+    
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+    
+    
+    <div class="sw-projects-group">
+      <p class="sw-projects-label">Operations &amp; tools</p>
+    
+      <div class="sw-projects-group-links">
+        <div class="sw-projects-columns">
+        
+        <div class="sw-projects-column">
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#SkyWalkingCLI">
+          <img src="/images/project/skywalking-cli.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking CLI</strong><span class="sw-project-description">Command-line operations</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#SkyWalkingMCP">
+          <img src="/images/project/skywalking.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking MCP</strong><span class="sw-project-description">Observability for AI assistants</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#KubernetesHelm">
+          <img src="/images/project/helm.svg" width="28" height="28" alt="">
+          <span><strong>Kubernetes Helm</strong><span class="sw-project-description">Deploy SkyWalking with Helm</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#SkyWalkingCloudonKubernetes">
+          <img src="/images/project/kubernetes.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking Cloud on Kubernetes</strong><span class="sw-project-description">Kubernetes operator</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#SkyWalkingEyes">
+          <img src="/images/project/skywalking-eyes.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking Eyes</strong><span class="sw-project-description">License checks and fixes</span></span>
+        </a>
+        
+        
+        </div>
+        
+        </div>
+        
+        <a class="dropdown-item sw-projects-more" href="/docs/#Operation">All operations projects <span aria-hidden="true">→</span></a>
+        
+      </div>
+    </div>
+    
+  </div>
+  <div class="sw-projects-footer">
+    <a class="dropdown-item sw-projects-all" href="/docs/">All projects <span aria-hidden="true">→</span></a>
+    <a class="dropdown-item sw-projects-downloads" href="/downloads/">Downloads <span aria-hidden="true">→</span></a>
+  </div>
+</div>
+
+                </div>
+            </li>
+            
+            
+            
+            
+            <li class="nav-item"><a class="nav-link" href="/blog">Blogs</a></li>
+            
+            
+            
+            
+            
+            <li class="nav-item" data-nav-promote="events" hidden><a class="nav-link" href="/events/">Release Posts</a></li>
+            
+            <li class="nav-item" data-nav-promote="events/calendar" hidden><a class="nav-link" href="/events/calendar/">Event Calendar</a></li>
+            
+            <li class="nav-item" data-nav-promote="users" hidden><a class="nav-link" href="/users">Users</a></li>
+            
+            <li class="nav-item" data-nav-promote="team" hidden><a class="nav-link" href="/team">Team</a></li>
+            
+            <li class="nav-item" data-nav-promote="zh" hidden><a class="nav-link" href="/zh/">中文博客</a></li>
+            
+            
+            <li class="nav-item dropdown" data-nav-more>
+                <button type="button" class="nav-link dropdown-toggle sw-more-toggle" id="more-menu-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">More</button>
+                <div class="dropdown-menu sw-more-menu" aria-labelledby="more-menu-toggle">
+                    
+                    <a class="dropdown-item" data-nav-overflow="events" href="/events/">Release Posts</a>
+                    
+                    <a class="dropdown-item" data-nav-overflow="events/calendar" href="/events/calendar/">Event Calendar</a>
+                    
+                    <a class="dropdown-item" data-nav-overflow="users" href="/users">Users</a>
+                    
+                    <a class="dropdown-item" data-nav-overflow="team" href="/team">Team</a>
+                    
+                    <a class="dropdown-item" data-nav-overflow="zh" href="/zh/">中文博客</a>
+                    
+                </div>
+            </li>
+            
+            
+            
+            
+            
+            
             
 			
         </ul>
     </div>
 
-    <div class="navbar-nav d-none d-lg-block search-input-box">
-        
-<div id="docsearch"></div>
+    <div class="sw-navbar-actions">
+        <button type="button" class="sw-kapa-search" aria-label="Search SkyWalking documentation and ask AI" aria-haspopup="dialog" title="Search and ask AI">
+  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="7.5"/><path d="m16 16 5 5"/></svg>
+  <span>Search</span>
+</button>
 
-
-            
-        
+        <div class="navbar-nav d-none d-lg-block search-input-box">
             
         
             
@@ -270,7 +1257,24 @@ The panes are independent: a healthy :12800 with broken :17128 is a real and rec
             </span>
             
         
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+            <a class="sw-nav-cta" href="/get-started/">Get started</a>
+            
+        
+            
+        
+        </div>
     </div>
+  </div>
 </nav>
 
     </header>
@@ -279,7 +1283,6 @@ The panes are independent: a healthy :12800 with broken :17128 is a real and rec
       <div class="td-main">
         <div class="row flex-xl-nowrap">
           <div class="col-12 col-md-3 col-xl-2 d-print-none scroll-bar td-sidebar">
-
 
 
 
@@ -327,17 +1330,17 @@ The panes are independent: a healthy :12800 with broken :17128 is a real and rec
                   
                     
                     
-                    <option ZgotmplZ value="v0.7.0">
+                    <option ZgotmplZ value="v1.1.0">
                     
-                      v0.7.0
+                      v1.1.0
                     
                     </option>
                   
                     
                     
-                    <option ZgotmplZ value="v0.6.0">
+                    <option ZgotmplZ value="v1.0.1">
                     
-                      v0.6.0
+                      v1.0.1
                     
                     </option>
                   
@@ -428,7 +1431,15 @@ The panes are independent: a healthy :12800 with broken :17128 is a real and rec
 
     <li>
         
-            <a href="/docs/skywalking-horizon-ui/latest/setup/audit">Audit Log File</a>
+            <a href="/docs/skywalking-horizon-ui/latest/setup/security">Security &amp; Hardening</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-horizon-ui/latest/setup/login-audit">Login Audit</a>
         
     </li>
 
@@ -514,6 +1525,30 @@ The panes are independent: a healthy :12800 with broken :17128 is a real and rec
 
     <li>
         
+            <a href="/docs/skywalking-horizon-ui/latest/operate/refreshing">Refreshing &amp; Time Range</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-horizon-ui/latest/operate/ai-assistant">AI Assistant</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-horizon-ui/latest/operate/mcp">MCP — connect your own agent</a>
+        
+    </li>
+
+    
+
+    <li>
+        
             <a href="/docs/skywalking-horizon-ui/latest/operate/service-map">Service Map &amp; Topology</a>
         
     </li>
@@ -562,6 +1597,30 @@ The panes are independent: a healthy :12800 with broken :17128 is a real and rec
 
     <li>
         
+            <a href="/docs/skywalking-horizon-ui/latest/operate/events">Events</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-horizon-ui/latest/operate/ai-agent-conversations">AI Agent Conversations</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-horizon-ui/latest/operate/genai-evaluation">GenAI Evaluation Records</a>
+        
+    </li>
+
+    
+
+    <li>
+        
             <a href="/docs/skywalking-horizon-ui/latest/operate/profiling">Profiling</a>
         
     </li>
@@ -571,6 +1630,22 @@ The panes are independent: a healthy :12800 with broken :17128 is a real and rec
     <li>
         
             <a href="/docs/skywalking-horizon-ui/latest/operate/inspect">Metrics Inspect</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-horizon-ui/latest/operate/trace-inspect">Trace Inspect</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-horizon-ui/latest/operate/log-inspect">Log Inspect</a>
         
     </li>
 
@@ -633,6 +1708,17 @@ The panes are independent: a healthy :12800 with broken :17128 is a real and rec
 
     <li>
         
+
+            
+            <a href="#">Overviews<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
             <a href="/docs/skywalking-horizon-ui/latest/dashboards/overview-services">Services Dashboard</a>
         
     </li>
@@ -649,7 +1735,14 @@ The panes are independent: a healthy :12800 with broken :17128 is a real and rec
 
     <li>
         
-            <a href="/docs/skywalking-horizon-ui/latest/dashboards/activemq">ActiveMQ</a>
+            <a href="/docs/skywalking-horizon-ui/latest/dashboards/overview-ai-agent">AI Agent Overview</a>
+        
+    </li>
+
+    
+
+</ul>
+
         
     </li>
 
@@ -657,7 +1750,18 @@ The panes are independent: a healthy :12800 with broken :17128 is a real and rec
 
     <li>
         
-            <a href="/docs/skywalking-horizon-ui/latest/dashboards/airflow">Airflow</a>
+
+            
+            <a href="#">Application<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-horizon-ui/latest/dashboards/general">General Service</a>
         
     </li>
 
@@ -665,7 +1769,14 @@ The panes are independent: a healthy :12800 with broken :17128 is a real and rec
 
     <li>
         
-            <a href="/docs/skywalking-horizon-ui/latest/dashboards/alipay_mini_program">Alipay Mini Program</a>
+            <a href="/docs/skywalking-horizon-ui/latest/dashboards/browser">Browser</a>
+        
+    </li>
+
+    
+
+</ul>
+
         
     </li>
 
@@ -673,7 +1784,18 @@ The panes are independent: a healthy :12800 with broken :17128 is a real and rec
 
     <li>
         
-            <a href="/docs/skywalking-horizon-ui/latest/dashboards/apisix">APISIX</a>
+
+            
+            <a href="#">OpenTelemetry<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-horizon-ui/latest/dashboards/otlp_general">OTLP Service</a>
         
     </li>
 
@@ -681,10 +1803,70 @@ The panes are independent: a healthy :12800 with broken :17128 is a real and rec
 
     <li>
         
-            <a href="/docs/skywalking-horizon-ui/latest/dashboards/aws_gateway">AWS API Gateway</a>
+            <a href="/docs/skywalking-horizon-ui/latest/dashboards/otlp_virtual_database">OTLP Virtual Database</a>
         
     </li>
 
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-horizon-ui/latest/dashboards/otlp_virtual_mq">OTLP Virtual MQ</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-horizon-ui/latest/dashboards/otlp_virtual_cache">OTLP Virtual Cache</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
+            <a href="#">AI Agents<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-horizon-ui/latest/dashboards/ai_agent">AI Agents</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
+            <a href="#">AWS<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
     
 
     <li>
@@ -705,15 +1887,22 @@ The panes are independent: a healthy :12800 with broken :17128 is a real and rec
 
     <li>
         
+            <a href="/docs/skywalking-horizon-ui/latest/dashboards/aws_gateway">AWS API Gateway</a>
+        
+    </li>
+
+    
+
+    <li>
+        
             <a href="/docs/skywalking-horizon-ui/latest/dashboards/aws_s3">AWS S3</a>
         
     </li>
 
     
 
-    <li>
-        
-            <a href="/docs/skywalking-horizon-ui/latest/dashboards/banyandb">BanyanDB</a>
+</ul>
+
         
     </li>
 
@@ -721,26 +1910,13 @@ The panes are independent: a healthy :12800 with broken :17128 is a real and rec
 
     <li>
         
-            <a href="/docs/skywalking-horizon-ui/latest/dashboards/bookkeeper">BookKeeper</a>
-        
-    </li>
 
-    
+            
+            <a href="#">Databases<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
 
-    <li>
-        
-            <a href="/docs/skywalking-horizon-ui/latest/dashboards/browser">Browser</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/skywalking-horizon-ui/latest/dashboards/cilium_service">Cilium Service</a>
-        
-    </li>
-
+            
+<ul class="sidebar-submenu">
     
 
     <li>
@@ -754,118 +1930,6 @@ The panes are independent: a healthy :12800 with broken :17128 is a real and rec
     <li>
         
             <a href="/docs/skywalking-horizon-ui/latest/dashboards/elasticsearch">Elasticsearch</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/skywalking-horizon-ui/latest/dashboards/envoy_ai_gateway">Envoy AI Gateway</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/skywalking-horizon-ui/latest/dashboards/flink">Flink</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/skywalking-horizon-ui/latest/dashboards/general">General Service</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/skywalking-horizon-ui/latest/dashboards/so11y_go_agent">Go Agent (Self-Observability)</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/skywalking-horizon-ui/latest/dashboards/ios">iOS</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/skywalking-horizon-ui/latest/dashboards/mesh_cp">Istio Control Plane</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/skywalking-horizon-ui/latest/dashboards/mesh_dp">Istio Data Plane</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/skywalking-horizon-ui/latest/dashboards/mesh">Istio Managed Services</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/skywalking-horizon-ui/latest/dashboards/so11y_java_agent">Java Agent (Self-Observability)</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/skywalking-horizon-ui/latest/dashboards/kafka">Kafka</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/skywalking-horizon-ui/latest/dashboards/kong">Kong</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/skywalking-horizon-ui/latest/dashboards/k8s">Kubernetes</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/skywalking-horizon-ui/latest/dashboards/k8s_service">Kubernetes Services</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/skywalking-horizon-ui/latest/dashboards/os_linux">Linux</a>
         
     </li>
 
@@ -889,15 +1953,72 @@ The panes are independent: a healthy :12800 with broken :17128 is a real and rec
 
     <li>
         
+            <a href="/docs/skywalking-horizon-ui/latest/dashboards/postgresql">PostgreSQL</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-horizon-ui/latest/dashboards/redis">Redis</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
+            <a href="#">Gateways<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-horizon-ui/latest/dashboards/apisix">APISIX</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-horizon-ui/latest/dashboards/envoy_ai_gateway">Agent Router</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-horizon-ui/latest/dashboards/kong">Kong</a>
+        
+    </li>
+
+    
+
+    <li>
+        
             <a href="/docs/skywalking-horizon-ui/latest/dashboards/nginx">Nginx</a>
         
     </li>
 
     
 
-    <li>
-        
-            <a href="/docs/skywalking-horizon-ui/latest/dashboards/so11y_oap">OAP (Self-Observability)</a>
+</ul>
+
         
     </li>
 
@@ -905,7 +2026,126 @@ The panes are independent: a healthy :12800 with broken :17128 is a real and rec
 
     <li>
         
-            <a href="/docs/skywalking-horizon-ui/latest/dashboards/postgresql">PostgreSQL</a>
+
+            
+            <a href="#">Istio<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-horizon-ui/latest/dashboards/mesh">Istio Managed Services</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-horizon-ui/latest/dashboards/mesh_cp">Istio Control Plane</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-horizon-ui/latest/dashboards/mesh_dp">Istio Data Plane</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
+            <a href="#">Kubernetes<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-horizon-ui/latest/dashboards/cilium_service">Cilium Service</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-horizon-ui/latest/dashboards/k8s">Kubernetes</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-horizon-ui/latest/dashboards/k8s_service">Kubernetes Services</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
+            <a href="#">MQ<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-horizon-ui/latest/dashboards/activemq">ActiveMQ</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-horizon-ui/latest/dashboards/bookkeeper">BookKeeper</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-horizon-ui/latest/dashboards/flink">Flink</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-horizon-ui/latest/dashboards/kafka">Kafka</a>
         
     </li>
 
@@ -929,7 +2169,14 @@ The panes are independent: a healthy :12800 with broken :17128 is a real and rec
 
     <li>
         
-            <a href="/docs/skywalking-horizon-ui/latest/dashboards/redis">Redis</a>
+            <a href="/docs/skywalking-horizon-ui/latest/dashboards/rocketmq">RocketMQ</a>
+        
+    </li>
+
+    
+
+</ul>
+
         
     </li>
 
@@ -937,7 +2184,118 @@ The panes are independent: a healthy :12800 with broken :17128 is a real and rec
 
     <li>
         
-            <a href="/docs/skywalking-horizon-ui/latest/dashboards/rocketmq">RocketMQ</a>
+
+            
+            <a href="#">Mobile<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-horizon-ui/latest/dashboards/alipay_mini_program">Alipay Mini Program</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-horizon-ui/latest/dashboards/ios">iOS</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-horizon-ui/latest/dashboards/wechat_mini_program">WeChat Mini Program</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
+            <a href="#">OS<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-horizon-ui/latest/dashboards/os_linux">Linux</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-horizon-ui/latest/dashboards/os_windows">Windows</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
+            <a href="#">Self-Observability<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-horizon-ui/latest/dashboards/banyandb">BanyanDB</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-horizon-ui/latest/dashboards/so11y_go_agent">Go Agent (Self-Observability)</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-horizon-ui/latest/dashboards/so11y_java_agent">Java Agent (Self-Observability)</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-horizon-ui/latest/dashboards/so11y_oap">OAP (Self-Observability)</a>
         
     </li>
 
@@ -949,6 +2307,24 @@ The panes are independent: a healthy :12800 with broken :17128 is a real and rec
         
     </li>
 
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
+            <a href="#">Virtual targets<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
     
 
     <li>
@@ -983,9 +2359,8 @@ The panes are independent: a healthy :12800 with broken :17128 is a real and rec
 
     
 
-    <li>
-        
-            <a href="/docs/skywalking-horizon-ui/latest/dashboards/wechat_mini_program">WeChat Mini Program</a>
+</ul>
+
         
     </li>
 
@@ -993,7 +2368,25 @@ The panes are independent: a healthy :12800 with broken :17128 is a real and rec
 
     <li>
         
-            <a href="/docs/skywalking-horizon-ui/latest/dashboards/os_windows">Windows</a>
+
+            
+            <a href="#">Workflow Scheduler<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-horizon-ui/latest/dashboards/airflow">Airflow</a>
+        
+    </li>
+
+    
+
+</ul>
+
         
     </li>
 
@@ -1048,14 +2441,6 @@ The panes are independent: a healthy :12800 with broken :17128 is a real and rec
 
     <li>
         
-            <a href="/docs/skywalking-horizon-ui/latest/access-control/audit-log">Audit Log</a>
-        
-    </li>
-
-    
-
-    <li>
-        
             <a href="/docs/skywalking-horizon-ui/latest/access-control/admin-pages">Admin Pages</a>
         
     </li>
@@ -1103,6 +2488,14 @@ The panes are independent: a healthy :12800 with broken :17128 is a real and rec
 
     <li>
         
+            <a href="/docs/skywalking-horizon-ui/latest/customization/alarm-pages">Alarm Pages</a>
+        
+    </li>
+
+    
+
+    <li>
+        
             <a href="/docs/skywalking-horizon-ui/latest/customization/adding-a-new-layer">Add a Layer</a>
         
     </li>
@@ -1112,6 +2505,22 @@ The panes are independent: a healthy :12800 with broken :17128 is a real and rec
     <li>
         
             <a href="/docs/skywalking-horizon-ui/latest/customization/i18n">Languages and Translations</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-horizon-ui/latest/customization/global-defaults">Themes and Global Defaults</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-horizon-ui/latest/customization/invalid-templates">Invalid Stored Templates</a>
         
     </li>
 
@@ -1169,6 +2578,101 @@ The panes are independent: a healthy :12800 with broken :17128 is a real and rec
         
     </li>
     
+    <li>
+        
+            
+            <a href="#">Release Notes<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-horizon-ui/latest/changelog/1.1.0">1.1.0</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-horizon-ui/latest/changelog/1.0.1">1.0.1</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-horizon-ui/latest/changelog/1.0.0">1.0.0</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-horizon-ui/latest/changelog/0.7.0">0.7.0</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-horizon-ui/latest/changelog/0.6.0">0.6.0</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-horizon-ui/latest/changelog/0.5.0">0.5.0</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-horizon-ui/latest/changelog/0.4.0">0.4.0</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-horizon-ui/latest/changelog/0.3.0">0.3.0</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-horizon-ui/latest/changelog/0.2.0">0.2.0</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-horizon-ui/latest/changelog/0.1.0">0.1.0</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+    
 </ul>
 <script src="/js/sidebar-menu.js"></script>
 <script>
@@ -1191,8 +2695,23 @@ The panes are independent: a healthy :12800 with broken :17128 is a real and rec
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 9fc54aa</div>
+                  <div class="commit-id">Commit Id: 063434e</div>
                 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1238,8 +2757,9 @@ The panes are independent: a healthy :12800 with broken :17128 is a real and rec
               
 <div class="td-content">
 	<h1 id="cluster-status-check-sequence">Cluster Status Check Sequence</h1>
-<p>The Cluster Status page (<code>/operate/cluster</code>, sidebar <strong>Operate → Cluster</strong>) is the operator&rsquo;s single pane for &ldquo;is the OAP backend healthy and configured correctly?&rdquo; It runs <strong>three independent checks in parallel</strong> — the Query and Admin OAP ports plus a Zipkin/OTLP trace-source probe — they do not block each other, and the page surfaces each pane&rsquo;s result independently.</p>
-<p>The panes are independent: a healthy <code>:12800</code> with broken <code>:17128</code> is a real and recoverable state (forgot to expose the admin port behind a Kubernetes Service), and Horizon makes that diagnosis obvious. The Zipkin/OTLP pane is informational for the trace menu — a red dot there is not a cluster-wide outage.</p>
+<p>The Cluster Status page (<code>/operate/cluster</code>, sidebar <strong>Operate → Cluster</strong>) is the operator&rsquo;s single pane for &ldquo;is the OAP backend healthy and configured correctly?&rdquo; It runs its checks <strong>in parallel</strong> — the Query and Admin OAP ports, plus one probe per trace API (the Zipkin endpoint and each TraceQL datasource) — they do not block each other, and the page surfaces each pane&rsquo;s result independently.</p>
+<p>The panes are independent: a healthy <code>:12800</code> with broken <code>:17128</code> is a real and recoverable state (forgot to expose the admin port behind a Kubernetes Service), and Horizon makes that diagnosis obvious. The Trace APIs pane is informational for the trace rows it feeds — a red dot there is not a cluster-wide outage.</p>
+<p>The page header carries a single <strong>refresh both</strong> button that re-runs every check — use it after fixing a network rule or an OAP selector instead of waiting for the next poll. A trace API that answered is re-probed at most every five minutes, so a green row may be up to that old; one that FAILED is re-probed within seconds, so a recovery shows up promptly.</p>
 <h2 id="pane-a--query--graphql-port-12800">Pane A — Query / GraphQL port (<code>:12800</code>)</h2>
 <p><strong>Single GraphQL call</strong> fired every 30 seconds:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-graphql" data-lang="graphql"><span style="display:flex;"><span><span style="color:#cf222e">query</span><span style="color:#fff"> </span><span style="color:#1f2328">{</span><span style="color:#fff">
@@ -1296,56 +2816,147 @@ The panes are independent: a healthy :12800 with broken :17128 is a real and rec
 <li>Refetch interval: 30 s</li>
 </ul>
 <h2 id="pane-b--admin-host-17128">Pane B — Admin host (<code>:17128</code>)</h2>
-<p><strong>Single admin REST call</strong> fired every 60 seconds:</p>
+<p><strong>Per-feature reachability probes.</strong> Horizon checks each admin feature by firing a safe GET at the <strong>real REST path that feature calls</strong>, and colors the row by whether the path responds. Health is the live probe, not config-presence: a build that serves the path reads as reachable even if its config dump looks unfamiliar, and a path that 404s reads as unreachable even when the module&rsquo;s selector appears in the OAP config.</p>
+<p>Every round starts with the admin host itself:</p>
 <pre tabindex="0"><code>GET &lt;adminUrl&gt;/debugging/config/dump
-</code></pre><p>OAP returns a flat key/value map. Each required module is reported as enabled when <strong>any</strong> key with that module&rsquo;s prefix appears in the dump.</p>
-<h3 id="what-you-see-per-refresh">What you see (per refresh)</h3>
-<p>If the admin host is unreachable, every module shows off and the whole pane goes red. If it is reachable, each module shows enabled or disabled independently based on whether its keys appear in the config dump:</p>
-<ul>
-<li><strong><code>admin-server</code></strong> — when off, the admin host responded but does not expose the admin selector. The dump endpoint is itself served by admin-server, so in practice this means a custom OAP build. When admin-server is off the dump is empty, so the other three modules all show off as well — one root cause, not three stacked warnings.</li>
-<li><strong><code>receiver-runtime-rule</code></strong> — when off, DSL Management, alarm rules, and the cluster rule matrix are disabled. Yellow badge.</li>
-<li><strong><code>dsl-debugging</code></strong> — when off, the Live Debugger is disabled. Yellow badge.</li>
-<li><strong><code>inspect</code></strong> — when off, the Inspect page is disabled. Yellow badge.</li>
-</ul>
-<h3 id="what-the-pane-shows-1">What the pane shows</h3>
+</code></pre><p>If that call fails, the pane shows a red <strong>Admin host unreachable</strong> block with the error and the exact URL tried, and every feature row reads unreachable — one root cause, not five stacked failures. Fix the network / port exposure / <code>SW_ADMIN_SERVER=default</code> first; individual selectors are irrelevant until the host answers.</p>
+<p>When the host answers, each feature is probed on its own path and gets its own row:</p>
 <table>
   <thead>
       <tr>
-          <th>Module</th>
-          <th>Hint shown when off</th>
+          <th>Feature</th>
+          <th>Probe path</th>
+          <th>Gates</th>
       </tr>
   </thead>
   <tbody>
       <tr>
           <td><code>admin-server</code></td>
-          <td>&ldquo;Confirm <code>SW_ADMIN_SERVER=default</code> is set on OAP and port 17128 is exposed.&rdquo;</td>
+          <td><code>/debugging/config/dump</code></td>
+          <td>Everything on the admin port — its probe is the config-dump call itself.</td>
       </tr>
       <tr>
           <td><code>receiver-runtime-rule</code></td>
-          <td>&ldquo;Set <code>SW_RECEIVER_RUNTIME_RULE=default</code> on OAP to enable DSL Management.&rdquo;</td>
+          <td><code>/runtime/rule/list</code></td>
+          <td>DSL Management (catalog, editor save/load, OAL catalog), the cluster rule matrix, the Live Debugger rule picker, Inspect source attribution.</td>
       </tr>
       <tr>
           <td><code>dsl-debugging</code></td>
-          <td>&ldquo;Set <code>SW_DSL_DEBUGGING=default</code> on OAP to enable the Live Debugger.&rdquo;</td>
+          <td><code>/dsl-debugging/status</code></td>
+          <td>The Live Debugger (MAL / LAL / OAL session start / poll / stop).</td>
       </tr>
       <tr>
           <td><code>inspect</code></td>
-          <td>&ldquo;Set <code>SW_INSPECT=default</code> on OAP to enable the Inspect page.&rdquo;</td>
+          <td><code>/inspect/metrics</code></td>
+          <td>The Inspect pages.</td>
+      </tr>
+      <tr>
+          <td><code>ui-management</code></td>
+          <td><code>/ui-management/templates</code></td>
+          <td>Dashboard templates — the layer / overview / alert / 3D template store the config surface reads and writes.</td>
       </tr>
   </tbody>
 </table>
+<h3 id="row-states">Row states</h3>
+<ul>
+<li><strong>reachable</strong> (green) — the GET got an HTTP answer other than 404 or a 5xx. An auth challenge (401) or a bad-request answer (400) still proves the route is served, so it counts as reachable.</li>
+<li><strong>unreachable</strong> (red) — the path returned 404 (the route isn&rsquo;t registered: selector off, renamed, or absent in this OAP build), returned a 5xx, or failed at the network level. The pages the feature gates show a warning banner naming the env-var to set.</li>
+<li><strong>readonly · bundled</strong> (yellow) — the <code>ui-management</code> row only, when Horizon runs with templates in readonly mode. Horizon serves its bundled dashboard templates and never calls the template store, so the path is not probed. This is informational, not a failure — but it does keep the pane badge at &ldquo;4/5 reachable&rdquo; instead of &ldquo;all reachable&rdquo;.</li>
+</ul>
+<p>The pane badge summarizes the rows: <strong>all reachable</strong>, <strong>N/M reachable</strong> when some rows are not live-reachable, or <strong>unreachable</strong> when the admin host itself is down.</p>
+<h3 id="the-selector-detected-footnote">The &ldquo;selector detected&rdquo; footnote</h3>
+<p>Under each row&rsquo;s state chip there is a footnote — <strong>selector detected</strong> or <strong>selector not detected</strong> — reporting whether any key with that module&rsquo;s prefix appears in OAP&rsquo;s config dump, i.e. whether the running release advertises that selector. This is the old config-presence check, kept as an informational hint only: a custom build can be perfectly reachable with no selector detected, or advertise a selector whose endpoint still 404s. The reachable/unreachable chip is the verdict.</p>
+<h3 id="timestamps-and-re-checking">Timestamps and re-checking</h3>
+<p>The pane header and each row carry a <strong>checked … ago</strong> stamp — when the displayed probe round actually ran. It can lag the page&rsquo;s own refresh slightly, because concurrent viewers share one probe round for up to 30 seconds. <strong>refresh both</strong> forces a fresh probe round immediately.</p>
 <h3 id="poll-cadence-1">Poll cadence</h3>
 <ul>
-<li>Stale-time: 30 s</li>
 <li>Refetch interval: 60 s</li>
+<li>Probe rounds are shared across viewers for up to 30 s; <strong>refresh both</strong> bypasses the sharing</li>
 </ul>
-<h2 id="pane-c--zipkin--otlp-traces">Pane C — Zipkin / OTLP traces</h2>
-<p>A third pane probes OAP&rsquo;s Zipkin v2 REST endpoint and reports reachability. It feeds only the Zipkin/OTLP trace menu — a red dot here is <strong>not</strong> a cluster-wide outage; the rest of the UI keeps working and only Zipkin/OTLP trace views are affected.</p>
+<h2 id="pane-b2--dashboard-templates">Pane B2 — Dashboard templates</h2>
+<p>Pane B says whether the <code>ui-management</code> <strong>endpoint answers</strong>. This pane says what actually came back from it: how many of your templates Horizon is serving, when it last read them, and — if a read failed — what the failure said.</p>
+<ul>
+<li><strong>The counts</strong> — how many layer templates, overviews, alert pages and translation overlays are being served <strong>from OAP</strong>. These are the templates you published, so the figures are checkable against what you pushed.</li>
+<li><strong>Loaded / next in</strong> — how long ago Horizon last reached the store, and how many seconds until it looks again, so it is clear the cycle is still running.</li>
+<li><strong>Last error</strong> — the message from the most recent failed read, kept only while it is still the current trouble and cleared as soon as a read succeeds. &ldquo;Unreachable&rdquo; alone covers a 404 from a module nobody enabled, a 401 from wrong credentials and a timeout from a slow admin port; the message tells you which.</li>
+</ul>
+<p>The badge distinguishes two situations that look alike and are not:</p>
+<ul>
+<li><strong>stale · store unreachable</strong> — the store cannot be read right now, but Horizon is still rendering the templates from its last successful read. Your dashboards are up; they are simply not current. A warning, not an outage.</li>
+<li><strong>unreachable</strong> — the store cannot be read and Horizon has never read it, so there is nothing of yours to show and the template-backed pages stay empty.</li>
+<li><strong>readonly · bundled</strong> — <code>templates.mode: readonly</code>; the store is deliberately never called, so nothing here is a fault.</li>
+</ul>
+<p>See <a href="../../customization/layer-templates">Layer templates</a> for what renders in each case and why the bundled templates are never substituted.</p>
+<h2 id="pane-c--trace-apis">Pane C — Trace APIs</h2>
+<p>A third pane probes every endpoint behind a layer&rsquo;s trace rows and lists them in one table — API, source, state, endpoint:</p>
+<table>
+  <thead>
+      <tr>
+          <th>API</th>
+          <th>Source</th>
+          <th>Endpoint</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>Zipkin v2 REST</strong></td>
+          <td>Zipkin spans</td>
+          <td><code>oap.zipkinUrl</code> — the Zipkin / OTel trace rows.</td>
+      </tr>
+      <tr>
+          <td><strong>TraceQL</strong></td>
+          <td>SkyWalking-native spans</td>
+          <td><code>oap.traceql.url</code> + <code>nativePath</code> — the TraceQL rows over native spans.</td>
+      </tr>
+      <tr>
+          <td><strong>TraceQL</strong></td>
+          <td>Zipkin spans</td>
+          <td><code>oap.traceql.url</code> + <code>zipkinPath</code> — the TraceQL rows over Zipkin spans.</td>
+      </tr>
+      <tr>
+          <td><strong>TraceQL</strong></td>
+          <td>Natively stored OTLP spans</td>
+          <td><code>oap.traceql.url</code> + <code>otlpPath</code> — the TraceQL rows over the OTLP spans OAP kept as they arrived.</td>
+      </tr>
+  </tbody>
+</table>
+<p>A TraceQL row also prints the Tempo API version the datasource reported.</p>
+<p><strong>Native traces are not in this pane.</strong> They are answered by the GraphQL port, so Pane A already reports on them.</p>
+<p>Each row&rsquo;s state reads one of:</p>
+<table>
+  <thead>
+      <tr>
+          <th>State</th>
+          <th>Meaning</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>reachable</strong></td>
+          <td>The endpoint answered a build-info probe. That is the connection, not the search — a reachable endpoint can still answer a query with nothing, or refuse one.</td>
+      </tr>
+      <tr>
+          <td><strong>unreachable</strong></td>
+          <td>A URL is configured but nothing answered. The error and the exact URL tried are shown below the table, with the OAP settings to check.</td>
+      </tr>
+      <tr>
+          <td><strong>not configured</strong></td>
+          <td>No URL is set for that TraceQL datasource in <code>oap.traceql</code>.</td>
+      </tr>
+      <tr>
+          <td><strong>unknown</strong></td>
+          <td>The probe could not be read — usually a role without <code>traces:read</code>.</td>
+      </tr>
+  </tbody>
+</table>
+<p>The pane badge reads <strong>degraded</strong> when any configured endpoint is failing, and a failure is scoped to the rows that endpoint feeds: the rest of the UI, including the other trace rows, keeps working. See <a href="../../setup/oap#traceql-trace-stores-oaptraceql">OAP Connection → TraceQL trace stores</a> for the settings.</p>
 <h2 id="reading-the-page-during-an-incident">Reading the page during an incident</h2>
 <p>The triage flow during &ldquo;Horizon shows banners I don&rsquo;t understand&rdquo;:</p>
 <ol>
 <li><strong>Is the Query pane green?</strong> If not, OAP itself is down / unreachable — fix OAP first, the rest is downstream.</li>
-<li><strong>Is the Admin pane green?</strong> If not, expose port 17128 and / or turn on the four selectors — see the per-module hints.</li>
+<li><strong>Does the Admin pane say &ldquo;Admin host unreachable&rdquo;?</strong> The admin port isn&rsquo;t answering at all — expose port 17128 and confirm <code>SW_ADMIN_SERVER=default</code>. Don&rsquo;t chase individual selectors yet.</li>
+<li><strong>Admin host up but a row reads unreachable?</strong> That one feature&rsquo;s endpoint isn&rsquo;t served — usually its selector is off. The row&rsquo;s Gates column says what breaks and which env-var enables it (e.g. <code>SW_INSPECT=default</code>); set it on OAP, restart, then hit <strong>refresh both</strong>.</li>
+<li><strong>A trace row on a layer says its source is not answering?</strong> Read Pane C: it says whether that endpoint is unconfigured (no URL) or unreachable (URL set, nothing answering), and prints the URL it tried.</li>
 <li><strong>Is the health score <code>&gt; 0</code>?</strong> OAP is up but degraded — pull <code>details</code> from <code>checkHealth</code> (visible in the Query pane) and triage on the OAP side.</li>
 </ol>
 
@@ -1391,12 +3002,14 @@ The panes are independent: a healthy :12800 with broken :17128 is a real and rec
         </li>
         <li><a href="#pane-b--admin-host-17128">Pane B — Admin host (<code>:17128</code>)</a>
           <ul>
-            <li><a href="#what-you-see-per-refresh">What you see (per refresh)</a></li>
-            <li><a href="#what-the-pane-shows-1">What the pane shows</a></li>
+            <li><a href="#row-states">Row states</a></li>
+            <li><a href="#the-selector-detected-footnote">The &ldquo;selector detected&rdquo; footnote</a></li>
+            <li><a href="#timestamps-and-re-checking">Timestamps and re-checking</a></li>
             <li><a href="#poll-cadence-1">Poll cadence</a></li>
           </ul>
         </li>
-        <li><a href="#pane-c--zipkin--otlp-traces">Pane C — Zipkin / OTLP traces</a></li>
+        <li><a href="#pane-b2--dashboard-templates">Pane B2 — Dashboard templates</a></li>
+        <li><a href="#pane-c--trace-apis">Pane C — Trace APIs</a></li>
         <li><a href="#reading-the-page-during-an-incident">Reading the page during an incident</a></li>
       </ul>
     </li>
@@ -1493,6 +3106,9 @@ The panes are independent: a healthy :12800 with broken :17128 is a real and rec
         
         
     </div>
+    <p class="footer-contribute">
+      <a id="contribute" href="https://github.com/apache/skywalking-website" target="_blank" rel="noopener">Help improve this website <span aria-hidden="true">↗</span></a>
+    </p>
     <div class="">
 
         <small class="text-color">&copy; 2017 - 2026 The Apache Software Foundation All Rights Reserved</small>
@@ -11207,6 +12823,1466 @@ The panes are independent: a healthy :12800 with broken :17128 is a real and rec
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
 <div id="popup">
     <div class="mask">
@@ -11214,85 +14290,187 @@ The panes are independent: a healthy :12800 with broken :17128 is a real and rec
     </div>
 </div>
 
-    <div class="sidebar-mask"></div>
-<div class="sidebar">
-    <nav class="nav-links">
+    
+
+
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+<div class="sidebar-mask" aria-hidden="true"></div>
+<div class="sidebar" id="site-navigation-drawer" role="dialog" aria-modal="true" aria-label="Navigation" aria-hidden="true" tabindex="-1">
+  <div class="sidebar-header">
+    <span>Menu</span>
+    <button type="button" class="sidebar-close" aria-label="Close navigation">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+    </button>
+  </div>
+  <nav class="nav-links" aria-label="Site pages">
+    <ul class="sidebar-primary">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/">Home</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link active" href="/docs" aria-current="page">Projects</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/blog">Blogs</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/events/">Release Posts</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/events/calendar/">Event Calendar</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/users">Users</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/team">Team</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/zh/">中文博客</a></li>
+      
+      
+    </ul>
+    <ul class="sidebar-secondary">
+      <li><a class="nav-link" href="/downloads/">Downloads</a></li>
+      
+      <li><a class="nav-link" href="/get-started/">Get started</a></li>
+      
+    </ul>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <details class="sidebar-resources">
+      <summary><span>Apache</span><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 4 4 4-4 4"/></svg></summary>
+      <ul class="sidebar-resource-links">
         
-        <div class="nav-item"><a href="/docs/" class="nav-link router-link-active">Documentation</a></div>
-        <div class="nav-item"><a href="/events/" class="nav-link">Events</a></div>
-        <div class="nav-item"><a href="/blog/" class="nav-link">Blog</a></div>
-        <div class="nav-item"><a href="/downloads/" class="nav-link">Downloads</a></div>
-        <div class="nav-item"><a href="/team/" class="nav-link">Team</a></div>
-        <div class="nav-item"><a href="/users/" class="nav-link">Users</a></div>
-        <div class="nav-item"><a href="/zh/" class="nav-link">中文博客</a></div>
-        <div class="nav-item">
-            <div class="dropdown-wrapper open">
-                <a class="dropdown-title">
-                    <span>Links</span>
-                    <span class="arrow down"></span>
-                </a>
-                <ul class="nav-dropdown">
-                    <li class="dropdown-item">
-                        <a href="http://www.apache.org/" target="_blank"
-                           rel="noopener noreferrer" class="nav-link external">
-                            Apache Software Foundation
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="https://github.com/apache/skywalking/issues"
-                           target="_blank" rel="noopener noreferrer"
-                           class="nav-link external">
-                            GitHub Issue Tracker
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="https://lists.apache.org/list.html?dev@skywalking.apache.org" target="_blank"
-                           rel="noopener noreferrer" class="nav-link external">
-                            Dev Mailing List
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="http://www.apache.org/licenses/" target="_blank"
-                           rel="noopener noreferrer" class="nav-link external">
-                            License
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="http://www.apache.org/events/current-event"
-                           target="_blank" rel="noopener noreferrer"
-                           class="nav-link external">
-                            Apache Events
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="http://www.apache.org/security/" target="_blank"
-                           rel="noopener noreferrer" class="nav-link external">
-                            Security
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="http://www.apache.org/foundation/sponsorship.html"
-                           target="_blank" rel="noopener noreferrer"
-                           class="nav-link external">
-                            Sponsorship and Donate
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="http://www.apache.org/foundation/thanks.html"
-                           target="_blank" rel="noopener noreferrer"
-                           class="nav-link external">
-                            Thanks
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+        <li><a class="nav-link" href="http://www.apache.org/" target="_blank" rel="noopener noreferrer"><span>Apache Software Foundation</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="https://github.com/apache/skywalking/issues" target="_blank" rel="noopener noreferrer"><span>GitHub Issue Tracker</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="https://github.com/apache/skywalking/discussions" target="_blank" rel="noopener noreferrer"><span>Discussion</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="https://lists.apache.org/list.html?dev@skywalking.apache.org" target="_blank" rel="noopener noreferrer"><span>Dev Mailing List</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="https://cwiki.apache.org/confluence/display/SKYWALKING/Home" target="_blank" rel="noopener noreferrer"><span>WIKI</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="http://www.apache.org/licenses/" target="_blank" rel="noopener noreferrer"><span>License</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="http://www.apache.org/events/current-event" target="_blank" rel="noopener noreferrer"><span>Apache Events</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="http://www.apache.org/security/" target="_blank" rel="noopener noreferrer"><span>Security</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="http://www.apache.org/foundation/sponsorship.html" target="_blank" rel="noopener noreferrer"><span>Sponsor and Donate</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="http://www.apache.org/foundation/thanks.html" target="_blank" rel="noopener noreferrer"><span>Thanks</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="https://apache.org/foundation/policies/privacy.html" target="_blank" rel="noopener noreferrer"><span>Privacy</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+      </ul>
+    </details>
+    
+    
+  </nav>
 </div>
 
     <script src="/js/bootstrap.bundle.min.js"></script>
 
-<script src="/js/docsearch-3.9.0.js"></script>
 
 
 
@@ -11302,7 +14480,8 @@ The panes are independent: a healthy :12800 with broken :17128 is a real and rec
 
 
 
-<script src="/js/main.min.9be14eed0a0e24711261c334305209aa2e5ae3fb624f6a1731e064d5ffb11f3d.js" integrity="sha256-m&#43;FO7QoOJHESYcM0MFIJqi5a4/tiT2oXMeBk1f&#43;xHz0=" crossorigin="anonymous"></script>
+
+<script src="/js/main.min.a351a9c3ee226044b9050a859fb2f5a6019a548cfe22e3ca281fb08443c28976.js" integrity="sha256-o1Gpw&#43;4iYES5BQqFn7L1pgGaVIz&#43;IuPKKB&#43;whEPCiXY=" crossorigin="anonymous"></script>
 
 
 <script src="/js/highlight.min.js"></script>
@@ -11335,14 +14514,16 @@ data-project-name="SkyWalking"
 data-project-color="#2B74B8"
 data-button-text="Ask AI"
 data-search-mode-enabled="true"
+data-search-mode-default="false"
+data-modal-override-open-selector-search=".sw-kapa-search"
 data-modal-open-on-command-k="true"
+data-modal-command-k-search-mode-default="true"
+data-modal-z-index="10000"
 data-modal-disclaimer="The AI supports multiple languages, but it may not be accessible in China, a proxy is required."
 data-project-logo="/images/widget-logo.jpg"
 data-modal-example-questions="What is Apache SkyWalking?,How to deploy SkyWalking?,How to inject agents non-intrusively?,How to setup trace sampling?"
-data-button-position-top=""
 data-button-position-right="20px"
 data-button-position-bottom="200px"
-data-button-position-left=""
 data-consent-required="true"  
 data-user-analytics-cookie-enabled="true"  
 data-consent-screen-title="Help us improve our AI assistant"  
@@ -11350,8 +14531,28 @@ data-consent-screen-disclaimer="By clicking 'Allow tracking', you consent to ano
 data-consent-screen-accept-button-text="Allow tracking"  
 data-consent-screen-reject-button-text="No, thanks"
 ></script>
+<script>
+  (function () {
+    var SEL = 'details.topic-filter';
 
+    function closeAll(except) {
+      document.querySelectorAll(SEL).forEach(function (d) {
+        if (d !== except && d.open) { d.open = false; }
+      });
+    }
 
+    
+    
+    document.addEventListener('click', function (e) {
+      var target = e.target instanceof Element ? e.target.closest(SEL) : null;
+      closeAll(target);
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' || e.key === 'Esc') { closeAll(null); }
+    });
+  })();
+</script>
 
 
     <script>

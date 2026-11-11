@@ -24,7 +24,7 @@
 <title>Use Grafana As The UI | Apache SkyWalking</title><meta property="og:url" content="https://skywalking.apache.org/docs/main/latest/en/setup/backend/ui-grafana/">
   <meta property="og:site_name" content="Apache SkyWalking">
   <meta property="og:title" content="Use Grafana As The UI">
-  <meta property="og:description" content="Use Grafana As The UI SkyWalking provides PromQL Service and LogQL Service. You can choose Grafana as the SkyWalking UI. About the installation and how to use please refer to the official document.
+  <meta property="og:description" content="Use Grafana As The UI SkyWalking provides PromQL Service, LogQL Service and TraceQL Service. You can choose Grafana as the SkyWalking UI. About the installation and how to use please refer to the official document.
 Notice &lt;1&gt;, Gafana is AGPL-3.0 license, which is very different from Apache 2.0. Please follow AGPL 3.0 license requirements.
 Notice &lt;2&gt;, SkyWalking always uses its native UI as first class. All visualization features are only available on native UI. Grafana UI is an extension on our support of PromQL APIs. We don’t maintain or promise the complete Grafana UI dashboard setup.">
   <meta property="og:locale" content="en">
@@ -32,31 +32,29 @@ Notice &lt;2&gt;, SkyWalking always uses its native UI as first class. All visua
     <meta property="article:section" content="docs">
 
   <meta itemprop="name" content="Use Grafana As The UI">
-  <meta itemprop="description" content="Use Grafana As The UI SkyWalking provides PromQL Service and LogQL Service. You can choose Grafana as the SkyWalking UI. About the installation and how to use please refer to the official document.
+  <meta itemprop="description" content="Use Grafana As The UI SkyWalking provides PromQL Service, LogQL Service and TraceQL Service. You can choose Grafana as the SkyWalking UI. About the installation and how to use please refer to the official document.
 Notice &lt;1&gt;, Gafana is AGPL-3.0 license, which is very different from Apache 2.0. Please follow AGPL 3.0 license requirements.
 Notice &lt;2&gt;, SkyWalking always uses its native UI as first class. All visualization features are only available on native UI. Grafana UI is an extension on our support of PromQL APIs. We don’t maintain or promise the complete Grafana UI dashboard setup.">
-  <meta itemprop="wordCount" content="909">
+  <meta itemprop="wordCount" content="1661">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Use Grafana As The UI">
-  <meta name="twitter:description" content="Use Grafana As The UI SkyWalking provides PromQL Service and LogQL Service. You can choose Grafana as the SkyWalking UI. About the installation and how to use please refer to the official document.
+  <meta name="twitter:description" content="Use Grafana As The UI SkyWalking provides PromQL Service, LogQL Service and TraceQL Service. You can choose Grafana as the SkyWalking UI. About the installation and how to use please refer to the official document.
 Notice &lt;1&gt;, Gafana is AGPL-3.0 license, which is very different from Apache 2.0. Please follow AGPL 3.0 license requirements.
 Notice &lt;2&gt;, SkyWalking always uses its native UI as first class. All visualization features are only available on native UI. Grafana UI is an extension on our support of PromQL APIs. We don’t maintain or promise the complete Grafana UI dashboard setup.">
 
 
 
-<link rel="preload" href="/scss/main.min.75b3855349f4480c60036369f115ecf9ae08f3fff28f5b2de980d22a7fac93ef.css" as="style">
-<link href="/scss/main.min.75b3855349f4480c60036369f115ecf9ae08f3fff28f5b2de980d22a7fac93ef.css" rel="stylesheet" integrity="">
+<link rel="preload" href="/scss/main.min.b350fb8c42fee31880305a4433cf2325b5cefc4e06a4d17342698fbbcf354d7b.css" as="style">
+<link href="/scss/main.min.b350fb8c42fee31880305a4433cf2325b5cefc4e06a4d17342698fbbcf354d7b.css" rel="stylesheet" integrity="">
 
 
 
-<link rel="stylesheet" href="/css/docSearch.css" />
 <link rel="stylesheet" href="/css/highlight-github.css" />
-
 
 <script src="/js/jquery-3.6.0.min.js"></script>
 
 <link rel="canonical" href="https://skywalking.apache.org/docs/main/latest/en/setup/backend/ui-grafana/">
-<meta name="description" content="Use Grafana As The UI SkyWalking provides PromQL Service and LogQL Service. You can choose Grafana as the SkyWalking UI. About the installation and how to use…">
+<meta name="description" content="Use Grafana As The UI SkyWalking provides PromQL Service, LogQL Service and TraceQL Service. You can choose Grafana as the SkyWalking UI. About the installation…">
 
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@id":"https://skywalking.apache.org/#organization","@type":"Organization","logo":"https://skywalking.apache.org/images/skywalking_400x400.png","name":"Apache SkyWalking","parentOrganization":{"@type":"Organization","name":"The Apache Software Foundation","url":"https://www.apache.org/"},"sameAs":["https://github.com/apache/skywalking","https://twitter.com/asfskywalking","https://projects.apache.org/project.html?skywalking"],"url":"https://skywalking.apache.org/"},{"@type":"TechArticle","headline":"Use Grafana As The UI","inLanguage":"en","mainEntityOfPage":{"@id":"https://skywalking.apache.org/docs/main/latest/en/setup/backend/ui-grafana/","@type":"WebPage"},"publisher":{"@id":"https://skywalking.apache.org/#organization"},"url":"https://skywalking.apache.org/docs/main/latest/en/setup/backend/ui-grafana/"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://skywalking.apache.org/","name":"Apache SkyWalking","position":1},{"@type":"ListItem","item":"https://skywalking.apache.org/docs/","name":"Documentation","position":2},{"@type":"ListItem","item":"https://skywalking.apache.org/docs/main/latest/en/setup/backend/ui-grafana/","name":"Use Grafana As The UI","position":3}]}]}</script>
 
@@ -69,16 +67,88 @@ Notice &lt;2&gt;, SkyWalking always uses its native UI as first class. All visua
   <body class="td-page  project-doc">
     <header>
       
-<nav class="js-navbar-scroll navbar navbar-expand  flex-column flex-md-row td-navbar">
-    <div class="sidebar-button">
-      <i class="iconfont icon-menu"></i>
-    </div>
+
+
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    
+  
+
+  
+  
+
+  
+  
+
+
+
+
+  
+    
+    
+    
+    
+    
+    
+  
+
+  
+    
+    
+    
+    
+    
+    
+  
+
+  
+    
+    
+    
+    
+    
+    
+  
+
+  
+    
+    
+    
+    
+    
+    
+  
+
+  
+    
+    
+    
+    
+    
+    
+  
+
+<nav class="js-navbar-scroll navbar navbar-expand td-navbar" aria-label="Main navigation">
+  <div class="sw-navbar-inner">
+    <button type="button" class="sidebar-button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-navigation-drawer">
+      <i class="iconfont icon-menu" aria-hidden="true"></i>
+    </button>
     <a class="navbar-brand" href="/">
         <span class="navbar-logo"><img width="130" src="/images/logo.svg" alt="SkyWalking"></span> 
     </a>
     <div class="td-navbar-nav-scroll navbar-nav-wrapper" id="navigation">
         <ul class="navbar-nav mt-lg-0">
-             
+            
             
             <li class="nav-item mr-3 mb-lg-0">
 				
@@ -87,90 +157,1007 @@ Notice &lt;2&gt;, SkyWalking always uses its native UI as first class. All visua
 				
 				
 				
-				<a class="nav-link active" href="/docs" ><span class="active">Documentation</span></a>
+				
+				
+                
+                <a class="nav-link" href="/" ><span>Home</span></a>
 			</li>
             
             
             
-            <li class="nav-item mr-3 mb-lg-0">
-				
-				
-				
-				
-				
-				
-				<a class="nav-link" href="/events" ><span>Events</span></a>
-			</li>
-            
-            
-            
-            <li class="nav-item mr-3 mb-lg-0">
-				
-				
-				
-				
-				
-				
-				<a class="nav-link" href="/blog" ><span>Blogs</span></a>
-			</li>
-            
-            
-            
-            <li class="nav-item mr-3 mb-lg-0">
-				
-				
-				
-				
-				
-				
-				<a class="nav-link" href="/downloads" ><span>Downloads</span></a>
-			</li>
-            
-            
-            
-            <li class="nav-item mr-3 mb-lg-0">
-				
-				
-				
-				
-				
-				
-				<a class="nav-link" href="/team" ><span>Team</span></a>
-			</li>
-            
-            
-            
-            <li class="nav-item mr-3 mb-lg-0">
-				
-				
-				
-				
-				
-				
-				<a class="nav-link" href="/users" ><span>Users</span></a>
-			</li>
-            
-            
-            
-            
-            
-            
-            <li class="nav-item mr-3 mb-lg-0">
-                <a class="nav-link" href="/zh/"><span>中文博客</span></a>
-            </li>
+            <li class="nav-item dropdown sw-projects-item">
+                <button type="button" class="nav-link dropdown-toggle sw-projects-toggle active" id="projects-menu-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Projects</button>
+                <div class="dropdown-menu sw-projects-menu" aria-labelledby="projects-menu-toggle">
+                    
 
+
+<div class="sw-projects-content">
+  <a class="dropdown-item sw-projects-intro" href="/get-started/">
+    <span><strong>Get started in minutes</strong><span>Try the Showcase or install SkyWalking</span></span>
+    <span aria-hidden="true">→</span>
+  </a>
+  <div class="sw-projects-groups">
+    
+    
+    
+      
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+      
+    
+    
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+    
+    
+    <div class="sw-projects-group">
+      <p class="sw-projects-label">Platform</p>
+    
+      <div class="sw-projects-group-links">
+        <div class="sw-projects-columns">
+        
+        <div class="sw-projects-column">
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link active" href="/docs/#SkyWalking">
+          <img src="/images/project/skywalking.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking</strong><span class="sw-project-description">Core observability server</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#BanyanDB">
+          <img src="/images/project/banyan-db.svg" width="28" height="28" alt="">
+          <span><strong>BanyanDB</strong><span class="sw-project-description">Observability database</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#HorizonUI">
+          <img src="/images/project/skywalking.svg" width="28" height="28" alt="">
+          <span><strong>Horizon UI</strong><span class="sw-project-description">Next-generation UI</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#AISessionizer">
+          <img src="/images/project/skywalking.svg" width="28" height="28" alt="">
+          <span><strong>AI Sessionizer</strong><span class="sw-project-description">AI agent observability</span></span>
+        </a>
+        
+        
+        </div>
+        
+        </div>
+        
+        <a class="dropdown-item sw-projects-more" href="/docs/#SkyWalkingServers">All platform projects <span aria-hidden="true">→</span></a>
+        
+      </div>
+    </div>
+    
+    
+    
+      
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+      
+    
+      
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+      
+    
+    
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+    
+    
+    <div class="sw-projects-group sw-projects-group-wide">
+      <p class="sw-projects-label">Agents &amp; collection</p>
+    
+      <div class="sw-projects-group-links">
+        <div class="sw-projects-columns">
+        
+        <div class="sw-projects-column">
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#JavaAgent">
+          <img src="/images/project/java-agent.svg" width="28" height="28" alt="">
+          <span><strong>Java Agent</strong><span class="sw-project-description">Java tracing and profiling</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#GoAgent">
+          <img src="/images/project/skywalking-go.svg" width="28" height="28" alt="">
+          <span><strong>Go Agent</strong><span class="sw-project-description">Go tracing and metrics</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#PythonAgent">
+          <img src="/images/project/python-agent.svg" width="28" height="28" alt="">
+          <span><strong>Python Agent</strong><span class="sw-project-description">Python tracing and profiling</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#NodeJSAgent">
+          <img src="/images/project/nodejs-agent.svg" width="28" height="28" alt="">
+          <span><strong>NodeJS Agent</strong><span class="sw-project-description">Node.js distributed tracing</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#PHPAgent">
+          <img src="/images/project/php-agent.svg" width="28" height="28" alt="">
+          <span><strong>PHP Agent</strong><span class="sw-project-description">PHP distributed tracing</span></span>
+        </a>
+        
+        
+        </div>
+        
+        <div class="sw-projects-column">
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#OpenTelemetryOTLP">
+          <img src="/images/project/otlp.svg" width="28" height="28" alt="">
+          <span><strong>OpenTelemetry (OTLP)</strong><span class="sw-project-description">OTLP traces, metrics, and logs</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#SkyWalkingRover">
+          <img src="/images/project/skywalking.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking Rover</strong><span class="sw-project-description">eBPF metrics and profiling</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#SkyWalkingSatellite">
+          <img src="/images/project/skywalking-satellite.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking Satellite</strong><span class="sw-project-description">Lightweight telemetry collector</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#KubernetesEventExporter">
+          <img src="/images/project/kubernetes.svg" width="28" height="28" alt="">
+          <span><strong>Kubernetes Event Exporter</strong><span class="sw-project-description">Kubernetes event collection</span></span>
+        </a>
+        
+        
+        </div>
+        
+        </div>
+        
+        <a class="dropdown-item sw-projects-more" href="/docs/#Agents">View all agents &amp; collectors <span aria-hidden="true">→</span></a>
+        
+      </div>
+    </div>
+    
+    
+    
+      
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+      
+    
+    
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+    
+    
+    <div class="sw-projects-group">
+      <p class="sw-projects-label">Operations &amp; tools</p>
+    
+      <div class="sw-projects-group-links">
+        <div class="sw-projects-columns">
+        
+        <div class="sw-projects-column">
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#SkyWalkingCLI">
+          <img src="/images/project/skywalking-cli.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking CLI</strong><span class="sw-project-description">Command-line operations</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#SkyWalkingMCP">
+          <img src="/images/project/skywalking.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking MCP</strong><span class="sw-project-description">Observability for AI assistants</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#KubernetesHelm">
+          <img src="/images/project/helm.svg" width="28" height="28" alt="">
+          <span><strong>Kubernetes Helm</strong><span class="sw-project-description">Deploy SkyWalking with Helm</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#SkyWalkingCloudonKubernetes">
+          <img src="/images/project/kubernetes.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking Cloud on Kubernetes</strong><span class="sw-project-description">Kubernetes operator</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#SkyWalkingEyes">
+          <img src="/images/project/skywalking-eyes.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking Eyes</strong><span class="sw-project-description">License checks and fixes</span></span>
+        </a>
+        
+        
+        </div>
+        
+        </div>
+        
+        <a class="dropdown-item sw-projects-more" href="/docs/#Operation">All operations projects <span aria-hidden="true">→</span></a>
+        
+      </div>
+    </div>
+    
+  </div>
+  <div class="sw-projects-footer">
+    <a class="dropdown-item sw-projects-all" href="/docs/">All projects <span aria-hidden="true">→</span></a>
+    <a class="dropdown-item sw-projects-downloads" href="/downloads/">Downloads <span aria-hidden="true">→</span></a>
+  </div>
+</div>
+
+                </div>
+            </li>
+            
+            
+            
+            
+            <li class="nav-item"><a class="nav-link" href="/blog">Blogs</a></li>
+            
+            
+            
+            
+            
+            <li class="nav-item" data-nav-promote="events" hidden><a class="nav-link" href="/events/">Release Posts</a></li>
+            
+            <li class="nav-item" data-nav-promote="events/calendar" hidden><a class="nav-link" href="/events/calendar/">Event Calendar</a></li>
+            
+            <li class="nav-item" data-nav-promote="users" hidden><a class="nav-link" href="/users">Users</a></li>
+            
+            <li class="nav-item" data-nav-promote="team" hidden><a class="nav-link" href="/team">Team</a></li>
+            
+            <li class="nav-item" data-nav-promote="zh" hidden><a class="nav-link" href="/zh/">中文博客</a></li>
+            
+            
+            <li class="nav-item dropdown" data-nav-more>
+                <button type="button" class="nav-link dropdown-toggle sw-more-toggle" id="more-menu-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">More</button>
+                <div class="dropdown-menu sw-more-menu" aria-labelledby="more-menu-toggle">
+                    
+                    <a class="dropdown-item" data-nav-overflow="events" href="/events/">Release Posts</a>
+                    
+                    <a class="dropdown-item" data-nav-overflow="events/calendar" href="/events/calendar/">Event Calendar</a>
+                    
+                    <a class="dropdown-item" data-nav-overflow="users" href="/users">Users</a>
+                    
+                    <a class="dropdown-item" data-nav-overflow="team" href="/team">Team</a>
+                    
+                    <a class="dropdown-item" data-nav-overflow="zh" href="/zh/">中文博客</a>
+                    
+                </div>
+            </li>
+            
+            
+            
+            
+            
+            
             
 			
         </ul>
     </div>
 
-    <div class="navbar-nav d-none d-lg-block search-input-box">
-        
-<div id="docsearch"></div>
+    <div class="sw-navbar-actions">
+        <button type="button" class="sw-kapa-search" aria-label="Search SkyWalking documentation and ask AI" aria-haspopup="dialog" title="Search and ask AI">
+  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="7.5"/><path d="m16 16 5 5"/></svg>
+  <span>Search</span>
+</button>
 
-
-            
-        
+        <div class="navbar-nav d-none d-lg-block search-input-box">
             
         
             
@@ -273,7 +1260,24 @@ Notice &lt;2&gt;, SkyWalking always uses its native UI as first class. All visua
             </span>
             
         
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+            <a class="sw-nav-cta" href="/get-started/">Get started</a>
+            
+        
+            
+        
+        </div>
     </div>
+  </div>
 </nav>
 
     </header>
@@ -309,6 +1313,22 @@ Notice &lt;2&gt;, SkyWalking always uses its native UI as first class. All visua
                     <option selected value="latest">
                     
                       latest
+                    
+                    </option>
+                  
+                    
+                    
+                    <option ZgotmplZ value="v11.1.0">
+                    
+                      v11.1.0
+                    
+                    </option>
+                  
+                    
+                    
+                    <option ZgotmplZ value="v11.0.0">
+                    
+                      v11.0.0
                     
                     </option>
                   
@@ -357,38 +1377,6 @@ Notice &lt;2&gt;, SkyWalking always uses its native UI as first class. All visua
                     <option ZgotmplZ value="v10.0.0">
                     
                       v10.0.0
-                    
-                    </option>
-                  
-                    
-                    
-                    <option ZgotmplZ value="v9.7.0">
-                    
-                      v9.7.0
-                    
-                    </option>
-                  
-                    
-                    
-                    <option ZgotmplZ value="v9.6.0">
-                    
-                      v9.6.0
-                    
-                    </option>
-                  
-                    
-                    
-                    <option ZgotmplZ value="v9.5.0">
-                    
-                      v9.5.0
-                    
-                    </option>
-                  
-                    
-                    
-                    <option ZgotmplZ value="v9.4.0">
-                    
-                      v9.4.0
                     
                     </option>
                   
@@ -833,6 +1821,48 @@ Notice &lt;2&gt;, SkyWalking always uses its native UI as first class. All visua
         
 
             
+            <a href="#">Mobile Monitoring<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/backend-ios-monitoring">iOS</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/backend-wechat-mini-program-monitoring">WeChat Mini Program</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/backend-alipay-mini-program-monitoring">Alipay Mini Program</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
             <a href="#">Gateway Monitoring<i class="iconfont icon-arrow-right pull-right"></i></a>
             
 
@@ -1023,6 +2053,32 @@ Notice &lt;2&gt;, SkyWalking always uses its native UI as first class. All visua
         
 
             
+            <a href="#">Workflow Scheduler<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/backend-airflow-monitoring">Airflow</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
             <a href="#">Data Processing Engine<i class="iconfont icon-arrow-right pull-right"></i></a>
             
 
@@ -1066,7 +2122,23 @@ Notice &lt;2&gt;, SkyWalking always uses its native UI as first class. All visua
 
     <li>
         
-            <a href="/docs/main/latest/en/setup/backend/backend-envoy-ai-gateway-monitoring">Envoy AI Gateway</a>
+            <a href="/docs/main/latest/en/setup/backend/ai-evaluation">AI Evaluation</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/ai-agent-conversation">AI Agent Conversations</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/backend-envoy-ai-gateway-monitoring">Agent Router (Envoy AI Gateway)</a>
         
     </li>
 
@@ -1377,6 +2449,14 @@ Notice &lt;2&gt;, SkyWalking always uses its native UI as first class. All visua
 
     <li>
         
+            <a href="/docs/main/latest/en/banyandb/tail-sampling">Trace Tail Sampling</a>
+        
+    </li>
+
+    
+
+    <li>
+        
             <a href="/docs/main/latest/en/banyandb/dashboards-banyandb">BanyanDB self observability dashboard</a>
         
     </li>
@@ -1443,6 +2523,14 @@ Notice &lt;2&gt;, SkyWalking always uses its native UI as first class. All visua
 
     <li>
         
+            <a href="/docs/main/latest/en/setup/backend/server-clusters">Server Clusters</a>
+        
+    </li>
+
+    
+
+    <li>
+        
             <a href="/docs/main/latest/en/setup/backend/zipkin-trace">Zipkin Trace</a>
         
     </li>
@@ -1451,7 +2539,125 @@ Notice &lt;2&gt;, SkyWalking always uses its native UI as first class. All visua
 
     <li>
         
-            <a href="/docs/main/latest/en/setup/backend/otlp-trace">OpenTelemetry Trace</a>
+
+            
+            <a href="#">OpenTelemetry Trace<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/otlp-trace">Setup</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/trace-analyzer">Analysis</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
+            <a href="#">Best Practices<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+
+            
+            <a href="#">Gateway<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/otlp-trace-practices/gateway-overview">Overview</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/otlp-trace-practices/gateway-envoy">Envoy</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/otlp-trace-practices/gateway-nginx">nginx</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/otlp-trace-practices/gateway-without-instrumentation">Gateways Without Instrumentation</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/otlp-trace-practices/gateway-canary">Canary Releases</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/otlp-trace-practices/message-queue">Message Queue</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/otlp-trace-practices/database-and-cache">Database and Cache</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+</ul>
+
         
     </li>
 
@@ -1510,6 +2716,22 @@ Notice &lt;2&gt;, SkyWalking always uses its native UI as first class. All visua
     <li>
         
             <a href="/docs/main/latest/en/setup/backend/backend-meter">Meter Analysis</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/dashboards-php-runtime">PHP runtime metrics (PHM)</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/dashboards-nodejs-runtime">Node.js runtime metrics</a>
         
     </li>
 
@@ -2082,72 +3304,6 @@ Notice &lt;2&gt;, SkyWalking always uses its native UI as first class. All visua
 
     
 
-    <li>
-        
-
-            
-            <a href="#">Status APIs<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-            <a href="/docs/main/latest/en/status/status_apis">Introduction</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/latest/en/debugging/config_dump">Dump Effective Initial Configurations</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/latest/en/debugging/query-tracing">Tracing Query Execution</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/latest/en/status/query_ttl_setup">Get Effective TTL Configurations</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/latest/en/status/query_cluster_nodes">Get Node List in the Cluster</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/latest/en/status/query_alarm_runtime_status">Get Alarm Runtime Status</a>
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-
-    
-
 </ul>
 
         
@@ -2204,6 +3360,22 @@ Notice &lt;2&gt;, SkyWalking always uses its native UI as first class. All visua
 
     <li>
         
+            <a href="/docs/main/latest/en/concepts-and-designs/tal">Analysis OpenTelemetry Traces</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/concepts-and-designs/runtime-rule-hot-update">Runtime Rule Hot-Update</a>
+        
+    </li>
+
+    
+
+    <li>
+        
             <a href="/docs/main/latest/en/concepts-and-designs/profiling">Profiling</a>
         
     </li>
@@ -2244,6 +3416,145 @@ Notice &lt;2&gt;, SkyWalking always uses its native UI as first class. All visua
     <li>
         
             <a href="/docs/main/latest/en/operation/dynamic-code-generation-debugging">Dynamic Code Generation and Debugging</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+    
+    <li>
+        
+            
+            <a href="#">Admin API<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/admin-api/readme">Introduction</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/admin-api/runtime-rule">Runtime Rule Hot-Update API</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
+            <a href="#">DSL Debug API<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/admin-api/dsl-debugging">Overview</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/admin-api/dsl-debugging-mal">MAL</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/admin-api/dsl-debugging-oal">OAL</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/admin-api/dsl-debugging-lal">LAL</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
+            <a href="#">Status API<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/admin-api/status">Overview</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/debugging/config_dump">Dump Effective Initial Configurations</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/debugging/query-tracing">Tracing Query Execution</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/admin-api/inspect">Inspect API</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/admin-api/ui-management">UI Management API</a>
         
     </li>
 
@@ -2546,11 +3857,45 @@ Notice &lt;2&gt;, SkyWalking always uses its native UI as first class. All visua
         
 
             
+            <a href="#">11.x Releases<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/changes/changes-11.0.0">11.0.0</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
             <a href="#">10.x Releases<i class="iconfont icon-arrow-right pull-right"></i></a>
             
 
             
 <ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/changes/changes-10.4.0">10.4.0</a>
+        
+    </li>
+
     
 
     <li>
@@ -2855,8 +4200,22 @@ Notice &lt;2&gt;, SkyWalking always uses its native UI as first class. All visua
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: b272da3</div>
+                  <div class="commit-id">Commit Id: d34eff2</div>
                 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2918,28 +4277,54 @@ Notice &lt;2&gt;, SkyWalking always uses its native UI as first class. All visua
               
 <div class="td-content">
 	<h1 id="use-grafana-as-the-ui">Use Grafana As The UI</h1>
-<p>SkyWalking provides <a href="../../../api/promql-service">PromQL Service</a> and <a href="../../../api/logql-service">LogQL Service</a>. You can choose <a href="https://grafana.com/">Grafana</a>
+<p>SkyWalking provides <a href="../../../api/promql-service">PromQL Service</a>, <a href="../../../api/logql-service">LogQL Service</a> and <a href="../../../api/traceql-service">TraceQL Service</a>. You can choose <a href="https://grafana.com/">Grafana</a>
 as the SkyWalking UI. About the installation and how to use please refer to the <a href="https://grafana.com/docs/grafana/v9.3/">official document</a>.</p>
 <p>Notice &lt;1&gt;, Gafana is <a href="https://github.com/grafana/grafana/blob/main/LICENSE">AGPL-3.0 license</a>, which is very different from Apache 2.0.
 Please follow AGPL 3.0 license requirements.</p>
 <p>Notice &lt;2&gt;, SkyWalking always uses its native UI as first class. All visualization features are only available on native UI.
 Grafana UI is an extension on our support of PromQL APIs. We don&rsquo;t maintain or promise the complete Grafana UI dashboard setup.</p>
+<p>The <a href="https://github.com/apache/skywalking-showcase">SkyWalking Showcase</a> runs Grafana with the setup this document
+describes. Its data sources are in
+<a href="https://github.com/apache/skywalking-showcase/blob/main/deploy/platform/docker/config/grafana/datasources.yaml">datasources.yaml</a>
+and its dashboards, General Service, General Relation, Service Mesh, Virtual-Database, Log, SkyWalking Trace, Zipkin
+Trace and OTLP Trace, are JSON files in
+<a href="https://github.com/apache/skywalking-showcase/tree/main/deploy/platform/config/grafana/dashboards">deploy/platform/config/grafana/dashboards</a>,
+which you can import as a starting point. Each dashboard picks its data sources by name: <code>SkyWalkingPromQL</code>,
+<code>SkyWalkingLogQL</code>, <code>SkywalkingTraceQL</code>, <code>ZipkinTraceQL</code> or <code>OTLPTraceQL</code>. Give your data sources the same names, or
+change the dashboard&rsquo;s data source variable after importing it.</p>
 <h2 id="configure-data-source">Configure Data Source</h2>
 <h3 id="prometheus-data-source">Prometheus Data Source</h3>
-<p>In the data source config panel, chose the <code>Prometheus</code> and set the url to the OAP server address, the default port is <code>9090</code>.
+<p>In the data source config panel, choose the <code>Prometheus</code> and set the url to the OAP server address, the default port is <code>9090</code>.
 <img src="https://skywalking.apache.org/screenshots/9.6.0/promql/grafana-datasource.jpg"/></p>
 <h3 id="skywalking-data-source">SkyWalking Data Source</h3>
 <p>Before you start, please install the <a href="https://github.com/apache/skywalking-grafana-plugins">SkyWalking data source plugin</a>.
-In the data source config panel, chose the <code>SkyWalking</code> and set the url to the OAP server <code>graphql</code> service address, the default port is <code>12800</code>.
+In the data source config panel, choose the <code>SkyWalking</code> and set the url to the OAP server <code>graphql</code> service address, the default port is <code>12800</code>.
 <img src="https://skywalking.apache.org/screenshots/9.7.0/promql/grafana-skywalking-datasource.jpg"/></p>
 <h3 id="loki-data-source">Loki Data Source</h3>
-<p>In the data source config panel, chose the <code>Loki</code> and set the url to the OAP server address, the default port is <code>3100</code>.
+<p>In the data source config panel, choose the <code>Loki</code> and set the url to the OAP server address, the default port is <code>3100</code>.
 <img src="https://skywalking.apache.org/screenshots/9.6.0/logql/grafana-loki-datasource.jpg"/></p>
+<h3 id="tempo-data-source">Tempo Data Source</h3>
+<p>In the data source config panel, choose the <code>Tempo</code> and set the url to the full OAP trace API address, including the context path. The default port is <code>3200</code>, for example <code>http://&lt;oap-host&gt;:3200/skywalking</code> for SkyWalking native trace, <code>http://&lt;oap-host&gt;:3200/zipkin</code> for Zipkin trace, or <code>http://&lt;oap-host&gt;:3200/otlp</code> for natively stored OTLP trace.
+The SkyWalking native trace API context path is <code>/skywalking</code>, the Zipkin trace API context path is <code>/zipkin</code>, and the OTLP trace API context path is <code>/otlp</code>.
+You can customize them via <code>SW_TRACEQL_REST_CONTEXT_PATH_SKYWALKING</code>, <code>SW_TRACEQL_REST_CONTEXT_PATH_ZIPKIN</code> and <code>SW_TRACEQL_REST_CONTEXT_PATH_OTLP</code> respectively. If you customize a path, use the customized path in the Grafana Tempo data source URL.
+The OTLP data source serves the spans <code>receiver-otel</code> stores with <code>otlpTraceStorage: otlp</code>, the default, see <a href="../otlp-trace">OpenTelemetry Trace Format</a>.</p>
+<p><em><strong>Notice:</strong></em> The feature requires version <code>Grafana 12 or later</code>. And require disabling the Streaming option for the Tempo data source in the following configuration.</p>
+<p><em><strong>Notice:</strong></em> OR (<code>||</code>) is not supported in TraceQL. Grafana&rsquo;s query builder emits <code>{(a || b)}</code> when several values of one
+filter are selected, so select one value per filter; a query with <code>||</code> is refused with <code>400 OR (||) is not supported</code>.
+The supported TraceQL subset is listed in <a href="../../../api/traceql-service#details-of-supported-traceql">TraceQL Service</a>.
+<img src="https://skywalking.apache.org/screenshots/10.4.0/traceql/grafana-tempo-datasource-streaming.png"/></p>
+<h4 id="skywalking-native-trace">SkyWalking Native Trace</h4>
+<img src="https://skywalking.apache.org/screenshots/10.4.0/traceql/grafana-tempo-skywalking-datasource.png"/>
+<h4 id="zipkin-trace">Zipkin Trace</h4>
+<img src="https://skywalking.apache.org/screenshots/10.4.0/traceql/grafana-tempo-zipkin-datasource.png"/>
+<h4 id="otlp-trace">OTLP Trace</h4>
+<p>Same as the Zipkin trace, with the URL <code>http://&lt;oap-host&gt;:3200/otlp</code>, for example a data source named <code>OTLPTraceQL</code>.
+The <code>/otlp</code> data source is enabled by <code>SW_TRACEQL_ENABLE_DATASOURCE_OTLP</code>.</p>
 <h2 id="configure-metric-dashboards">Configure Metric Dashboards</h2>
 <h3 id="dashboards-settings">Dashboards Settings</h3>
 <p>The following steps are the example of config a <code>General Service</code> dashboard:</p>
 <ol>
-<li>Create a dashboard named <code>General Service</code>. A <a href="https://github.com/apache/skywalking/tree/b272da3cc196c2455bf86e911c427d302f68b950/oap-server/server-core/src/main/java/org/apache/skywalking/oap/server/core/analysis/Layer.java">layer</a> is recommended as a dashboard.</li>
+<li>Create a dashboard named <code>General Service</code>. A <a href="https://github.com/apache/skywalking/tree/d34eff29bae36d6b6639ff8b04ad755923912c7d/oap-server/server-core/src/main/java/org/apache/skywalking/oap/server/core/analysis/Layer.java">layer</a> is recommended as a dashboard.</li>
 <li>Configure variables for the dashboard:
 <img src="https://skywalking.apache.org/screenshots/9.6.0/promql/grafana-variables.jpg"/>
 After configure, you can select the service/instance/endpoint on the top of the dashboard:
@@ -3039,6 +4424,57 @@ For endpoint relation scope, extra set <code>Endpoint</code> and <code>Dest Endp
 <li>Test query and save the panel.
 <img src="https://skywalking.apache.org/screenshots/10.1.0/promql/grafana-relation-panel.png"/></li>
 </ol>
+<h2 id="configure-trace-dashboard">Configure Trace Dashboard</h2>
+<h3 id="skywalking-native-trace-1">SkyWalking Native Trace</h3>
+<h4 id="dashboards-settings-4">Dashboards Settings</h4>
+<p>The following steps are an example of configuring a <code>Trace</code> dashboard for SkyWalking native trace:</p>
+<ol>
+<li>Go to the <code>Explore</code> page, select the <code>Tempo</code> data source named <code>SkyWalkingTraceQL</code> (the name you configured). Add it to the dashboard and save it as <code>SkyWalking Trace</code>.
+<img src="https://skywalking.apache.org/screenshots/10.4.0/traceql/grafana-tempo-skywalking-explore.png"/></li>
+<li>Configure variables for the dashboard:
+<em><strong>Notice:</strong></em> The variables (Service/Instance/Endpoint) querying leverage the Prometheus data source <code>SkyWalkingPromQL(DS_SW_Prometheus)</code>.
+<img src="https://skywalking.apache.org/screenshots/10.5.0/traceql/grafana-tempo-skywalking-variables.png"/></li>
+<li>If you want the Service/Instance/Endpoint variables to support the <code>All</code> option,
+enable <code>Allow custom values</code> and set <code>Custom all value</code> to <code>*</code> so it matches the backend wildcard.
+<img src="https://skywalking.apache.org/screenshots/10.5.0/traceql/grafana-tempo-skywalking-variables-all.png"/></li>
+</ol>
+<h4 id="add-trace-panel">Add Trace Panel</h4>
+<p>The following steps show how to add a trace panel for SkyWalking native trace.</p>
+<ol>
+<li>Choose <code>Table</code> chart or edit your saved panel.</li>
+<li>Set <code>Query type</code> to <code>Search</code> and set the query condition to variables, such as <code>Service Name</code> to <code>$Service</code>.</li>
+<li>Set other query conditions if needed.</li>
+<li>Test query and save the panel.
+<img src="https://skywalking.apache.org/screenshots/10.5.0/traceql/grafana-tempo-skywalking-panel.png"/></li>
+<li>If you click the trace ID on the trace panel, it will jump to the explore page and show the trace details.
+<img src="https://skywalking.apache.org/screenshots/10.4.0/traceql/grafana-tempo-skywalking-trace-detail.png"/></li>
+</ol>
+<h3 id="zipkin-trace-1">Zipkin Trace</h3>
+<p>Same as the SkyWalking native trace, but use the Zipkin Tempo data source you configured.
+The following are the variables and trace panel configuration screenshots for Zipkin trace:
+<img src="https://skywalking.apache.org/screenshots/10.5.0/traceql/grafana-tempo-zipkin-variables.png"/>
+<img src="https://skywalking.apache.org/screenshots/10.5.0/traceql/grafana-tempo-zipkin-panel.png"/></p>
+<h3 id="otlp-trace-1">OTLP Trace</h3>
+<p>The following steps are an example of configuring a <code>Trace</code> dashboard for the OTLP traces stored natively, using the
+<code>OTLPTraceQL</code> data source configured in <a href="#otlp-trace">OTLP Trace</a>. The showcase&rsquo;s
+<a href="https://github.com/apache/skywalking-showcase/blob/main/deploy/platform/config/grafana/dashboards/trace-otlp.json">trace-otlp.json</a>
+is this dashboard.</p>
+<ol>
+<li>Go to the <code>Explore</code> page, select the <code>OTLPTraceQL</code> data source, add it to the dashboard and save it as <code>OTLP Trace</code>.</li>
+<li>Add an <code>Ad hoc filters</code> variable named <code>filters</code> on the <code>OTLPTraceQL</code> data source. A viewer adds conditions from
+drop-downs, for example <code>resource.service.name</code>, <code>name</code>, <code>resource.service.instance.id</code>, <code>kind</code>, <code>status</code> or a span
+attribute such as <code>span.http.request.method</code>, and Grafana adds them to the panel&rsquo;s query. The values listed for a
+key are those of the spans the other filters match, so add <code>resource.service.name</code> first and <code>name</code> lists that
+service&rsquo;s span names. Services are listed by the name OAP stores them under, <code>group::name</code> when
+<a href="../otlp-trace#service-group">service grouping</a> is on. Only the <code>=</code> operator is supported; <code>!=</code> and the regex
+operators are refused.</li>
+<li>Add <code>Text box</code> variables <code>min_duration</code> and <code>max_duration</code>, for example <code>100ms</code> or <code>1s</code>.</li>
+<li>Choose <code>Table</code> chart, set <code>Query type</code> to <code>Search</code>, add a <code>Duration</code> condition <code>&gt;</code> <code>$min_duration</code> and another <code>&lt;</code>
+<code>$max_duration</code>, test the query and save the panel. An empty duration box adds no condition.</li>
+</ol>
+<p>The <code>Service</code> and <code>Name</code> columns of the panel are those of each trace&rsquo;s root span, so a trace that matches the
+filters may be listed under the service that started it. Expand a row to see the matched spans, or click the trace ID
+to open the whole trace.</p>
 <h2 id="preview-on-demoskywalkingao">Preview on demo.skywalking.a.o</h2>
 <p>SkyWalking community provides a preview site for services of <code>General</code> and <code>Service Mesh</code> layers from the demo environment.
 You could take a glance through <a href="https://skywalking.apache.org/#demo"><strong>Preview metrics on Grafana</strong></a> of the demo deployment.</p>
@@ -3082,6 +4518,7 @@ You could take a glance through <a href="https://skywalking.apache.org/#demo"><s
             <li><a href="#prometheus-data-source">Prometheus Data Source</a></li>
             <li><a href="#skywalking-data-source">SkyWalking Data Source</a></li>
             <li><a href="#loki-data-source">Loki Data Source</a></li>
+            <li><a href="#tempo-data-source">Tempo Data Source</a></li>
           </ul>
         </li>
         <li><a href="#configure-metric-dashboards">Configure Metric Dashboards</a>
@@ -3106,6 +4543,13 @@ You could take a glance through <a href="https://skywalking.apache.org/#demo"><s
           <ul>
             <li><a href="#dashboards-settings-3">Dashboards Settings</a></li>
             <li><a href="#add-relation-metrics-panel">Add Relation Metrics Panel</a></li>
+          </ul>
+        </li>
+        <li><a href="#configure-trace-dashboard">Configure Trace Dashboard</a>
+          <ul>
+            <li><a href="#skywalking-native-trace-1">SkyWalking Native Trace</a></li>
+            <li><a href="#zipkin-trace-1">Zipkin Trace</a></li>
+            <li><a href="#otlp-trace-1">OTLP Trace</a></li>
           </ul>
         </li>
         <li><a href="#preview-on-demoskywalkingao">Preview on demo.skywalking.a.o</a></li>
@@ -3204,6 +4648,9 @@ You could take a glance through <a href="https://skywalking.apache.org/#demo"><s
         
         
     </div>
+    <p class="footer-contribute">
+      <a id="contribute" href="https://github.com/apache/skywalking-website" target="_blank" rel="noopener">Help improve this website <span aria-hidden="true">↗</span></a>
+    </p>
     <div class="">
 
         <small class="text-color">&copy; 2017 - 2026 The Apache Software Foundation All Rights Reserved</small>
@@ -12918,6 +14365,1466 @@ You could take a glance through <a href="https://skywalking.apache.org/#demo"><s
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
 <div id="popup">
     <div class="mask">
@@ -12925,85 +15832,187 @@ You could take a glance through <a href="https://skywalking.apache.org/#demo"><s
     </div>
 </div>
 
-    <div class="sidebar-mask"></div>
-<div class="sidebar">
-    <nav class="nav-links">
+    
+
+
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+<div class="sidebar-mask" aria-hidden="true"></div>
+<div class="sidebar" id="site-navigation-drawer" role="dialog" aria-modal="true" aria-label="Navigation" aria-hidden="true" tabindex="-1">
+  <div class="sidebar-header">
+    <span>Menu</span>
+    <button type="button" class="sidebar-close" aria-label="Close navigation">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+    </button>
+  </div>
+  <nav class="nav-links" aria-label="Site pages">
+    <ul class="sidebar-primary">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/">Home</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link active" href="/docs" aria-current="page">Projects</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/blog">Blogs</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/events/">Release Posts</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/events/calendar/">Event Calendar</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/users">Users</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/team">Team</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/zh/">中文博客</a></li>
+      
+      
+    </ul>
+    <ul class="sidebar-secondary">
+      <li><a class="nav-link" href="/downloads/">Downloads</a></li>
+      
+      <li><a class="nav-link" href="/get-started/">Get started</a></li>
+      
+    </ul>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <details class="sidebar-resources">
+      <summary><span>Apache</span><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 4 4 4-4 4"/></svg></summary>
+      <ul class="sidebar-resource-links">
         
-        <div class="nav-item"><a href="/docs/" class="nav-link router-link-active">Documentation</a></div>
-        <div class="nav-item"><a href="/events/" class="nav-link">Events</a></div>
-        <div class="nav-item"><a href="/blog/" class="nav-link">Blog</a></div>
-        <div class="nav-item"><a href="/downloads/" class="nav-link">Downloads</a></div>
-        <div class="nav-item"><a href="/team/" class="nav-link">Team</a></div>
-        <div class="nav-item"><a href="/users/" class="nav-link">Users</a></div>
-        <div class="nav-item"><a href="/zh/" class="nav-link">中文博客</a></div>
-        <div class="nav-item">
-            <div class="dropdown-wrapper open">
-                <a class="dropdown-title">
-                    <span>Links</span>
-                    <span class="arrow down"></span>
-                </a>
-                <ul class="nav-dropdown">
-                    <li class="dropdown-item">
-                        <a href="http://www.apache.org/" target="_blank"
-                           rel="noopener noreferrer" class="nav-link external">
-                            Apache Software Foundation
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="https://github.com/apache/skywalking/issues"
-                           target="_blank" rel="noopener noreferrer"
-                           class="nav-link external">
-                            GitHub Issue Tracker
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="https://lists.apache.org/list.html?dev@skywalking.apache.org" target="_blank"
-                           rel="noopener noreferrer" class="nav-link external">
-                            Dev Mailing List
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="http://www.apache.org/licenses/" target="_blank"
-                           rel="noopener noreferrer" class="nav-link external">
-                            License
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="http://www.apache.org/events/current-event"
-                           target="_blank" rel="noopener noreferrer"
-                           class="nav-link external">
-                            Apache Events
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="http://www.apache.org/security/" target="_blank"
-                           rel="noopener noreferrer" class="nav-link external">
-                            Security
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="http://www.apache.org/foundation/sponsorship.html"
-                           target="_blank" rel="noopener noreferrer"
-                           class="nav-link external">
-                            Sponsorship and Donate
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="http://www.apache.org/foundation/thanks.html"
-                           target="_blank" rel="noopener noreferrer"
-                           class="nav-link external">
-                            Thanks
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+        <li><a class="nav-link" href="http://www.apache.org/" target="_blank" rel="noopener noreferrer"><span>Apache Software Foundation</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="https://github.com/apache/skywalking/issues" target="_blank" rel="noopener noreferrer"><span>GitHub Issue Tracker</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="https://github.com/apache/skywalking/discussions" target="_blank" rel="noopener noreferrer"><span>Discussion</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="https://lists.apache.org/list.html?dev@skywalking.apache.org" target="_blank" rel="noopener noreferrer"><span>Dev Mailing List</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="https://cwiki.apache.org/confluence/display/SKYWALKING/Home" target="_blank" rel="noopener noreferrer"><span>WIKI</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="http://www.apache.org/licenses/" target="_blank" rel="noopener noreferrer"><span>License</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="http://www.apache.org/events/current-event" target="_blank" rel="noopener noreferrer"><span>Apache Events</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="http://www.apache.org/security/" target="_blank" rel="noopener noreferrer"><span>Security</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="http://www.apache.org/foundation/sponsorship.html" target="_blank" rel="noopener noreferrer"><span>Sponsor and Donate</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="http://www.apache.org/foundation/thanks.html" target="_blank" rel="noopener noreferrer"><span>Thanks</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="https://apache.org/foundation/policies/privacy.html" target="_blank" rel="noopener noreferrer"><span>Privacy</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+      </ul>
+    </details>
+    
+    
+  </nav>
 </div>
 
     <script src="/js/bootstrap.bundle.min.js"></script>
 
-<script src="/js/docsearch-3.9.0.js"></script>
 
 
 
@@ -13013,7 +16022,8 @@ You could take a glance through <a href="https://skywalking.apache.org/#demo"><s
 
 
 
-<script src="/js/main.min.9be14eed0a0e24711261c334305209aa2e5ae3fb624f6a1731e064d5ffb11f3d.js" integrity="sha256-m&#43;FO7QoOJHESYcM0MFIJqi5a4/tiT2oXMeBk1f&#43;xHz0=" crossorigin="anonymous"></script>
+
+<script src="/js/main.min.a351a9c3ee226044b9050a859fb2f5a6019a548cfe22e3ca281fb08443c28976.js" integrity="sha256-o1Gpw&#43;4iYES5BQqFn7L1pgGaVIz&#43;IuPKKB&#43;whEPCiXY=" crossorigin="anonymous"></script>
 
 
 <script src="/js/highlight.min.js"></script>
@@ -13046,14 +16056,16 @@ data-project-name="SkyWalking"
 data-project-color="#2B74B8"
 data-button-text="Ask AI"
 data-search-mode-enabled="true"
+data-search-mode-default="false"
+data-modal-override-open-selector-search=".sw-kapa-search"
 data-modal-open-on-command-k="true"
+data-modal-command-k-search-mode-default="true"
+data-modal-z-index="10000"
 data-modal-disclaimer="The AI supports multiple languages, but it may not be accessible in China, a proxy is required."
 data-project-logo="/images/widget-logo.jpg"
 data-modal-example-questions="What is Apache SkyWalking?,How to deploy SkyWalking?,How to inject agents non-intrusively?,How to setup trace sampling?"
-data-button-position-top=""
 data-button-position-right="20px"
 data-button-position-bottom="200px"
-data-button-position-left=""
 data-consent-required="true"  
 data-user-analytics-cookie-enabled="true"  
 data-consent-screen-title="Help us improve our AI assistant"  
@@ -13061,8 +16073,28 @@ data-consent-screen-disclaimer="By clicking 'Allow tracking', you consent to ano
 data-consent-screen-accept-button-text="Allow tracking"  
 data-consent-screen-reject-button-text="No, thanks"
 ></script>
+<script>
+  (function () {
+    var SEL = 'details.topic-filter';
 
+    function closeAll(except) {
+      document.querySelectorAll(SEL).forEach(function (d) {
+        if (d !== except && d.open) { d.open = false; }
+      });
+    }
 
+    
+    
+    document.addEventListener('click', function (e) {
+      var target = e.target instanceof Element ? e.target.closest(SEL) : null;
+      closeAll(target);
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' || e.key === 'Esc') { closeAll(null); }
+    });
+  })();
+</script>
 
 
     <script>

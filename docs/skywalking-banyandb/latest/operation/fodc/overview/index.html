@@ -37,7 +37,7 @@ Ensure the stable operation of DB nodes across all lifecycle stages (bootstrap, 
 It continuously collects runtime parameters, performance indicators, node states, and configuration data from DB nodes, and also supports on-demand performance profiling and memory snapshots.
 FODC has two primary goals:
 Ensure the stable operation of DB nodes across all lifecycle stages (bootstrap, steady state, scaling, failure, etc.). Provide trustworthy, structured data that supports capacity planning, performance analysis, and troubleshooting. FODC adopts a Proxy &#43; Agent deployment model and exposes a unified, ecosystem-friendly data interface to external systems (such as Prometheus and other observability platforms).">
-  <meta itemprop="wordCount" content="1306">
+  <meta itemprop="wordCount" content="1652">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="First Occurrence Data Collection (FODC)">
   <meta name="twitter:description" content="First Occurrence Data Collection (FODC) First Occurrence Data Collection (FODC) is an observability and diagnostics subsystem for BanyanDB.
@@ -47,14 +47,12 @@ Ensure the stable operation of DB nodes across all lifecycle stages (bootstrap, 
 
 
 
-<link rel="preload" href="/scss/main.min.75b3855349f4480c60036369f115ecf9ae08f3fff28f5b2de980d22a7fac93ef.css" as="style">
-<link href="/scss/main.min.75b3855349f4480c60036369f115ecf9ae08f3fff28f5b2de980d22a7fac93ef.css" rel="stylesheet" integrity="">
+<link rel="preload" href="/scss/main.min.b350fb8c42fee31880305a4433cf2325b5cefc4e06a4d17342698fbbcf354d7b.css" as="style">
+<link href="/scss/main.min.b350fb8c42fee31880305a4433cf2325b5cefc4e06a4d17342698fbbcf354d7b.css" rel="stylesheet" integrity="">
 
 
 
-<link rel="stylesheet" href="/css/docSearch.css" />
 <link rel="stylesheet" href="/css/highlight-github.css" />
-
 
 <script src="/js/jquery-3.6.0.min.js"></script>
 
@@ -72,16 +70,88 @@ Ensure the stable operation of DB nodes across all lifecycle stages (bootstrap, 
   <body class="td-page  project-doc">
     <header>
       
-<nav class="js-navbar-scroll navbar navbar-expand  flex-column flex-md-row td-navbar">
-    <div class="sidebar-button">
-      <i class="iconfont icon-menu"></i>
-    </div>
+
+
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    
+  
+
+  
+  
+
+  
+  
+
+
+
+
+  
+    
+    
+    
+    
+    
+    
+  
+
+  
+    
+    
+    
+    
+    
+    
+  
+
+  
+    
+    
+    
+    
+    
+    
+  
+
+  
+    
+    
+    
+    
+    
+    
+  
+
+  
+    
+    
+    
+    
+    
+    
+  
+
+<nav class="js-navbar-scroll navbar navbar-expand td-navbar" aria-label="Main navigation">
+  <div class="sw-navbar-inner">
+    <button type="button" class="sidebar-button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-navigation-drawer">
+      <i class="iconfont icon-menu" aria-hidden="true"></i>
+    </button>
     <a class="navbar-brand" href="/">
         <span class="navbar-logo"><img width="130" src="/images/logo.svg" alt="SkyWalking"></span> 
     </a>
     <div class="td-navbar-nav-scroll navbar-nav-wrapper" id="navigation">
         <ul class="navbar-nav mt-lg-0">
-             
+            
             
             <li class="nav-item mr-3 mb-lg-0">
 				
@@ -90,90 +160,1007 @@ Ensure the stable operation of DB nodes across all lifecycle stages (bootstrap, 
 				
 				
 				
-				<a class="nav-link active" href="/docs" ><span class="active">Documentation</span></a>
+				
+				
+                
+                <a class="nav-link" href="/" ><span>Home</span></a>
 			</li>
             
             
             
-            <li class="nav-item mr-3 mb-lg-0">
-				
-				
-				
-				
-				
-				
-				<a class="nav-link" href="/events" ><span>Events</span></a>
-			</li>
-            
-            
-            
-            <li class="nav-item mr-3 mb-lg-0">
-				
-				
-				
-				
-				
-				
-				<a class="nav-link" href="/blog" ><span>Blogs</span></a>
-			</li>
-            
-            
-            
-            <li class="nav-item mr-3 mb-lg-0">
-				
-				
-				
-				
-				
-				
-				<a class="nav-link" href="/downloads" ><span>Downloads</span></a>
-			</li>
-            
-            
-            
-            <li class="nav-item mr-3 mb-lg-0">
-				
-				
-				
-				
-				
-				
-				<a class="nav-link" href="/team" ><span>Team</span></a>
-			</li>
-            
-            
-            
-            <li class="nav-item mr-3 mb-lg-0">
-				
-				
-				
-				
-				
-				
-				<a class="nav-link" href="/users" ><span>Users</span></a>
-			</li>
-            
-            
-            
-            
-            
-            
-            <li class="nav-item mr-3 mb-lg-0">
-                <a class="nav-link" href="/zh/"><span>中文博客</span></a>
-            </li>
+            <li class="nav-item dropdown sw-projects-item">
+                <button type="button" class="nav-link dropdown-toggle sw-projects-toggle active" id="projects-menu-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Projects</button>
+                <div class="dropdown-menu sw-projects-menu" aria-labelledby="projects-menu-toggle">
+                    
 
+
+<div class="sw-projects-content">
+  <a class="dropdown-item sw-projects-intro" href="/get-started/">
+    <span><strong>Get started in minutes</strong><span>Try the Showcase or install SkyWalking</span></span>
+    <span aria-hidden="true">→</span>
+  </a>
+  <div class="sw-projects-groups">
+    
+    
+    
+      
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+      
+    
+    
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+    
+    
+    <div class="sw-projects-group">
+      <p class="sw-projects-label">Platform</p>
+    
+      <div class="sw-projects-group-links">
+        <div class="sw-projects-columns">
+        
+        <div class="sw-projects-column">
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#SkyWalking">
+          <img src="/images/project/skywalking.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking</strong><span class="sw-project-description">Core observability server</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link active" href="/docs/#BanyanDB">
+          <img src="/images/project/banyan-db.svg" width="28" height="28" alt="">
+          <span><strong>BanyanDB</strong><span class="sw-project-description">Observability database</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#HorizonUI">
+          <img src="/images/project/skywalking.svg" width="28" height="28" alt="">
+          <span><strong>Horizon UI</strong><span class="sw-project-description">Next-generation UI</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#AISessionizer">
+          <img src="/images/project/skywalking.svg" width="28" height="28" alt="">
+          <span><strong>AI Sessionizer</strong><span class="sw-project-description">AI agent observability</span></span>
+        </a>
+        
+        
+        </div>
+        
+        </div>
+        
+        <a class="dropdown-item sw-projects-more" href="/docs/#SkyWalkingServers">All platform projects <span aria-hidden="true">→</span></a>
+        
+      </div>
+    </div>
+    
+    
+    
+      
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+      
+    
+      
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+      
+    
+    
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+    
+    
+    <div class="sw-projects-group sw-projects-group-wide">
+      <p class="sw-projects-label">Agents &amp; collection</p>
+    
+      <div class="sw-projects-group-links">
+        <div class="sw-projects-columns">
+        
+        <div class="sw-projects-column">
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#JavaAgent">
+          <img src="/images/project/java-agent.svg" width="28" height="28" alt="">
+          <span><strong>Java Agent</strong><span class="sw-project-description">Java tracing and profiling</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#GoAgent">
+          <img src="/images/project/skywalking-go.svg" width="28" height="28" alt="">
+          <span><strong>Go Agent</strong><span class="sw-project-description">Go tracing and metrics</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#PythonAgent">
+          <img src="/images/project/python-agent.svg" width="28" height="28" alt="">
+          <span><strong>Python Agent</strong><span class="sw-project-description">Python tracing and profiling</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#NodeJSAgent">
+          <img src="/images/project/nodejs-agent.svg" width="28" height="28" alt="">
+          <span><strong>NodeJS Agent</strong><span class="sw-project-description">Node.js distributed tracing</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#PHPAgent">
+          <img src="/images/project/php-agent.svg" width="28" height="28" alt="">
+          <span><strong>PHP Agent</strong><span class="sw-project-description">PHP distributed tracing</span></span>
+        </a>
+        
+        
+        </div>
+        
+        <div class="sw-projects-column">
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#OpenTelemetryOTLP">
+          <img src="/images/project/otlp.svg" width="28" height="28" alt="">
+          <span><strong>OpenTelemetry (OTLP)</strong><span class="sw-project-description">OTLP traces, metrics, and logs</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#SkyWalkingRover">
+          <img src="/images/project/skywalking.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking Rover</strong><span class="sw-project-description">eBPF metrics and profiling</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#SkyWalkingSatellite">
+          <img src="/images/project/skywalking-satellite.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking Satellite</strong><span class="sw-project-description">Lightweight telemetry collector</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#KubernetesEventExporter">
+          <img src="/images/project/kubernetes.svg" width="28" height="28" alt="">
+          <span><strong>Kubernetes Event Exporter</strong><span class="sw-project-description">Kubernetes event collection</span></span>
+        </a>
+        
+        
+        </div>
+        
+        </div>
+        
+        <a class="dropdown-item sw-projects-more" href="/docs/#Agents">View all agents &amp; collectors <span aria-hidden="true">→</span></a>
+        
+      </div>
+    </div>
+    
+    
+    
+      
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+      
+    
+    
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+    
+    
+    <div class="sw-projects-group">
+      <p class="sw-projects-label">Operations &amp; tools</p>
+    
+      <div class="sw-projects-group-links">
+        <div class="sw-projects-columns">
+        
+        <div class="sw-projects-column">
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#SkyWalkingCLI">
+          <img src="/images/project/skywalking-cli.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking CLI</strong><span class="sw-project-description">Command-line operations</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#SkyWalkingMCP">
+          <img src="/images/project/skywalking.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking MCP</strong><span class="sw-project-description">Observability for AI assistants</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#KubernetesHelm">
+          <img src="/images/project/helm.svg" width="28" height="28" alt="">
+          <span><strong>Kubernetes Helm</strong><span class="sw-project-description">Deploy SkyWalking with Helm</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#SkyWalkingCloudonKubernetes">
+          <img src="/images/project/kubernetes.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking Cloud on Kubernetes</strong><span class="sw-project-description">Kubernetes operator</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#SkyWalkingEyes">
+          <img src="/images/project/skywalking-eyes.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking Eyes</strong><span class="sw-project-description">License checks and fixes</span></span>
+        </a>
+        
+        
+        </div>
+        
+        </div>
+        
+        <a class="dropdown-item sw-projects-more" href="/docs/#Operation">All operations projects <span aria-hidden="true">→</span></a>
+        
+      </div>
+    </div>
+    
+  </div>
+  <div class="sw-projects-footer">
+    <a class="dropdown-item sw-projects-all" href="/docs/">All projects <span aria-hidden="true">→</span></a>
+    <a class="dropdown-item sw-projects-downloads" href="/downloads/">Downloads <span aria-hidden="true">→</span></a>
+  </div>
+</div>
+
+                </div>
+            </li>
+            
+            
+            
+            
+            <li class="nav-item"><a class="nav-link" href="/blog">Blogs</a></li>
+            
+            
+            
+            
+            
+            <li class="nav-item" data-nav-promote="events" hidden><a class="nav-link" href="/events/">Release Posts</a></li>
+            
+            <li class="nav-item" data-nav-promote="events/calendar" hidden><a class="nav-link" href="/events/calendar/">Event Calendar</a></li>
+            
+            <li class="nav-item" data-nav-promote="users" hidden><a class="nav-link" href="/users">Users</a></li>
+            
+            <li class="nav-item" data-nav-promote="team" hidden><a class="nav-link" href="/team">Team</a></li>
+            
+            <li class="nav-item" data-nav-promote="zh" hidden><a class="nav-link" href="/zh/">中文博客</a></li>
+            
+            
+            <li class="nav-item dropdown" data-nav-more>
+                <button type="button" class="nav-link dropdown-toggle sw-more-toggle" id="more-menu-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">More</button>
+                <div class="dropdown-menu sw-more-menu" aria-labelledby="more-menu-toggle">
+                    
+                    <a class="dropdown-item" data-nav-overflow="events" href="/events/">Release Posts</a>
+                    
+                    <a class="dropdown-item" data-nav-overflow="events/calendar" href="/events/calendar/">Event Calendar</a>
+                    
+                    <a class="dropdown-item" data-nav-overflow="users" href="/users">Users</a>
+                    
+                    <a class="dropdown-item" data-nav-overflow="team" href="/team">Team</a>
+                    
+                    <a class="dropdown-item" data-nav-overflow="zh" href="/zh/">中文博客</a>
+                    
+                </div>
+            </li>
+            
+            
+            
+            
+            
+            
             
 			
         </ul>
     </div>
 
-    <div class="navbar-nav d-none d-lg-block search-input-box">
-        
-<div id="docsearch"></div>
+    <div class="sw-navbar-actions">
+        <button type="button" class="sw-kapa-search" aria-label="Search SkyWalking documentation and ask AI" aria-haspopup="dialog" title="Search and ask AI">
+  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="7.5"/><path d="m16 16 5 5"/></svg>
+  <span>Search</span>
+</button>
 
-
-            
-        
+        <div class="navbar-nav d-none d-lg-block search-input-box">
             
         
             
@@ -276,7 +1263,24 @@ Ensure the stable operation of DB nodes across all lifecycle stages (bootstrap, 
             </span>
             
         
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+            <a class="sw-nav-cta" href="/get-started/">Get started</a>
+            
+        
+            
+        
+        </div>
     </div>
+  </div>
 </nav>
 
     </header>
@@ -285,32 +1289,6 @@ Ensure the stable operation of DB nodes across all lifecycle stages (bootstrap, 
       <div class="td-main">
         <div class="row flex-xl-nowrap">
           <div class="col-12 col-md-3 col-xl-2 d-print-none scroll-bar td-sidebar">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -367,9 +1345,25 @@ Ensure the stable operation of DB nodes across all lifecycle stages (bootstrap, 
                   
                     
                     
-                    <option ZgotmplZ value="v0.10.3">
+                    <option ZgotmplZ value="v0.11.2">
                     
-                      v0.10.3
+                      v0.11.2
+                    
+                    </option>
+                  
+                    
+                    
+                    <option ZgotmplZ value="v0.11.1">
+                    
+                      v0.11.1
+                    
+                    </option>
+                  
+                    
+                    
+                    <option ZgotmplZ value="v0.11.0">
+                    
+                      v0.11.0
                     
                     </option>
                   
@@ -530,6 +1524,14 @@ Ensure the stable operation of DB nodes across all lifecycle stages (bootstrap, 
 
     <li>
         
+            <a href="/docs/skywalking-banyandb/latest/interacting/bydbctl/agent">BYDBQL Agent TUI</a>
+        
+    </li>
+
+    
+
+    <li>
+        
 
             
             <a href="#">CRUD Schema<i class="iconfont icon-arrow-right pull-right"></i></a>
@@ -558,6 +1560,14 @@ Ensure the stable operation of DB nodes across all lifecycle stages (bootstrap, 
     <li>
         
             <a href="/docs/skywalking-banyandb/latest/interacting/bydbctl/schema/stream">Stream</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/latest/interacting/bydbctl/schema/trace">Trace</a>
         
     </li>
 
@@ -616,6 +1626,14 @@ Ensure the stable operation of DB nodes across all lifecycle stages (bootstrap, 
     <li>
         
             <a href="/docs/skywalking-banyandb/latest/interacting/bydbctl/query/stream">Stream</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/latest/interacting/bydbctl/query/trace">Trace</a>
         
     </li>
 
@@ -819,6 +1837,56 @@ Ensure the stable operation of DB nodes across all lifecycle stages (bootstrap, 
 
     <li>
         
+
+            
+            <a href="#">Schema Consistency<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/latest/interacting/schema-consistency/overview">Overview</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/latest/interacting/schema-consistency/barriers">Barrier RPCs</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/latest/interacting/schema-consistency/revision-gates">Revision Gates</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/latest/interacting/schema-consistency/scenarios">Scenarios</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
             <a href="/docs/skywalking-banyandb/latest/interacting/bydbql">BydbQL</a>
         
     </li>
@@ -874,7 +1942,107 @@ Ensure the stable operation of DB nodes across all lifecycle stages (bootstrap, 
 
     <li>
         
-            <a href="/docs/skywalking-banyandb/latest/operation/observability">Observability</a>
+
+            
+            <a href="#">Trace Pipeline Plugins<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/latest/operation/plugins-development">Development Guide</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/latest/operation/plugins">Packaging and Deployment</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/latest/operation/plugins-debugging">Debugging (Offline)</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
+            <a href="#">Observability<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/latest/operation/observability/overview">Overview</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/latest/operation/observability/logging">Logging</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/latest/operation/observability/metrics">Metrics</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/latest/operation/observability/providers">Metrics Providers</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/latest/operation/observability/profiling">Profiling</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/latest/operation/observability/tracing">Query Tracing</a>
+        
+    </li>
+
+    
+
+</ul>
+
         
     </li>
 
@@ -1029,6 +2197,14 @@ Ensure the stable operation of DB nodes across all lifecycle stages (bootstrap, 
 
     
 
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/latest/operation/mcp/plugin">Plugin Packaging</a>
+        
+    </li>
+
+    
+
 </ul>
 
         
@@ -1066,6 +2242,14 @@ Ensure the stable operation of DB nodes across all lifecycle stages (bootstrap, 
     <li>
         
             <a href="/docs/skywalking-banyandb/latest/operation/fodc/apis">Proxy APIs and CLI Flags</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/latest/operation/fodc/topology">Cluster Topology Rendering</a>
         
     </li>
 
@@ -1137,6 +2321,14 @@ Ensure the stable operation of DB nodes across all lifecycle stages (bootstrap, 
 
     <li>
         
+            <a href="/docs/skywalking-banyandb/latest/concept/storage-and-format">Storage &amp; File Format (by API resource)</a>
+        
+    </li>
+
+    
+
+    <li>
+        
             <a href="/docs/skywalking-banyandb/latest/concept/tsdb">v1.3.0</a>
         
     </li>
@@ -1161,6 +2353,14 @@ Ensure the stable operation of DB nodes across all lifecycle stages (bootstrap, 
     <li>
         
             <a href="/docs/skywalking-banyandb/latest/concept/clustering">Clustering</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/skywalking-banyandb/latest/concept/distributed-measure-aggregation">Distributed Measure Aggregation</a>
         
     </li>
 
@@ -1240,8 +2440,48 @@ Ensure the stable operation of DB nodes across all lifecycle stages (bootstrap, 
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 951e00e</div>
+                  <div class="commit-id">Commit Id: 30d3268</div>
                 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1313,7 +2553,7 @@ data from DB nodes, and also supports <strong>on-demand</strong> performance pro
 </span></span><span style="display:flex;"><span>                 |  - Cluster topology view                |
 </span></span><span style="display:flex;"><span>External         |  - Aggregated metrics (/metrics         |
 </span></span><span style="display:flex;"><span>Clients &amp;  &lt;---- |    and /metrics-windows)                |
-</span></span><span style="display:flex;"><span>Ecosystem        |  - Config view (/cluster/config)        |
+</span></span><span style="display:flex;"><span>Ecosystem        |  - Lifecycle view (/cluster/lifecycle)  |
 </span></span><span style="display:flex;"><span>                 |  - On-demand control APIs               |
 </span></span><span style="display:flex;"><span>                 +-----------------^-----------------------+
 </span></span><span style="display:flex;"><span>                                   |
@@ -1399,23 +2639,20 @@ data from DB nodes, and also supports <strong>on-demand</strong> performance pro
 </li>
 </ul>
 <h3 id="proxy-metric-exposure">Proxy Metric Exposure</h3>
-<p>The FODC Proxy provides aggregated / enriched metric endpoints:</p>
+<p>The FODC Proxy aggregates the metrics of <strong>all</strong> registered agents and re-exposes them through two endpoints. Both accept optional <code>role</code> and <code>pod_name</code> query parameters to scope the result to a subset of nodes:</p>
 <ul>
 <li><code>GET /metrics</code>
 <ul>
-<li>Proxy’s own metrics (health, number of agents, RPC latency, etc.)</li>
+<li>Returns the <strong>aggregated, latest</strong> per-node metrics from every agent in <strong>Prometheus text exposition format</strong> (<code>Content-Type: text/plain; version=0.0.4</code>).</li>
+<li>On each request the proxy collects the current sample from the agents on demand, then concatenates them — so scraping the proxy once yields every node&rsquo;s series. This is the <strong>single scrape target</strong> for a Prometheus-based setup; per-node identity is carried in the <code>pod_name</code> and <code>container_name</code> labels (see <a href="../../observability/providers">Observability › Metrics Providers</a>).</li>
+<li>This endpoint exposes the aggregated node metrics, <strong>not</strong> a proxy-only view; the proxy&rsquo;s own health and agent counts are served separately by <code>GET /health</code> (status, online/total agents, uptime).</li>
 </ul>
 </li>
 <li><code>GET /metrics-windows</code>
 <ul>
-<li>Returns metrics <strong>within the maintained time window</strong> for all known agents</li>
-<li>Includes <strong>additional node metadata</strong>, such as:
-<ul>
-<li>Node role (<code>liaison</code>, <code>datanode-hot</code>, <code>datanode-warm</code>, <code>datanode-cold</code>, etc.)</li>
-<li>Node IDs and cluster membership</li>
-<li>Location / shard information (if available)</li>
-</ul>
-</li>
+<li>Returns metrics as <strong>JSON</strong> — an array of time series, each with <code>name</code>, <code>description</code>, <code>labels</code>, <code>agent_id</code>, <code>pod_name</code>, and a time-sorted <code>data</code> array of <code>{timestamp, value}</code> points.</li>
+<li>When <strong>both</strong> <code>start_time</code> and <code>end_time</code> (RFC3339) are supplied, it returns the samples held in the agents&rsquo; in-memory sliding window for that range; otherwise it falls back to the latest sample (the same data as <code>/metrics</code>, in JSON form).</li>
+<li>Each series carries whatever labels the underlying metric has (including <code>node_role</code> and <code>container_name</code>); richer cluster metadata such as node IDs, membership, and roles is served by <code>GET /cluster/topology</code>. This endpoint is intended for short-term trend queries and incident triage, <strong>not</strong> as a Prometheus scrape target.</li>
 </ul>
 </li>
 </ul>
@@ -1438,30 +2675,24 @@ data from DB nodes, and also supports <strong>on-demand</strong> performance pro
 <li>The Proxy aggregates these registrations into a <strong>logical cluster hierarchy structure</strong>.</li>
 </ol>
 <h3 id="topology--status-api">Topology &amp; Status API</h3>
-<p>The Proxy exposes a unified cluster discovery endpoint:</p>
+<p>The Proxy exposes a cluster discovery endpoint:</p>
 <ul>
-<li><code>GET /cluster</code>
+<li><code>GET /cluster/topology</code>
 <ul>
-<li>Returns the list of all registered nodes</li>
-<li>Includes:
+<li>Triggers a topology collection across all registered agents and returns the merged snapshot as JSON: <code>{ &quot;nodes&quot;: [...], &quot;calls&quot;: [...] }</code>.</li>
+<li>Each <code>nodes</code> entry carries:
 <ul>
-<li>Node identity (ID, name, address)</li>
-<li>Role:
-<ul>
-<li><code>liaison</code></li>
-<li><code>datanode-hot</code></li>
-<li><code>datanode-warm</code></li>
-<li><code>datanode-cold</code></li>
-<li>(extensible for future roles)</li>
+<li>Node identity — <code>metadata.name</code> and <code>grpc_address</code></li>
+<li><code>labels</code> — e.g. <code>pod_name</code> and <code>type</code> (<code>hot</code> / <code>warm</code> / <code>cold</code>)</li>
+<li><code>roles</code> — role-name strings such as <code>ROLE_META</code>, <code>ROLE_DATA</code>, <code>ROLE_LIAISON</code> (extensible for future roles)</li>
+<li>Agent <code>status</code> (online/offline) and <code>last_heartbeat</code></li>
 </ul>
 </li>
-<li>Agent status (online/offline, last heartbeat time)</li>
-<li>Key runtime indicators (optional: load, health, etc.)</li>
+<li><code>calls</code> describes the node-to-node call graph reported by the agents (route-table membership, not data flow).</li>
 </ul>
 </li>
 </ul>
-</li>
-</ul>
+<p>See <a href="./../apis">Proxy APIs and CLI Flags</a> for the full response schema. To turn this node inventory into a directed, weighted topology of the actual data flow — joining it with the queue metrics for per-edge throughput, latency, and errors — see <a href="./../topology">Cluster Topology Rendering</a>.</p>
 <p>This simplifies integration with:</p>
 <ul>
 <li>Cluster dashboards</li>
@@ -1469,44 +2700,37 @@ data from DB nodes, and also supports <strong>on-demand</strong> performance pro
 <li>Higher-level diagnostics tooling that needs a consistent cluster graph</li>
 </ul>
 <hr>
-<h2 id="node-configuration-collection">Node Configuration Collection</h2>
-<p>FODC also collects and exposes static and dynamic configuration for each node.</p>
-<h3 id="what-is-collected">What Is Collected</h3>
-<p>Typical configuration categories include:</p>
+<h2 id="cluster-lifecycle-and-group-information">Cluster Lifecycle and Group Information</h2>
+<p>Beyond topology, the Proxy aggregates per-group lifecycle data and per-pod lifecycle reports from the agents.</p>
+<h3 id="lifecycle-api">Lifecycle API</h3>
 <ul>
-<li><strong>Startup parameters</strong>
+<li><code>GET /cluster/lifecycle</code>
 <ul>
-<li>Command-line flags</li>
-<li>Environment variables (where permitted)</li>
+<li>Triggers lifecycle-data collection from all agents that support the lifecycle stream and returns JSON with two sections:
+<ul>
+<li><code>groups</code> — group lifecycle information (group name, catalog type, resource options such as shard count / segment interval / TTL, and data info), collected from the first agent that provides it (typically the liaison node).</li>
+<li><code>lifecycle_statuses</code> — per-pod lifecycle reports, i.e. the JSON report files read from each agent&rsquo;s lifecycle report directory.</li>
 </ul>
 </li>
-<li><strong>Affected configurations</strong>
-<ul>
-<li>Configurations used by the database node in the runtime.</li>
-</ul>
-</li>
-</ul>
-<h3 id="configuration-api">Configuration API</h3>
-<p>The FODC Proxy aggregates configuration from all Agents and exposes it via:</p>
-<ul>
-<li><code>GET /cluster/config</code>
-<ul>
-<li>Returns configuration for all nodes in the cluster</li>
-</ul>
-</li>
-<li>Potential filters (implementation-dependent):
-<ul>
-<li><code>GET /cluster/config?node_id=&lt;id&gt;</code></li>
-<li><code>GET /cluster/config?role=datanode-hot</code></li>
+<li>Agents that do not support the lifecycle stream are silently skipped.</li>
 </ul>
 </li>
 </ul>
 <p>This allows:</p>
 <ul>
-<li>Quickly verifying configuration consistency across nodes and tiers</li>
-<li>Comparing pre- and post-incident configuration states</li>
-<li>Supporting automated configuration audits and drift detection</li>
+<li>Verifying group / resource-option consistency across the cluster</li>
+<li>Reviewing lifecycle (rotation / TTL / migration) reports per node</li>
+<li>Correlating group settings with observed behavior during incident triage</li>
 </ul>
+<h3 id="crash-diagnostics-api">Crash Diagnostics API</h3>
+<ul>
+<li><code>GET /diagnostics</code>
+<ul>
+<li>Aggregates crash diagnostic records (structured panic records and on-disk crash artifacts) from all connected agents, with optional <code>role</code> and <code>pod_name</code> filters.</li>
+</ul>
+</li>
+</ul>
+<p>See <a href="./../apis">Proxy APIs and CLI Flags</a> for the full request/response schemas of both endpoints.</p>
 <hr>
 <h2 id="on-demand-performance-profiling-and-memory-snapshots">On-Demand Performance Profiling and Memory Snapshots</h2>
 <p>On-demand diagnostics are the <strong>first non read-only capability</strong> exposed by FODC.
@@ -1612,10 +2836,10 @@ Extra CPU/memory budget is mainly consumed <strong>only during active profiling 
             <li><a href="#topology--status-api">Topology &amp; Status API</a></li>
           </ul>
         </li>
-        <li><a href="#node-configuration-collection">Node Configuration Collection</a>
+        <li><a href="#cluster-lifecycle-and-group-information">Cluster Lifecycle and Group Information</a>
           <ul>
-            <li><a href="#what-is-collected">What Is Collected</a></li>
-            <li><a href="#configuration-api">Configuration API</a></li>
+            <li><a href="#lifecycle-api">Lifecycle API</a></li>
+            <li><a href="#crash-diagnostics-api">Crash Diagnostics API</a></li>
           </ul>
         </li>
         <li><a href="#on-demand-performance-profiling-and-memory-snapshots">On-Demand Performance Profiling and Memory Snapshots</a>
@@ -1720,6 +2944,9 @@ Extra CPU/memory budget is mainly consumed <strong>only during active profiling 
         
         
     </div>
+    <p class="footer-contribute">
+      <a id="contribute" href="https://github.com/apache/skywalking-website" target="_blank" rel="noopener">Help improve this website <span aria-hidden="true">↗</span></a>
+    </p>
     <div class="">
 
         <small class="text-color">&copy; 2017 - 2026 The Apache Software Foundation All Rights Reserved</small>
@@ -11434,6 +12661,1466 @@ Extra CPU/memory budget is mainly consumed <strong>only during active profiling 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
 <div id="popup">
     <div class="mask">
@@ -11441,85 +14128,187 @@ Extra CPU/memory budget is mainly consumed <strong>only during active profiling 
     </div>
 </div>
 
-    <div class="sidebar-mask"></div>
-<div class="sidebar">
-    <nav class="nav-links">
+    
+
+
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+<div class="sidebar-mask" aria-hidden="true"></div>
+<div class="sidebar" id="site-navigation-drawer" role="dialog" aria-modal="true" aria-label="Navigation" aria-hidden="true" tabindex="-1">
+  <div class="sidebar-header">
+    <span>Menu</span>
+    <button type="button" class="sidebar-close" aria-label="Close navigation">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+    </button>
+  </div>
+  <nav class="nav-links" aria-label="Site pages">
+    <ul class="sidebar-primary">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/">Home</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link active" href="/docs" aria-current="page">Projects</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/blog">Blogs</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/events/">Release Posts</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/events/calendar/">Event Calendar</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/users">Users</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/team">Team</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/zh/">中文博客</a></li>
+      
+      
+    </ul>
+    <ul class="sidebar-secondary">
+      <li><a class="nav-link" href="/downloads/">Downloads</a></li>
+      
+      <li><a class="nav-link" href="/get-started/">Get started</a></li>
+      
+    </ul>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <details class="sidebar-resources">
+      <summary><span>Apache</span><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 4 4 4-4 4"/></svg></summary>
+      <ul class="sidebar-resource-links">
         
-        <div class="nav-item"><a href="/docs/" class="nav-link router-link-active">Documentation</a></div>
-        <div class="nav-item"><a href="/events/" class="nav-link">Events</a></div>
-        <div class="nav-item"><a href="/blog/" class="nav-link">Blog</a></div>
-        <div class="nav-item"><a href="/downloads/" class="nav-link">Downloads</a></div>
-        <div class="nav-item"><a href="/team/" class="nav-link">Team</a></div>
-        <div class="nav-item"><a href="/users/" class="nav-link">Users</a></div>
-        <div class="nav-item"><a href="/zh/" class="nav-link">中文博客</a></div>
-        <div class="nav-item">
-            <div class="dropdown-wrapper open">
-                <a class="dropdown-title">
-                    <span>Links</span>
-                    <span class="arrow down"></span>
-                </a>
-                <ul class="nav-dropdown">
-                    <li class="dropdown-item">
-                        <a href="http://www.apache.org/" target="_blank"
-                           rel="noopener noreferrer" class="nav-link external">
-                            Apache Software Foundation
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="https://github.com/apache/skywalking/issues"
-                           target="_blank" rel="noopener noreferrer"
-                           class="nav-link external">
-                            GitHub Issue Tracker
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="https://lists.apache.org/list.html?dev@skywalking.apache.org" target="_blank"
-                           rel="noopener noreferrer" class="nav-link external">
-                            Dev Mailing List
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="http://www.apache.org/licenses/" target="_blank"
-                           rel="noopener noreferrer" class="nav-link external">
-                            License
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="http://www.apache.org/events/current-event"
-                           target="_blank" rel="noopener noreferrer"
-                           class="nav-link external">
-                            Apache Events
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="http://www.apache.org/security/" target="_blank"
-                           rel="noopener noreferrer" class="nav-link external">
-                            Security
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="http://www.apache.org/foundation/sponsorship.html"
-                           target="_blank" rel="noopener noreferrer"
-                           class="nav-link external">
-                            Sponsorship and Donate
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="http://www.apache.org/foundation/thanks.html"
-                           target="_blank" rel="noopener noreferrer"
-                           class="nav-link external">
-                            Thanks
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+        <li><a class="nav-link" href="http://www.apache.org/" target="_blank" rel="noopener noreferrer"><span>Apache Software Foundation</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="https://github.com/apache/skywalking/issues" target="_blank" rel="noopener noreferrer"><span>GitHub Issue Tracker</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="https://github.com/apache/skywalking/discussions" target="_blank" rel="noopener noreferrer"><span>Discussion</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="https://lists.apache.org/list.html?dev@skywalking.apache.org" target="_blank" rel="noopener noreferrer"><span>Dev Mailing List</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="https://cwiki.apache.org/confluence/display/SKYWALKING/Home" target="_blank" rel="noopener noreferrer"><span>WIKI</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="http://www.apache.org/licenses/" target="_blank" rel="noopener noreferrer"><span>License</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="http://www.apache.org/events/current-event" target="_blank" rel="noopener noreferrer"><span>Apache Events</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="http://www.apache.org/security/" target="_blank" rel="noopener noreferrer"><span>Security</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="http://www.apache.org/foundation/sponsorship.html" target="_blank" rel="noopener noreferrer"><span>Sponsor and Donate</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="http://www.apache.org/foundation/thanks.html" target="_blank" rel="noopener noreferrer"><span>Thanks</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="https://apache.org/foundation/policies/privacy.html" target="_blank" rel="noopener noreferrer"><span>Privacy</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+      </ul>
+    </details>
+    
+    
+  </nav>
 </div>
 
     <script src="/js/bootstrap.bundle.min.js"></script>
 
-<script src="/js/docsearch-3.9.0.js"></script>
 
 
 
@@ -11529,7 +14318,8 @@ Extra CPU/memory budget is mainly consumed <strong>only during active profiling 
 
 
 
-<script src="/js/main.min.9be14eed0a0e24711261c334305209aa2e5ae3fb624f6a1731e064d5ffb11f3d.js" integrity="sha256-m&#43;FO7QoOJHESYcM0MFIJqi5a4/tiT2oXMeBk1f&#43;xHz0=" crossorigin="anonymous"></script>
+
+<script src="/js/main.min.a351a9c3ee226044b9050a859fb2f5a6019a548cfe22e3ca281fb08443c28976.js" integrity="sha256-o1Gpw&#43;4iYES5BQqFn7L1pgGaVIz&#43;IuPKKB&#43;whEPCiXY=" crossorigin="anonymous"></script>
 
 
 <script src="/js/highlight.min.js"></script>
@@ -11562,14 +14352,16 @@ data-project-name="SkyWalking"
 data-project-color="#2B74B8"
 data-button-text="Ask AI"
 data-search-mode-enabled="true"
+data-search-mode-default="false"
+data-modal-override-open-selector-search=".sw-kapa-search"
 data-modal-open-on-command-k="true"
+data-modal-command-k-search-mode-default="true"
+data-modal-z-index="10000"
 data-modal-disclaimer="The AI supports multiple languages, but it may not be accessible in China, a proxy is required."
 data-project-logo="/images/widget-logo.jpg"
 data-modal-example-questions="What is Apache SkyWalking?,How to deploy SkyWalking?,How to inject agents non-intrusively?,How to setup trace sampling?"
-data-button-position-top=""
 data-button-position-right="20px"
 data-button-position-bottom="200px"
-data-button-position-left=""
 data-consent-required="true"  
 data-user-analytics-cookie-enabled="true"  
 data-consent-screen-title="Help us improve our AI assistant"  
@@ -11577,8 +14369,28 @@ data-consent-screen-disclaimer="By clicking 'Allow tracking', you consent to ano
 data-consent-screen-accept-button-text="Allow tracking"  
 data-consent-screen-reject-button-text="No, thanks"
 ></script>
+<script>
+  (function () {
+    var SEL = 'details.topic-filter';
 
+    function closeAll(except) {
+      document.querySelectorAll(SEL).forEach(function (d) {
+        if (d !== except && d.open) { d.open = false; }
+      });
+    }
 
+    
+    
+    document.addEventListener('click', function (e) {
+      var target = e.target instanceof Element ? e.target.closest(SEL) : null;
+      closeAll(target);
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' || e.key === 'Esc') { closeAll(null); }
+    });
+  })();
+</script>
 
 
     <script>

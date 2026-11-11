@@ -5,8 +5,85 @@
     <description>Recent engineering posts from Apache SkyWalking</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Tue, 30 Jun 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 29 Oct 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://skywalking.apache.org/tags/engineering/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Collect Cloud Sessions, Evaluate Locally: Analyzing AI Agents on Amazon Bedrock AgentCore with Apache SkyWalking AI Sessionizer</title>
+      <link>https://skywalking.apache.org/blog/2026-10-29-ai-sessionizer-agentcore-pull-judge/</link>
+      <pubDate>Thu, 29 Oct 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2026-10-29-ai-sessionizer-agentcore-pull-judge/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sheng Wu</dc:creator>
+      <category>AI</category>
+      <category>Engineering</category>
+      <category>Community</category>
+      <description>Deploy a real Bedrock-powered agent, collect its execution records with Apache SkyWalking AI Sessionizer, and pull them locally for evaluation. Follow the commands and HTML report screenshots to check completion, evidence, and execution efficiency.</description>
+    </item>
+    <item>
+      <title>采集云端会话，本地评估：用 Apache SkyWalking AI Sessionizer 分析 Amazon Bedrock AgentCore 上的 AI Agent</title>
+      <link>https://skywalking.apache.org/zh/2026-10-29-ai-sessionizer-agentcore-pull-judge/</link>
+      <pubDate>Thu, 29 Oct 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/zh/2026-10-29-ai-sessionizer-agentcore-pull-judge/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">吴晟</dc:creator>
+      <category>AI</category>
+      <category>Engineering</category>
+      <category>Community</category>
+      <description>设计一个真实调用 Bedrock 的发布助手，部署到 AgentCore 并用 asz 采集；通过 remote pull 在本地查看，再按设计目标运行 judge、导出 HTML 报告，逐项检查完成条件、已做工作和缺口。</description>
+    </item>
+    <item>
+      <title>Recorded as the Session Runs, Kept When It Ends: LangGraph on Amazon Bedrock AgentCore</title>
+      <link>https://skywalking.apache.org/blog/2026-10-10-ai-sessionizer-agentcore/</link>
+      <pubDate>Sat, 10 Oct 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2026-10-10-ai-sessionizer-agentcore/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sheng Wu</dc:creator>
+      <category>AI</category>
+      <category>Engineering</category>
+      <category>Community</category>
+      <description>Run a LangGraph agent on Amazon Bedrock AgentCore Runtime and record every turn, model prompt, tool call and file change in Apache SkyWalking AI Sessionizer while the session runs, kept after it ends, with no change to the agent&#39;s logic.</description>
+    </item>
+    <item>
+      <title>From Claude Code to Your Own Agent: Capture and Replay LangChain and LangGraph Conversations</title>
+      <link>https://skywalking.apache.org/blog/2026-09-23-ai-sessionizer-langchain-langgraph/</link>
+      <pubDate>Wed, 23 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2026-09-23-ai-sessionizer-langchain-langgraph/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sheng Wu</dc:creator>
+      <category>AI</category>
+      <category>Engineering</category>
+      <category>Community</category>
+      <description>Build a LangGraph agent on Amazon Bedrock, point its tracing client at Apache SkyWalking AI Sessionizer, and replay every turn, tool call, sub-agent and model request without changing the application.</description>
+    </item>
+    <item>
+      <title>Beyond Replay: Metrics and Change Detection for Your Claude Code Sessions</title>
+      <link>https://skywalking.apache.org/blog/2026-09-12-ai-sessionizer-workspace-changes/</link>
+      <pubDate>Sat, 12 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2026-09-12-ai-sessionizer-workspace-changes/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sheng Wu</dc:creator>
+      <category>AI</category>
+      <category>Engineering</category>
+      <category>Community</category>
+      <description>Understand Claude Code usage across sessions and machines, replay recorded work, and inspect file changes with their tool calls and source evidence.</description>
+    </item>
+    <item>
+      <title>不止于回放：看清 Claude Code 的用量与文件变更</title>
+      <link>https://skywalking.apache.org/zh/2026-09-12-ai-sessionizer-workspace-changes/</link>
+      <pubDate>Sat, 12 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/zh/2026-09-12-ai-sessionizer-workspace-changes/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">吴晟</dc:creator>
+      <category>AI</category>
+      <category>Engineering</category>
+      <category>Community</category>
+      <description>汇总多次会话、多台机器上的 Claude Code 用量，结合对话、工具调用和文件差异，看清智能体做了什么、修改了什么，以及消耗了哪些资源。</description>
+    </item>
+    <item>
+      <title>Replay Claude Code Sessions Without Plugins or Configuration Changes</title>
+      <link>https://skywalking.apache.org/blog/2026-09-03-ai-sessionizer-first-look/</link>
+      <pubDate>Thu, 03 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2026-09-03-ai-sessionizer-first-look/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sheng Wu</dc:creator>
+      <category>AI</category>
+      <category>Engineering</category>
+      <category>Community</category>
+      <description>Replay existing Claude Code sessions with Apache SkyWalking AI Sessionizer: explore conversations, tool calls, and child-agent activity without installing a Claude Code plugin or changing its configuration.</description>
+    </item>
     <item>
       <title>Meet Horizon UI · 13/17: Platform &amp; Cluster Introspection</title>
       <link>https://skywalking.apache.org/blog/2026-06-30-horizon-ui-platform-introspection/</link>
@@ -136,78 +213,6 @@
       <category>Profiling</category>
       <category>Engineering</category>
       <description>Part 9 of the Meet Horizon UI series: SkyWalking&#39;s five profilers — trace, async (JVM), eBPF, Go pprof, and network — four of them pouring into one shared flame-graph and stack-tree engine, and the fifth rendering a process honeycomb instead.</description>
-    </item>
-    <item>
-      <title>认识 Horizon UI · 9/17：五种 Profiler，一套火焰图</title>
-      <link>https://skywalking.apache.org/zh/2026-06-26-horizon-ui-profiling/</link>
-      <pubDate>Fri, 26 Jun 2026 00:00:00 +0000</pubDate>
-      <guid>https://skywalking.apache.org/zh/2026-06-26-horizon-ui-profiling/</guid>
-      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">吴晟</dc:creator>
-      <category>Profiling</category>
-      <category>Engineering</category>
-      <description>Horizon UI 系列第九篇：SkyWalking 的五种 profiler：trace、async（JVM）、eBPF、Go pprof 和 network。前四种统一进入同一套火焰图和调用树视图，network 则用蜂窝拓扑展示进程间通信。</description>
-    </item>
-    <item>
-      <title>Meet Horizon UI · 8/17: Browser Errors &amp; Source Maps</title>
-      <link>https://skywalking.apache.org/blog/2026-06-23-horizon-ui-browser-errors-and-source-maps/</link>
-      <pubDate>Tue, 23 Jun 2026 00:00:00 +0000</pubDate>
-      <guid>https://skywalking.apache.org/blog/2026-06-23-horizon-ui-browser-errors-and-source-maps/</guid>
-      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sheng Wu</dc:creator>
-      <category>Logging</category>
-      <category>Engineering</category>
-      <description>Part 8 of the Meet Horizon UI series: the browser agent&#39;s JavaScript-error feed, and the capability that makes it useful — resolving a minified production stack back to your original file, line, column, symbol and source, frame by frame.</description>
-    </item>
-    <item>
-      <title>认识 Horizon UI · 8/17：浏览器错误与 Source Map</title>
-      <link>https://skywalking.apache.org/zh/2026-06-23-horizon-ui-browser-errors-and-source-maps/</link>
-      <pubDate>Tue, 23 Jun 2026 00:00:00 +0000</pubDate>
-      <guid>https://skywalking.apache.org/zh/2026-06-23-horizon-ui-browser-errors-and-source-maps/</guid>
-      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">吴晟</dc:creator>
-      <category>Logging</category>
-      <category>Engineering</category>
-      <description>Horizon UI 系列第八篇：浏览器端 agent 上报的 JavaScript 错误流，以及如何借助 source map 把生产环境压缩后的 stack 还原到原始文件、行、列、符号和源码片段。</description>
-    </item>
-    <item>
-      <title>Meet Horizon UI · 5/17: The 3D Infrastructure Map</title>
-      <link>https://skywalking.apache.org/blog/2026-06-22-horizon-ui-3d-infrastructure-map/</link>
-      <pubDate>Mon, 22 Jun 2026 00:00:00 +0000</pubDate>
-      <guid>https://skywalking.apache.org/blog/2026-06-22-horizon-ui-3d-infrastructure-map/</guid>
-      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sheng Wu</dc:creator>
-      <category>Cloud Native</category>
-      <category>Engineering</category>
-      <description>Part 5 of the Meet Horizon UI series: a single WebGL view of your whole deployment — every layer&#39;s services as cubes stacked on tiers, with live traffic, alarm beacons, and the calls between them.</description>
-    </item>
-    <item>
-      <title>认识 Horizon UI · 5/17：3D 基础设施地图</title>
-      <link>https://skywalking.apache.org/zh/2026-06-22-horizon-ui-3d-infrastructure-map/</link>
-      <pubDate>Mon, 22 Jun 2026 00:00:00 +0000</pubDate>
-      <guid>https://skywalking.apache.org/zh/2026-06-22-horizon-ui-3d-infrastructure-map/</guid>
-      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">吴晟</dc:creator>
-      <category>Cloud Native</category>
-      <category>Engineering</category>
-      <description>Horizon UI 系列第五篇：用一个 WebGL 场景把整个部署放到同一张 3D 地图里，把各个 Layer 的服务渲染成立方体，并同时展示实时流量、告警和调用关系。</description>
-    </item>
-    <item>
-      <title>基于 SkyWalking 10.4 的大模型应用监控：洞察 LLM 的性能与成本</title>
-      <link>https://skywalking.apache.org/zh/2026-04-05-virtual-genai-monitoring/</link>
-      <pubDate>Sun, 05 Apr 2026 00:00:00 +0000</pubDate>
-      <guid>https://skywalking.apache.org/zh/2026-04-05-virtual-genai-monitoring/</guid>
-      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">邵一鸣</dc:creator>
-      <category>AI</category>
-      <category>Engineering</category>
-      <category>Tracing</category>
-      <description>SkyWalking 10.4 增加了 Virtual GenAI 观测面板,本文将介绍该新特性的使用。</description>
-    </item>
-    <item>
-      <title>用 Apache SkyWalking 监控 Envoy AI Gateway</title>
-      <link>https://skywalking.apache.org/zh/2026-04-02-envoy-ai-gateway-monitoring/</link>
-      <pubDate>Thu, 02 Apr 2026 00:00:00 +0000</pubDate>
-      <guid>https://skywalking.apache.org/zh/2026-04-02-envoy-ai-gateway-monitoring/</guid>
-      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">吴晟</dc:creator>
-      <category>AI</category>
-      <category>Cloud Native</category>
-      <category>Engineering</category>
-      <description>基于 Envoy AI Gateway、SkyWalking OAP 10.4.0 和 BanyanDB 0.10.0，搭建面向 AI/LLM 流量的全栈可观测方案。</description>
     </item>
   </channel>
 </rss>

@@ -5,8 +5,124 @@
     <description>Recent blog posts from Apache SkyWalking</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Mon, 06 Jul 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 09 Nov 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://skywalking.apache.org/blog/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Getting the Topology Right with OpenTelemetry Traces: Gateways, Queues and Databases</title>
+      <link>https://skywalking.apache.org/blog/2026-11-09-otlp-topology-best-practices/</link>
+      <pubDate>Mon, 09 Nov 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2026-11-09-otlp-topology-best-practices/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Kai Wan</dc:creator>
+      <category>Tracing</category>
+      <category>OpenTelemetry</category>
+      <description>SkyWalking draws its topology from OTLP spans alone. Gateways, message brokers and databases reached at several addresses are where that gets hard. This post runs each case on a laptop, shows the topology before and after, and the one change that fixes it.</description>
+    </item>
+    <item>
+      <title>OpenTelemetry Traces in SkyWalking: Native Storage, Metrics and Topology</title>
+      <link>https://skywalking.apache.org/blog/2026-11-03-otlp-traces-in-skywalking/</link>
+      <pubDate>Tue, 03 Nov 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2026-11-03-otlp-traces-in-skywalking/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Kai Wan</dc:creator>
+      <category>Tracing</category>
+      <category>OpenTelemetry</category>
+      <description>SkyWalking now stores OTLP traces as they arrive and turns them into service metrics, topology and database, cache and MQ dashboards through the new Trace Analysis Language. This quick start runs the OpenTelemetry Astronomy Shop against SkyWalking with one command, and shows what to set in your own applications.</description>
+    </item>
+    <item>
+      <title>Collect Cloud Sessions, Evaluate Locally: Analyzing AI Agents on Amazon Bedrock AgentCore with Apache SkyWalking AI Sessionizer</title>
+      <link>https://skywalking.apache.org/blog/2026-10-29-ai-sessionizer-agentcore-pull-judge/</link>
+      <pubDate>Thu, 29 Oct 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2026-10-29-ai-sessionizer-agentcore-pull-judge/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sheng Wu</dc:creator>
+      <category>AI</category>
+      <category>Engineering</category>
+      <category>Community</category>
+      <description>Deploy a real Bedrock-powered agent, collect its execution records with Apache SkyWalking AI Sessionizer, and pull them locally for evaluation. Follow the commands and HTML report screenshots to check completion, evidence, and execution efficiency.</description>
+    </item>
+    <item>
+      <title>How Good Are LLM Answers? Bringing Model Quality into SkyWalking Observability</title>
+      <link>https://skywalking.apache.org/blog/2026-10-15-llm-as-judge/</link>
+      <pubDate>Thu, 15 Oct 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2026-10-15-llm-as-judge/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">peachisai</dc:creator>
+      <category>AI</category>
+      <category>Metrics</category>
+      <category>Tracing</category>
+      <description>Learn how the upcoming SkyWalking 11.1.0 release uses LLM-as-Judge to evaluate GenAI span input and output messages asynchronously and connect the results to evaluation records, metrics, and traces.</description>
+    </item>
+    <item>
+      <title>Recorded as the Session Runs, Kept When It Ends: LangGraph on Amazon Bedrock AgentCore</title>
+      <link>https://skywalking.apache.org/blog/2026-10-10-ai-sessionizer-agentcore/</link>
+      <pubDate>Sat, 10 Oct 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2026-10-10-ai-sessionizer-agentcore/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sheng Wu</dc:creator>
+      <category>AI</category>
+      <category>Engineering</category>
+      <category>Community</category>
+      <description>Run a LangGraph agent on Amazon Bedrock AgentCore Runtime and record every turn, model prompt, tool call and file change in Apache SkyWalking AI Sessionizer while the session runs, kept after it ends, with no change to the agent&#39;s logic.</description>
+    </item>
+    <item>
+      <title>From Claude Code to Your Own Agent: Capture and Replay LangChain and LangGraph Conversations</title>
+      <link>https://skywalking.apache.org/blog/2026-09-23-ai-sessionizer-langchain-langgraph/</link>
+      <pubDate>Wed, 23 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2026-09-23-ai-sessionizer-langchain-langgraph/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sheng Wu</dc:creator>
+      <category>AI</category>
+      <category>Engineering</category>
+      <category>Community</category>
+      <description>Build a LangGraph agent on Amazon Bedrock, point its tracing client at Apache SkyWalking AI Sessionizer, and replay every turn, tool call, sub-agent and model request without changing the application.</description>
+    </item>
+    <item>
+      <title>Beyond Replay: Metrics and Change Detection for Your Claude Code Sessions</title>
+      <link>https://skywalking.apache.org/blog/2026-09-12-ai-sessionizer-workspace-changes/</link>
+      <pubDate>Sat, 12 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2026-09-12-ai-sessionizer-workspace-changes/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sheng Wu</dc:creator>
+      <category>AI</category>
+      <category>Engineering</category>
+      <category>Community</category>
+      <description>Understand Claude Code usage across sessions and machines, replay recorded work, and inspect file changes with their tool calls and source evidence.</description>
+    </item>
+    <item>
+      <title>Horizon UI 1.0 GA: SkyWalking&#39;s New Mainstream UI</title>
+      <link>https://skywalking.apache.org/blog/2026-09-10-horizon-ui-1-0-ga/</link>
+      <pubDate>Thu, 10 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2026-09-10-horizon-ui-1-0-ga/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sheng Wu</dc:creator>
+      <category>Release</category>
+      <category>Community</category>
+      <description>With Horizon UI 1.0 generally available, the SkyWalking community has voted to make it the project&#39;s primary UI and retire Booster UI. Explore Horizon and plan your migration.</description>
+    </item>
+    <item>
+      <title>BanyanDB 0.11.0: What&#39;s New and How to Upgrade</title>
+      <link>https://skywalking.apache.org/blog/banyandb-0-11-0-vectorized-queries-by-default-explained/</link>
+      <pubDate>Mon, 07 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/banyandb-0-11-0-vectorized-queries-by-default-explained/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The BanyanDB Team</dc:creator>
+      <category>Release</category>
+      <category>Storage</category>
+      <description>BanyanDB 0.11.0: default vectorized queries, pluggable trace sampling, schema barriers, and the upgrade order you must not skip.</description>
+    </item>
+    <item>
+      <title>Trace Tail Sampling Inside the Storage Engine with SkyWalking 11 and BanyanDB 0.11</title>
+      <link>https://skywalking.apache.org/blog/2026-09-07-banyandb-trace-tail-sampling/</link>
+      <pubDate>Mon, 07 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2026-09-07-banyandb-trace-tail-sampling/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Kai Wan</dc:creator>
+      <category>Tracing</category>
+      <category>Storage</category>
+      <description>SkyWalking 11.0.0 and BanyanDB 0.11.0 add trace tail sampling that runs inside the BanyanDB data node during compaction: each trace is judged as a whole after it is stored, and a dropped trace reclaims space that was already written.</description>
+    </item>
+    <item>
+      <title>Replay Claude Code Sessions Without Plugins or Configuration Changes</title>
+      <link>https://skywalking.apache.org/blog/2026-09-03-ai-sessionizer-first-look/</link>
+      <pubDate>Thu, 03 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2026-09-03-ai-sessionizer-first-look/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sheng Wu</dc:creator>
+      <category>AI</category>
+      <category>Engineering</category>
+      <category>Community</category>
+      <description>Replay existing Claude Code sessions with Apache SkyWalking AI Sessionizer: explore conversations, tool calls, and child-agent activity without installing a Claude Code plugin or changing its configuration.</description>
+    </item>
     <item>
       <title>Meet Horizon UI · The AI Assistant: Ask Your Observability Data in Plain Language</title>
       <link>https://skywalking.apache.org/blog/2026-07-06-horizon-ui-ai-assistant/</link>
@@ -97,117 +213,6 @@
       <category>Engineering</category>
       <category>Metrics</category>
       <description>Part 12 of the Meet Horizon UI series: the Inspect family under Operate — a metric catalog and MQE board that shows which rule defines every metric, plus layer-less trace and log finders that query across the whole deployment without picking a layer first.</description>
-    </item>
-    <item>
-      <title>Meet Horizon UI · 9/17: Five Profilers, One Flame Graph</title>
-      <link>https://skywalking.apache.org/blog/2026-06-26-horizon-ui-profiling/</link>
-      <pubDate>Fri, 26 Jun 2026 00:00:00 +0000</pubDate>
-      <guid>https://skywalking.apache.org/blog/2026-06-26-horizon-ui-profiling/</guid>
-      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sheng Wu</dc:creator>
-      <category>Profiling</category>
-      <category>Engineering</category>
-      <description>Part 9 of the Meet Horizon UI series: SkyWalking&#39;s five profilers — trace, async (JVM), eBPF, Go pprof, and network — four of them pouring into one shared flame-graph and stack-tree engine, and the fifth rendering a process honeycomb instead.</description>
-    </item>
-    <item>
-      <title>Meet Horizon UI · 7/17: The Log Explorer</title>
-      <link>https://skywalking.apache.org/blog/2026-06-23-horizon-ui-log-explorer/</link>
-      <pubDate>Tue, 23 Jun 2026 00:00:00 +0000</pubDate>
-      <guid>https://skywalking.apache.org/blog/2026-06-23-horizon-ui-log-explorer/</guid>
-      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sheng Wu</dc:creator>
-      <category>Logging</category>
-      <category>Cloud Native</category>
-      <description>Part 7 of the Meet Horizon UI series: two log surfaces — a stored, indexed, trace-correlated log stream with a level histogram, and an on-demand live tail of a Kubernetes pod&#39;s container logs.</description>
-    </item>
-    <item>
-      <title>Meet Horizon UI · 8/17: Browser Errors &amp; Source Maps</title>
-      <link>https://skywalking.apache.org/blog/2026-06-23-horizon-ui-browser-errors-and-source-maps/</link>
-      <pubDate>Tue, 23 Jun 2026 00:00:00 +0000</pubDate>
-      <guid>https://skywalking.apache.org/blog/2026-06-23-horizon-ui-browser-errors-and-source-maps/</guid>
-      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sheng Wu</dc:creator>
-      <category>Logging</category>
-      <category>Engineering</category>
-      <description>Part 8 of the Meet Horizon UI series: the browser agent&#39;s JavaScript-error feed, and the capability that makes it useful — resolving a minified production stack back to your original file, line, column, symbol and source, frame by frame.</description>
-    </item>
-    <item>
-      <title>Meet Horizon UI · 5/17: The 3D Infrastructure Map</title>
-      <link>https://skywalking.apache.org/blog/2026-06-22-horizon-ui-3d-infrastructure-map/</link>
-      <pubDate>Mon, 22 Jun 2026 00:00:00 +0000</pubDate>
-      <guid>https://skywalking.apache.org/blog/2026-06-22-horizon-ui-3d-infrastructure-map/</guid>
-      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sheng Wu</dc:creator>
-      <category>Cloud Native</category>
-      <category>Engineering</category>
-      <description>Part 5 of the Meet Horizon UI series: a single WebGL view of your whole deployment — every layer&#39;s services as cubes stacked on tiers, with live traffic, alarm beacons, and the calls between them.</description>
-    </item>
-    <item>
-      <title>Meet Horizon UI · 6/17: The Trace Explorer</title>
-      <link>https://skywalking.apache.org/blog/2026-06-22-horizon-ui-trace-explorer/</link>
-      <pubDate>Mon, 22 Jun 2026 00:00:00 +0000</pubDate>
-      <guid>https://skywalking.apache.org/blog/2026-06-22-horizon-ui-trace-explorer/</guid>
-      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sheng Wu</dc:creator>
-      <category>Tracing</category>
-      <category>Cloud Native</category>
-      <description>Part 6 of the Meet Horizon UI series: a per-layer distributed-trace explorer — staged conditions, a duration-distribution chart you can box-select, three ways to read one trace, and a Zipkin tab beside the native one.</description>
-    </item>
-    <item>
-      <title>Meet Horizon UI · 1/17: SkyWalking&#39;s New Observability Console</title>
-      <link>https://skywalking.apache.org/blog/2026-06-21-skywalking-horizon-ui-introduction/</link>
-      <pubDate>Sun, 21 Jun 2026 00:00:00 +0000</pubDate>
-      <guid>https://skywalking.apache.org/blog/2026-06-21-skywalking-horizon-ui-introduction/</guid>
-      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sheng Wu</dc:creator>
-      <category>Release</category>
-      <category>Cloud Native</category>
-      <description>Introducing Apache SkyWalking Horizon UI — the next-generation web UI. A greenfield rewrite on the same OAP backend that you can observe, operate, govern, and customize, starting with a sidebar that mirrors your whole estate.</description>
-    </item>
-    <item>
-      <title>Meet Horizon UI · 2/17: Dashboards That Adapt — MQE, Smart Widgets, and Numbers Humans Can Read</title>
-      <link>https://skywalking.apache.org/blog/2026-06-21-horizon-ui-dashboards-and-mqe/</link>
-      <pubDate>Sun, 21 Jun 2026 00:00:00 +0000</pubDate>
-      <guid>https://skywalking.apache.org/blog/2026-06-21-horizon-ui-dashboards-and-mqe/</guid>
-      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sheng Wu</dc:creator>
-      <category>Metrics</category>
-      <category>Cloud Native</category>
-      <description>Part 2 of the Horizon UI series: how its dashboards are built from MQE expressions, hide the widgets that don&#39;t apply to the entity in front of you (skipping their queries on the server), and render OK instead of 1 and 45.1k instead of 4.51e4.</description>
-    </item>
-    <item>
-      <title>Meet Horizon UI · 3/17: Topology &amp; Service Dependency</title>
-      <link>https://skywalking.apache.org/blog/2026-06-21-horizon-ui-topology-and-dependency/</link>
-      <pubDate>Sun, 21 Jun 2026 00:00:00 +0000</pubDate>
-      <guid>https://skywalking.apache.org/blog/2026-06-21-horizon-ui-topology-and-dependency/</guid>
-      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sheng Wu</dc:creator>
-      <category>Cloud Native</category>
-      <category>Tracing</category>
-      <description>Part 3 of the Meet Horizon UI series: one template-driven topology engine that repaints for every layer, a filter to cut the noise, drill-down from a call into instances, the endpoint-dependency graph, and the cross-layer Smartscape overlay.</description>
-    </item>
-    <item>
-      <title>Meet Horizon UI · 4/17: The Deployment Tab &amp; BanyanDB Self-Observability</title>
-      <link>https://skywalking.apache.org/blog/2026-06-21-horizon-ui-deployment-and-banyandb/</link>
-      <pubDate>Sun, 21 Jun 2026 00:00:00 +0000</pubDate>
-      <guid>https://skywalking.apache.org/blog/2026-06-21-horizon-ui-deployment-and-banyandb/</guid>
-      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sheng Wu</dc:creator>
-      <category>Cloud Native</category>
-      <category>Storage</category>
-      <description>Part 4 of the Meet Horizon UI series: the Deployment tab turns the topology map inward to show one clustered service&#39;s own instances, and BanyanDB is modeled as the role- and tier-aware cluster it is — SkyWalking finally watching its own database the way it watches everything else.</description>
-    </item>
-    <item>
-      <title>Monitoring WeChat and Alipay Mini Programs with SkyWalking</title>
-      <link>https://skywalking.apache.org/blog/2026-04-30-mini-program-monitoring-with-skywalking/</link>
-      <pubDate>Thu, 30 Apr 2026 00:00:00 +0000</pubDate>
-      <guid>https://skywalking.apache.org/blog/2026-04-30-mini-program-monitoring-with-skywalking/</guid>
-      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sheng Wu</dc:creator>
-      <category>Metrics</category>
-      <category>Agents</category>
-      <category>Community</category>
-      <description>SkyAPM/mini-program-monitor and SkyWalking OAP together extend SkyWalking&#39;s end-user monitoring to WeChat and Alipay Mini Programs. This post focuses on the data path, the cross-platform abstraction, and the OAP-side integration.</description>
-    </item>
-    <item>
-      <title>Query SkyWalking and Zipkin Traces with TraceQL and Visualize in Grafana</title>
-      <link>https://skywalking.apache.org/blog/2026-04-08-traceql/</link>
-      <pubDate>Wed, 08 Apr 2026 00:00:00 +0000</pubDate>
-      <guid>https://skywalking.apache.org/blog/2026-04-08-traceql/</guid>
-      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Kai Wan</dc:creator>
-      <category>Tracing</category>
-      <category>Metrics</category>
-      <description>SkyWalking 10.4 introduces TraceQL support, implementing Grafana Tempo&#39;s HTTP query APIs so that Grafana can query and visualize traces stored in SkyWalking.</description>
     </item>
   </channel>
 </rss>

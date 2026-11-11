@@ -37,7 +37,7 @@ If the BanyanDB server API version is not compatible with the OAP server, the OA
 The BanyanDB server compatibility relies on API and release versions, The compatible BanyanDB API version number could be found in /config/bydb.yml
 ${SW_STORAGE_BANYANDB_COMPATIBLE_SERVER_API_VERSIONS} The compatible BanyanDB Server version number can be found via the API versions mapping.
 If the BanyanDB server API version is not compatible with the OAP server, the OAP server will not start, and the following error message will be displayed:">
-  <meta itemprop="wordCount" content="1838">
+  <meta itemprop="wordCount" content="4042">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="BanyanDB">
   <meta name="twitter:description" content="BanyanDB BanyanDB is a dedicated storage implementation developed by the SkyWalking Team and the community. Activate BanyanDB as the storage by setting the storage provider to banyandb.
@@ -47,14 +47,12 @@ If the BanyanDB server API version is not compatible with the OAP server, the OA
 
 
 
-<link rel="preload" href="/scss/main.min.75b3855349f4480c60036369f115ecf9ae08f3fff28f5b2de980d22a7fac93ef.css" as="style">
-<link href="/scss/main.min.75b3855349f4480c60036369f115ecf9ae08f3fff28f5b2de980d22a7fac93ef.css" rel="stylesheet" integrity="">
+<link rel="preload" href="/scss/main.min.b350fb8c42fee31880305a4433cf2325b5cefc4e06a4d17342698fbbcf354d7b.css" as="style">
+<link href="/scss/main.min.b350fb8c42fee31880305a4433cf2325b5cefc4e06a4d17342698fbbcf354d7b.css" rel="stylesheet" integrity="">
 
 
 
-<link rel="stylesheet" href="/css/docSearch.css" />
 <link rel="stylesheet" href="/css/highlight-github.css" />
-
 
 <script src="/js/jquery-3.6.0.min.js"></script>
 
@@ -72,16 +70,88 @@ If the BanyanDB server API version is not compatible with the OAP server, the OA
   <body class="td-page  project-doc">
     <header>
       
-<nav class="js-navbar-scroll navbar navbar-expand  flex-column flex-md-row td-navbar">
-    <div class="sidebar-button">
-      <i class="iconfont icon-menu"></i>
-    </div>
+
+
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    
+  
+
+  
+  
+
+  
+  
+
+
+
+
+  
+    
+    
+    
+    
+    
+    
+  
+
+  
+    
+    
+    
+    
+    
+    
+  
+
+  
+    
+    
+    
+    
+    
+    
+  
+
+  
+    
+    
+    
+    
+    
+    
+  
+
+  
+    
+    
+    
+    
+    
+    
+  
+
+<nav class="js-navbar-scroll navbar navbar-expand td-navbar" aria-label="Main navigation">
+  <div class="sw-navbar-inner">
+    <button type="button" class="sidebar-button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-navigation-drawer">
+      <i class="iconfont icon-menu" aria-hidden="true"></i>
+    </button>
     <a class="navbar-brand" href="/">
         <span class="navbar-logo"><img width="130" src="/images/logo.svg" alt="SkyWalking"></span> 
     </a>
     <div class="td-navbar-nav-scroll navbar-nav-wrapper" id="navigation">
         <ul class="navbar-nav mt-lg-0">
-             
+            
             
             <li class="nav-item mr-3 mb-lg-0">
 				
@@ -90,90 +160,1007 @@ If the BanyanDB server API version is not compatible with the OAP server, the OA
 				
 				
 				
-				<a class="nav-link active" href="/docs" ><span class="active">Documentation</span></a>
+				
+				
+                
+                <a class="nav-link" href="/" ><span>Home</span></a>
 			</li>
             
             
             
-            <li class="nav-item mr-3 mb-lg-0">
-				
-				
-				
-				
-				
-				
-				<a class="nav-link" href="/events" ><span>Events</span></a>
-			</li>
-            
-            
-            
-            <li class="nav-item mr-3 mb-lg-0">
-				
-				
-				
-				
-				
-				
-				<a class="nav-link" href="/blog" ><span>Blogs</span></a>
-			</li>
-            
-            
-            
-            <li class="nav-item mr-3 mb-lg-0">
-				
-				
-				
-				
-				
-				
-				<a class="nav-link" href="/downloads" ><span>Downloads</span></a>
-			</li>
-            
-            
-            
-            <li class="nav-item mr-3 mb-lg-0">
-				
-				
-				
-				
-				
-				
-				<a class="nav-link" href="/team" ><span>Team</span></a>
-			</li>
-            
-            
-            
-            <li class="nav-item mr-3 mb-lg-0">
-				
-				
-				
-				
-				
-				
-				<a class="nav-link" href="/users" ><span>Users</span></a>
-			</li>
-            
-            
-            
-            
-            
-            
-            <li class="nav-item mr-3 mb-lg-0">
-                <a class="nav-link" href="/zh/"><span>中文博客</span></a>
-            </li>
+            <li class="nav-item dropdown sw-projects-item">
+                <button type="button" class="nav-link dropdown-toggle sw-projects-toggle active" id="projects-menu-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Projects</button>
+                <div class="dropdown-menu sw-projects-menu" aria-labelledby="projects-menu-toggle">
+                    
 
+
+<div class="sw-projects-content">
+  <a class="dropdown-item sw-projects-intro" href="/get-started/">
+    <span><strong>Get started in minutes</strong><span>Try the Showcase or install SkyWalking</span></span>
+    <span aria-hidden="true">→</span>
+  </a>
+  <div class="sw-projects-groups">
+    
+    
+    
+      
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+      
+    
+    
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+    
+    
+    <div class="sw-projects-group">
+      <p class="sw-projects-label">Platform</p>
+    
+      <div class="sw-projects-group-links">
+        <div class="sw-projects-columns">
+        
+        <div class="sw-projects-column">
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link active" href="/docs/#SkyWalking">
+          <img src="/images/project/skywalking.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking</strong><span class="sw-project-description">Core observability server</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#BanyanDB">
+          <img src="/images/project/banyan-db.svg" width="28" height="28" alt="">
+          <span><strong>BanyanDB</strong><span class="sw-project-description">Observability database</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#HorizonUI">
+          <img src="/images/project/skywalking.svg" width="28" height="28" alt="">
+          <span><strong>Horizon UI</strong><span class="sw-project-description">Next-generation UI</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#AISessionizer">
+          <img src="/images/project/skywalking.svg" width="28" height="28" alt="">
+          <span><strong>AI Sessionizer</strong><span class="sw-project-description">AI agent observability</span></span>
+        </a>
+        
+        
+        </div>
+        
+        </div>
+        
+        <a class="dropdown-item sw-projects-more" href="/docs/#SkyWalkingServers">All platform projects <span aria-hidden="true">→</span></a>
+        
+      </div>
+    </div>
+    
+    
+    
+      
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+      
+    
+      
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+      
+    
+    
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+    
+    
+    <div class="sw-projects-group sw-projects-group-wide">
+      <p class="sw-projects-label">Agents &amp; collection</p>
+    
+      <div class="sw-projects-group-links">
+        <div class="sw-projects-columns">
+        
+        <div class="sw-projects-column">
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#JavaAgent">
+          <img src="/images/project/java-agent.svg" width="28" height="28" alt="">
+          <span><strong>Java Agent</strong><span class="sw-project-description">Java tracing and profiling</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#GoAgent">
+          <img src="/images/project/skywalking-go.svg" width="28" height="28" alt="">
+          <span><strong>Go Agent</strong><span class="sw-project-description">Go tracing and metrics</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#PythonAgent">
+          <img src="/images/project/python-agent.svg" width="28" height="28" alt="">
+          <span><strong>Python Agent</strong><span class="sw-project-description">Python tracing and profiling</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#NodeJSAgent">
+          <img src="/images/project/nodejs-agent.svg" width="28" height="28" alt="">
+          <span><strong>NodeJS Agent</strong><span class="sw-project-description">Node.js distributed tracing</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#PHPAgent">
+          <img src="/images/project/php-agent.svg" width="28" height="28" alt="">
+          <span><strong>PHP Agent</strong><span class="sw-project-description">PHP distributed tracing</span></span>
+        </a>
+        
+        
+        </div>
+        
+        <div class="sw-projects-column">
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#OpenTelemetryOTLP">
+          <img src="/images/project/otlp.svg" width="28" height="28" alt="">
+          <span><strong>OpenTelemetry (OTLP)</strong><span class="sw-project-description">OTLP traces, metrics, and logs</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#SkyWalkingRover">
+          <img src="/images/project/skywalking.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking Rover</strong><span class="sw-project-description">eBPF metrics and profiling</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#SkyWalkingSatellite">
+          <img src="/images/project/skywalking-satellite.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking Satellite</strong><span class="sw-project-description">Lightweight telemetry collector</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#KubernetesEventExporter">
+          <img src="/images/project/kubernetes.svg" width="28" height="28" alt="">
+          <span><strong>Kubernetes Event Exporter</strong><span class="sw-project-description">Kubernetes event collection</span></span>
+        </a>
+        
+        
+        </div>
+        
+        </div>
+        
+        <a class="dropdown-item sw-projects-more" href="/docs/#Agents">View all agents &amp; collectors <span aria-hidden="true">→</span></a>
+        
+      </div>
+    </div>
+    
+    
+    
+      
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+      
+    
+    
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+    
+    
+    <div class="sw-projects-group">
+      <p class="sw-projects-label">Operations &amp; tools</p>
+    
+      <div class="sw-projects-group-links">
+        <div class="sw-projects-columns">
+        
+        <div class="sw-projects-column">
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#SkyWalkingCLI">
+          <img src="/images/project/skywalking-cli.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking CLI</strong><span class="sw-project-description">Command-line operations</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#SkyWalkingMCP">
+          <img src="/images/project/skywalking.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking MCP</strong><span class="sw-project-description">Observability for AI assistants</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#KubernetesHelm">
+          <img src="/images/project/helm.svg" width="28" height="28" alt="">
+          <span><strong>Kubernetes Helm</strong><span class="sw-project-description">Deploy SkyWalking with Helm</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#SkyWalkingCloudonKubernetes">
+          <img src="/images/project/kubernetes.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking Cloud on Kubernetes</strong><span class="sw-project-description">Kubernetes operator</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#SkyWalkingEyes">
+          <img src="/images/project/skywalking-eyes.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking Eyes</strong><span class="sw-project-description">License checks and fixes</span></span>
+        </a>
+        
+        
+        </div>
+        
+        </div>
+        
+        <a class="dropdown-item sw-projects-more" href="/docs/#Operation">All operations projects <span aria-hidden="true">→</span></a>
+        
+      </div>
+    </div>
+    
+  </div>
+  <div class="sw-projects-footer">
+    <a class="dropdown-item sw-projects-all" href="/docs/">All projects <span aria-hidden="true">→</span></a>
+    <a class="dropdown-item sw-projects-downloads" href="/downloads/">Downloads <span aria-hidden="true">→</span></a>
+  </div>
+</div>
+
+                </div>
+            </li>
+            
+            
+            
+            
+            <li class="nav-item"><a class="nav-link" href="/blog">Blogs</a></li>
+            
+            
+            
+            
+            
+            <li class="nav-item" data-nav-promote="events" hidden><a class="nav-link" href="/events/">Release Posts</a></li>
+            
+            <li class="nav-item" data-nav-promote="events/calendar" hidden><a class="nav-link" href="/events/calendar/">Event Calendar</a></li>
+            
+            <li class="nav-item" data-nav-promote="users" hidden><a class="nav-link" href="/users">Users</a></li>
+            
+            <li class="nav-item" data-nav-promote="team" hidden><a class="nav-link" href="/team">Team</a></li>
+            
+            <li class="nav-item" data-nav-promote="zh" hidden><a class="nav-link" href="/zh/">中文博客</a></li>
+            
+            
+            <li class="nav-item dropdown" data-nav-more>
+                <button type="button" class="nav-link dropdown-toggle sw-more-toggle" id="more-menu-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">More</button>
+                <div class="dropdown-menu sw-more-menu" aria-labelledby="more-menu-toggle">
+                    
+                    <a class="dropdown-item" data-nav-overflow="events" href="/events/">Release Posts</a>
+                    
+                    <a class="dropdown-item" data-nav-overflow="events/calendar" href="/events/calendar/">Event Calendar</a>
+                    
+                    <a class="dropdown-item" data-nav-overflow="users" href="/users">Users</a>
+                    
+                    <a class="dropdown-item" data-nav-overflow="team" href="/team">Team</a>
+                    
+                    <a class="dropdown-item" data-nav-overflow="zh" href="/zh/">中文博客</a>
+                    
+                </div>
+            </li>
+            
+            
+            
+            
+            
+            
             
 			
         </ul>
     </div>
 
-    <div class="navbar-nav d-none d-lg-block search-input-box">
-        
-<div id="docsearch"></div>
+    <div class="sw-navbar-actions">
+        <button type="button" class="sw-kapa-search" aria-label="Search SkyWalking documentation and ask AI" aria-haspopup="dialog" title="Search and ask AI">
+  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="7.5"/><path d="m16 16 5 5"/></svg>
+  <span>Search</span>
+</button>
 
-
-            
-        
+        <div class="navbar-nav d-none d-lg-block search-input-box">
             
         
             
@@ -276,7 +1263,24 @@ If the BanyanDB server API version is not compatible with the OAP server, the OA
             </span>
             
         
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+            <a class="sw-nav-cta" href="/get-started/">Get started</a>
+            
+        
+            
+        
+        </div>
     </div>
+  </div>
 </nav>
 
     </header>
@@ -312,6 +1316,22 @@ If the BanyanDB server API version is not compatible with the OAP server, the OA
                     <option selected value="latest">
                     
                       latest
+                    
+                    </option>
+                  
+                    
+                    
+                    <option ZgotmplZ value="v11.1.0">
+                    
+                      v11.1.0
+                    
+                    </option>
+                  
+                    
+                    
+                    <option ZgotmplZ value="v11.0.0">
+                    
+                      v11.0.0
                     
                     </option>
                   
@@ -360,38 +1380,6 @@ If the BanyanDB server API version is not compatible with the OAP server, the OA
                     <option ZgotmplZ value="v10.0.0">
                     
                       v10.0.0
-                    
-                    </option>
-                  
-                    
-                    
-                    <option ZgotmplZ value="v9.7.0">
-                    
-                      v9.7.0
-                    
-                    </option>
-                  
-                    
-                    
-                    <option ZgotmplZ value="v9.6.0">
-                    
-                      v9.6.0
-                    
-                    </option>
-                  
-                    
-                    
-                    <option ZgotmplZ value="v9.5.0">
-                    
-                      v9.5.0
-                    
-                    </option>
-                  
-                    
-                    
-                    <option ZgotmplZ value="v9.4.0">
-                    
-                      v9.4.0
                     
                     </option>
                   
@@ -836,6 +1824,48 @@ If the BanyanDB server API version is not compatible with the OAP server, the OA
         
 
             
+            <a href="#">Mobile Monitoring<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/backend-ios-monitoring">iOS</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/backend-wechat-mini-program-monitoring">WeChat Mini Program</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/backend-alipay-mini-program-monitoring">Alipay Mini Program</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
             <a href="#">Gateway Monitoring<i class="iconfont icon-arrow-right pull-right"></i></a>
             
 
@@ -1026,6 +2056,32 @@ If the BanyanDB server API version is not compatible with the OAP server, the OA
         
 
             
+            <a href="#">Workflow Scheduler<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/backend-airflow-monitoring">Airflow</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
             <a href="#">Data Processing Engine<i class="iconfont icon-arrow-right pull-right"></i></a>
             
 
@@ -1069,7 +2125,23 @@ If the BanyanDB server API version is not compatible with the OAP server, the OA
 
     <li>
         
-            <a href="/docs/main/latest/en/setup/backend/backend-envoy-ai-gateway-monitoring">Envoy AI Gateway</a>
+            <a href="/docs/main/latest/en/setup/backend/ai-evaluation">AI Evaluation</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/ai-agent-conversation">AI Agent Conversations</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/backend-envoy-ai-gateway-monitoring">Agent Router (Envoy AI Gateway)</a>
         
     </li>
 
@@ -1380,6 +2452,14 @@ If the BanyanDB server API version is not compatible with the OAP server, the OA
 
     <li>
         
+            <a href="/docs/main/latest/en/banyandb/tail-sampling">Trace Tail Sampling</a>
+        
+    </li>
+
+    
+
+    <li>
+        
             <a href="/docs/main/latest/en/banyandb/dashboards-banyandb">BanyanDB self observability dashboard</a>
         
     </li>
@@ -1446,6 +2526,14 @@ If the BanyanDB server API version is not compatible with the OAP server, the OA
 
     <li>
         
+            <a href="/docs/main/latest/en/setup/backend/server-clusters">Server Clusters</a>
+        
+    </li>
+
+    
+
+    <li>
+        
             <a href="/docs/main/latest/en/setup/backend/zipkin-trace">Zipkin Trace</a>
         
     </li>
@@ -1454,7 +2542,125 @@ If the BanyanDB server API version is not compatible with the OAP server, the OA
 
     <li>
         
-            <a href="/docs/main/latest/en/setup/backend/otlp-trace">OpenTelemetry Trace</a>
+
+            
+            <a href="#">OpenTelemetry Trace<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/otlp-trace">Setup</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/trace-analyzer">Analysis</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
+            <a href="#">Best Practices<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+
+            
+            <a href="#">Gateway<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/otlp-trace-practices/gateway-overview">Overview</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/otlp-trace-practices/gateway-envoy">Envoy</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/otlp-trace-practices/gateway-nginx">nginx</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/otlp-trace-practices/gateway-without-instrumentation">Gateways Without Instrumentation</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/otlp-trace-practices/gateway-canary">Canary Releases</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/otlp-trace-practices/message-queue">Message Queue</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/otlp-trace-practices/database-and-cache">Database and Cache</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+</ul>
+
         
     </li>
 
@@ -1513,6 +2719,22 @@ If the BanyanDB server API version is not compatible with the OAP server, the OA
     <li>
         
             <a href="/docs/main/latest/en/setup/backend/backend-meter">Meter Analysis</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/dashboards-php-runtime">PHP runtime metrics (PHM)</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/dashboards-nodejs-runtime">Node.js runtime metrics</a>
         
     </li>
 
@@ -2085,72 +3307,6 @@ If the BanyanDB server API version is not compatible with the OAP server, the OA
 
     
 
-    <li>
-        
-
-            
-            <a href="#">Status APIs<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-            <a href="/docs/main/latest/en/status/status_apis">Introduction</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/latest/en/debugging/config_dump">Dump Effective Initial Configurations</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/latest/en/debugging/query-tracing">Tracing Query Execution</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/latest/en/status/query_ttl_setup">Get Effective TTL Configurations</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/latest/en/status/query_cluster_nodes">Get Node List in the Cluster</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/latest/en/status/query_alarm_runtime_status">Get Alarm Runtime Status</a>
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-
-    
-
 </ul>
 
         
@@ -2207,6 +3363,22 @@ If the BanyanDB server API version is not compatible with the OAP server, the OA
 
     <li>
         
+            <a href="/docs/main/latest/en/concepts-and-designs/tal">Analysis OpenTelemetry Traces</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/concepts-and-designs/runtime-rule-hot-update">Runtime Rule Hot-Update</a>
+        
+    </li>
+
+    
+
+    <li>
+        
             <a href="/docs/main/latest/en/concepts-and-designs/profiling">Profiling</a>
         
     </li>
@@ -2247,6 +3419,145 @@ If the BanyanDB server API version is not compatible with the OAP server, the OA
     <li>
         
             <a href="/docs/main/latest/en/operation/dynamic-code-generation-debugging">Dynamic Code Generation and Debugging</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+    
+    <li>
+        
+            
+            <a href="#">Admin API<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/admin-api/readme">Introduction</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/admin-api/runtime-rule">Runtime Rule Hot-Update API</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
+            <a href="#">DSL Debug API<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/admin-api/dsl-debugging">Overview</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/admin-api/dsl-debugging-mal">MAL</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/admin-api/dsl-debugging-oal">OAL</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/admin-api/dsl-debugging-lal">LAL</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
+            <a href="#">Status API<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/admin-api/status">Overview</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/debugging/config_dump">Dump Effective Initial Configurations</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/debugging/query-tracing">Tracing Query Execution</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/admin-api/inspect">Inspect API</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/admin-api/ui-management">UI Management API</a>
         
     </li>
 
@@ -2549,11 +3860,45 @@ If the BanyanDB server API version is not compatible with the OAP server, the OA
         
 
             
+            <a href="#">11.x Releases<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/changes/changes-11.0.0">11.0.0</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
             <a href="#">10.x Releases<i class="iconfont icon-arrow-right pull-right"></i></a>
             
 
             
 <ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/changes/changes-10.4.0">10.4.0</a>
+        
+    </li>
+
     
 
     <li>
@@ -2858,8 +4203,22 @@ If the BanyanDB server API version is not compatible with the OAP server, the OA
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: b272da3</div>
+                  <div class="commit-id">Commit Id: d34eff2</div>
                 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2954,6 +4313,8 @@ The compatible BanyanDB API version number could be found in <code>/config/bydb.
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">  </span><span style="color:#57606a"># A higher value can improve write performance but also increases CPU usage on both OAP and BanyanDB Server.</span><span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">  </span><span style="color:#0550ae">concurrentWriteThreads</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_CONCURRENT_WRITE_THREADS:15}<span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">  </span><span style="color:#57606a"># The maximum size of the dataset when the OAP loads cache, such as network aliases.</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">  </span><span style="color:#57606a"># Also the row cap sent for any query that has no limit of its own, so that a query never falls back to</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">  </span><span style="color:#57606a"># BanyanDB&#39;s own default (100 rows for measures, 20 for streams/traces), which truncates results silently.</span><span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">  </span><span style="color:#0550ae">resultWindowMaxSize</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_QUERY_MAX_WINDOW_SIZE:10000}<span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">  </span><span style="color:#57606a"># The maximum size of metadata per query.</span><span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">  </span><span style="color:#0550ae">metadataQueryMaxSize</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_QUERY_MAX_SIZE:10000}<span style="color:#fff">
@@ -2967,7 +4328,11 @@ The compatible BanyanDB API version number could be found in <code>/config/bydb.
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">  </span><span style="color:#0550ae">user</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_USER:&#34;&#34;}<span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">  </span><span style="color:#0550ae">password</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_PASSWORD:&#34;&#34;}<span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">  </span><span style="color:#57606a"># If the BanyanDB server is configured with TLS, configure the TLS cert file path and enable TLS connection.</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">  </span><span style="color:#57606a"># This file is watched: rotating it rebuilds the gRPC channel so the new CA is used, without restarting the OAP.</span><span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">  </span><span style="color:#0550ae">sslTrustCAPath</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_SSL_TRUST_CA_PATH:&#34;&#34;}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">  </span><span style="color:#57606a"># Secrets management file in the properties format, including the user and password, which are managed by a 3rd party tool.</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">  </span><span style="color:#57606a"># When set, it overrides the user/password above, and a rotation of the file is applied without restarting the OAP.</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">  </span><span style="color:#0550ae">secretsManagementFile</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_SECRETS_MANAGEMENT_FILE:&#34;&#34;}<span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">  </span><span style="color:#57606a"># Cleanup TopN rules in BanyanDB server that are not configured in the bydb-topn.yml config.</span><span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">  </span><span style="color:#0550ae">cleanupUnusedTopNRules</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_CLEANUP_UNUSED_TOPN_RULES:true}<span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">  </span><span style="color:#57606a"># The namespace in BanyanDB to store the data of OAP, if not set, the default is &#34;sw&#34;.</span><span style="color:#fff">
@@ -2975,7 +4340,7 @@ The compatible BanyanDB API version number could be found in <code>/config/bydb.
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">  </span><span style="color:#0550ae">namespace</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_NAMESPACE:&#34;sw&#34;}<span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">  </span><span style="color:#57606a"># The compatible server API versions of BanyanDB.</span><span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">  </span><span style="color:#57606a"># The compatible BanyanDB Server version number can be found via the [API versions mapping](https://skywalking.apache.org/docs/skywalking-banyandb/latest/installation/versions/).</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">  </span><span style="color:#0550ae">compatibleServerApiVersions</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_COMPATIBLE_SERVER_API_VERSIONS:&#34;0.10&#34;}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">  </span><span style="color:#0550ae">compatibleServerApiVersions</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_COMPATIBLE_SERVER_API_VERSIONS:&#34;0.11&#34;}<span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#0550ae">groups</span><span style="color:#1f2328">:</span><span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">  </span><span style="color:#57606a"># The group settings of record.</span><span style="color:#fff">
@@ -3011,7 +4376,7 @@ The compatible BanyanDB API version number could be found in <code>/config/bydb.
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#57606a"># The settings for the &#34;cold&#34; stage.</span><span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#0550ae">cold</span><span style="color:#1f2328">:</span><span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">shardNum</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_RECORDS_COLD_SHARD_NUM:1}<span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">segmentInterval</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_RECORDS_COLD_SI_DAYS:3}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">segmentInterval</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_RECORDS_COLD_SI_DAYS:4}<span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">ttl</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_RECORDS_COLD_TTL_DAYS:30}<span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">replicas</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_RECORDS_COLD_REPLICAS:0}<span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">nodeSelector</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_RECORDS_COLD_NODE_SELECTOR:&#34;type=cold&#34;}<span style="color:#fff">
@@ -3034,6 +4399,20 @@ The compatible BanyanDB API version number could be found in <code>/config/bydb.
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">ttl</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_TRACE_COLD_TTL_DAYS:30}<span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">replicas</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_TRACE_COLD_REPLICAS:0}<span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">nodeSelector</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_TRACE_COLD_NODE_SELECTOR:&#34;type=cold&#34;}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#57606a"># Group-scoped trace retention pipeline (sampler plugins). See &#34;Trace retention pipeline&#34; below.</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#0550ae">pipeline</span><span style="color:#1f2328">:</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">enabled</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_TRACE_PIPELINE_ENABLED:false}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">enabledEvents</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_TRACE_PIPELINE_ENABLED_EVENTS:PIPELINE_EVENT_MERGE}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">mergeGraceSeconds</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_TRACE_PIPELINE_MERGE_GRACE_SECONDS:1800}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">finalizeGraceSeconds</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_TRACE_PIPELINE_FINALIZE_GRACE_SECONDS:-1}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">plugins</span><span style="color:#1f2328">:</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span>- <span style="color:#0550ae">name</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>sw-trace-sampler<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">          </span><span style="color:#0550ae">path</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_TRACE_SAMPLER_SO:sw-trace-sampler.so}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">          </span><span style="color:#0550ae">abiVersion</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span><span style="color:#0550ae">1</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">          </span><span style="color:#0550ae">config</span><span style="color:#1f2328">:</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span><span style="color:#0550ae">durationThresholdMs</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_TRACE_SAMPLER_DURATION_THRESHOLD_MS:500}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span><span style="color:#0550ae">keepErrors</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_TRACE_SAMPLER_KEEP_ERRORS:true}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span><span style="color:#0550ae">healthySampleRate</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_TRACE_SAMPLER_HEALTHY_SAMPLE_RATE:0.1}<span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">  </span><span style="color:#0550ae">zipkinTrace</span><span style="color:#1f2328">:</span><span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#0550ae">shardNum</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_ZIPKIN_TRACE_SHARD_NUM:2}<span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#0550ae">segmentInterval</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_ZIPKIN_TRACE_SI_DAYS:1}<span style="color:#fff">
@@ -3053,6 +4432,40 @@ The compatible BanyanDB API version number could be found in <code>/config/bydb.
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">ttl</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_ZIPKIN_TRACE_COLD_TTL_DAYS:30}<span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">replicas</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_ZIPKIN_TRACE_COLD_REPLICAS:0}<span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">nodeSelector</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_ZIPKIN_TRACE_COLD_NODE_SELECTOR:&#34;type=cold&#34;}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#57606a"># The Zipkin schema has no is_error column, so keepErrors here detects Zipkin&#39;s</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#57606a"># conventional &#34;error&#34; span tag inside the flattened &#34;query&#34; attributes.</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#0550ae">pipeline</span><span style="color:#1f2328">:</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">enabled</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_ZIPKIN_TRACE_PIPELINE_ENABLED:false}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">enabledEvents</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_ZIPKIN_TRACE_PIPELINE_ENABLED_EVENTS:PIPELINE_EVENT_MERGE}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">mergeGraceSeconds</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_ZIPKIN_TRACE_PIPELINE_MERGE_GRACE_SECONDS:1800}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">finalizeGraceSeconds</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_ZIPKIN_TRACE_PIPELINE_FINALIZE_GRACE_SECONDS:-1}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">plugins</span><span style="color:#1f2328">:</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span>- <span style="color:#0550ae">name</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>zipkin-trace-sampler<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">          </span><span style="color:#0550ae">path</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_ZIPKIN_TRACE_SAMPLER_SO:zipkin-trace-sampler.so}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">          </span><span style="color:#0550ae">abiVersion</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span><span style="color:#0550ae">1</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">          </span><span style="color:#0550ae">config</span><span style="color:#1f2328">:</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span><span style="color:#0550ae">durationThresholdMs</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_ZIPKIN_TRACE_SAMPLER_DURATION_THRESHOLD_MS:1000}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span><span style="color:#0550ae">keepErrors</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_ZIPKIN_TRACE_SAMPLER_KEEP_ERRORS:true}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span><span style="color:#0550ae">healthySampleRate</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_ZIPKIN_TRACE_SAMPLER_HEALTHY_SAMPLE_RATE:0.05}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">  </span><span style="color:#0550ae">otlpTrace</span><span style="color:#1f2328">:</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#0550ae">shardNum</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_OTLP_TRACE_SHARD_NUM:2}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#0550ae">segmentInterval</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_OTLP_TRACE_SI_DAYS:1}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#0550ae">ttl</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_OTLP_TRACE_TTL_DAYS:3}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#0550ae">replicas</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_OTLP_TRACE_REPLICAS:0}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#0550ae">enableWarmStage</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_OTLP_TRACE_ENABLE_WARM_STAGE:false}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#0550ae">enableColdStage</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_OTLP_TRACE_ENABLE_COLD_STAGE:false}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#0550ae">warm</span><span style="color:#1f2328">:</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">shardNum</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_OTLP_TRACE_WARM_SHARD_NUM:2}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">segmentInterval</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_OTLP_TRACE_WARM_SI_DAYS:1}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">ttl</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_OTLP_TRACE_WARM_TTL_DAYS:7}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">replicas</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_OTLP_TRACE_WARM_REPLICAS:0}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">nodeSelector</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_OTLP_TRACE_WARM_NODE_SELECTOR:&#34;type=warm&#34;}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#0550ae">cold</span><span style="color:#1f2328">:</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">shardNum</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_OTLP_TRACE_COLD_SHARD_NUM:2}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">segmentInterval</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_OTLP_TRACE_COLD_SI_DAYS:1}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">ttl</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_OTLP_TRACE_COLD_TTL_DAYS:30}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">replicas</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_OTLP_TRACE_COLD_REPLICAS:0}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">nodeSelector</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_OTLP_TRACE_COLD_NODE_SELECTOR:&#34;type=cold&#34;}<span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">  </span><span style="color:#0550ae">recordsLog</span><span style="color:#1f2328">:</span><span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#0550ae">shardNum</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_LOG_SHARD_NUM:2}<span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#0550ae">segmentInterval</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_LOG_SI_DAYS:1}<span style="color:#fff">
@@ -3072,6 +4485,29 @@ The compatible BanyanDB API version number could be found in <code>/config/bydb.
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">ttl</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_LOG_COLD_TTL_DAYS:30}<span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">replicas</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_LOG_COLD_REPLICAS:0}<span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">nodeSelector</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_LOG_COLD_NODE_SELECTOR:&#34;type=cold&#34;}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">  </span><span style="color:#57606a"># The &#34;recordsAIAgent&#34; group holds AI agent conversation files landed by the AI Sessionizer: Session Data (.sd)</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">  </span><span style="color:#57606a"># and Session Flow (.sf) rows of up to 2 MiB each. It mirrors the log group&#39;s keys but has its own retention,</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">  </span><span style="color:#57606a"># because conversations are kept for weeks and a round whose files have expired is a broken chain.</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">  </span><span style="color:#57606a"># See the &#34;AI Agent Conversations&#34; document.</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">  </span><span style="color:#0550ae">recordsAIAgent</span><span style="color:#1f2328">:</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#0550ae">shardNum</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_AI_AGENT_SHARD_NUM:2}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#0550ae">segmentInterval</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_AI_AGENT_SI_DAYS:1}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#0550ae">ttl</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_AI_AGENT_TTL_DAYS:30}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#0550ae">replicas</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_AI_AGENT_REPLICAS:0}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#0550ae">enableWarmStage</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_AI_AGENT_ENABLE_WARM_STAGE:false}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#0550ae">enableColdStage</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_AI_AGENT_ENABLE_COLD_STAGE:false}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#0550ae">warm</span><span style="color:#1f2328">:</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">shardNum</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_AI_AGENT_WARM_SHARD_NUM:2}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">segmentInterval</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_AI_AGENT_WARM_SI_DAYS:1}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">ttl</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_AI_AGENT_WARM_TTL_DAYS:60}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">replicas</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_AI_AGENT_WARM_REPLICAS:0}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">nodeSelector</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_AI_AGENT_WARM_NODE_SELECTOR:&#34;type=warm&#34;}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#0550ae">cold</span><span style="color:#1f2328">:</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">shardNum</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_AI_AGENT_COLD_SHARD_NUM:2}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">segmentInterval</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_AI_AGENT_COLD_SI_DAYS:1}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">ttl</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_AI_AGENT_COLD_TTL_DAYS:180}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">replicas</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_AI_AGENT_COLD_REPLICAS:0}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">nodeSelector</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_AI_AGENT_COLD_NODE_SELECTOR:&#34;type=cold&#34;}<span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">  </span><span style="color:#0550ae">recordsBrowserErrorLog</span><span style="color:#1f2328">:</span><span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#0550ae">shardNum</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_BROWSER_ERROR_LOG_SHARD_NUM:2}<span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#0550ae">segmentInterval</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_BROWSER_ERROR_LOG_SI_DAYS:1}<span style="color:#fff">
@@ -3112,7 +4548,7 @@ The compatible BanyanDB API version number could be found in <code>/config/bydb.
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">nodeSelector</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_METRICS_MINUTE_WARM_NODE_SELECTOR:&#34;type=warm&#34;}<span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#0550ae">cold</span><span style="color:#1f2328">:</span><span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">shardNum</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_METRICS_MINUTE_COLD_SHARD_NUM:2}<span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">segmentInterval</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_METRICS_MINUTE_COLD_SI_DAYS:5}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">segmentInterval</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_METRICS_MINUTE_COLD_SI_DAYS:6}<span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">ttl</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_METRICS_MINUTE_COLD_TTL_DAYS:60}<span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">replicas</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_METRICS_MINUTE_COLD_REPLICAS:0}<span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">nodeSelector</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_METRICS_MINUTE_COLD_NODE_SELECTOR:&#34;type=cold&#34;}<span style="color:#fff">
@@ -3125,13 +4561,13 @@ The compatible BanyanDB API version number could be found in <code>/config/bydb.
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#0550ae">enableColdStage</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_METRICS_HOUR_ENABLE_COLD_STAGE:false}<span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#0550ae">warm</span><span style="color:#1f2328">:</span><span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">shardNum</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_METRICS_HOUR_WARM_SHARD_NUM:1}<span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">segmentInterval</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_METRICS_HOUR_WARM_SI_DAYS:7}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">segmentInterval</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_METRICS_HOUR_WARM_SI_DAYS:10}<span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">ttl</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_METRICS_HOUR_WARM_TTL_DAYS:30}<span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">replicas</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_METRICS_HOUR_WARM_REPLICAS:0}<span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">nodeSelector</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_METRICS_HOUR_WARM_NODE_SELECTOR:&#34;type=warm&#34;}<span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#0550ae">cold</span><span style="color:#1f2328">:</span><span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">shardNum</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_METRICS_HOUR_COLD_SHARD_NUM:1}<span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">segmentInterval</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_METRICS_HOUR_COLD_SI_DAYS:15}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">segmentInterval</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_METRICS_HOUR_COLD_SI_DAYS:20}<span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">ttl</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_METRICS_HOUR_COLD_TTL_DAYS:120}<span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">replicas</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_METRICS_HOUR_COLD_REPLICAS:0}<span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">      </span><span style="color:#0550ae">nodeSelector</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_METRICS_HOUR_COLD_NODE_SELECTOR:&#34;type=cold&#34;}<span style="color:#fff">
@@ -3168,7 +4604,193 @@ The compatible BanyanDB API version number could be found in <code>/config/bydb.
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">  </span><span style="color:#0550ae">property</span><span style="color:#1f2328">:</span><span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#0550ae">shardNum</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_PROPERTY_SHARD_NUM:1}<span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#0550ae">replicas</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_STORAGE_BANYANDB_PROPERTY_REPLICAS:0}<span style="color:#fff">
-</span></span></span></code></pre></div><h3 id="topn-rules-configuration">TopN Rules Configuration</h3>
+</span></span></span></code></pre></div><h3 id="secrets-management-file-of-banyandb-authentication">Secrets Management File Of BanyanDB Authentication</h3>
+<p>The value of <code>secretsManagementFile</code> should point to the absolute path of the secrets management file.
+The file includes the user and password of the BanyanDB server in the properties format.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#1f2328">user</span><span style="color:#0550ae">=</span><span style="color:#0a3069">xxx</span>
+</span></span><span style="display:flex;"><span><span style="color:#1f2328">password</span><span style="color:#0550ae">=</span><span style="color:#0a3069">yyy</span>
+</span></span></code></pre></div><p>The difference from setting <code>user</code> and <code>password</code> directly in <code>bydb.yml</code> is that the <strong>Secrets Management File</strong> is
+watched by the OAP server. Once it is changed manually or through a 3rd party tool, such as
+<a href="https://github.com/hashicorp/vault">Vault</a>, the new credentials are attached to the following requests, and the
+<code>user/password</code> in <code>bydb.yml</code> are overridden. The gRPC connection is not re-established, so rotating the credentials
+does not interrupt in-flight queries or writes.</p>
+<p>Whatever the file contains is applied, including a file that carries only one of the two entries, or none. This is
+deliberate: a mistake in the file then shows up at the next request instead of being quietly refused, which would
+leave the previous credentials working and the mistake unnoticed until the OAP is next restarted.</p>
+<p>A username and a password are only ever sent together, so an incomplete file is applied as no credentials at all:
+requests go out unauthenticated and BanyanDB answers them with <code>UNAUTHENTICATED</code>, and it never authenticates as the
+named user with the wrong password. Both halves are cleared together, so a file that is only briefly incomplete
+while a 3rd party tool rewrites it cannot stop the OAP from starting — it behaves the same whether it is read at
+boot or while the OAP is running. Note this also clears any <code>user</code>/<code>password</code> set in <code>bydb.yml</code>, since the file
+overrides them. The OAP logs an error naming the file when it applies an incomplete pair:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Applied incomplete credentials from /etc/skywalking/bydb-secrets.properties: requests are now sent without
+</span></span><span style="display:flex;"><span>authentication, ...
+</span></span></code></pre></div><p>Writing a complete pair back to the file restores service without a restart.</p>
+<p>Only the credentials are reloaded this way. For the TLS trust CA, see
+<a href="#reloading-the-tls-trust-ca">Reloading The TLS Trust CA</a>.</p>
+<h3 id="reloading-the-tls-trust-ca">Reloading The TLS Trust CA</h3>
+<p>The file at <code>sslTrustCAPath</code> is watched by the OAP server, separately from <code>secretsManagementFile</code>. Overwriting it —
+manually, or through a tool such as <a href="https://cert-manager.io">cert-manager</a> — rebuilds the gRPC channel so that the
+new CA is used. No restart is needed.</p>
+<p>The trust CA cannot be swapped in place the way the credentials can, because it is resolved when the channel is
+built rather than per request. Rebuilding the channel is therefore what a rotation costs, and it behaves as follows:</p>
+<ul>
+<li>
+<p>The change is detected within 10 seconds, and the replacement channel is created before the old one is released,
+so a failure to build it leaves the current channel serving with the previous CA. That case is logged as an error.</p>
+</li>
+<li>
+<p>Requests already in flight finish on the old channel; new requests go to the replacement. The replacement is
+<strong>not</strong> verified before it is swapped in: a gRPC channel connects lazily, so the TLS handshake only happens on
+the first request that uses it. A file that parses but does not validate the server therefore replaces a healthy
+connection, and queries and writes start failing until material that does validate is written back. Rotating to
+a CA the server&rsquo;s certificate chains to is interruption-free; rotating to the wrong one is not, and recovers
+only on the next rotation.</p>
+<p>To rotate with no interruption at all, write a PEM holding both the current and the new CA, confirm the OAP is
+healthy, and only then let the server switch and drop the old CA at a later rotation. A certificate collection
+in one PEM file is supported.</p>
+</li>
+<li>
+<p>The replacement picks a target from <code>targets</code> again, so with more than one BanyanDB address configured the OAP may
+end up connected to a different node after a rotation. This is harmless, but worth knowing when correlating a
+rotation with a change of peer in the logs.</p>
+</li>
+</ul>
+<p>A successful rotation is logged as:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Rebuilt the BanyanDB channel to reload the TLS trust CA from /etc/skywalking/bydb-ca.crt
+</span></span></code></pre></div><p>Two limitations to keep in mind:</p>
+<ul>
+<li>
+<p>The file is only watched when <code>sslTrustCAPath</code> is set at startup. Populating a path that was empty when the OAP
+booted does not enable TLS at runtime; that still requires a restart.</p>
+</li>
+<li>
+<p>TLS is enabled by the presence of the file, so a path that does not point to one would leave the connection on
+plaintext. Rather than degrade silently, building the channel fails:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>BanyanDB TLS trust CA path /etc/skywalking/bydb-ca.crt does not point to a file. Fix the path, or unset
+</span></span><span style="display:flex;"><span>sslTrustCAPath to connect without TLS.
+</span></span></code></pre></div><p>At startup that stops the OAP. If the file disappears while it is running, the rebuild fails the same way and
+is logged, and the channel already in use keeps serving with the trust material it was built with.</p>
+</li>
+<li>
+<p>Only the trust CA is configurable. There is no client-certificate (mutual TLS) option for BanyanDB, so there is
+no client keystore to reload.</p>
+</li>
+</ul>
+<p>Independently of this watch, the channel is also rebuilt in reaction to failures: a request that fails with a
+network-class gRPC status (<code>UNAVAILABLE</code>, <code>UNKNOWN</code>, <code>RESOURCE_EXHAUSTED</code>, <code>PERMISSION_DENIED</code>, <code>UNAUTHENTICATED</code>)
+flags the channel, and it is replaced within 30 seconds if it is still not <code>READY</code>. That is the client&rsquo;s failover
+path across <code>targets</code>, and it re-reads the CA as a side effect.</p>
+<h3 id="trace-retention-pipeline">Trace retention pipeline</h3>
+<blockquote>
+<p>This section is the configuration reference. For how a trace is actually judged — the rule
+chain, the duration envelope, the sampling hash, and what happens when a plugin is missing —
+see <a href="../../../../banyandb/tail-sampling">Trace Tail Sampling</a>.
+The <code>trace</code> and <code>zipkinTrace</code> groups may run a <strong>sampler plugin inside the BanyanDB data node</strong>,
+which drops traces during Hot-phase LSM compaction. Unlike
+<a href="../../trace-sampling">server-side trace sampling</a>, which decides at ingest and prevents writes,
+this runs <em>after</em> storage: it reclaims space from data already written, and its verdict is per
+whole trace, so all of a trace&rsquo;s segments (or spans) are seen together and kept or dropped as a
+unit. It is disabled by default (<code>enabled: false</code>).</p>
+</blockquote>
+<p>Each data node must run with <code>-trace-pipeline-native-plugin-enabled=true</code> and
+<code>-trace-pipeline-trusted-plugin-dir</code> pointing at a directory holding the sampler <code>.so</code>.</p>
+<table>
+  <thead>
+      <tr>
+          <th>Setting</th>
+          <th>Meaning</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>enabled</code></td>
+          <td>Activates the pipeline for this group. <strong>Off by default</strong> — this deletes stored traces, so it is opt-in. It also only has any effect on a data node running the plugin-capable image with <code>-trace-pipeline-native-plugin-enabled=true</code> and the sampler <code>.so</code> present in its trusted directory; elsewhere the config is pushed and ignored, and merges run unfiltered.</td>
+      </tr>
+      <tr>
+          <td><code>enabledEvents</code></td>
+          <td>When the chain runs: <code>PIPELINE_EVENT_MERGE</code> (during compaction) and/or <code>PIPELINE_EVENT_FINALIZE</code> (once a segment has settled). Accepts a comma-separated string, so it can be set from the environment (<code>SW_STORAGE_BANYANDB_TRACE_PIPELINE_ENABLED_EVENTS</code>, and the <code>ZIPKIN_</code> variant), or a YAML block list in the file. An empty value falls back to MERGE for backward compatibility, so FINALIZE runs only when named explicitly.</td>
+      </tr>
+      <tr>
+          <td><code>mergeGraceSeconds</code></td>
+          <td>Maturity window before a trace may be dropped at merge, so traces whose remaining spans may still arrive are not destroyed prematurely. Ships as <strong>1800</strong> (30 minutes): a trace is usually read soon after it is written, so the data node&rsquo;s own 30s default would let the sampler drop traces still being looked at. Set <code>-1</code> to hand the decision back to the node.</td>
+      </tr>
+      <tr>
+          <td><code>finalizeGraceSeconds</code></td>
+          <td>Settling window for the finalization pass. <code>-1</code> uses the data node default (5m).</td>
+      </tr>
+      <tr>
+          <td><code>plugins[].path</code></td>
+          <td>The <code>.so</code> filename, resolved inside the trusted plugin directory.</td>
+      </tr>
+      <tr>
+          <td><code>plugins[].config</code></td>
+          <td>Passed verbatim to the plugin constructor; the engine does not interpret the keys. The first-party samplers <strong>reject an unrecognized key</strong> rather than ignoring it — every option they have is a keep rule, so a key that silently missed would leave a sampler that drops the whole group. Note the reference <code>_example</code> plugin uses <code>snake_case</code> names; these two use <code>camelCase</code>, so a config copied from it is refused outright instead of quietly retaining nothing.</td>
+      </tr>
+  </tbody>
+</table>
+<p>Only a <strong>positive</strong> grace overrides the data node default. <code>0</code> is not &ldquo;no grace&rdquo;: the data node
+treats any non-positive value as unset, so zero grace can only be set with the node&rsquo;s
+<code>-trace-pipeline-merge-grace-default=0</code> flag. A blank value is treated as unset and leaves the
+field at its default, the same as omitting the line.</p>
+<p>The first-party samplers accept:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Config key</th>
+          <th>Meaning</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>durationThresholdMs</code></td>
+          <td>Keep a trace whose end-to-end duration reaches this many milliseconds. <code>0</code> disables the rule.</td>
+      </tr>
+      <tr>
+          <td><code>keepErrors</code></td>
+          <td>Keep a trace that carries an error. <code>sw-trace-sampler</code> reads the <code>is_error</code> column. <code>zipkin-trace-sampler</code> has no such column, so it detects Zipkin&rsquo;s conventional <code>error</code> span tag inside the flattened <code>query</code> attributes — a tag convention, so failures signalled only by <code>http.status_code</code> 5xx or <code>otel.status_code</code> need an explicit rule instead. <strong>On Zipkin it also misses long errors</strong>: OAP drops both the bare key and <code>key=value</code> from <code>query</code> when either exceeds 256 characters, so an <code>error</code> tag carrying a long exception message is invisible to this option. Catch those with a <code>keepTagRules</code> entry on a short-valued tag.</td>
+      </tr>
+      <tr>
+          <td><code>healthySampleRate</code></td>
+          <td>Fraction (0–1) of the remaining traces to keep, chosen by a deterministic hash of the trace ID. <code>0</code> keeps none of them.</td>
+      </tr>
+      <tr>
+          <td><code>keepTagRules</code></td>
+          <td>Sure-keep rules matched against the searchable tags: a list of <code>{tagKey, exists|equals|in|regex}</code>. Empty list = no tag rules. An <code>exists</code> rule matches the key in either stored form — the bare key or <code>key=value</code> — using an exact comparison, so <code>exists</code> on <code>error</code> is not satisfied by <code>error_rate</code>.</td>
+      </tr>
+      <tr>
+          <td><code>errorTag</code></td>
+          <td>Overrides which tag <code>keepErrors</code> reads, for instrumentation that signals failure through a non-standard tag. Defaults to <code>is_error</code> for <code>sw-trace-sampler</code> and <code>error</code> for <code>zipkin-trace-sampler</code>; ignored unless <code>keepErrors</code> is <code>true</code>.</td>
+      </tr>
+  </tbody>
+</table>
+<p>A <code>tagKey</code> may only name a <strong>searchable tag</strong>, because all of them are flattened into one
+array column (<code>tags</code> for segments, <code>query</code> for Zipkin). A rule naming a first-class column
+such as <code>service_id</code> or <code>local_endpoint_service_name</code> can never match. Each sampler carries
+its model&rsquo;s full column list and rejects such a rule at startup rather than let it silently
+never fire — so <code>{tagKey: service_id, equals: ...}</code>, the natural way to write &ldquo;keep
+everything from the payment service&rdquo;, fails loudly instead of dropping exactly those traces.
+&ldquo;Keep everything from service X&rdquo; has to key off a tag the instrumentation actually emits.</p>
+<p>If a searchable tag legitimately shares a name with a column — a Zipkin span tag called
+<code>duration</code>, say — match it through the array column itself, which sees the raw
+<code>key=value</code> entries: <code>{tagKey: query, regex: &quot;^duration=&quot;}</code>.</p>
+<p><code>keepTagRules</code> is a list of objects, so an environment override must be a <strong>one-line YAML/JSON
+flow sequence</strong>:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#953800">SW_STORAGE_BANYANDB_TRACE_SAMPLER_KEEP_TAG_RULES</span><span style="color:#0550ae">=</span><span style="color:#0a3069">&#39;[{tagKey: db.type, equals: PostgreSQL},{tagKey: mq.queue, equals: queue-songs-ping}]&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#953800">SW_STORAGE_BANYANDB_ZIPKIN_TRACE_SAMPLER_KEEP_TAG_RULES</span><span style="color:#0550ae">=</span><span style="color:#0a3069">&#39;[{tagKey: query, regex: &#34;http\.status_code=5\d\d&#34;}]&#39;</span>
+</span></span></code></pre></div><p>Nested values work too (<code>{tagKey: http.method, in: [GET, POST]}</code>). To set the rules in the file
+instead, replace the whole <code>${...}</code> placeholder with a normal block list. If you write an inline
+flow sequence <em>inside</em> <code>bydb.yml</code>, quote it — the <code>&quot;: &quot;</code> in it would otherwise be parsed as a
+nested mapping.</p>
+<p>A trace is kept when <strong>any</strong> rule matches; otherwise the <code>healthySampleRate</code> hash decides.</p>
+<p>Expect a CPU cost on merge. BanyanDB can normally copy a single-block trace through a merge
+as raw bytes without decoding it, but a sampler that projects any tag — which every useful
+config does — disables that fast path, so each block is decoded in full during merges that
+run the filter. Budget for it before enabling the pipeline on a busy cluster; the reward is
+that dropped traces are never re-written, reclaiming the space instead of leaving tombstones.
+Note that this composes with ingest-side sampling — enabling both multiplies the drop rate; see
+<a href="../../trace-sampling">Trace Sampling at server side</a>.</p>
+<h3 id="topn-rules-configuration">TopN Rules Configuration</h3>
 <p>The BanyanDB storage supports TopN pre-aggregation in the BanyanDB server side, which trades off more disk_volume for pre-aggregation to save CPU cost, and perform faster query in the query stage.
 You can define the TopN rules for different metrics. The configuration is defined in the <code>bydb-topn.yaml</code> file:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#57606a"># This file is used to configure the TopN rules for BanyanDB in SkyWalking OAP server.</span><span style="color:#fff">
@@ -3332,6 +4954,9 @@ You can define the TopN rules for different metrics. The configuration is define
         <li><a href="#banyandb">BanyanDB</a>
           <ul>
             <li><a href="#configuration">Configuration</a></li>
+            <li><a href="#secrets-management-file-of-banyandb-authentication">Secrets Management File Of BanyanDB Authentication</a></li>
+            <li><a href="#reloading-the-tls-trust-ca">Reloading The TLS Trust CA</a></li>
+            <li><a href="#trace-retention-pipeline">Trace retention pipeline</a></li>
             <li><a href="#topn-rules-configuration">TopN Rules Configuration</a></li>
             <li><a href="#installation-modes">Installation Modes</a></li>
           </ul>
@@ -3431,6 +5056,9 @@ You can define the TopN rules for different metrics. The configuration is define
         
         
     </div>
+    <p class="footer-contribute">
+      <a id="contribute" href="https://github.com/apache/skywalking-website" target="_blank" rel="noopener">Help improve this website <span aria-hidden="true">↗</span></a>
+    </p>
     <div class="">
 
         <small class="text-color">&copy; 2017 - 2026 The Apache Software Foundation All Rights Reserved</small>
@@ -13145,6 +14773,1466 @@ You can define the TopN rules for different metrics. The configuration is define
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
 <div id="popup">
     <div class="mask">
@@ -13152,85 +16240,187 @@ You can define the TopN rules for different metrics. The configuration is define
     </div>
 </div>
 
-    <div class="sidebar-mask"></div>
-<div class="sidebar">
-    <nav class="nav-links">
+    
+
+
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+<div class="sidebar-mask" aria-hidden="true"></div>
+<div class="sidebar" id="site-navigation-drawer" role="dialog" aria-modal="true" aria-label="Navigation" aria-hidden="true" tabindex="-1">
+  <div class="sidebar-header">
+    <span>Menu</span>
+    <button type="button" class="sidebar-close" aria-label="Close navigation">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+    </button>
+  </div>
+  <nav class="nav-links" aria-label="Site pages">
+    <ul class="sidebar-primary">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/">Home</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link active" href="/docs" aria-current="page">Projects</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/blog">Blogs</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/events/">Release Posts</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/events/calendar/">Event Calendar</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/users">Users</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/team">Team</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/zh/">中文博客</a></li>
+      
+      
+    </ul>
+    <ul class="sidebar-secondary">
+      <li><a class="nav-link" href="/downloads/">Downloads</a></li>
+      
+      <li><a class="nav-link" href="/get-started/">Get started</a></li>
+      
+    </ul>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <details class="sidebar-resources">
+      <summary><span>Apache</span><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 4 4 4-4 4"/></svg></summary>
+      <ul class="sidebar-resource-links">
         
-        <div class="nav-item"><a href="/docs/" class="nav-link router-link-active">Documentation</a></div>
-        <div class="nav-item"><a href="/events/" class="nav-link">Events</a></div>
-        <div class="nav-item"><a href="/blog/" class="nav-link">Blog</a></div>
-        <div class="nav-item"><a href="/downloads/" class="nav-link">Downloads</a></div>
-        <div class="nav-item"><a href="/team/" class="nav-link">Team</a></div>
-        <div class="nav-item"><a href="/users/" class="nav-link">Users</a></div>
-        <div class="nav-item"><a href="/zh/" class="nav-link">中文博客</a></div>
-        <div class="nav-item">
-            <div class="dropdown-wrapper open">
-                <a class="dropdown-title">
-                    <span>Links</span>
-                    <span class="arrow down"></span>
-                </a>
-                <ul class="nav-dropdown">
-                    <li class="dropdown-item">
-                        <a href="http://www.apache.org/" target="_blank"
-                           rel="noopener noreferrer" class="nav-link external">
-                            Apache Software Foundation
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="https://github.com/apache/skywalking/issues"
-                           target="_blank" rel="noopener noreferrer"
-                           class="nav-link external">
-                            GitHub Issue Tracker
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="https://lists.apache.org/list.html?dev@skywalking.apache.org" target="_blank"
-                           rel="noopener noreferrer" class="nav-link external">
-                            Dev Mailing List
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="http://www.apache.org/licenses/" target="_blank"
-                           rel="noopener noreferrer" class="nav-link external">
-                            License
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="http://www.apache.org/events/current-event"
-                           target="_blank" rel="noopener noreferrer"
-                           class="nav-link external">
-                            Apache Events
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="http://www.apache.org/security/" target="_blank"
-                           rel="noopener noreferrer" class="nav-link external">
-                            Security
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="http://www.apache.org/foundation/sponsorship.html"
-                           target="_blank" rel="noopener noreferrer"
-                           class="nav-link external">
-                            Sponsorship and Donate
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="http://www.apache.org/foundation/thanks.html"
-                           target="_blank" rel="noopener noreferrer"
-                           class="nav-link external">
-                            Thanks
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+        <li><a class="nav-link" href="http://www.apache.org/" target="_blank" rel="noopener noreferrer"><span>Apache Software Foundation</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="https://github.com/apache/skywalking/issues" target="_blank" rel="noopener noreferrer"><span>GitHub Issue Tracker</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="https://github.com/apache/skywalking/discussions" target="_blank" rel="noopener noreferrer"><span>Discussion</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="https://lists.apache.org/list.html?dev@skywalking.apache.org" target="_blank" rel="noopener noreferrer"><span>Dev Mailing List</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="https://cwiki.apache.org/confluence/display/SKYWALKING/Home" target="_blank" rel="noopener noreferrer"><span>WIKI</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="http://www.apache.org/licenses/" target="_blank" rel="noopener noreferrer"><span>License</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="http://www.apache.org/events/current-event" target="_blank" rel="noopener noreferrer"><span>Apache Events</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="http://www.apache.org/security/" target="_blank" rel="noopener noreferrer"><span>Security</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="http://www.apache.org/foundation/sponsorship.html" target="_blank" rel="noopener noreferrer"><span>Sponsor and Donate</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="http://www.apache.org/foundation/thanks.html" target="_blank" rel="noopener noreferrer"><span>Thanks</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="https://apache.org/foundation/policies/privacy.html" target="_blank" rel="noopener noreferrer"><span>Privacy</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+      </ul>
+    </details>
+    
+    
+  </nav>
 </div>
 
     <script src="/js/bootstrap.bundle.min.js"></script>
 
-<script src="/js/docsearch-3.9.0.js"></script>
 
 
 
@@ -13240,7 +16430,8 @@ You can define the TopN rules for different metrics. The configuration is define
 
 
 
-<script src="/js/main.min.9be14eed0a0e24711261c334305209aa2e5ae3fb624f6a1731e064d5ffb11f3d.js" integrity="sha256-m&#43;FO7QoOJHESYcM0MFIJqi5a4/tiT2oXMeBk1f&#43;xHz0=" crossorigin="anonymous"></script>
+
+<script src="/js/main.min.a351a9c3ee226044b9050a859fb2f5a6019a548cfe22e3ca281fb08443c28976.js" integrity="sha256-o1Gpw&#43;4iYES5BQqFn7L1pgGaVIz&#43;IuPKKB&#43;whEPCiXY=" crossorigin="anonymous"></script>
 
 
 <script src="/js/highlight.min.js"></script>
@@ -13273,14 +16464,16 @@ data-project-name="SkyWalking"
 data-project-color="#2B74B8"
 data-button-text="Ask AI"
 data-search-mode-enabled="true"
+data-search-mode-default="false"
+data-modal-override-open-selector-search=".sw-kapa-search"
 data-modal-open-on-command-k="true"
+data-modal-command-k-search-mode-default="true"
+data-modal-z-index="10000"
 data-modal-disclaimer="The AI supports multiple languages, but it may not be accessible in China, a proxy is required."
 data-project-logo="/images/widget-logo.jpg"
 data-modal-example-questions="What is Apache SkyWalking?,How to deploy SkyWalking?,How to inject agents non-intrusively?,How to setup trace sampling?"
-data-button-position-top=""
 data-button-position-right="20px"
 data-button-position-bottom="200px"
-data-button-position-left=""
 data-consent-required="true"  
 data-user-analytics-cookie-enabled="true"  
 data-consent-screen-title="Help us improve our AI assistant"  
@@ -13288,8 +16481,28 @@ data-consent-screen-disclaimer="By clicking 'Allow tracking', you consent to ano
 data-consent-screen-accept-button-text="Allow tracking"  
 data-consent-screen-reject-button-text="No, thanks"
 ></script>
+<script>
+  (function () {
+    var SEL = 'details.topic-filter';
 
+    function closeAll(except) {
+      document.querySelectorAll(SEL).forEach(function (d) {
+        if (d !== except && d.open) { d.open = false; }
+      });
+    }
 
+    
+    
+    document.addEventListener('click', function (e) {
+      var target = e.target instanceof Element ? e.target.closest(SEL) : null;
+      closeAll(target);
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' || e.key === 'Esc') { closeAll(null); }
+    });
+  })();
+</script>
 
 
     <script>

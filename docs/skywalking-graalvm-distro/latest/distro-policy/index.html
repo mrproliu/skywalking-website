@@ -25,30 +25,28 @@
   <meta property="og:site_name" content="Apache SkyWalking">
   <meta property="og:title" content="SkyWalking GraalVM Distro - Distribution Policy">
   <meta property="og:description" content="SkyWalking GraalVM Distro - Distribution Policy Goal Build and package Apache SkyWalking OAP server as a GraalVM native image on JDK 25.
-Architecture Constraints Submodule: skywalking/ is a git submodule of apache/skywalking.git. All SkyWalking source changes go through upstream PRs. Minimize upstream changes. This repo: Maven &#43; Makefile to orchestrate building on top of the submodule. Pre-compilation, GraalVM config, native-image wiring, and the fixed module manager live here. JDK 25: Already compiles and runs. Not an issue. Module Selection (Fixed at Build Time) Category Module Provider Core CoreModule default Storage StorageModule BanyanDB Cluster ClusterModule Standalone, Kubernetes Configuration ConfigurationModule Kubernetes Receivers SharingServerModule, TraceModule, JVMModule, MeterReceiverModule, LogModule, RegisterModule, ProfileModule, BrowserModule, EventModule, OtelMetricReceiverModule, MeshReceiverModule, EnvoyMetricReceiverModule, ZipkinReceiverModule, ZabbixReceiverModule, TelegrafReceiverModule, AWSFirehoseReceiverModule, CiliumFetcherModule, EBPFReceiverModule, AsyncProfilerModule, PprofModule, CLRModule, ConfigurationDiscoveryModule, KafkaFetcherModule default providers Analyzers AnalyzerModule, LogAnalyzerModule, EventAnalyzerModule, GenAIAnalyzerModule default providers Query QueryModule (GraphQL), PromQLModule, LogQLModule, TraceQLModule, ZipkinQueryModule, StatusQueryModule default providers Alarm AlarmModule default Telemetry TelemetryModule Prometheus Other ExporterModule, HealthCheckerModule, AIPipelineModule default providers Full feature set. Work around issues as they arise.">
+Architecture Constraints Submodule: skywalking/ is a git submodule of apache/skywalking.git. All SkyWalking source changes go through upstream PRs. Minimize upstream changes. This repo: Maven &#43; Makefile to orchestrate building on top of the submodule. Pre-compilation, GraalVM config, native-image wiring, and the fixed module manager live here. JDK 25: Already compiles and runs. Not an issue. Module Selection (Fixed at Build Time) Category Module Provider Core CoreModule default Storage StorageModule BanyanDB Cluster ClusterModule Standalone, Kubernetes Configuration ConfigurationModule Kubernetes Receivers SharingServerModule, TraceModule, JVMModule, MeterReceiverModule, LogModule, RegisterModule, ProfileModule, BrowserModule, EventModule, OtelMetricReceiverModule, MeshReceiverModule, EnvoyMetricReceiverModule, ZipkinReceiverModule, ZabbixReceiverModule, TelegrafReceiverModule, AWSFirehoseReceiverModule, CiliumFetcherModule, EBPFReceiverModule, AsyncProfilerModule, PprofModule, CLRModule, ConfigurationDiscoveryModule, KafkaFetcherModule default providers Analyzers AnalyzerModule, LogAnalyzerModule, TraceAnalyzerModule, EventAnalyzerModule, GenAIAnalyzerModule, AIEvaluationModule, AIAgentConversationModule default providers (AIEvaluationModule disabled by default; AIAgentConversationModule also offers none; TraceAnalyzerModule can be removed with -) Query QueryModule (GraphQL), PromQLModule, LogQLModule, TraceQLModule, ZipkinQueryModule default providers Admin AdminServerModule, StatusModule, InspectModule, UIManagementModule, DSLDebuggingModule default; runtime-rule excluded (mutations return 501) Alarm AlarmModule default Telemetry TelemetryModule Prometheus Other ExporterModule, HealthCheckerModule, AIPipelineModule default providers Full feature set. Work around issues as they arise.">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="article">
     <meta property="article:section" content="docs">
 
   <meta itemprop="name" content="SkyWalking GraalVM Distro - Distribution Policy">
   <meta itemprop="description" content="SkyWalking GraalVM Distro - Distribution Policy Goal Build and package Apache SkyWalking OAP server as a GraalVM native image on JDK 25.
-Architecture Constraints Submodule: skywalking/ is a git submodule of apache/skywalking.git. All SkyWalking source changes go through upstream PRs. Minimize upstream changes. This repo: Maven &#43; Makefile to orchestrate building on top of the submodule. Pre-compilation, GraalVM config, native-image wiring, and the fixed module manager live here. JDK 25: Already compiles and runs. Not an issue. Module Selection (Fixed at Build Time) Category Module Provider Core CoreModule default Storage StorageModule BanyanDB Cluster ClusterModule Standalone, Kubernetes Configuration ConfigurationModule Kubernetes Receivers SharingServerModule, TraceModule, JVMModule, MeterReceiverModule, LogModule, RegisterModule, ProfileModule, BrowserModule, EventModule, OtelMetricReceiverModule, MeshReceiverModule, EnvoyMetricReceiverModule, ZipkinReceiverModule, ZabbixReceiverModule, TelegrafReceiverModule, AWSFirehoseReceiverModule, CiliumFetcherModule, EBPFReceiverModule, AsyncProfilerModule, PprofModule, CLRModule, ConfigurationDiscoveryModule, KafkaFetcherModule default providers Analyzers AnalyzerModule, LogAnalyzerModule, EventAnalyzerModule, GenAIAnalyzerModule default providers Query QueryModule (GraphQL), PromQLModule, LogQLModule, TraceQLModule, ZipkinQueryModule, StatusQueryModule default providers Alarm AlarmModule default Telemetry TelemetryModule Prometheus Other ExporterModule, HealthCheckerModule, AIPipelineModule default providers Full feature set. Work around issues as they arise.">
-  <meta itemprop="wordCount" content="2051">
+Architecture Constraints Submodule: skywalking/ is a git submodule of apache/skywalking.git. All SkyWalking source changes go through upstream PRs. Minimize upstream changes. This repo: Maven &#43; Makefile to orchestrate building on top of the submodule. Pre-compilation, GraalVM config, native-image wiring, and the fixed module manager live here. JDK 25: Already compiles and runs. Not an issue. Module Selection (Fixed at Build Time) Category Module Provider Core CoreModule default Storage StorageModule BanyanDB Cluster ClusterModule Standalone, Kubernetes Configuration ConfigurationModule Kubernetes Receivers SharingServerModule, TraceModule, JVMModule, MeterReceiverModule, LogModule, RegisterModule, ProfileModule, BrowserModule, EventModule, OtelMetricReceiverModule, MeshReceiverModule, EnvoyMetricReceiverModule, ZipkinReceiverModule, ZabbixReceiverModule, TelegrafReceiverModule, AWSFirehoseReceiverModule, CiliumFetcherModule, EBPFReceiverModule, AsyncProfilerModule, PprofModule, CLRModule, ConfigurationDiscoveryModule, KafkaFetcherModule default providers Analyzers AnalyzerModule, LogAnalyzerModule, TraceAnalyzerModule, EventAnalyzerModule, GenAIAnalyzerModule, AIEvaluationModule, AIAgentConversationModule default providers (AIEvaluationModule disabled by default; AIAgentConversationModule also offers none; TraceAnalyzerModule can be removed with -) Query QueryModule (GraphQL), PromQLModule, LogQLModule, TraceQLModule, ZipkinQueryModule default providers Admin AdminServerModule, StatusModule, InspectModule, UIManagementModule, DSLDebuggingModule default; runtime-rule excluded (mutations return 501) Alarm AlarmModule default Telemetry TelemetryModule Prometheus Other ExporterModule, HealthCheckerModule, AIPipelineModule default providers Full feature set. Work around issues as they arise.">
+  <meta itemprop="wordCount" content="2573">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="SkyWalking GraalVM Distro - Distribution Policy">
   <meta name="twitter:description" content="SkyWalking GraalVM Distro - Distribution Policy Goal Build and package Apache SkyWalking OAP server as a GraalVM native image on JDK 25.
-Architecture Constraints Submodule: skywalking/ is a git submodule of apache/skywalking.git. All SkyWalking source changes go through upstream PRs. Minimize upstream changes. This repo: Maven &#43; Makefile to orchestrate building on top of the submodule. Pre-compilation, GraalVM config, native-image wiring, and the fixed module manager live here. JDK 25: Already compiles and runs. Not an issue. Module Selection (Fixed at Build Time) Category Module Provider Core CoreModule default Storage StorageModule BanyanDB Cluster ClusterModule Standalone, Kubernetes Configuration ConfigurationModule Kubernetes Receivers SharingServerModule, TraceModule, JVMModule, MeterReceiverModule, LogModule, RegisterModule, ProfileModule, BrowserModule, EventModule, OtelMetricReceiverModule, MeshReceiverModule, EnvoyMetricReceiverModule, ZipkinReceiverModule, ZabbixReceiverModule, TelegrafReceiverModule, AWSFirehoseReceiverModule, CiliumFetcherModule, EBPFReceiverModule, AsyncProfilerModule, PprofModule, CLRModule, ConfigurationDiscoveryModule, KafkaFetcherModule default providers Analyzers AnalyzerModule, LogAnalyzerModule, EventAnalyzerModule, GenAIAnalyzerModule default providers Query QueryModule (GraphQL), PromQLModule, LogQLModule, TraceQLModule, ZipkinQueryModule, StatusQueryModule default providers Alarm AlarmModule default Telemetry TelemetryModule Prometheus Other ExporterModule, HealthCheckerModule, AIPipelineModule default providers Full feature set. Work around issues as they arise.">
+Architecture Constraints Submodule: skywalking/ is a git submodule of apache/skywalking.git. All SkyWalking source changes go through upstream PRs. Minimize upstream changes. This repo: Maven &#43; Makefile to orchestrate building on top of the submodule. Pre-compilation, GraalVM config, native-image wiring, and the fixed module manager live here. JDK 25: Already compiles and runs. Not an issue. Module Selection (Fixed at Build Time) Category Module Provider Core CoreModule default Storage StorageModule BanyanDB Cluster ClusterModule Standalone, Kubernetes Configuration ConfigurationModule Kubernetes Receivers SharingServerModule, TraceModule, JVMModule, MeterReceiverModule, LogModule, RegisterModule, ProfileModule, BrowserModule, EventModule, OtelMetricReceiverModule, MeshReceiverModule, EnvoyMetricReceiverModule, ZipkinReceiverModule, ZabbixReceiverModule, TelegrafReceiverModule, AWSFirehoseReceiverModule, CiliumFetcherModule, EBPFReceiverModule, AsyncProfilerModule, PprofModule, CLRModule, ConfigurationDiscoveryModule, KafkaFetcherModule default providers Analyzers AnalyzerModule, LogAnalyzerModule, TraceAnalyzerModule, EventAnalyzerModule, GenAIAnalyzerModule, AIEvaluationModule, AIAgentConversationModule default providers (AIEvaluationModule disabled by default; AIAgentConversationModule also offers none; TraceAnalyzerModule can be removed with -) Query QueryModule (GraphQL), PromQLModule, LogQLModule, TraceQLModule, ZipkinQueryModule default providers Admin AdminServerModule, StatusModule, InspectModule, UIManagementModule, DSLDebuggingModule default; runtime-rule excluded (mutations return 501) Alarm AlarmModule default Telemetry TelemetryModule Prometheus Other ExporterModule, HealthCheckerModule, AIPipelineModule default providers Full feature set. Work around issues as they arise.">
 
 
 
-<link rel="preload" href="/scss/main.min.75b3855349f4480c60036369f115ecf9ae08f3fff28f5b2de980d22a7fac93ef.css" as="style">
-<link href="/scss/main.min.75b3855349f4480c60036369f115ecf9ae08f3fff28f5b2de980d22a7fac93ef.css" rel="stylesheet" integrity="">
+<link rel="preload" href="/scss/main.min.b350fb8c42fee31880305a4433cf2325b5cefc4e06a4d17342698fbbcf354d7b.css" as="style">
+<link href="/scss/main.min.b350fb8c42fee31880305a4433cf2325b5cefc4e06a4d17342698fbbcf354d7b.css" rel="stylesheet" integrity="">
 
 
 
-<link rel="stylesheet" href="/css/docSearch.css" />
 <link rel="stylesheet" href="/css/highlight-github.css" />
-
 
 <script src="/js/jquery-3.6.0.min.js"></script>
 
@@ -66,16 +64,88 @@ Architecture Constraints Submodule: skywalking/ is a git submodule of apache/sky
   <body class="td-page  project-doc">
     <header>
       
-<nav class="js-navbar-scroll navbar navbar-expand  flex-column flex-md-row td-navbar">
-    <div class="sidebar-button">
-      <i class="iconfont icon-menu"></i>
-    </div>
+
+
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    
+  
+
+  
+  
+
+  
+  
+
+
+
+
+  
+    
+    
+    
+    
+    
+    
+  
+
+  
+    
+    
+    
+    
+    
+    
+  
+
+  
+    
+    
+    
+    
+    
+    
+  
+
+  
+    
+    
+    
+    
+    
+    
+  
+
+  
+    
+    
+    
+    
+    
+    
+  
+
+<nav class="js-navbar-scroll navbar navbar-expand td-navbar" aria-label="Main navigation">
+  <div class="sw-navbar-inner">
+    <button type="button" class="sidebar-button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-navigation-drawer">
+      <i class="iconfont icon-menu" aria-hidden="true"></i>
+    </button>
     <a class="navbar-brand" href="/">
         <span class="navbar-logo"><img width="130" src="/images/logo.svg" alt="SkyWalking"></span> 
     </a>
     <div class="td-navbar-nav-scroll navbar-nav-wrapper" id="navigation">
         <ul class="navbar-nav mt-lg-0">
-             
+            
             
             <li class="nav-item mr-3 mb-lg-0">
 				
@@ -84,90 +154,1007 @@ Architecture Constraints Submodule: skywalking/ is a git submodule of apache/sky
 				
 				
 				
-				<a class="nav-link active" href="/docs" ><span class="active">Documentation</span></a>
+				
+				
+                
+                <a class="nav-link" href="/" ><span>Home</span></a>
 			</li>
             
             
             
-            <li class="nav-item mr-3 mb-lg-0">
-				
-				
-				
-				
-				
-				
-				<a class="nav-link" href="/events" ><span>Events</span></a>
-			</li>
-            
-            
-            
-            <li class="nav-item mr-3 mb-lg-0">
-				
-				
-				
-				
-				
-				
-				<a class="nav-link" href="/blog" ><span>Blogs</span></a>
-			</li>
-            
-            
-            
-            <li class="nav-item mr-3 mb-lg-0">
-				
-				
-				
-				
-				
-				
-				<a class="nav-link" href="/downloads" ><span>Downloads</span></a>
-			</li>
-            
-            
-            
-            <li class="nav-item mr-3 mb-lg-0">
-				
-				
-				
-				
-				
-				
-				<a class="nav-link" href="/team" ><span>Team</span></a>
-			</li>
-            
-            
-            
-            <li class="nav-item mr-3 mb-lg-0">
-				
-				
-				
-				
-				
-				
-				<a class="nav-link" href="/users" ><span>Users</span></a>
-			</li>
-            
-            
-            
-            
-            
-            
-            <li class="nav-item mr-3 mb-lg-0">
-                <a class="nav-link" href="/zh/"><span>中文博客</span></a>
-            </li>
+            <li class="nav-item dropdown sw-projects-item">
+                <button type="button" class="nav-link dropdown-toggle sw-projects-toggle active" id="projects-menu-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Projects</button>
+                <div class="dropdown-menu sw-projects-menu" aria-labelledby="projects-menu-toggle">
+                    
 
+
+<div class="sw-projects-content">
+  <a class="dropdown-item sw-projects-intro" href="/get-started/">
+    <span><strong>Get started in minutes</strong><span>Try the Showcase or install SkyWalking</span></span>
+    <span aria-hidden="true">→</span>
+  </a>
+  <div class="sw-projects-groups">
+    
+    
+    
+      
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+      
+    
+    
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+    
+    
+    <div class="sw-projects-group">
+      <p class="sw-projects-label">Platform</p>
+    
+      <div class="sw-projects-group-links">
+        <div class="sw-projects-columns">
+        
+        <div class="sw-projects-column">
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#SkyWalking">
+          <img src="/images/project/skywalking.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking</strong><span class="sw-project-description">Core observability server</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#BanyanDB">
+          <img src="/images/project/banyan-db.svg" width="28" height="28" alt="">
+          <span><strong>BanyanDB</strong><span class="sw-project-description">Observability database</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#HorizonUI">
+          <img src="/images/project/skywalking.svg" width="28" height="28" alt="">
+          <span><strong>Horizon UI</strong><span class="sw-project-description">Next-generation UI</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#AISessionizer">
+          <img src="/images/project/skywalking.svg" width="28" height="28" alt="">
+          <span><strong>AI Sessionizer</strong><span class="sw-project-description">AI agent observability</span></span>
+        </a>
+        
+        
+        </div>
+        
+        </div>
+        
+        <a class="dropdown-item sw-projects-more" href="/docs/#SkyWalkingServers">All platform projects <span aria-hidden="true">→</span></a>
+        
+      </div>
+    </div>
+    
+    
+    
+      
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+      
+    
+      
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+      
+    
+    
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+    
+    
+    <div class="sw-projects-group sw-projects-group-wide">
+      <p class="sw-projects-label">Agents &amp; collection</p>
+    
+      <div class="sw-projects-group-links">
+        <div class="sw-projects-columns">
+        
+        <div class="sw-projects-column">
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#JavaAgent">
+          <img src="/images/project/java-agent.svg" width="28" height="28" alt="">
+          <span><strong>Java Agent</strong><span class="sw-project-description">Java tracing and profiling</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#GoAgent">
+          <img src="/images/project/skywalking-go.svg" width="28" height="28" alt="">
+          <span><strong>Go Agent</strong><span class="sw-project-description">Go tracing and metrics</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#PythonAgent">
+          <img src="/images/project/python-agent.svg" width="28" height="28" alt="">
+          <span><strong>Python Agent</strong><span class="sw-project-description">Python tracing and profiling</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#NodeJSAgent">
+          <img src="/images/project/nodejs-agent.svg" width="28" height="28" alt="">
+          <span><strong>NodeJS Agent</strong><span class="sw-project-description">Node.js distributed tracing</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#PHPAgent">
+          <img src="/images/project/php-agent.svg" width="28" height="28" alt="">
+          <span><strong>PHP Agent</strong><span class="sw-project-description">PHP distributed tracing</span></span>
+        </a>
+        
+        
+        </div>
+        
+        <div class="sw-projects-column">
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#OpenTelemetryOTLP">
+          <img src="/images/project/otlp.svg" width="28" height="28" alt="">
+          <span><strong>OpenTelemetry (OTLP)</strong><span class="sw-project-description">OTLP traces, metrics, and logs</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#SkyWalkingRover">
+          <img src="/images/project/skywalking.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking Rover</strong><span class="sw-project-description">eBPF metrics and profiling</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#SkyWalkingSatellite">
+          <img src="/images/project/skywalking-satellite.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking Satellite</strong><span class="sw-project-description">Lightweight telemetry collector</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#KubernetesEventExporter">
+          <img src="/images/project/kubernetes.svg" width="28" height="28" alt="">
+          <span><strong>Kubernetes Event Exporter</strong><span class="sw-project-description">Kubernetes event collection</span></span>
+        </a>
+        
+        
+        </div>
+        
+        </div>
+        
+        <a class="dropdown-item sw-projects-more" href="/docs/#Agents">View all agents &amp; collectors <span aria-hidden="true">→</span></a>
+        
+      </div>
+    </div>
+    
+    
+    
+      
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+      
+    
+    
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+    
+    
+    <div class="sw-projects-group">
+      <p class="sw-projects-label">Operations &amp; tools</p>
+    
+      <div class="sw-projects-group-links">
+        <div class="sw-projects-columns">
+        
+        <div class="sw-projects-column">
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#SkyWalkingCLI">
+          <img src="/images/project/skywalking-cli.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking CLI</strong><span class="sw-project-description">Command-line operations</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#SkyWalkingMCP">
+          <img src="/images/project/skywalking.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking MCP</strong><span class="sw-project-description">Observability for AI assistants</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#KubernetesHelm">
+          <img src="/images/project/helm.svg" width="28" height="28" alt="">
+          <span><strong>Kubernetes Helm</strong><span class="sw-project-description">Deploy SkyWalking with Helm</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#SkyWalkingCloudonKubernetes">
+          <img src="/images/project/kubernetes.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking Cloud on Kubernetes</strong><span class="sw-project-description">Kubernetes operator</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#SkyWalkingEyes">
+          <img src="/images/project/skywalking-eyes.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking Eyes</strong><span class="sw-project-description">License checks and fixes</span></span>
+        </a>
+        
+        
+        </div>
+        
+        </div>
+        
+        <a class="dropdown-item sw-projects-more" href="/docs/#Operation">All operations projects <span aria-hidden="true">→</span></a>
+        
+      </div>
+    </div>
+    
+  </div>
+  <div class="sw-projects-footer">
+    <a class="dropdown-item sw-projects-all" href="/docs/">All projects <span aria-hidden="true">→</span></a>
+    <a class="dropdown-item sw-projects-downloads" href="/downloads/">Downloads <span aria-hidden="true">→</span></a>
+  </div>
+</div>
+
+                </div>
+            </li>
+            
+            
+            
+            
+            <li class="nav-item"><a class="nav-link" href="/blog">Blogs</a></li>
+            
+            
+            
+            
+            
+            <li class="nav-item" data-nav-promote="events" hidden><a class="nav-link" href="/events/">Release Posts</a></li>
+            
+            <li class="nav-item" data-nav-promote="events/calendar" hidden><a class="nav-link" href="/events/calendar/">Event Calendar</a></li>
+            
+            <li class="nav-item" data-nav-promote="users" hidden><a class="nav-link" href="/users">Users</a></li>
+            
+            <li class="nav-item" data-nav-promote="team" hidden><a class="nav-link" href="/team">Team</a></li>
+            
+            <li class="nav-item" data-nav-promote="zh" hidden><a class="nav-link" href="/zh/">中文博客</a></li>
+            
+            
+            <li class="nav-item dropdown" data-nav-more>
+                <button type="button" class="nav-link dropdown-toggle sw-more-toggle" id="more-menu-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">More</button>
+                <div class="dropdown-menu sw-more-menu" aria-labelledby="more-menu-toggle">
+                    
+                    <a class="dropdown-item" data-nav-overflow="events" href="/events/">Release Posts</a>
+                    
+                    <a class="dropdown-item" data-nav-overflow="events/calendar" href="/events/calendar/">Event Calendar</a>
+                    
+                    <a class="dropdown-item" data-nav-overflow="users" href="/users">Users</a>
+                    
+                    <a class="dropdown-item" data-nav-overflow="team" href="/team">Team</a>
+                    
+                    <a class="dropdown-item" data-nav-overflow="zh" href="/zh/">中文博客</a>
+                    
+                </div>
+            </li>
+            
+            
+            
+            
+            
+            
             
 			
         </ul>
     </div>
 
-    <div class="navbar-nav d-none d-lg-block search-input-box">
-        
-<div id="docsearch"></div>
+    <div class="sw-navbar-actions">
+        <button type="button" class="sw-kapa-search" aria-label="Search SkyWalking documentation and ask AI" aria-haspopup="dialog" title="Search and ask AI">
+  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="7.5"/><path d="m16 16 5 5"/></svg>
+  <span>Search</span>
+</button>
 
-
-            
-        
+        <div class="navbar-nav d-none d-lg-block search-input-box">
             
         
             
@@ -270,7 +1257,24 @@ Architecture Constraints Submodule: skywalking/ is a git submodule of apache/sky
             </span>
             
         
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+            <a class="sw-nav-cta" href="/get-started/">Get started</a>
+            
+        
+            
+        
+        </div>
     </div>
+  </div>
 </nav>
 
     </header>
@@ -279,8 +1283,6 @@ Architecture Constraints Submodule: skywalking/ is a git submodule of apache/sky
       <div class="td-main">
         <div class="row flex-xl-nowrap">
           <div class="col-12 col-md-3 col-xl-2 d-print-none scroll-bar td-sidebar">
-
-
 
 
 
@@ -323,17 +1325,25 @@ Architecture Constraints Submodule: skywalking/ is a git submodule of apache/sky
                   
                     
                     
-                    <option ZgotmplZ value="0.3.0">
+                    <option ZgotmplZ value="v0.5.0">
                     
-                      0.3.0
+                      0.5.0 (SkyWalking 11.1.0)
                     
                     </option>
                   
                     
                     
-                    <option ZgotmplZ value="v0.2.1 (10.3.0-dev-64a1795)">
+                    <option ZgotmplZ value="v0.4.0">
                     
-                      v0.2.1 (10.3.0-dev-64a1795)
+                      0.4.0 (SkyWalking 11.0.0)
+                    
+                    </option>
+                  
+                    
+                    
+                    <option ZgotmplZ value="v0.3.0">
+                    
+                      0.3.0 (SkyWalking 10.4.0)
                     
                     </option>
                   
@@ -486,8 +1496,24 @@ Architecture Constraints Submodule: skywalking/ is a git submodule of apache/sky
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 1ab407e</div>
+                  <div class="commit-id">Commit Id: 8ca2b7e</div>
                 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -582,13 +1608,18 @@ Architecture Constraints Submodule: skywalking/ is a git submodule of apache/sky
       </tr>
       <tr>
           <td><strong>Analyzers</strong></td>
-          <td>AnalyzerModule, LogAnalyzerModule, EventAnalyzerModule, GenAIAnalyzerModule</td>
-          <td>default providers</td>
+          <td>AnalyzerModule, LogAnalyzerModule, TraceAnalyzerModule, EventAnalyzerModule, GenAIAnalyzerModule, AIEvaluationModule, AIAgentConversationModule</td>
+          <td>default providers (AIEvaluationModule disabled by default; AIAgentConversationModule also offers <code>none</code>; TraceAnalyzerModule can be removed with <code>-</code>)</td>
       </tr>
       <tr>
           <td><strong>Query</strong></td>
-          <td>QueryModule (GraphQL), PromQLModule, LogQLModule, TraceQLModule, ZipkinQueryModule, StatusQueryModule</td>
+          <td>QueryModule (GraphQL), PromQLModule, LogQLModule, TraceQLModule, ZipkinQueryModule</td>
           <td>default providers</td>
+      </tr>
+      <tr>
+          <td><strong>Admin</strong></td>
+          <td>AdminServerModule, StatusModule, InspectModule, UIManagementModule, DSLDebuggingModule</td>
+          <td>default; runtime-rule excluded (mutations return 501)</td>
       </tr>
       <tr>
           <td><strong>Alarm</strong></td>
@@ -608,11 +1639,29 @@ Architecture Constraints Submodule: skywalking/ is a git submodule of apache/sky
   </tbody>
 </table>
 <p><strong>Full feature set.</strong> Work around issues as they arise.</p>
+<blockquote>
+<p><strong>Admin server family (11.0.0+).</strong> <code>StatusModule</code> — cluster / alarm-runtime / TTL-config
+status plus the <code>/debugging/*</code> debug-query trace endpoints — was relocated from the 10.x
+<code>status-query</code> query plugin onto the admin-server host (default <code>:17128</code>); URIs and payloads
+are unchanged. <code>InspectModule</code> (SWIP-14 metric catalog + entity enumeration, <code>/inspect/*</code>)
+and <code>UIManagementModule</code> (dashboard-template REST consumed by the Horizon UI,
+<code>/ui-management/*</code>) are hosted there as well, and so is <code>DSLDebuggingModule</code> (SWIP-13 DSL live
+debugger, <code>/dsl-debugging/*</code> + <code>/runtime/oal/*</code>): the precompiler flips upstream&rsquo;s
+<code>DSLDebugCodegenSwitch</code> before generating, so every pre-compiled OAL/MAL/LAL rule class carries
+the debug probes and the module only flips gates at runtime (upstream&rsquo;s TAL compiler emits no
+probes yet, so TAL rules are not debuggable on either distro). <code>RuntimeRuleModule</code> (MAL/LAL hot-update) is
+<strong>not supported</strong>: it needs runtime Javassist code generation, which a closed-world native
+image cannot do. Its mutating endpoints return a friendly HTTP 501 via a stub module provider,
+while the read-only rule catalog (<code>/runtime/rule/list|bundled</code>, <code>GET /runtime/rule</code>) is served
+from <code>META-INF/rule-source/</code>, the raw rule files the precompiler exports at build time, so
+Horizon can list and review every bundled rule of upstream&rsquo;s runtime-rule catalogs (MAL and LAL;
+upstream has no TAL catalog, so TAL rules are not listed there either).</p>
+</blockquote>
 <hr>
 <h2 id="core-strategy">Core Strategy</h2>
 <ol>
 <li>
-<p><strong>Build-Time Class Export</strong>: All runtime code generation (OAL/MAL/LAL/Hierarchy via ANTLR4 + Javassist) runs at build time. Export <code>.class</code> files and package into native-image classpath. Classpath scanning also runs here as a verification gate.</p>
+<p><strong>Build-Time Class Export</strong>: All runtime code generation (OAL/MAL/LAL/TAL/Hierarchy via ANTLR4 + Javassist) runs at build time. Export <code>.class</code> files and package into native-image classpath. Classpath scanning also runs here as a verification gate.</p>
 </li>
 <li>
 <p><strong>Fixed Module Wiring</strong>: Module/provider selection is hardcoded in this distro (no SPI discovery). Simplified config file for selected providers only.</p>
@@ -623,34 +1672,41 @@ Architecture Constraints Submodule: skywalking/ is a git submodule of apache/sky
 </ol>
 <hr>
 <h2 id="dsl-runtime-class-generation-unified-v2-engines">DSL Runtime Class Generation (Unified V2 Engines)</h2>
-<p>Since upstream PR #13723, all four SkyWalking DSL compilers (OAL, MAL, LAL, Hierarchy) use a unified pipeline: ANTLR4 parse → immutable AST → Javassist bytecode. This eliminated the need for the complex, 10,000-line custom Groovy-to-Java transpiler previously maintained in this distro.</p>
+<p>Since upstream PR #13723, the SkyWalking DSL compilers (OAL, MAL, LAL, Hierarchy, and since 11.1 TAL) use a unified pipeline: ANTLR4 parse → immutable AST → Javassist bytecode. This eliminated the need for the complex, 10,000-line custom Groovy-to-Java transpiler previously maintained in this distro.</p>
 <h3 id="approach-simplified">Approach (Simplified)</h3>
-<p>Run all four v2 compilers at build time via their native exposed APIs (<code>setClassOutputDir()</code>, <code>setClassNameHint()</code>, <code>setGeneratedFilePath()</code>). Capture generated <code>.class</code> files into the precompiler output JAR. At runtime, same-FQCN replacement loaders find these classes by name instead of compiling them.</p>
+<p>Run all five v2 compilers at build time via their native exposed APIs (<code>setClassOutputDir()</code>, <code>setClassNameHint()</code>, <code>setGeneratedFilePath()</code>). Capture generated <code>.class</code> files into the precompiler output JAR. At runtime, same-FQCN replacement loaders find these classes by name instead of compiling them.</p>
 <p><strong>Details</strong>: <a href="../internals/dsl-immigration">dsl-immigration.md</a> | <a href="../internals/oal-immigration">oal-immigration.md</a></p>
 <h3 id="oal">OAL</h3>
 <ul>
 <li><code>OALEngineV2.start()</code> processes all 9 OAL defines at build time.</li>
-<li>Exports ~620 metrics classes, ~620 builder classes, ~45 dispatchers.</li>
+<li>Exports ~640 metrics classes, ~640 builder classes, ~47 dispatchers.</li>
 <li>3 manifest files: <code>oal-metrics-classes.txt</code>, <code>oal-dispatcher-classes.txt</code>, <code>oal-disabled-sources.txt</code>.</li>
 <li>Same-FQCN <code>OALEngineLoaderService</code> loads pre-compiled classes from manifests.</li>
 </ul>
 <h3 id="mal">MAL</h3>
 <ul>
-<li><code>MALClassGenerator</code> compiles ~1250 MAL expressions from 71 YAML rule files at build time.</li>
-<li>Uses <code>setClassNameHint(yamlSource + metricName)</code> for deterministic naming.</li>
+<li><code>MALClassGenerator</code> compiles ~1570 MAL expressions from 96 YAML rule files at build time.</li>
+<li>Deterministic class naming via <code>DslSourceRef</code> (<code>{yaml}_L{line}_{metricName}</code>), the same names the JVM distro generates.</li>
 <li>Same-FQCN v2 <code>DSL.java</code> loads pre-compiled <code>MalExpression</code> classes by computed name.</li>
-<li><code>MeterSystem.create()</code> also runs at build time → exports ~1188 Javassist meter classes.</li>
+<li><code>MeterSystem.create()</code> also runs at build time → exports ~1500 Javassist meter classes.</li>
 </ul>
 <h3 id="lal">LAL</h3>
 <ul>
-<li><code>LALClassGenerator</code> compiles 10 LAL scripts (8 YAML files) at build time.</li>
-<li>Uses <code>setClassNameHint(yamlSource + ruleName)</code> for deterministic naming.</li>
-<li>Same-FQCN v2 <code>DSL.java</code> loads pre-compiled <code>LalExpression</code> classes by computed name.</li>
+<li><code>LALClassGenerator</code> compiles 16 LAL rules (12 YAML files) at build time.</li>
+<li>Deterministic class naming via <code>DslSourceRef</code> (<code>{yaml}_L{line}_{ruleName}</code>).</li>
+<li>Same-FQCN v2 <code>DSL.java</code> loads pre-compiled <code>LalExpression</code> classes by source coordinates from <code>META-INF/lal-v2-rules.txt</code>, which also records each rule&rsquo;s effective input type (upstream routes Envoy HTTP vs TCP access logs by it).</li>
+</ul>
+<h3 id="tal">TAL</h3>
+<ul>
+<li><code>TALClassGenerator</code> compiles every <code>tal/*.yaml</code> at build time (shipped: <code>otlp-general.yaml</code> with <code>otlp-general</code> and <code>otlp-slow-sql</code>), resolving input / output / layer exactly as upstream <code>SpanFilterListener.Factory</code> does; a rule that does not compile fails the build. Nothing is specific to the shipped rules: an operator&rsquo;s own TAL files, and the scripts in upstream&rsquo;s TAL docs, go through the same pass (<code>TALPrecompileTest</code>, <code>TALDocScriptsTest</code>).</li>
+<li>Deterministic class naming via <code>DslSourceRef</code> (<code>{yaml}_L{line}_{ruleName}</code>).</li>
+<li>The precompiler runs <code>createMetrics</code> on the build-time <code>MeterSystem</code> it shares with MAL, so the 28 <code>otlp_*</code> meter classes are generated (<code>tal-meter-classes.txt</code>).</li>
+<li>Same-FQCN <code>TalDSL</code> loads the pre-compiled <code>TalExpression</code> by source coordinates from <code>META-INF/tal-v2-rules.txt</code>, which also carries each rule&rsquo;s input type and metric declarations; it claims and creates those metrics (incl. <code>limitLabels</code>) as upstream does. Same-FQCN <code>TALConfigs</code> reads <code>META-INF/config-data/tal.json</code>.</li>
 </ul>
 <h3 id="hierarchy">Hierarchy</h3>
 <ul>
 <li><code>HierarchyRuleClassGenerator</code> compiles 4 hierarchy matching rules at build time.</li>
-<li>Same-FQCN <code>CompiledHierarchyRuleProvider</code> loads pre-compiled <code>BiFunction</code> classes by rule name.</li>
+<li>Same-FQCN <code>HierarchyDefinitionService</code> loads pre-compiled <code>BiFunction</code> classes by rule name from <code>META-INF/hierarchy-v2-rules.txt</code>.</li>
 </ul>
 <h3 id="upstream-changes--simplification">Upstream Changes &amp; Simplification</h3>
 <ul>
@@ -718,7 +1774,7 @@ Architecture Constraints Submodule: skywalking/ is a git submodule of apache/sky
       </tr>
       <tr>
           <td><code>server-core-for-graalvm</code></td>
-          <td><code>OALEngineLoaderService</code>, <code>AnnotationScan</code>, <code>SourceReceiverImpl</code>, <code>MeterSystem</code>, <code>CoreModuleConfig</code>, <code>HierarchyDefinitionService</code>, <code>CompiledHierarchyRuleProvider</code></td>
+          <td><code>OALEngineLoaderService</code>, <code>AnnotationScan</code>, <code>SourceReceiverImpl</code>, <code>MeterSystem</code>, <code>CoreModuleConfig</code>, <code>HierarchyDefinitionService</code></td>
           <td>Load from manifests instead of Javassist/ClassPath; config with @Setter; pre-compiled hierarchy rules</td>
       </tr>
       <tr>
@@ -737,9 +1793,14 @@ Architecture Constraints Submodule: skywalking/ is a git submodule of apache/sky
           <td>Load pre-compiled v2 <code>LalExpression</code> classes; config with @Setter; load LAL config data from JSON config-data manifests</td>
       </tr>
       <tr>
+          <td><code>trace-analyzer-for-graalvm</code></td>
+          <td><code>TalDSL</code>, <code>TALConfigs</code></td>
+          <td>Load pre-compiled v2 <code>TalExpression</code> classes and their metric declarations; load TAL config data from JSON config-data manifests</td>
+      </tr>
+      <tr>
           <td><code>agent-analyzer-for-graalvm</code></td>
-          <td><code>AnalyzerModuleConfig</code>, <code>MeterConfigs</code></td>
-          <td>Config with @Setter; load meter config data from JSON config-data manifests</td>
+          <td><code>AnalyzerModuleConfig</code></td>
+          <td>Config with @Setter (meter-analyzer-config rules load through the shared <code>Rules</code> replacement since 11.0.0)</td>
       </tr>
   </tbody>
 </table>
@@ -771,10 +1832,6 @@ Architecture Constraints Submodule: skywalking/ is a git submodule of apache/sky
       <tr>
           <td><code>cilium-fetcher-for-graalvm</code></td>
           <td><code>CiliumFetcherConfig</code></td>
-      </tr>
-      <tr>
-          <td><code>status-query-for-graalvm</code></td>
-          <td><code>StatusQueryConfig</code></td>
       </tr>
       <tr>
           <td><code>health-checker-for-graalvm</code></td>
@@ -905,6 +1962,12 @@ YAML parsing. No reflection involved — safe for GraalVM native image as-is.</p
           <td>Gateway definitions</td>
       </tr>
       <tr>
+          <td><code>server-clusters.yml</code></td>
+          <td>1</td>
+          <td><code>ServerClusterConfig</code> via <code>ResourceUtils.read()</code></td>
+          <td>Brokers, databases and caches named as one cluster by the trace analyses (empty by default)</td>
+      </tr>
+      <tr>
           <td><code>hierarchy-definition.yml</code></td>
           <td>1</td>
           <td><code>HierarchyDefinitionService</code> via <code>ResourceUtils.read()</code></td>
@@ -929,10 +1992,16 @@ YAML parsing. No reflection involved — safe for GraalVM native image as-is.</p
           <td>Trace sampling</td>
       </tr>
       <tr>
-          <td><code>ui-initialized-templates/**</code></td>
-          <td>131</td>
-          <td><code>UITemplateInitializer</code> via <code>Files.walk()</code></td>
-          <td>UI dashboard JSON templates</td>
+          <td><code>gen-ai-config.yml</code></td>
+          <td>1</td>
+          <td><code>GenAIConfigLoader</code> via <code>ResourceUtils.read()</code></td>
+          <td>GenAI provider/model pricing</td>
+      </tr>
+      <tr>
+          <td><code>ai-evaluation.yml</code></td>
+          <td>1</td>
+          <td><code>AIEvaluationConfigLoader</code> via <code>ResourceUtils.read()</code></td>
+          <td>LLM-as-judge endpoint, prompt and tasks (read only when <code>ai-evaluation</code> is enabled)</td>
       </tr>
       <tr>
           <td><code>cilium-rules/**</code></td>
@@ -948,7 +2017,9 @@ YAML parsing. No reflection involved — safe for GraalVM native image as-is.</p
       </tr>
   </tbody>
 </table>
-<p><strong>Total: 146 files</strong> included in the distro <code>config/</code> directory.</p>
+<p><strong>Total: 18 files</strong> included in the distro <code>config/</code> directory. (Upstream 11.0.0 removed the
+bundled <code>ui-initialized-templates/</code> + <code>UITemplateInitializer</code>; dashboard templates are now managed
+via the <code>ui-management</code> REST surface.)</p>
 <h3 id="pre-compiled-at-build-time-not-in-distro">Pre-compiled at Build Time (NOT in distro)</h3>
 <p>These files are consumed by <code>build-tools/precompiler</code> during the build. Their
 expressions, scripts, and metric definitions are compiled into <code>.class</code> files
@@ -965,26 +2036,26 @@ packaged in JARs. The YAML source files are not needed at runtime.</p>
   <tbody>
       <tr>
           <td><code>oal/*.oal</code></td>
-          <td>9</td>
-          <td>~620 metrics + ~620 builders + ~45 dispatchers (Javassist)</td>
+          <td>10</td>
+          <td>~640 metrics + ~640 builders + ~47 dispatchers (Javassist)</td>
           <td>OAL v2 engine</td>
       </tr>
       <tr>
           <td><code>meter-analyzer-config/*.yaml</code></td>
-          <td>11</td>
-          <td>~147 <code>MalExpression</code> classes (ANTLR4+Javassist) + meter classes</td>
+          <td>14</td>
+          <td>~180 <code>MalExpression</code> classes (ANTLR4+Javassist) + meter classes</td>
           <td>MAL v2 compiler</td>
       </tr>
       <tr>
           <td><code>otel-rules/**/*.yaml</code></td>
-          <td>55</td>
-          <td>~1039 <code>MalExpression</code> classes + meter classes</td>
+          <td>75</td>
+          <td>~1320 <code>MalExpression</code> classes + meter classes</td>
           <td>MAL v2 compiler</td>
       </tr>
       <tr>
           <td><code>log-mal-rules/*.yaml</code></td>
-          <td>2</td>
-          <td>~2 <code>MalExpression</code> classes</td>
+          <td>4</td>
+          <td>~4 <code>MalExpression</code> classes</td>
           <td>MAL v2 compiler</td>
       </tr>
       <tr>
@@ -1007,9 +2078,15 @@ packaged in JARs. The YAML source files are not needed at runtime.</p>
       </tr>
       <tr>
           <td><code>lal/*.yaml</code></td>
-          <td>8</td>
-          <td>~10 <code>LalExpression</code> classes (ANTLR4+Javassist)</td>
+          <td>12</td>
+          <td>16 <code>LalExpression</code> classes (ANTLR4+Javassist)</td>
           <td>LAL v2 compiler</td>
+      </tr>
+      <tr>
+          <td><code>tal/*.yaml</code></td>
+          <td>1</td>
+          <td>2 <code>TalExpression</code> classes (ANTLR4+Javassist) + 28 meter classes</td>
+          <td>TAL v2 compiler</td>
       </tr>
       <tr>
           <td><code>hierarchy-definition.yml</code></td>
@@ -1019,10 +2096,10 @@ packaged in JARs. The YAML source files are not needed at runtime.</p>
       </tr>
   </tbody>
 </table>
-<p><strong>Total: 90 files</strong> consumed at build time, producing ~1285 OAL classes, ~1250 MAL expression classes, ~1188 meter classes, ~10 LAL expression classes, and ~4 hierarchy rule classes.</p>
+<p><strong>Total: 121 files</strong> consumed at build time, producing ~1330 OAL classes, ~1570 MAL expression classes, ~1560 meter classes, 16 LAL expression classes, 2 TAL expression classes, and 4 hierarchy rule classes.</p>
 <p>Additionally, the precompiler serializes parsed config POJOs as JSON manifests in
-<code>META-INF/config-data/</code> (7 JSON files for meter-analyzer-config, otel-rules,
-envoy-metrics-rules, log-mal-rules, telegraf-rules, zabbix-rules, and lal). These
+<code>META-INF/config-data/</code> (8 JSON files for meter-analyzer-config, otel-rules,
+envoy-metrics-rules, log-mal-rules, telegraf-rules, zabbix-rules, lal, and tal). These
 provide the runtime &ldquo;wiring&rdquo; data (metric prefixes, rule names, expression lookup
 keys) that replacement loader classes use instead of filesystem YAML access.</p>
 <h3 id="not-included-upstream-only">Not Included (upstream-only)</h3>
@@ -1050,22 +2127,23 @@ keys) that replacement loader classes use instead of filesystem YAML access.</p>
 <li>Simplified config file for selected modules (<code>application.yml</code>)</li>
 </ul>
 <h3 id="build-time-pre-compilation">Build-Time Pre-Compilation</h3>
-<p>All four DSL compilers (OAL/MAL/LAL/Hierarchy) use ANTLR4 + Javassist v2 engines. The unified precompiler (<code>build-tools/precompiler</code>) runs them all at build time, capturing generated <code>.class</code> files into the output JAR.</p>
-<p><strong>OAL</strong>: OAL v2 engine exports <code>.class</code> files (9 defines, ~620 metrics, ~620 builders, ~45 dispatchers). 7 annotation/interface manifests. Same-FQCN <code>OALEngineLoaderService</code> loads from manifests.</p>
-<p><strong>MAL</strong>: MAL v2 compiler processes 71 YAML files → ~1250 <code>MalExpression</code> classes + ~1188 Javassist meter classes. Deterministic class naming via <code>setClassNameHint()</code>. Same-FQCN v2 <code>DSL.java</code> loads pre-compiled classes by computed name.</p>
-<p><strong>LAL</strong>: LAL v2 compiler processes 8 YAML files → ~10 <code>LalExpression</code> classes. Deterministic class naming. Same-FQCN v2 <code>DSL.java</code> loads pre-compiled classes.</p>
-<p><strong>Hierarchy</strong>: Hierarchy v2 compiler processes 4 rules → ~4 <code>BiFunction</code> classes. Same-FQCN <code>CompiledHierarchyRuleProvider</code> loads pre-compiled rules.</p>
+<p>All five DSL compilers (OAL/MAL/LAL/TAL/Hierarchy) use ANTLR4 + Javassist v2 engines. The unified precompiler (<code>build-tools/precompiler</code>) runs them all at build time, capturing generated <code>.class</code> files into the output JAR.</p>
+<p><strong>OAL</strong>: OAL v2 engine exports <code>.class</code> files (10 defines, ~640 metrics, ~640 builders, ~47 dispatchers). 7 annotation/interface manifests. Same-FQCN <code>OALEngineLoaderService</code> loads from manifests.</p>
+<p><strong>MAL</strong>: MAL v2 compiler processes 96 YAML files → ~1570 <code>MalExpression</code> classes + ~1530 Javassist meter classes. Deterministic <code>DslSourceRef</code> class naming. Same-FQCN v2 <code>DSL.java</code> loads pre-compiled classes by expression text from per-file manifests.</p>
+<p><strong>LAL</strong>: LAL v2 compiler processes 12 YAML files → 16 <code>LalExpression</code> classes. Deterministic <code>DslSourceRef</code> class naming. Same-FQCN v2 <code>DSL.java</code> loads pre-compiled classes by source coordinates.</p>
+<p><strong>TAL</strong>: TAL v2 compiler processes 1 YAML file → 2 <code>TalExpression</code> classes + 28 meter classes. Same-FQCN <code>TalDSL</code> loads pre-compiled classes by source coordinates and creates the metrics recorded in the manifest.</p>
+<p><strong>Hierarchy</strong>: Hierarchy v2 compiler processes 4 rules → 4 <code>BiFunction</code> classes. Same-FQCN <code>HierarchyDefinitionService</code> loads pre-compiled rules by name.</p>
 <p><strong>Config initialization</strong>: <code>ConfigInitializerGenerator</code> generates same-FQCN <code>YamlConfigLoaderUtils</code> using Lombok setters — zero <code>Field.setAccessible</code> at runtime.</p>
-<p><strong>Config data serialization</strong>: Precompiler serializes parsed config POJOs to <code>META-INF/config-data/*.json</code> (7 JSON files). 3 same-FQCN replacement loaders (<code>MeterConfigs</code>, <code>Rules</code>, <code>LALConfigs</code>) deserialize from JSON instead of filesystem YAML.</p>
+<p><strong>Config data serialization</strong>: Precompiler serializes parsed config POJOs to <code>META-INF/config-data/*.json</code> (8 JSON files). 3 same-FQCN replacement loaders (<code>Rules</code>, <code>LALConfigs</code>, <code>TALConfigs</code>) deserialize from JSON instead of filesystem YAML.</p>
 <p><strong>Module system</strong>: <code>ModuleDefine</code> replacement with direct <code>prepare()</code> overload (bypasses ServiceLoader). <code>GraalVMOAPServerStartUp</code> with <code>configuration.has()</code> guards for 6 optional modules.</p>
 <p><strong>Distro resource packaging</strong>: 146 runtime files → distro <code>config/</code>, 90 pre-compiled files → JARs. Assembly descriptor (<code>distribution.xml</code>) packages runtime config files from upstream.</p>
 <h3 id="native-image-build">Native Image Build</h3>
 <ul>
 <li><code>native-maven-plugin</code> (GraalVM buildtools 0.10.4) in <code>oap-graalvm-native</code> with <code>-Pnative</code> profile</li>
-<li><code>reflect-config.json</code> auto-generated by precompiler from manifests (OAL, MAL, LAL, meter, HTTP handlers, GraphQL types)</li>
+<li><code>reflect-config.json</code> auto-generated by precompiler from manifests (OAL, MAL, LAL, TAL, meter, HTTP handlers, GraphQL types)</li>
 <li><code>log4j2-reflect-config.json</code> for Log4j2 plugin classes; console-only <code>log4j2.xml</code> with <code>SW_LOG_LEVEL</code> env var</li>
 <li>gRPC/Netty/Protobuf/Armeria via GraalVM reachability metadata repository</li>
-<li>Auto-scanned reflection metadata: Armeria HTTP handlers (~19), GraphQL resolvers (~32), GraphQL types (~182), config POJOs (8)</li>
+<li>Auto-scanned reflection metadata: Armeria HTTP handlers (~27, incl. admin-server/status/inspect/ui-management), GraphQL resolvers (~32), GraphQL types (~182), config POJOs (8)</li>
 <li>Native binary: ~203MB, boots to full module init with all HTTP endpoints functional</li>
 </ul>
 <h3 id="native-distro-packaging">Native Distro Packaging</h3>
@@ -1091,6 +2169,7 @@ keys) that replacement loader classes use instead of filesystem YAML access.</p>
 <li>OAL: build-time class export works via existing debug API (<code>setGeneratedFilePath()</code>)</li>
 <li>MAL: build-time compilation via <code>MALClassGenerator.setClassOutputDir()</code></li>
 <li>LAL: build-time compilation via <code>LALClassGenerator.setClassOutputDir()</code></li>
+<li>TAL: build-time compilation via <code>TALClassGenerator.setClassOutputDir()</code>; metric creation via <code>createMetrics()</code> on the build-time <code>MeterSystem</code></li>
 <li>Hierarchy: build-time compilation via <code>HierarchyRuleClassGenerator.setClassOutputDir()</code></li>
 </ul>
 
@@ -1137,6 +2216,7 @@ keys) that replacement loader classes use instead of filesystem YAML access.</p>
             <li><a href="#oal">OAL</a></li>
             <li><a href="#mal">MAL</a></li>
             <li><a href="#lal">LAL</a></li>
+            <li><a href="#tal">TAL</a></li>
             <li><a href="#hierarchy">Hierarchy</a></li>
             <li><a href="#upstream-changes--simplification">Upstream Changes &amp; Simplification</a></li>
           </ul>
@@ -1276,6 +2356,9 @@ keys) that replacement loader classes use instead of filesystem YAML access.</p>
         
         
     </div>
+    <p class="footer-contribute">
+      <a id="contribute" href="https://github.com/apache/skywalking-website" target="_blank" rel="noopener">Help improve this website <span aria-hidden="true">↗</span></a>
+    </p>
     <div class="">
 
         <small class="text-color">&copy; 2017 - 2026 The Apache Software Foundation All Rights Reserved</small>
@@ -10990,6 +12073,1466 @@ keys) that replacement loader classes use instead of filesystem YAML access.</p>
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
 <div id="popup">
     <div class="mask">
@@ -10997,85 +13540,187 @@ keys) that replacement loader classes use instead of filesystem YAML access.</p>
     </div>
 </div>
 
-    <div class="sidebar-mask"></div>
-<div class="sidebar">
-    <nav class="nav-links">
+    
+
+
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+<div class="sidebar-mask" aria-hidden="true"></div>
+<div class="sidebar" id="site-navigation-drawer" role="dialog" aria-modal="true" aria-label="Navigation" aria-hidden="true" tabindex="-1">
+  <div class="sidebar-header">
+    <span>Menu</span>
+    <button type="button" class="sidebar-close" aria-label="Close navigation">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+    </button>
+  </div>
+  <nav class="nav-links" aria-label="Site pages">
+    <ul class="sidebar-primary">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/">Home</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link active" href="/docs" aria-current="page">Projects</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/blog">Blogs</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/events/">Release Posts</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/events/calendar/">Event Calendar</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/users">Users</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/team">Team</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/zh/">中文博客</a></li>
+      
+      
+    </ul>
+    <ul class="sidebar-secondary">
+      <li><a class="nav-link" href="/downloads/">Downloads</a></li>
+      
+      <li><a class="nav-link" href="/get-started/">Get started</a></li>
+      
+    </ul>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <details class="sidebar-resources">
+      <summary><span>Apache</span><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 4 4 4-4 4"/></svg></summary>
+      <ul class="sidebar-resource-links">
         
-        <div class="nav-item"><a href="/docs/" class="nav-link router-link-active">Documentation</a></div>
-        <div class="nav-item"><a href="/events/" class="nav-link">Events</a></div>
-        <div class="nav-item"><a href="/blog/" class="nav-link">Blog</a></div>
-        <div class="nav-item"><a href="/downloads/" class="nav-link">Downloads</a></div>
-        <div class="nav-item"><a href="/team/" class="nav-link">Team</a></div>
-        <div class="nav-item"><a href="/users/" class="nav-link">Users</a></div>
-        <div class="nav-item"><a href="/zh/" class="nav-link">中文博客</a></div>
-        <div class="nav-item">
-            <div class="dropdown-wrapper open">
-                <a class="dropdown-title">
-                    <span>Links</span>
-                    <span class="arrow down"></span>
-                </a>
-                <ul class="nav-dropdown">
-                    <li class="dropdown-item">
-                        <a href="http://www.apache.org/" target="_blank"
-                           rel="noopener noreferrer" class="nav-link external">
-                            Apache Software Foundation
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="https://github.com/apache/skywalking/issues"
-                           target="_blank" rel="noopener noreferrer"
-                           class="nav-link external">
-                            GitHub Issue Tracker
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="https://lists.apache.org/list.html?dev@skywalking.apache.org" target="_blank"
-                           rel="noopener noreferrer" class="nav-link external">
-                            Dev Mailing List
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="http://www.apache.org/licenses/" target="_blank"
-                           rel="noopener noreferrer" class="nav-link external">
-                            License
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="http://www.apache.org/events/current-event"
-                           target="_blank" rel="noopener noreferrer"
-                           class="nav-link external">
-                            Apache Events
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="http://www.apache.org/security/" target="_blank"
-                           rel="noopener noreferrer" class="nav-link external">
-                            Security
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="http://www.apache.org/foundation/sponsorship.html"
-                           target="_blank" rel="noopener noreferrer"
-                           class="nav-link external">
-                            Sponsorship and Donate
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="http://www.apache.org/foundation/thanks.html"
-                           target="_blank" rel="noopener noreferrer"
-                           class="nav-link external">
-                            Thanks
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+        <li><a class="nav-link" href="http://www.apache.org/" target="_blank" rel="noopener noreferrer"><span>Apache Software Foundation</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="https://github.com/apache/skywalking/issues" target="_blank" rel="noopener noreferrer"><span>GitHub Issue Tracker</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="https://github.com/apache/skywalking/discussions" target="_blank" rel="noopener noreferrer"><span>Discussion</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="https://lists.apache.org/list.html?dev@skywalking.apache.org" target="_blank" rel="noopener noreferrer"><span>Dev Mailing List</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="https://cwiki.apache.org/confluence/display/SKYWALKING/Home" target="_blank" rel="noopener noreferrer"><span>WIKI</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="http://www.apache.org/licenses/" target="_blank" rel="noopener noreferrer"><span>License</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="http://www.apache.org/events/current-event" target="_blank" rel="noopener noreferrer"><span>Apache Events</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="http://www.apache.org/security/" target="_blank" rel="noopener noreferrer"><span>Security</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="http://www.apache.org/foundation/sponsorship.html" target="_blank" rel="noopener noreferrer"><span>Sponsor and Donate</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="http://www.apache.org/foundation/thanks.html" target="_blank" rel="noopener noreferrer"><span>Thanks</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="https://apache.org/foundation/policies/privacy.html" target="_blank" rel="noopener noreferrer"><span>Privacy</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+      </ul>
+    </details>
+    
+    
+  </nav>
 </div>
 
     <script src="/js/bootstrap.bundle.min.js"></script>
 
-<script src="/js/docsearch-3.9.0.js"></script>
 
 
 
@@ -11085,7 +13730,8 @@ keys) that replacement loader classes use instead of filesystem YAML access.</p>
 
 
 
-<script src="/js/main.min.9be14eed0a0e24711261c334305209aa2e5ae3fb624f6a1731e064d5ffb11f3d.js" integrity="sha256-m&#43;FO7QoOJHESYcM0MFIJqi5a4/tiT2oXMeBk1f&#43;xHz0=" crossorigin="anonymous"></script>
+
+<script src="/js/main.min.a351a9c3ee226044b9050a859fb2f5a6019a548cfe22e3ca281fb08443c28976.js" integrity="sha256-o1Gpw&#43;4iYES5BQqFn7L1pgGaVIz&#43;IuPKKB&#43;whEPCiXY=" crossorigin="anonymous"></script>
 
 
 <script src="/js/highlight.min.js"></script>
@@ -11118,14 +13764,16 @@ data-project-name="SkyWalking"
 data-project-color="#2B74B8"
 data-button-text="Ask AI"
 data-search-mode-enabled="true"
+data-search-mode-default="false"
+data-modal-override-open-selector-search=".sw-kapa-search"
 data-modal-open-on-command-k="true"
+data-modal-command-k-search-mode-default="true"
+data-modal-z-index="10000"
 data-modal-disclaimer="The AI supports multiple languages, but it may not be accessible in China, a proxy is required."
 data-project-logo="/images/widget-logo.jpg"
 data-modal-example-questions="What is Apache SkyWalking?,How to deploy SkyWalking?,How to inject agents non-intrusively?,How to setup trace sampling?"
-data-button-position-top=""
 data-button-position-right="20px"
 data-button-position-bottom="200px"
-data-button-position-left=""
 data-consent-required="true"  
 data-user-analytics-cookie-enabled="true"  
 data-consent-screen-title="Help us improve our AI assistant"  
@@ -11133,8 +13781,28 @@ data-consent-screen-disclaimer="By clicking 'Allow tracking', you consent to ano
 data-consent-screen-accept-button-text="Allow tracking"  
 data-consent-screen-reject-button-text="No, thanks"
 ></script>
+<script>
+  (function () {
+    var SEL = 'details.topic-filter';
 
+    function closeAll(except) {
+      document.querySelectorAll(SEL).forEach(function (d) {
+        if (d !== except && d.open) { d.open = false; }
+      });
+    }
 
+    
+    
+    document.addEventListener('click', function (e) {
+      var target = e.target instanceof Element ? e.target.closest(SEL) : null;
+      closeAll(target);
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' || e.key === 'Esc') { closeAll(null); }
+    });
+  })();
+</script>
 
 
     <script>

@@ -5,8 +5,107 @@
     <description>Recent ai posts from Apache SkyWalking</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Mon, 06 Jul 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 29 Oct 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://skywalking.apache.org/tags/ai/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Collect Cloud Sessions, Evaluate Locally: Analyzing AI Agents on Amazon Bedrock AgentCore with Apache SkyWalking AI Sessionizer</title>
+      <link>https://skywalking.apache.org/blog/2026-10-29-ai-sessionizer-agentcore-pull-judge/</link>
+      <pubDate>Thu, 29 Oct 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2026-10-29-ai-sessionizer-agentcore-pull-judge/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sheng Wu</dc:creator>
+      <category>AI</category>
+      <category>Engineering</category>
+      <category>Community</category>
+      <description>Deploy a real Bedrock-powered agent, collect its execution records with Apache SkyWalking AI Sessionizer, and pull them locally for evaluation. Follow the commands and HTML report screenshots to check completion, evidence, and execution efficiency.</description>
+    </item>
+    <item>
+      <title>采集云端会话，本地评估：用 Apache SkyWalking AI Sessionizer 分析 Amazon Bedrock AgentCore 上的 AI Agent</title>
+      <link>https://skywalking.apache.org/zh/2026-10-29-ai-sessionizer-agentcore-pull-judge/</link>
+      <pubDate>Thu, 29 Oct 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/zh/2026-10-29-ai-sessionizer-agentcore-pull-judge/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">吴晟</dc:creator>
+      <category>AI</category>
+      <category>Engineering</category>
+      <category>Community</category>
+      <description>设计一个真实调用 Bedrock 的发布助手，部署到 AgentCore 并用 asz 采集；通过 remote pull 在本地查看，再按设计目标运行 judge、导出 HTML 报告，逐项检查完成条件、已做工作和缺口。</description>
+    </item>
+    <item>
+      <title>How Good Are LLM Answers? Bringing Model Quality into SkyWalking Observability</title>
+      <link>https://skywalking.apache.org/blog/2026-10-15-llm-as-judge/</link>
+      <pubDate>Thu, 15 Oct 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2026-10-15-llm-as-judge/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">peachisai</dc:creator>
+      <category>AI</category>
+      <category>Metrics</category>
+      <category>Tracing</category>
+      <description>Learn how the upcoming SkyWalking 11.1.0 release uses LLM-as-Judge to evaluate GenAI span input and output messages asynchronously and connect the results to evaluation records, metrics, and traces.</description>
+    </item>
+    <item>
+      <title>LLM 回答得好不好？SkyWalking 用 LLM-as-Judge 评估线上回答</title>
+      <link>https://skywalking.apache.org/zh/2026-10-15-llm-as-judge/</link>
+      <pubDate>Thu, 15 Oct 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/zh/2026-10-15-llm-as-judge/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">peachisai</dc:creator>
+      <category>AI</category>
+      <category>Metrics</category>
+      <category>Tracing</category>
+      <description>SkyWalking 11.1.0 即将支持 LLM-as-Judge：异步评估 GenAI Span 中的输入和输出消息，生成评估记录并关联原始 Trace，SCORE 任务还会产生质量指标。</description>
+    </item>
+    <item>
+      <title>Recorded as the Session Runs, Kept When It Ends: LangGraph on Amazon Bedrock AgentCore</title>
+      <link>https://skywalking.apache.org/blog/2026-10-10-ai-sessionizer-agentcore/</link>
+      <pubDate>Sat, 10 Oct 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2026-10-10-ai-sessionizer-agentcore/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sheng Wu</dc:creator>
+      <category>AI</category>
+      <category>Engineering</category>
+      <category>Community</category>
+      <description>Run a LangGraph agent on Amazon Bedrock AgentCore Runtime and record every turn, model prompt, tool call and file change in Apache SkyWalking AI Sessionizer while the session runs, kept after it ends, with no change to the agent&#39;s logic.</description>
+    </item>
+    <item>
+      <title>From Claude Code to Your Own Agent: Capture and Replay LangChain and LangGraph Conversations</title>
+      <link>https://skywalking.apache.org/blog/2026-09-23-ai-sessionizer-langchain-langgraph/</link>
+      <pubDate>Wed, 23 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2026-09-23-ai-sessionizer-langchain-langgraph/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sheng Wu</dc:creator>
+      <category>AI</category>
+      <category>Engineering</category>
+      <category>Community</category>
+      <description>Build a LangGraph agent on Amazon Bedrock, point its tracing client at Apache SkyWalking AI Sessionizer, and replay every turn, tool call, sub-agent and model request without changing the application.</description>
+    </item>
+    <item>
+      <title>Beyond Replay: Metrics and Change Detection for Your Claude Code Sessions</title>
+      <link>https://skywalking.apache.org/blog/2026-09-12-ai-sessionizer-workspace-changes/</link>
+      <pubDate>Sat, 12 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2026-09-12-ai-sessionizer-workspace-changes/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sheng Wu</dc:creator>
+      <category>AI</category>
+      <category>Engineering</category>
+      <category>Community</category>
+      <description>Understand Claude Code usage across sessions and machines, replay recorded work, and inspect file changes with their tool calls and source evidence.</description>
+    </item>
+    <item>
+      <title>不止于回放：看清 Claude Code 的用量与文件变更</title>
+      <link>https://skywalking.apache.org/zh/2026-09-12-ai-sessionizer-workspace-changes/</link>
+      <pubDate>Sat, 12 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/zh/2026-09-12-ai-sessionizer-workspace-changes/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">吴晟</dc:creator>
+      <category>AI</category>
+      <category>Engineering</category>
+      <category>Community</category>
+      <description>汇总多次会话、多台机器上的 Claude Code 用量，结合对话、工具调用和文件差异，看清智能体做了什么、修改了什么，以及消耗了哪些资源。</description>
+    </item>
+    <item>
+      <title>Replay Claude Code Sessions Without Plugins or Configuration Changes</title>
+      <link>https://skywalking.apache.org/blog/2026-09-03-ai-sessionizer-first-look/</link>
+      <pubDate>Thu, 03 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2026-09-03-ai-sessionizer-first-look/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sheng Wu</dc:creator>
+      <category>AI</category>
+      <category>Engineering</category>
+      <category>Community</category>
+      <description>Replay existing Claude Code sessions with Apache SkyWalking AI Sessionizer: explore conversations, tool calls, and child-agent activity without installing a Claude Code plugin or changing its configuration.</description>
+    </item>
     <item>
       <title>Meet Horizon UI · The AI Assistant: Ask Your Observability Data in Plain Language</title>
       <link>https://skywalking.apache.org/blog/2026-07-06-horizon-ui-ai-assistant/</link>
@@ -27,7 +126,7 @@
       <category>Release</category>
       <category>AI</category>
       <category>Cloud Native</category>
-      <description>Horizon UI 新增的 AI Assistant 可以用和 UI 相同的图表、拓扑和表格回答关于 live system 的问题；它只读、继承权限，并运行在你自己接入的高性价比模型上。</description>
+      <description>Horizon UI 新增的 AI Assistant 可以用和 UI 相同的图表、拓扑和表格回答运行中系统的问题；它只读、按权限返回结果，并运行在你自己接入的高性价比模型上。</description>
     </item>
     <item>
       <title>Monitoring LLM Applications with SkyWalking 10.4: Insights into Performance and Cost</title>

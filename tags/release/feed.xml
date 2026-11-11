@@ -5,8 +5,48 @@
     <description>Recent release posts from Apache SkyWalking</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Mon, 06 Jul 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 10 Sep 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://skywalking.apache.org/tags/release/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Horizon UI 1.0 GA: SkyWalking&#39;s New Mainstream UI</title>
+      <link>https://skywalking.apache.org/blog/2026-09-10-horizon-ui-1-0-ga/</link>
+      <pubDate>Thu, 10 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/2026-09-10-horizon-ui-1-0-ga/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sheng Wu</dc:creator>
+      <category>Release</category>
+      <category>Community</category>
+      <description>With Horizon UI 1.0 generally available, the SkyWalking community has voted to make it the project&#39;s primary UI and retire Booster UI. Explore Horizon and plan your migration.</description>
+    </item>
+    <item>
+      <title>Horizon UI 1.0 正式发布：SkyWalking 新一代控制台接棒 Booster</title>
+      <link>https://skywalking.apache.org/zh/2026-09-10-horizon-ui-1-0-ga/</link>
+      <pubDate>Thu, 10 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/zh/2026-09-10-horizon-ui-1-0-ga/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">吴晟</dc:creator>
+      <category>Release</category>
+      <category>Community</category>
+      <description>Horizon UI 1.0 正式发布，社区投票决定由 Horizon 接替 Booster，承担 SkyWalking 今后的 UI 开发与维护。本文介绍新控制台、迁移要点，以及 AI 智能体可观测性的最新进展。</description>
+    </item>
+    <item>
+      <title>BanyanDB 0.11.0: What&#39;s New and How to Upgrade</title>
+      <link>https://skywalking.apache.org/blog/banyandb-0-11-0-vectorized-queries-by-default-explained/</link>
+      <pubDate>Mon, 07 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/blog/banyandb-0-11-0-vectorized-queries-by-default-explained/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">The BanyanDB Team</dc:creator>
+      <category>Release</category>
+      <category>Storage</category>
+      <description>BanyanDB 0.11.0: default vectorized queries, pluggable trace sampling, schema barriers, and the upgrade order you must not skip.</description>
+    </item>
+    <item>
+      <title>BanyanDB 0.11.0：新特性与升级指南</title>
+      <link>https://skywalking.apache.org/zh/banyandb-0-11-0-vectorized-queries-by-default-explained/</link>
+      <pubDate>Mon, 07 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/zh/banyandb-0-11-0-vectorized-queries-by-default-explained/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">BanyanDB 团队</dc:creator>
+      <category>Release</category>
+      <category>Storage</category>
+      <description>BanyanDB 0.11.0：默认启用向量化查询、可插拔 Trace 后采样、Schema 屏障，以及不可忽略的升级顺序。</description>
+    </item>
     <item>
       <title>Meet Horizon UI · The AI Assistant: Ask Your Observability Data in Plain Language</title>
       <link>https://skywalking.apache.org/blog/2026-07-06-horizon-ui-ai-assistant/</link>
@@ -27,7 +67,7 @@
       <category>Release</category>
       <category>AI</category>
       <category>Cloud Native</category>
-      <description>Horizon UI 新增的 AI Assistant 可以用和 UI 相同的图表、拓扑和表格回答关于 live system 的问题；它只读、继承权限，并运行在你自己接入的高性价比模型上。</description>
+      <description>Horizon UI 新增的 AI Assistant 可以用和 UI 相同的图表、拓扑和表格回答运行中系统的问题；它只读、按权限返回结果，并运行在你自己接入的高性价比模型上。</description>
     </item>
     <item>
       <title>Meet Horizon UI · 17/17: Getting Started &amp; Migration</title>

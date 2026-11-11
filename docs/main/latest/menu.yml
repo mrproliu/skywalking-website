@@ -104,6 +104,14 @@ catalog:
                 path: "/en/setup/backend/backend-aws-api-gateway-monitoring"
           - name: "Browser Monitoring"
             path: "/en/setup/service-agent/browser-agent"
+          - name: "Mobile Monitoring"
+            catalog:
+              - name: "iOS"
+                path: "/en/setup/backend/backend-ios-monitoring"
+              - name: "WeChat Mini Program"
+                path: "/en/setup/backend/backend-wechat-mini-program-monitoring"
+              - name: "Alipay Mini Program"
+                path: "/en/setup/backend/backend-alipay-mini-program-monitoring"
           - name: "Gateway Monitoring"
             catalog:
               - name: "Nginx Monitoring"
@@ -144,6 +152,10 @@ catalog:
                 path: "/en/setup/backend/backend-rocketmq-monitoring"
               - name: "ActiveMQ"
                 path: "/en/setup/backend/backend-activemq-monitoring"
+          - name: "Workflow Scheduler"
+            catalog:
+              - name: "Airflow"
+                path: "/en/setup/backend/backend-airflow-monitoring"
           - name: "Data Processing Engine"
             catalog:
               - name: "Flink"
@@ -152,7 +164,11 @@ catalog:
             catalog:
               - name: "Virtual GenAI"
                 path: "/en/setup/service-agent/virtual-genai"
-              - name: "Envoy AI Gateway"
+              - name: "AI Evaluation"
+                path: "/en/setup/backend/ai-evaluation"
+              - name: "AI Agent Conversations"
+                path: "/en/setup/backend/ai-agent-conversation"
+              - name: "Agent Router (Envoy AI Gateway)"
                 path: "/en/setup/backend/backend-envoy-ai-gateway-monitoring"
           - name: "Self Observability"
             catalog:
@@ -218,6 +234,8 @@ catalog:
             path: "/en/banyandb/ttl"
           - name: "Data Lifecycle Stages(Hot/Warm/Cold)"
             path: "/en/banyandb/stages"
+          - name: "Trace Tail Sampling"
+            path: "/en/banyandb/tail-sampling"
           - name: "BanyanDB self observability dashboard"
             path: "/en/banyandb/dashboards-banyandb"
       - name: "Tracing"
@@ -232,10 +250,34 @@ catalog:
             path: "/en/setup/backend/mq"
           - name: "Uninstrumented Gateways"
             path: "/en/setup/backend/uninstrumented-gateways"
+          - name: "Server Clusters"
+            path: "/en/setup/backend/server-clusters"
           - name: "Zipkin Trace"
             path: "/en/setup/backend/zipkin-trace"
           - name: "OpenTelemetry Trace"
-            path: "/en/setup/backend/otlp-trace"
+            catalog:
+              - name: "Setup"
+                path: "/en/setup/backend/otlp-trace"
+              - name: "Analysis"
+                path: "/en/setup/backend/trace-analyzer"
+              - name: "Best Practices"
+                catalog:
+                  - name: "Gateway"
+                    catalog:
+                      - name: "Overview"
+                        path: "/en/setup/backend/otlp-trace-practices/gateway-overview"
+                      - name: "Envoy"
+                        path: "/en/setup/backend/otlp-trace-practices/gateway-envoy"
+                      - name: "nginx"
+                        path: "/en/setup/backend/otlp-trace-practices/gateway-nginx"
+                      - name: "Gateways Without Instrumentation"
+                        path: "/en/setup/backend/otlp-trace-practices/gateway-without-instrumentation"
+                      - name: "Canary Releases"
+                        path: "/en/setup/backend/otlp-trace-practices/gateway-canary"
+                  - name: "Message Queue"
+                    path: "/en/setup/backend/otlp-trace-practices/message-queue"
+                  - name: "Database and Cache"
+                    path: "/en/setup/backend/otlp-trace-practices/database-and-cache"
       - name: "Metrics"
         catalog:
           - name: "OAL Scripts"
@@ -248,6 +290,10 @@ catalog:
             path: "/en/setup/backend/backend-zabbix"
           - name: "Meter Analysis"
             path: "/en/setup/backend/backend-meter"
+          - name: "PHP runtime metrics (PHM)"
+            path: "/en/setup/backend/dashboards-php-runtime"
+          - name: "Node.js runtime metrics"
+            path: "/en/setup/backend/dashboards-nodejs-runtime"
           - name: "Telegraf Metrics"
             path: "/en/setup/backend/telegraf-receiver"
           - name: "Apdex Threshold"
@@ -358,20 +404,6 @@ catalog:
             path: "/en/api/traceql-service"
           - name: "Health Check API"
             path: "/en/api/health-check"
-          - name: "Status APIs"
-            catalog:
-              - name: "Introduction"
-                path: "/en/status/status_apis"
-              - name: "Dump Effective Initial Configurations"
-                path: "/en/debugging/config_dump"
-              - name: "Tracing Query Execution"
-                path: "/en/debugging/query-tracing"
-              - name: "Get Effective TTL Configurations"
-                path: "/en/status/query_ttl_setup"
-              - name: "Get Node List in the Cluster"
-                path: "/en/status/query_cluster_nodes"
-              - name: "Get Alarm Runtime Status"
-                path: "/en/status/query_alarm_runtime_status"
   - name: "Customization"
     catalog:
       - name: "Overview"
@@ -382,6 +414,10 @@ catalog:
         path: "/en/concepts-and-designs/mal"
       - name: "Analysis Logs"
         path: "/en/concepts-and-designs/lal"
+      - name: "Analysis OpenTelemetry Traces"
+        path: "/en/concepts-and-designs/tal"
+      - name: "Runtime Rule Hot-Update"
+        path: "/en/concepts-and-designs/runtime-rule-hot-update"
       - name: "Profiling"
         path: "/en/concepts-and-designs/profiling"
       - name: "Service Hierarchy Configuration"
@@ -392,6 +428,34 @@ catalog:
     catalog:
       - name: "Dynamic Code Generation and Debugging"
         path: "/en/operation/dynamic-code-generation-debugging"
+  - name: "Admin API"
+    catalog:
+      - name: "Introduction"
+        path: "/en/setup/backend/admin-api/readme"
+      - name: "Runtime Rule Hot-Update API"
+        path: "/en/setup/backend/admin-api/runtime-rule"
+      - name: "DSL Debug API"
+        catalog:
+          - name: "Overview"
+            path: "/en/setup/backend/admin-api/dsl-debugging"
+          - name: "MAL"
+            path: "/en/setup/backend/admin-api/dsl-debugging-mal"
+          - name: "OAL"
+            path: "/en/setup/backend/admin-api/dsl-debugging-oal"
+          - name: "LAL"
+            path: "/en/setup/backend/admin-api/dsl-debugging-lal"
+      - name: "Status API"
+        catalog:
+          - name: "Overview"
+            path: "/en/setup/backend/admin-api/status"
+          - name: "Dump Effective Initial Configurations"
+            path: "/en/debugging/config_dump"
+          - name: "Tracing Query Execution"
+            path: "/en/debugging/query-tracing"
+      - name: "Inspect API"
+        path: "/en/setup/backend/admin-api/inspect"
+      - name: "UI Management API"
+        path: "/en/setup/backend/admin-api/ui-management"
   - name: "Security Notice"
     path: "/en/security/readme"
   - name: "Academy"
@@ -454,8 +518,14 @@ catalog:
     catalog:
       - name: "Current Version"
         path: "/en/changes/changes"
+      - name: 11.x Releases
+        catalog:
+          - name: 11.0.0
+            path: /en/changes/changes-11.0.0
       - name: "10.x Releases"
         catalog:
+          - name: 10.4.0
+            path: /en/changes/changes-10.4.0
           - name: 10.3.0
             path: /en/changes/changes-10.3.0
           - name: "10.2.0"

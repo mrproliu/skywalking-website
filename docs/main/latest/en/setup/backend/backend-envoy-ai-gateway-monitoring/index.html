@@ -21,41 +21,39 @@
 <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#5bbad5">
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
-<title>Envoy AI Gateway Monitoring | Apache SkyWalking</title><meta property="og:url" content="https://skywalking.apache.org/docs/main/latest/en/setup/backend/backend-envoy-ai-gateway-monitoring/">
+<title>Agent Router (formerly Envoy AI Gateway) Monitoring | Apache SkyWalking</title><meta property="og:url" content="https://skywalking.apache.org/docs/main/latest/en/setup/backend/backend-envoy-ai-gateway-monitoring/">
   <meta property="og:site_name" content="Apache SkyWalking">
-  <meta property="og:title" content="Envoy AI Gateway Monitoring">
-  <meta property="og:description" content="Envoy AI Gateway Monitoring Envoy AI Gateway observability via OTLP Envoy AI Gateway is a gateway/proxy for AI/LLM API traffic (OpenAI, Anthropic, AWS Bedrock, Azure OpenAI, Google Gemini, etc.) built on top of Envoy Proxy. It natively emits GenAI metrics and access logs via OTLP, following OpenTelemetry GenAI Semantic Conventions.
-SkyWalking receives OTLP metrics and logs directly on its gRPC port (11800) — no OpenTelemetry Collector is needed between the AI Gateway and SkyWalking OAP.">
+  <meta property="og:title" content="Agent Router (formerly Envoy AI Gateway) Monitoring">
+  <meta property="og:description" content="Agent Router (formerly Envoy AI Gateway) Monitoring Agent Router observability via OTLP Agent Router, formerly Envoy AI Gateway, is a gateway/proxy for AI/LLM API traffic (OpenAI, Anthropic, AWS Bedrock, Azure OpenAI, Google Gemini, etc.) built on top of Envoy Proxy and Envoy Gateway. It natively emits GenAI metrics following OpenTelemetry GenAI Semantic Conventions, and also emits MCP (Model Context Protocol) metrics and access logs via OTLP.
+SkyWalking receives OTLP metrics and logs directly on its gRPC port (11800) — no OpenTelemetry Collector is needed between Agent Router and SkyWalking OAP.">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="article">
     <meta property="article:section" content="docs">
 
-  <meta itemprop="name" content="Envoy AI Gateway Monitoring">
-  <meta itemprop="description" content="Envoy AI Gateway Monitoring Envoy AI Gateway observability via OTLP Envoy AI Gateway is a gateway/proxy for AI/LLM API traffic (OpenAI, Anthropic, AWS Bedrock, Azure OpenAI, Google Gemini, etc.) built on top of Envoy Proxy. It natively emits GenAI metrics and access logs via OTLP, following OpenTelemetry GenAI Semantic Conventions.
-SkyWalking receives OTLP metrics and logs directly on its gRPC port (11800) — no OpenTelemetry Collector is needed between the AI Gateway and SkyWalking OAP.">
-  <meta itemprop="wordCount" content="534">
+  <meta itemprop="name" content="Agent Router (formerly Envoy AI Gateway) Monitoring">
+  <meta itemprop="description" content="Agent Router (formerly Envoy AI Gateway) Monitoring Agent Router observability via OTLP Agent Router, formerly Envoy AI Gateway, is a gateway/proxy for AI/LLM API traffic (OpenAI, Anthropic, AWS Bedrock, Azure OpenAI, Google Gemini, etc.) built on top of Envoy Proxy and Envoy Gateway. It natively emits GenAI metrics following OpenTelemetry GenAI Semantic Conventions, and also emits MCP (Model Context Protocol) metrics and access logs via OTLP.
+SkyWalking receives OTLP metrics and logs directly on its gRPC port (11800) — no OpenTelemetry Collector is needed between Agent Router and SkyWalking OAP.">
+  <meta itemprop="wordCount" content="852">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Envoy AI Gateway Monitoring">
-  <meta name="twitter:description" content="Envoy AI Gateway Monitoring Envoy AI Gateway observability via OTLP Envoy AI Gateway is a gateway/proxy for AI/LLM API traffic (OpenAI, Anthropic, AWS Bedrock, Azure OpenAI, Google Gemini, etc.) built on top of Envoy Proxy. It natively emits GenAI metrics and access logs via OTLP, following OpenTelemetry GenAI Semantic Conventions.
-SkyWalking receives OTLP metrics and logs directly on its gRPC port (11800) — no OpenTelemetry Collector is needed between the AI Gateway and SkyWalking OAP.">
+  <meta name="twitter:title" content="Agent Router (formerly Envoy AI Gateway) Monitoring">
+  <meta name="twitter:description" content="Agent Router (formerly Envoy AI Gateway) Monitoring Agent Router observability via OTLP Agent Router, formerly Envoy AI Gateway, is a gateway/proxy for AI/LLM API traffic (OpenAI, Anthropic, AWS Bedrock, Azure OpenAI, Google Gemini, etc.) built on top of Envoy Proxy and Envoy Gateway. It natively emits GenAI metrics following OpenTelemetry GenAI Semantic Conventions, and also emits MCP (Model Context Protocol) metrics and access logs via OTLP.
+SkyWalking receives OTLP metrics and logs directly on its gRPC port (11800) — no OpenTelemetry Collector is needed between Agent Router and SkyWalking OAP.">
 
 
 
-<link rel="preload" href="/scss/main.min.75b3855349f4480c60036369f115ecf9ae08f3fff28f5b2de980d22a7fac93ef.css" as="style">
-<link href="/scss/main.min.75b3855349f4480c60036369f115ecf9ae08f3fff28f5b2de980d22a7fac93ef.css" rel="stylesheet" integrity="">
+<link rel="preload" href="/scss/main.min.b350fb8c42fee31880305a4433cf2325b5cefc4e06a4d17342698fbbcf354d7b.css" as="style">
+<link href="/scss/main.min.b350fb8c42fee31880305a4433cf2325b5cefc4e06a4d17342698fbbcf354d7b.css" rel="stylesheet" integrity="">
 
 
 
-<link rel="stylesheet" href="/css/docSearch.css" />
 <link rel="stylesheet" href="/css/highlight-github.css" />
-
 
 <script src="/js/jquery-3.6.0.min.js"></script>
 
 <link rel="canonical" href="https://skywalking.apache.org/docs/main/latest/en/setup/backend/backend-envoy-ai-gateway-monitoring/">
-<meta name="description" content="Envoy AI Gateway Monitoring Envoy AI Gateway observability via OTLP Envoy AI Gateway is a gateway/proxy for AI/LLM API traffic (OpenAI, Anthropic, AWS Bedrock,…">
+<meta name="description" content="Agent Router (formerly Envoy AI Gateway) Monitoring Agent Router observability via OTLP Agent Router, formerly Envoy AI Gateway, is a gateway/proxy for AI/LLM…">
 
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@id":"https://skywalking.apache.org/#organization","@type":"Organization","logo":"https://skywalking.apache.org/images/skywalking_400x400.png","name":"Apache SkyWalking","parentOrganization":{"@type":"Organization","name":"The Apache Software Foundation","url":"https://www.apache.org/"},"sameAs":["https://github.com/apache/skywalking","https://twitter.com/asfskywalking","https://projects.apache.org/project.html?skywalking"],"url":"https://skywalking.apache.org/"},{"@type":"TechArticle","headline":"Envoy AI Gateway Monitoring","inLanguage":"en","mainEntityOfPage":{"@id":"https://skywalking.apache.org/docs/main/latest/en/setup/backend/backend-envoy-ai-gateway-monitoring/","@type":"WebPage"},"publisher":{"@id":"https://skywalking.apache.org/#organization"},"url":"https://skywalking.apache.org/docs/main/latest/en/setup/backend/backend-envoy-ai-gateway-monitoring/"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://skywalking.apache.org/","name":"Apache SkyWalking","position":1},{"@type":"ListItem","item":"https://skywalking.apache.org/docs/","name":"Documentation","position":2},{"@type":"ListItem","item":"https://skywalking.apache.org/docs/main/latest/en/setup/backend/backend-envoy-ai-gateway-monitoring/","name":"Envoy AI Gateway Monitoring","position":3}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@id":"https://skywalking.apache.org/#organization","@type":"Organization","logo":"https://skywalking.apache.org/images/skywalking_400x400.png","name":"Apache SkyWalking","parentOrganization":{"@type":"Organization","name":"The Apache Software Foundation","url":"https://www.apache.org/"},"sameAs":["https://github.com/apache/skywalking","https://twitter.com/asfskywalking","https://projects.apache.org/project.html?skywalking"],"url":"https://skywalking.apache.org/"},{"@type":"TechArticle","headline":"Agent Router (formerly Envoy AI Gateway) Monitoring","inLanguage":"en","mainEntityOfPage":{"@id":"https://skywalking.apache.org/docs/main/latest/en/setup/backend/backend-envoy-ai-gateway-monitoring/","@type":"WebPage"},"publisher":{"@id":"https://skywalking.apache.org/#organization"},"url":"https://skywalking.apache.org/docs/main/latest/en/setup/backend/backend-envoy-ai-gateway-monitoring/"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://skywalking.apache.org/","name":"Apache SkyWalking","position":1},{"@type":"ListItem","item":"https://skywalking.apache.org/docs/","name":"Documentation","position":2},{"@type":"ListItem","item":"https://skywalking.apache.org/docs/main/latest/en/setup/backend/backend-envoy-ai-gateway-monitoring/","name":"Agent Router (formerly Envoy AI Gateway) Monitoring","position":3}]}]}</script>
 
 
 <link rel="alternate" type="application/rss+xml" href="https://skywalking.apache.org/feed.xml" title="Apache SkyWalking">
@@ -66,16 +64,88 @@ SkyWalking receives OTLP metrics and logs directly on its gRPC port (11800) — 
   <body class="td-page  project-doc">
     <header>
       
-<nav class="js-navbar-scroll navbar navbar-expand  flex-column flex-md-row td-navbar">
-    <div class="sidebar-button">
-      <i class="iconfont icon-menu"></i>
-    </div>
+
+
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    
+  
+
+  
+  
+
+  
+  
+
+
+
+
+  
+    
+    
+    
+    
+    
+    
+  
+
+  
+    
+    
+    
+    
+    
+    
+  
+
+  
+    
+    
+    
+    
+    
+    
+  
+
+  
+    
+    
+    
+    
+    
+    
+  
+
+  
+    
+    
+    
+    
+    
+    
+  
+
+<nav class="js-navbar-scroll navbar navbar-expand td-navbar" aria-label="Main navigation">
+  <div class="sw-navbar-inner">
+    <button type="button" class="sidebar-button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-navigation-drawer">
+      <i class="iconfont icon-menu" aria-hidden="true"></i>
+    </button>
     <a class="navbar-brand" href="/">
         <span class="navbar-logo"><img width="130" src="/images/logo.svg" alt="SkyWalking"></span> 
     </a>
     <div class="td-navbar-nav-scroll navbar-nav-wrapper" id="navigation">
         <ul class="navbar-nav mt-lg-0">
-             
+            
             
             <li class="nav-item mr-3 mb-lg-0">
 				
@@ -84,90 +154,1007 @@ SkyWalking receives OTLP metrics and logs directly on its gRPC port (11800) — 
 				
 				
 				
-				<a class="nav-link active" href="/docs" ><span class="active">Documentation</span></a>
+				
+				
+                
+                <a class="nav-link" href="/" ><span>Home</span></a>
 			</li>
             
             
             
-            <li class="nav-item mr-3 mb-lg-0">
-				
-				
-				
-				
-				
-				
-				<a class="nav-link" href="/events" ><span>Events</span></a>
-			</li>
-            
-            
-            
-            <li class="nav-item mr-3 mb-lg-0">
-				
-				
-				
-				
-				
-				
-				<a class="nav-link" href="/blog" ><span>Blogs</span></a>
-			</li>
-            
-            
-            
-            <li class="nav-item mr-3 mb-lg-0">
-				
-				
-				
-				
-				
-				
-				<a class="nav-link" href="/downloads" ><span>Downloads</span></a>
-			</li>
-            
-            
-            
-            <li class="nav-item mr-3 mb-lg-0">
-				
-				
-				
-				
-				
-				
-				<a class="nav-link" href="/team" ><span>Team</span></a>
-			</li>
-            
-            
-            
-            <li class="nav-item mr-3 mb-lg-0">
-				
-				
-				
-				
-				
-				
-				<a class="nav-link" href="/users" ><span>Users</span></a>
-			</li>
-            
-            
-            
-            
-            
-            
-            <li class="nav-item mr-3 mb-lg-0">
-                <a class="nav-link" href="/zh/"><span>中文博客</span></a>
-            </li>
+            <li class="nav-item dropdown sw-projects-item">
+                <button type="button" class="nav-link dropdown-toggle sw-projects-toggle active" id="projects-menu-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Projects</button>
+                <div class="dropdown-menu sw-projects-menu" aria-labelledby="projects-menu-toggle">
+                    
 
+
+<div class="sw-projects-content">
+  <a class="dropdown-item sw-projects-intro" href="/get-started/">
+    <span><strong>Get started in minutes</strong><span>Try the Showcase or install SkyWalking</span></span>
+    <span aria-hidden="true">→</span>
+  </a>
+  <div class="sw-projects-groups">
+    
+    
+    
+      
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+      
+    
+    
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+    
+    
+    <div class="sw-projects-group">
+      <p class="sw-projects-label">Platform</p>
+    
+      <div class="sw-projects-group-links">
+        <div class="sw-projects-columns">
+        
+        <div class="sw-projects-column">
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link active" href="/docs/#SkyWalking">
+          <img src="/images/project/skywalking.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking</strong><span class="sw-project-description">Core observability server</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#BanyanDB">
+          <img src="/images/project/banyan-db.svg" width="28" height="28" alt="">
+          <span><strong>BanyanDB</strong><span class="sw-project-description">Observability database</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#HorizonUI">
+          <img src="/images/project/skywalking.svg" width="28" height="28" alt="">
+          <span><strong>Horizon UI</strong><span class="sw-project-description">Next-generation UI</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#AISessionizer">
+          <img src="/images/project/skywalking.svg" width="28" height="28" alt="">
+          <span><strong>AI Sessionizer</strong><span class="sw-project-description">AI agent observability</span></span>
+        </a>
+        
+        
+        </div>
+        
+        </div>
+        
+        <a class="dropdown-item sw-projects-more" href="/docs/#SkyWalkingServers">All platform projects <span aria-hidden="true">→</span></a>
+        
+      </div>
+    </div>
+    
+    
+    
+      
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+      
+    
+      
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+      
+    
+    
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+    
+    
+    <div class="sw-projects-group sw-projects-group-wide">
+      <p class="sw-projects-label">Agents &amp; collection</p>
+    
+      <div class="sw-projects-group-links">
+        <div class="sw-projects-columns">
+        
+        <div class="sw-projects-column">
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#JavaAgent">
+          <img src="/images/project/java-agent.svg" width="28" height="28" alt="">
+          <span><strong>Java Agent</strong><span class="sw-project-description">Java tracing and profiling</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#GoAgent">
+          <img src="/images/project/skywalking-go.svg" width="28" height="28" alt="">
+          <span><strong>Go Agent</strong><span class="sw-project-description">Go tracing and metrics</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#PythonAgent">
+          <img src="/images/project/python-agent.svg" width="28" height="28" alt="">
+          <span><strong>Python Agent</strong><span class="sw-project-description">Python tracing and profiling</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#NodeJSAgent">
+          <img src="/images/project/nodejs-agent.svg" width="28" height="28" alt="">
+          <span><strong>NodeJS Agent</strong><span class="sw-project-description">Node.js distributed tracing</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#PHPAgent">
+          <img src="/images/project/php-agent.svg" width="28" height="28" alt="">
+          <span><strong>PHP Agent</strong><span class="sw-project-description">PHP distributed tracing</span></span>
+        </a>
+        
+        
+        </div>
+        
+        <div class="sw-projects-column">
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#OpenTelemetryOTLP">
+          <img src="/images/project/otlp.svg" width="28" height="28" alt="">
+          <span><strong>OpenTelemetry (OTLP)</strong><span class="sw-project-description">OTLP traces, metrics, and logs</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#SkyWalkingRover">
+          <img src="/images/project/skywalking.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking Rover</strong><span class="sw-project-description">eBPF metrics and profiling</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#SkyWalkingSatellite">
+          <img src="/images/project/skywalking-satellite.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking Satellite</strong><span class="sw-project-description">Lightweight telemetry collector</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#KubernetesEventExporter">
+          <img src="/images/project/kubernetes.svg" width="28" height="28" alt="">
+          <span><strong>Kubernetes Event Exporter</strong><span class="sw-project-description">Kubernetes event collection</span></span>
+        </a>
+        
+        
+        </div>
+        
+        </div>
+        
+        <a class="dropdown-item sw-projects-more" href="/docs/#Agents">View all agents &amp; collectors <span aria-hidden="true">→</span></a>
+        
+      </div>
+    </div>
+    
+    
+    
+      
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+      
+    
+    
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+    
+    
+    <div class="sw-projects-group">
+      <p class="sw-projects-label">Operations &amp; tools</p>
+    
+      <div class="sw-projects-group-links">
+        <div class="sw-projects-columns">
+        
+        <div class="sw-projects-column">
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#SkyWalkingCLI">
+          <img src="/images/project/skywalking-cli.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking CLI</strong><span class="sw-project-description">Command-line operations</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#SkyWalkingMCP">
+          <img src="/images/project/skywalking.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking MCP</strong><span class="sw-project-description">Observability for AI assistants</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#KubernetesHelm">
+          <img src="/images/project/helm.svg" width="28" height="28" alt="">
+          <span><strong>Kubernetes Helm</strong><span class="sw-project-description">Deploy SkyWalking with Helm</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#SkyWalkingCloudonKubernetes">
+          <img src="/images/project/kubernetes.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking Cloud on Kubernetes</strong><span class="sw-project-description">Kubernetes operator</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#SkyWalkingEyes">
+          <img src="/images/project/skywalking-eyes.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking Eyes</strong><span class="sw-project-description">License checks and fixes</span></span>
+        </a>
+        
+        
+        </div>
+        
+        </div>
+        
+        <a class="dropdown-item sw-projects-more" href="/docs/#Operation">All operations projects <span aria-hidden="true">→</span></a>
+        
+      </div>
+    </div>
+    
+  </div>
+  <div class="sw-projects-footer">
+    <a class="dropdown-item sw-projects-all" href="/docs/">All projects <span aria-hidden="true">→</span></a>
+    <a class="dropdown-item sw-projects-downloads" href="/downloads/">Downloads <span aria-hidden="true">→</span></a>
+  </div>
+</div>
+
+                </div>
+            </li>
+            
+            
+            
+            
+            <li class="nav-item"><a class="nav-link" href="/blog">Blogs</a></li>
+            
+            
+            
+            
+            
+            <li class="nav-item" data-nav-promote="events" hidden><a class="nav-link" href="/events/">Release Posts</a></li>
+            
+            <li class="nav-item" data-nav-promote="events/calendar" hidden><a class="nav-link" href="/events/calendar/">Event Calendar</a></li>
+            
+            <li class="nav-item" data-nav-promote="users" hidden><a class="nav-link" href="/users">Users</a></li>
+            
+            <li class="nav-item" data-nav-promote="team" hidden><a class="nav-link" href="/team">Team</a></li>
+            
+            <li class="nav-item" data-nav-promote="zh" hidden><a class="nav-link" href="/zh/">中文博客</a></li>
+            
+            
+            <li class="nav-item dropdown" data-nav-more>
+                <button type="button" class="nav-link dropdown-toggle sw-more-toggle" id="more-menu-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">More</button>
+                <div class="dropdown-menu sw-more-menu" aria-labelledby="more-menu-toggle">
+                    
+                    <a class="dropdown-item" data-nav-overflow="events" href="/events/">Release Posts</a>
+                    
+                    <a class="dropdown-item" data-nav-overflow="events/calendar" href="/events/calendar/">Event Calendar</a>
+                    
+                    <a class="dropdown-item" data-nav-overflow="users" href="/users">Users</a>
+                    
+                    <a class="dropdown-item" data-nav-overflow="team" href="/team">Team</a>
+                    
+                    <a class="dropdown-item" data-nav-overflow="zh" href="/zh/">中文博客</a>
+                    
+                </div>
+            </li>
+            
+            
+            
+            
+            
+            
             
 			
         </ul>
     </div>
 
-    <div class="navbar-nav d-none d-lg-block search-input-box">
-        
-<div id="docsearch"></div>
+    <div class="sw-navbar-actions">
+        <button type="button" class="sw-kapa-search" aria-label="Search SkyWalking documentation and ask AI" aria-haspopup="dialog" title="Search and ask AI">
+  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="7.5"/><path d="m16 16 5 5"/></svg>
+  <span>Search</span>
+</button>
 
-
-            
-        
+        <div class="navbar-nav d-none d-lg-block search-input-box">
             
         
             
@@ -270,7 +1257,24 @@ SkyWalking receives OTLP metrics and logs directly on its gRPC port (11800) — 
             </span>
             
         
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+            <a class="sw-nav-cta" href="/get-started/">Get started</a>
+            
+        
+            
+        
+        </div>
     </div>
+  </div>
 </nav>
 
     </header>
@@ -306,6 +1310,22 @@ SkyWalking receives OTLP metrics and logs directly on its gRPC port (11800) — 
                     <option selected value="latest">
                     
                       latest
+                    
+                    </option>
+                  
+                    
+                    
+                    <option ZgotmplZ value="v11.1.0">
+                    
+                      v11.1.0
+                    
+                    </option>
+                  
+                    
+                    
+                    <option ZgotmplZ value="v11.0.0">
+                    
+                      v11.0.0
                     
                     </option>
                   
@@ -354,38 +1374,6 @@ SkyWalking receives OTLP metrics and logs directly on its gRPC port (11800) — 
                     <option ZgotmplZ value="v10.0.0">
                     
                       v10.0.0
-                    
-                    </option>
-                  
-                    
-                    
-                    <option ZgotmplZ value="v9.7.0">
-                    
-                      v9.7.0
-                    
-                    </option>
-                  
-                    
-                    
-                    <option ZgotmplZ value="v9.6.0">
-                    
-                      v9.6.0
-                    
-                    </option>
-                  
-                    
-                    
-                    <option ZgotmplZ value="v9.5.0">
-                    
-                      v9.5.0
-                    
-                    </option>
-                  
-                    
-                    
-                    <option ZgotmplZ value="v9.4.0">
-                    
-                      v9.4.0
                     
                     </option>
                   
@@ -830,6 +1818,48 @@ SkyWalking receives OTLP metrics and logs directly on its gRPC port (11800) — 
         
 
             
+            <a href="#">Mobile Monitoring<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/backend-ios-monitoring">iOS</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/backend-wechat-mini-program-monitoring">WeChat Mini Program</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/backend-alipay-mini-program-monitoring">Alipay Mini Program</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
             <a href="#">Gateway Monitoring<i class="iconfont icon-arrow-right pull-right"></i></a>
             
 
@@ -1020,6 +2050,32 @@ SkyWalking receives OTLP metrics and logs directly on its gRPC port (11800) — 
         
 
             
+            <a href="#">Workflow Scheduler<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/backend-airflow-monitoring">Airflow</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
             <a href="#">Data Processing Engine<i class="iconfont icon-arrow-right pull-right"></i></a>
             
 
@@ -1063,7 +2119,23 @@ SkyWalking receives OTLP metrics and logs directly on its gRPC port (11800) — 
 
     <li>
         
-            <a href="/docs/main/latest/en/setup/backend/backend-envoy-ai-gateway-monitoring">Envoy AI Gateway</a>
+            <a href="/docs/main/latest/en/setup/backend/ai-evaluation">AI Evaluation</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/ai-agent-conversation">AI Agent Conversations</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/backend-envoy-ai-gateway-monitoring">Agent Router (Envoy AI Gateway)</a>
         
     </li>
 
@@ -1374,6 +2446,14 @@ SkyWalking receives OTLP metrics and logs directly on its gRPC port (11800) — 
 
     <li>
         
+            <a href="/docs/main/latest/en/banyandb/tail-sampling">Trace Tail Sampling</a>
+        
+    </li>
+
+    
+
+    <li>
+        
             <a href="/docs/main/latest/en/banyandb/dashboards-banyandb">BanyanDB self observability dashboard</a>
         
     </li>
@@ -1440,6 +2520,14 @@ SkyWalking receives OTLP metrics and logs directly on its gRPC port (11800) — 
 
     <li>
         
+            <a href="/docs/main/latest/en/setup/backend/server-clusters">Server Clusters</a>
+        
+    </li>
+
+    
+
+    <li>
+        
             <a href="/docs/main/latest/en/setup/backend/zipkin-trace">Zipkin Trace</a>
         
     </li>
@@ -1448,7 +2536,125 @@ SkyWalking receives OTLP metrics and logs directly on its gRPC port (11800) — 
 
     <li>
         
-            <a href="/docs/main/latest/en/setup/backend/otlp-trace">OpenTelemetry Trace</a>
+
+            
+            <a href="#">OpenTelemetry Trace<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/otlp-trace">Setup</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/trace-analyzer">Analysis</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
+            <a href="#">Best Practices<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+
+            
+            <a href="#">Gateway<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/otlp-trace-practices/gateway-overview">Overview</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/otlp-trace-practices/gateway-envoy">Envoy</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/otlp-trace-practices/gateway-nginx">nginx</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/otlp-trace-practices/gateway-without-instrumentation">Gateways Without Instrumentation</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/otlp-trace-practices/gateway-canary">Canary Releases</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/otlp-trace-practices/message-queue">Message Queue</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/otlp-trace-practices/database-and-cache">Database and Cache</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+</ul>
+
         
     </li>
 
@@ -1507,6 +2713,22 @@ SkyWalking receives OTLP metrics and logs directly on its gRPC port (11800) — 
     <li>
         
             <a href="/docs/main/latest/en/setup/backend/backend-meter">Meter Analysis</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/dashboards-php-runtime">PHP runtime metrics (PHM)</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/dashboards-nodejs-runtime">Node.js runtime metrics</a>
         
     </li>
 
@@ -2079,72 +3301,6 @@ SkyWalking receives OTLP metrics and logs directly on its gRPC port (11800) — 
 
     
 
-    <li>
-        
-
-            
-            <a href="#">Status APIs<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-            <a href="/docs/main/latest/en/status/status_apis">Introduction</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/latest/en/debugging/config_dump">Dump Effective Initial Configurations</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/latest/en/debugging/query-tracing">Tracing Query Execution</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/latest/en/status/query_ttl_setup">Get Effective TTL Configurations</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/latest/en/status/query_cluster_nodes">Get Node List in the Cluster</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/latest/en/status/query_alarm_runtime_status">Get Alarm Runtime Status</a>
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-
-    
-
 </ul>
 
         
@@ -2201,6 +3357,22 @@ SkyWalking receives OTLP metrics and logs directly on its gRPC port (11800) — 
 
     <li>
         
+            <a href="/docs/main/latest/en/concepts-and-designs/tal">Analysis OpenTelemetry Traces</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/concepts-and-designs/runtime-rule-hot-update">Runtime Rule Hot-Update</a>
+        
+    </li>
+
+    
+
+    <li>
+        
             <a href="/docs/main/latest/en/concepts-and-designs/profiling">Profiling</a>
         
     </li>
@@ -2241,6 +3413,145 @@ SkyWalking receives OTLP metrics and logs directly on its gRPC port (11800) — 
     <li>
         
             <a href="/docs/main/latest/en/operation/dynamic-code-generation-debugging">Dynamic Code Generation and Debugging</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+    
+    <li>
+        
+            
+            <a href="#">Admin API<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/admin-api/readme">Introduction</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/admin-api/runtime-rule">Runtime Rule Hot-Update API</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
+            <a href="#">DSL Debug API<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/admin-api/dsl-debugging">Overview</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/admin-api/dsl-debugging-mal">MAL</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/admin-api/dsl-debugging-oal">OAL</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/admin-api/dsl-debugging-lal">LAL</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
+            <a href="#">Status API<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/admin-api/status">Overview</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/debugging/config_dump">Dump Effective Initial Configurations</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/debugging/query-tracing">Tracing Query Execution</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/admin-api/inspect">Inspect API</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/admin-api/ui-management">UI Management API</a>
         
     </li>
 
@@ -2543,11 +3854,45 @@ SkyWalking receives OTLP metrics and logs directly on its gRPC port (11800) — 
         
 
             
+            <a href="#">11.x Releases<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/changes/changes-11.0.0">11.0.0</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
             <a href="#">10.x Releases<i class="iconfont icon-arrow-right pull-right"></i></a>
             
 
             
 <ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/changes/changes-10.4.0">10.4.0</a>
+        
+    </li>
+
     
 
     <li>
@@ -2852,8 +4197,22 @@ SkyWalking receives OTLP metrics and logs directly on its gRPC port (11800) — 
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: b272da3</div>
+                  <div class="commit-id">Commit Id: d34eff2</div>
                 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2914,30 +4273,42 @@ SkyWalking receives OTLP metrics and logs directly on its gRPC port (11800) — 
               <i class="iconfont icon-menu-doc doc-menu-button"></i>
               
 <div class="td-content">
-	<h1 id="envoy-ai-gateway-monitoring">Envoy AI Gateway Monitoring</h1>
-<h2 id="envoy-ai-gateway-observability-via-otlp">Envoy AI Gateway observability via OTLP</h2>
-<p><a href="https://aigateway.envoyproxy.io/">Envoy AI Gateway</a> is a gateway/proxy for AI/LLM API traffic
-(OpenAI, Anthropic, AWS Bedrock, Azure OpenAI, Google Gemini, etc.) built on top of Envoy Proxy.
-It natively emits GenAI metrics and access logs via OTLP, following
-<a href="https://opentelemetry.io/docs/specs/semconv/gen-ai/">OpenTelemetry GenAI Semantic Conventions</a>.</p>
+	<h1 id="agent-router-formerly-envoy-ai-gateway-monitoring">Agent Router (formerly Envoy AI Gateway) Monitoring</h1>
+<h2 id="agent-router-observability-via-otlp">Agent Router observability via OTLP</h2>
+<p><a href="https://theagentrouter.ai/">Agent Router</a>, formerly Envoy AI Gateway, is a gateway/proxy for AI/LLM API traffic
+(OpenAI, Anthropic, AWS Bedrock, Azure OpenAI, Google Gemini, etc.) built on top of Envoy Proxy and Envoy Gateway.
+It natively emits GenAI metrics following
+<a href="https://opentelemetry.io/docs/specs/semconv/gen-ai/">OpenTelemetry GenAI Semantic Conventions</a>,
+and also emits MCP (Model Context Protocol) metrics and access logs via OTLP.</p>
 <p>SkyWalking receives OTLP metrics and logs directly on its gRPC port (11800) — no OpenTelemetry
-Collector is needed between the AI Gateway and SkyWalking OAP.</p>
+Collector is needed between Agent Router and SkyWalking OAP.</p>
+<h3 id="names-kept-from-envoy-ai-gateway">Names kept from Envoy AI Gateway</h3>
+<p>This integration was built while the project was named Envoy AI Gateway. The rename changed only the product name:
+Agent Router kept the names you deploy (the <code>aigateway.envoyproxy.io</code> API group, the <code>aigw</code> CLI) and emits the same
+telemetry. SkyWalking keeps its names unchanged in the same way, so existing gateway deployments, stored data,
+dashboards and alarm rules keep working:</p>
+<ul>
+<li>the layer <code>ENVOY_AI_GATEWAY</code></li>
+<li>the routing tag <code>job_name=envoy-ai-gateway</code></li>
+<li>the rule files <code>otel-rules/envoy-ai-gateway/*</code> and <code>lal/envoy-ai-gateway.yaml</code></li>
+<li>the metric names prefixed with <code>meter_envoy_ai_gw_</code></li>
+</ul>
 <h3 id="prerequisites">Prerequisites</h3>
 <ul>
-<li><a href="https://aigateway.envoyproxy.io/">Envoy AI Gateway</a> deployed. See the
-<a href="https://aigateway.envoyproxy.io/docs/getting-started/">Envoy AI Gateway getting started</a> for installation.</li>
+<li><a href="https://theagentrouter.ai/">Agent Router</a> deployed. See the
+<a href="https://theagentrouter.ai/docs/getting-started/">Agent Router getting started</a> for installation.</li>
 </ul>
 <h3 id="data-flow">Data flow</h3>
 <ol>
-<li>Envoy AI Gateway processes LLM API requests and records GenAI metrics (token usage, latency, TTFT, TPOT).</li>
-<li>The AI Gateway pushes metrics and access logs via OTLP gRPC to SkyWalking OAP.</li>
+<li>Agent Router processes LLM API requests and MCP requests, recording GenAI metrics and MCP metrics.</li>
+<li>Agent Router pushes metrics and access logs via OTLP gRPC to SkyWalking OAP.</li>
 <li>SkyWalking OAP parses metrics with <a href="../../../concepts-and-designs/mal">MAL</a> rules and access logs
 with <a href="../../../concepts-and-designs/lal">LAL</a> rules.</li>
 </ol>
 <h3 id="set-up">Set up</h3>
 <p>The MAL rules (<code>envoy-ai-gateway/*</code>) and LAL rules (<code>envoy-ai-gateway</code>) are enabled by default
 in SkyWalking OAP. No OAP-side configuration is needed.</p>
-<p>Configure the AI Gateway to push OTLP to SkyWalking by setting these environment variables:</p>
+<p>Configure Agent Router to push OTLP to SkyWalking by setting these environment variables:</p>
 <table>
   <thead>
       <tr>
@@ -2981,9 +4352,9 @@ in SkyWalking OAP. No OAP-side configuration is needed.</p>
 </table>
 <p><strong>Required resource attributes</strong> (in <code>OTEL_RESOURCE_ATTRIBUTES</code>):</p>
 <ul>
-<li><code>job_name=envoy-ai-gateway</code> — Fixed routing tag for MAL/LAL rules. Same for all AI Gateway deployments.</li>
+<li><code>job_name=envoy-ai-gateway</code> — Fixed routing tag for MAL/LAL rules. Same for all Agent Router deployments.</li>
 <li><code>service.instance.id=&lt;instance-id&gt;</code> — Instance identity. In Kubernetes, use the pod name via Downward API.</li>
-<li><code>service.layer=ENVOY_AI_GATEWAY</code> — Routes access logs to the AI Gateway LAL rules.</li>
+<li><code>service.layer=ENVOY_AI_GATEWAY</code> — Routes access logs to the Agent Router LAL rules.</li>
 </ul>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#953800">OTEL_SERVICE_NAME</span><span style="color:#0550ae">=</span>my-ai-gateway
@@ -2993,7 +4364,7 @@ in SkyWalking OAP. No OAP-side configuration is needed.</p>
 </span></span><span style="display:flex;"><span><span style="color:#953800">OTEL_LOGS_EXPORTER</span><span style="color:#0550ae">=</span>otlp
 </span></span><span style="display:flex;"><span><span style="color:#953800">OTEL_RESOURCE_ATTRIBUTES</span><span style="color:#0550ae">=</span><span style="color:#953800">job_name</span><span style="color:#0550ae">=</span>envoy-ai-gateway,service.instance.id<span style="color:#0550ae">=</span>pod-abc123,service.layer<span style="color:#0550ae">=</span>ENVOY_AI_GATEWAY
 </span></span></code></pre></div><h3 id="supported-metrics">Supported Metrics</h3>
-<p>SkyWalking observes the AI Gateway as a <code>LAYER: ENVOY_AI_GATEWAY</code> service. Each gateway deployment
+<p>SkyWalking observes Agent Router as a <code>LAYER: ENVOY_AI_GATEWAY</code> service. Each gateway deployment
 is a service, each pod is an instance. Metrics include per-provider and per-model breakdowns.</p>
 <h4 id="service-metrics">Service Metrics</h4>
 <table>
@@ -3139,15 +4510,131 @@ is a service, each pod is an instance. Metrics include per-provider and per-mode
 <h4 id="instance-metrics">Instance Metrics</h4>
 <p>All service-level metrics are also available per instance (pod) with <code>meter_envoy_ai_gw_instance_</code> prefix,
 including per-provider and per-model breakdowns.</p>
+<h3 id="mcp-metrics">MCP Metrics</h3>
+<p>When Agent Router is configured with MCP (Model Context Protocol) routes, SkyWalking collects
+MCP-specific metrics. These appear in the <strong>MCP</strong> tab on the service and instance dashboards.</p>
+<h4 id="mcp-service-metrics">MCP Service Metrics</h4>
+<table>
+  <thead>
+      <tr>
+          <th>Monitoring Panel</th>
+          <th>Unit</th>
+          <th>Metric Name</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>MCP Request CPM</td>
+          <td>calls/min</td>
+          <td>meter_envoy_ai_gw_mcp_request_cpm</td>
+          <td>MCP requests per minute</td>
+      </tr>
+      <tr>
+          <td>MCP Request Latency Avg</td>
+          <td>ms</td>
+          <td>meter_envoy_ai_gw_mcp_request_latency_avg</td>
+          <td>Average MCP request duration</td>
+      </tr>
+      <tr>
+          <td>MCP Request Latency Percentile</td>
+          <td>ms</td>
+          <td>meter_envoy_ai_gw_mcp_request_latency_percentile</td>
+          <td>P50/P75/P90/P95/P99</td>
+      </tr>
+      <tr>
+          <td>MCP Method CPM</td>
+          <td>calls/min</td>
+          <td>meter_envoy_ai_gw_mcp_method_cpm</td>
+          <td>Requests by MCP method (initialize, tools/list, tools/call, etc.)</td>
+      </tr>
+      <tr>
+          <td>MCP Error CPM</td>
+          <td>calls/min</td>
+          <td>meter_envoy_ai_gw_mcp_error_cpm</td>
+          <td>MCP error requests per minute</td>
+      </tr>
+      <tr>
+          <td>MCP Initialization Latency Avg</td>
+          <td>ms</td>
+          <td>meter_envoy_ai_gw_mcp_initialization_latency_avg</td>
+          <td>Average MCP session initialization time</td>
+      </tr>
+      <tr>
+          <td>MCP Initialization Latency Percentile</td>
+          <td>ms</td>
+          <td>meter_envoy_ai_gw_mcp_initialization_latency_percentile</td>
+          <td>P50/P75/P90/P95/P99</td>
+      </tr>
+      <tr>
+          <td>MCP Capabilities CPM</td>
+          <td>calls/min</td>
+          <td>meter_envoy_ai_gw_mcp_capabilities_cpm</td>
+          <td>Capabilities negotiated by type</td>
+      </tr>
+  </tbody>
+</table>
+<h4 id="mcp-backend-breakdown-metrics">MCP Backend Breakdown Metrics</h4>
+<table>
+  <thead>
+      <tr>
+          <th>Monitoring Panel</th>
+          <th>Unit</th>
+          <th>Metric Name</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Backend Request CPM</td>
+          <td>calls/min</td>
+          <td>meter_envoy_ai_gw_mcp_backend_request_cpm</td>
+          <td>Requests by MCP backend</td>
+      </tr>
+      <tr>
+          <td>Backend Latency Avg</td>
+          <td>ms</td>
+          <td>meter_envoy_ai_gw_mcp_backend_request_latency_avg</td>
+          <td>Latency by MCP backend</td>
+      </tr>
+      <tr>
+          <td>Backend Method CPM</td>
+          <td>calls/min</td>
+          <td>meter_envoy_ai_gw_mcp_backend_method_cpm</td>
+          <td>Requests by backend and method</td>
+      </tr>
+      <tr>
+          <td>Backend Error CPM</td>
+          <td>calls/min</td>
+          <td>meter_envoy_ai_gw_mcp_backend_error_cpm</td>
+          <td>Errors by MCP backend</td>
+      </tr>
+      <tr>
+          <td>Backend Init Latency Avg</td>
+          <td>ms</td>
+          <td>meter_envoy_ai_gw_mcp_backend_initialization_latency_avg</td>
+          <td>Init latency by backend</td>
+      </tr>
+  </tbody>
+</table>
+<h4 id="mcp-instance-metrics">MCP Instance Metrics</h4>
+<p>All MCP service-level metrics are also available per instance with <code>meter_envoy_ai_gw_mcp_instance_</code> prefix.</p>
 <h3 id="access-log-sampling">Access Log Sampling</h3>
-<p>The LAL rules apply a sampling policy to reduce storage:</p>
+<p>Access logs are tagged with <code>ai_route_type</code> (<code>llm</code> or <code>mcp</code>) for filtering in the log query UI.
+The <code>ai_route_type</code> tag is searchable by default.</p>
+<p><strong>LLM route logs:</strong></p>
 <ul>
 <li><strong>Error responses</strong> (HTTP status &gt;= 400) — always persisted.</li>
 <li><strong>Upstream failures</strong> — always persisted.</li>
 <li><strong>High token cost</strong> (&gt;= 10,000 total tokens) — persisted for cost anomaly detection.</li>
 <li>Normal successful responses with low token counts are dropped.</li>
 </ul>
-<p>The token threshold can be adjusted in <code>lal/envoy-ai-gateway.yaml</code>.</p>
+<p><strong>MCP route logs:</strong></p>
+<ul>
+<li><strong>Error responses</strong> (HTTP status &gt;= 400) — always persisted.</li>
+<li>Normal MCP requests are dropped (MCP observability is covered by metrics).</li>
+</ul>
+<p>The sampling policy can be adjusted in <code>lal/envoy-ai-gateway.yaml</code>.</p>
 
 </div>
 
@@ -3180,14 +4667,16 @@ including per-provider and per-model breakdowns.</p>
 <div class="td-toc-label">On this page</div>
 <nav id="TableOfContents">
   <ul>
-    <li><a href="#envoy-ai-gateway-monitoring">Envoy AI Gateway Monitoring</a>
+    <li><a href="#agent-router-formerly-envoy-ai-gateway-monitoring">Agent Router (formerly Envoy AI Gateway) Monitoring</a>
       <ul>
-        <li><a href="#envoy-ai-gateway-observability-via-otlp">Envoy AI Gateway observability via OTLP</a>
+        <li><a href="#agent-router-observability-via-otlp">Agent Router observability via OTLP</a>
           <ul>
+            <li><a href="#names-kept-from-envoy-ai-gateway">Names kept from Envoy AI Gateway</a></li>
             <li><a href="#prerequisites">Prerequisites</a></li>
             <li><a href="#data-flow">Data flow</a></li>
             <li><a href="#set-up">Set up</a></li>
             <li><a href="#supported-metrics">Supported Metrics</a></li>
+            <li><a href="#mcp-metrics">MCP Metrics</a></li>
             <li><a href="#access-log-sampling">Access Log Sampling</a></li>
           </ul>
         </li>
@@ -3286,6 +4775,9 @@ including per-provider and per-model breakdowns.</p>
         
         
     </div>
+    <p class="footer-contribute">
+      <a id="contribute" href="https://github.com/apache/skywalking-website" target="_blank" rel="noopener">Help improve this website <span aria-hidden="true">↗</span></a>
+    </p>
     <div class="">
 
         <small class="text-color">&copy; 2017 - 2026 The Apache Software Foundation All Rights Reserved</small>
@@ -13000,6 +14492,1466 @@ including per-provider and per-model breakdowns.</p>
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
 <div id="popup">
     <div class="mask">
@@ -13007,85 +15959,187 @@ including per-provider and per-model breakdowns.</p>
     </div>
 </div>
 
-    <div class="sidebar-mask"></div>
-<div class="sidebar">
-    <nav class="nav-links">
+    
+
+
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+<div class="sidebar-mask" aria-hidden="true"></div>
+<div class="sidebar" id="site-navigation-drawer" role="dialog" aria-modal="true" aria-label="Navigation" aria-hidden="true" tabindex="-1">
+  <div class="sidebar-header">
+    <span>Menu</span>
+    <button type="button" class="sidebar-close" aria-label="Close navigation">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+    </button>
+  </div>
+  <nav class="nav-links" aria-label="Site pages">
+    <ul class="sidebar-primary">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/">Home</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link active" href="/docs" aria-current="page">Projects</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/blog">Blogs</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/events/">Release Posts</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/events/calendar/">Event Calendar</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/users">Users</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/team">Team</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/zh/">中文博客</a></li>
+      
+      
+    </ul>
+    <ul class="sidebar-secondary">
+      <li><a class="nav-link" href="/downloads/">Downloads</a></li>
+      
+      <li><a class="nav-link" href="/get-started/">Get started</a></li>
+      
+    </ul>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <details class="sidebar-resources">
+      <summary><span>Apache</span><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 4 4 4-4 4"/></svg></summary>
+      <ul class="sidebar-resource-links">
         
-        <div class="nav-item"><a href="/docs/" class="nav-link router-link-active">Documentation</a></div>
-        <div class="nav-item"><a href="/events/" class="nav-link">Events</a></div>
-        <div class="nav-item"><a href="/blog/" class="nav-link">Blog</a></div>
-        <div class="nav-item"><a href="/downloads/" class="nav-link">Downloads</a></div>
-        <div class="nav-item"><a href="/team/" class="nav-link">Team</a></div>
-        <div class="nav-item"><a href="/users/" class="nav-link">Users</a></div>
-        <div class="nav-item"><a href="/zh/" class="nav-link">中文博客</a></div>
-        <div class="nav-item">
-            <div class="dropdown-wrapper open">
-                <a class="dropdown-title">
-                    <span>Links</span>
-                    <span class="arrow down"></span>
-                </a>
-                <ul class="nav-dropdown">
-                    <li class="dropdown-item">
-                        <a href="http://www.apache.org/" target="_blank"
-                           rel="noopener noreferrer" class="nav-link external">
-                            Apache Software Foundation
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="https://github.com/apache/skywalking/issues"
-                           target="_blank" rel="noopener noreferrer"
-                           class="nav-link external">
-                            GitHub Issue Tracker
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="https://lists.apache.org/list.html?dev@skywalking.apache.org" target="_blank"
-                           rel="noopener noreferrer" class="nav-link external">
-                            Dev Mailing List
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="http://www.apache.org/licenses/" target="_blank"
-                           rel="noopener noreferrer" class="nav-link external">
-                            License
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="http://www.apache.org/events/current-event"
-                           target="_blank" rel="noopener noreferrer"
-                           class="nav-link external">
-                            Apache Events
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="http://www.apache.org/security/" target="_blank"
-                           rel="noopener noreferrer" class="nav-link external">
-                            Security
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="http://www.apache.org/foundation/sponsorship.html"
-                           target="_blank" rel="noopener noreferrer"
-                           class="nav-link external">
-                            Sponsorship and Donate
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="http://www.apache.org/foundation/thanks.html"
-                           target="_blank" rel="noopener noreferrer"
-                           class="nav-link external">
-                            Thanks
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+        <li><a class="nav-link" href="http://www.apache.org/" target="_blank" rel="noopener noreferrer"><span>Apache Software Foundation</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="https://github.com/apache/skywalking/issues" target="_blank" rel="noopener noreferrer"><span>GitHub Issue Tracker</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="https://github.com/apache/skywalking/discussions" target="_blank" rel="noopener noreferrer"><span>Discussion</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="https://lists.apache.org/list.html?dev@skywalking.apache.org" target="_blank" rel="noopener noreferrer"><span>Dev Mailing List</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="https://cwiki.apache.org/confluence/display/SKYWALKING/Home" target="_blank" rel="noopener noreferrer"><span>WIKI</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="http://www.apache.org/licenses/" target="_blank" rel="noopener noreferrer"><span>License</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="http://www.apache.org/events/current-event" target="_blank" rel="noopener noreferrer"><span>Apache Events</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="http://www.apache.org/security/" target="_blank" rel="noopener noreferrer"><span>Security</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="http://www.apache.org/foundation/sponsorship.html" target="_blank" rel="noopener noreferrer"><span>Sponsor and Donate</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="http://www.apache.org/foundation/thanks.html" target="_blank" rel="noopener noreferrer"><span>Thanks</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="https://apache.org/foundation/policies/privacy.html" target="_blank" rel="noopener noreferrer"><span>Privacy</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+      </ul>
+    </details>
+    
+    
+  </nav>
 </div>
 
     <script src="/js/bootstrap.bundle.min.js"></script>
 
-<script src="/js/docsearch-3.9.0.js"></script>
 
 
 
@@ -13095,7 +16149,8 @@ including per-provider and per-model breakdowns.</p>
 
 
 
-<script src="/js/main.min.9be14eed0a0e24711261c334305209aa2e5ae3fb624f6a1731e064d5ffb11f3d.js" integrity="sha256-m&#43;FO7QoOJHESYcM0MFIJqi5a4/tiT2oXMeBk1f&#43;xHz0=" crossorigin="anonymous"></script>
+
+<script src="/js/main.min.a351a9c3ee226044b9050a859fb2f5a6019a548cfe22e3ca281fb08443c28976.js" integrity="sha256-o1Gpw&#43;4iYES5BQqFn7L1pgGaVIz&#43;IuPKKB&#43;whEPCiXY=" crossorigin="anonymous"></script>
 
 
 <script src="/js/highlight.min.js"></script>
@@ -13128,14 +16183,16 @@ data-project-name="SkyWalking"
 data-project-color="#2B74B8"
 data-button-text="Ask AI"
 data-search-mode-enabled="true"
+data-search-mode-default="false"
+data-modal-override-open-selector-search=".sw-kapa-search"
 data-modal-open-on-command-k="true"
+data-modal-command-k-search-mode-default="true"
+data-modal-z-index="10000"
 data-modal-disclaimer="The AI supports multiple languages, but it may not be accessible in China, a proxy is required."
 data-project-logo="/images/widget-logo.jpg"
 data-modal-example-questions="What is Apache SkyWalking?,How to deploy SkyWalking?,How to inject agents non-intrusively?,How to setup trace sampling?"
-data-button-position-top=""
 data-button-position-right="20px"
 data-button-position-bottom="200px"
-data-button-position-left=""
 data-consent-required="true"  
 data-user-analytics-cookie-enabled="true"  
 data-consent-screen-title="Help us improve our AI assistant"  
@@ -13143,8 +16200,28 @@ data-consent-screen-disclaimer="By clicking 'Allow tracking', you consent to ano
 data-consent-screen-accept-button-text="Allow tracking"  
 data-consent-screen-reject-button-text="No, thanks"
 ></script>
+<script>
+  (function () {
+    var SEL = 'details.topic-filter';
 
+    function closeAll(except) {
+      document.querySelectorAll(SEL).forEach(function (d) {
+        if (d !== except && d.open) { d.open = false; }
+      });
+    }
 
+    
+    
+    document.addEventListener('click', function (e) {
+      var target = e.target instanceof Element ? e.target.closest(SEL) : null;
+      closeAll(target);
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' || e.key === 'Esc') { closeAll(null); }
+    });
+  })();
+</script>
 
 
     <script>

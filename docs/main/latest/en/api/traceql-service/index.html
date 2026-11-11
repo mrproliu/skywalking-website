@@ -25,30 +25,28 @@
   <meta property="og:site_name" content="Apache SkyWalking">
   <meta property="og:title" content="TraceQL Service">
   <meta property="og:description" content="TraceQL Service TraceQL (Trace Query Language) is Grafana Tempo’s query language for traces. TraceQL Service exposes Tempo Querying HTTP APIs including TraceQL expression system and OpenTelemetry Protocol (OTLP) trace format. Third-party systems or visualization platforms that already support Tempo and TraceQL (such as Grafana), could obtain traces through TraceQL Service.
-SkyWalking supports two types of traces: SkyWalking native traces and Zipkin-compatible traces. The TraceQL Service converts both trace formats to OpenTelemetry Protocol (OTLP) format to provide compatibility with Grafana Tempo and TraceQL queries.">
+SkyWalking supports three types of traces: SkyWalking native traces, Zipkin-compatible traces, and natively stored OTLP traces. The TraceQL Service converts the first two formats to Tempo’s format to provide compatibility with Grafana Tempo and TraceQL queries. Since the trace detail part of Tempo’s format (Trace message) reuses OTLP Trace definitions, the conversion descriptions below refer to OTLP field names (e.g., span kind, status code). Natively stored OTLP traces need no conversion, see OTLP Native Trace.">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="article">
     <meta property="article:section" content="docs">
 
   <meta itemprop="name" content="TraceQL Service">
   <meta itemprop="description" content="TraceQL Service TraceQL (Trace Query Language) is Grafana Tempo’s query language for traces. TraceQL Service exposes Tempo Querying HTTP APIs including TraceQL expression system and OpenTelemetry Protocol (OTLP) trace format. Third-party systems or visualization platforms that already support Tempo and TraceQL (such as Grafana), could obtain traces through TraceQL Service.
-SkyWalking supports two types of traces: SkyWalking native traces and Zipkin-compatible traces. The TraceQL Service converts both trace formats to OpenTelemetry Protocol (OTLP) format to provide compatibility with Grafana Tempo and TraceQL queries.">
-  <meta itemprop="wordCount" content="2293">
+SkyWalking supports three types of traces: SkyWalking native traces, Zipkin-compatible traces, and natively stored OTLP traces. The TraceQL Service converts the first two formats to Tempo’s format to provide compatibility with Grafana Tempo and TraceQL queries. Since the trace detail part of Tempo’s format (Trace message) reuses OTLP Trace definitions, the conversion descriptions below refer to OTLP field names (e.g., span kind, status code). Natively stored OTLP traces need no conversion, see OTLP Native Trace.">
+  <meta itemprop="wordCount" content="3947">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="TraceQL Service">
   <meta name="twitter:description" content="TraceQL Service TraceQL (Trace Query Language) is Grafana Tempo’s query language for traces. TraceQL Service exposes Tempo Querying HTTP APIs including TraceQL expression system and OpenTelemetry Protocol (OTLP) trace format. Third-party systems or visualization platforms that already support Tempo and TraceQL (such as Grafana), could obtain traces through TraceQL Service.
-SkyWalking supports two types of traces: SkyWalking native traces and Zipkin-compatible traces. The TraceQL Service converts both trace formats to OpenTelemetry Protocol (OTLP) format to provide compatibility with Grafana Tempo and TraceQL queries.">
+SkyWalking supports three types of traces: SkyWalking native traces, Zipkin-compatible traces, and natively stored OTLP traces. The TraceQL Service converts the first two formats to Tempo’s format to provide compatibility with Grafana Tempo and TraceQL queries. Since the trace detail part of Tempo’s format (Trace message) reuses OTLP Trace definitions, the conversion descriptions below refer to OTLP field names (e.g., span kind, status code). Natively stored OTLP traces need no conversion, see OTLP Native Trace.">
 
 
 
-<link rel="preload" href="/scss/main.min.75b3855349f4480c60036369f115ecf9ae08f3fff28f5b2de980d22a7fac93ef.css" as="style">
-<link href="/scss/main.min.75b3855349f4480c60036369f115ecf9ae08f3fff28f5b2de980d22a7fac93ef.css" rel="stylesheet" integrity="">
+<link rel="preload" href="/scss/main.min.b350fb8c42fee31880305a4433cf2325b5cefc4e06a4d17342698fbbcf354d7b.css" as="style">
+<link href="/scss/main.min.b350fb8c42fee31880305a4433cf2325b5cefc4e06a4d17342698fbbcf354d7b.css" rel="stylesheet" integrity="">
 
 
 
-<link rel="stylesheet" href="/css/docSearch.css" />
 <link rel="stylesheet" href="/css/highlight-github.css" />
-
 
 <script src="/js/jquery-3.6.0.min.js"></script>
 
@@ -66,16 +64,88 @@ SkyWalking supports two types of traces: SkyWalking native traces and Zipkin-com
   <body class="td-page  project-doc">
     <header>
       
-<nav class="js-navbar-scroll navbar navbar-expand  flex-column flex-md-row td-navbar">
-    <div class="sidebar-button">
-      <i class="iconfont icon-menu"></i>
-    </div>
+
+
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    
+  
+
+  
+  
+
+  
+  
+
+
+
+
+  
+    
+    
+    
+    
+    
+    
+  
+
+  
+    
+    
+    
+    
+    
+    
+  
+
+  
+    
+    
+    
+    
+    
+    
+  
+
+  
+    
+    
+    
+    
+    
+    
+  
+
+  
+    
+    
+    
+    
+    
+    
+  
+
+<nav class="js-navbar-scroll navbar navbar-expand td-navbar" aria-label="Main navigation">
+  <div class="sw-navbar-inner">
+    <button type="button" class="sidebar-button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-navigation-drawer">
+      <i class="iconfont icon-menu" aria-hidden="true"></i>
+    </button>
     <a class="navbar-brand" href="/">
         <span class="navbar-logo"><img width="130" src="/images/logo.svg" alt="SkyWalking"></span> 
     </a>
     <div class="td-navbar-nav-scroll navbar-nav-wrapper" id="navigation">
         <ul class="navbar-nav mt-lg-0">
-             
+            
             
             <li class="nav-item mr-3 mb-lg-0">
 				
@@ -84,90 +154,1007 @@ SkyWalking supports two types of traces: SkyWalking native traces and Zipkin-com
 				
 				
 				
-				<a class="nav-link active" href="/docs" ><span class="active">Documentation</span></a>
+				
+				
+                
+                <a class="nav-link" href="/" ><span>Home</span></a>
 			</li>
             
             
             
-            <li class="nav-item mr-3 mb-lg-0">
-				
-				
-				
-				
-				
-				
-				<a class="nav-link" href="/events" ><span>Events</span></a>
-			</li>
-            
-            
-            
-            <li class="nav-item mr-3 mb-lg-0">
-				
-				
-				
-				
-				
-				
-				<a class="nav-link" href="/blog" ><span>Blogs</span></a>
-			</li>
-            
-            
-            
-            <li class="nav-item mr-3 mb-lg-0">
-				
-				
-				
-				
-				
-				
-				<a class="nav-link" href="/downloads" ><span>Downloads</span></a>
-			</li>
-            
-            
-            
-            <li class="nav-item mr-3 mb-lg-0">
-				
-				
-				
-				
-				
-				
-				<a class="nav-link" href="/team" ><span>Team</span></a>
-			</li>
-            
-            
-            
-            <li class="nav-item mr-3 mb-lg-0">
-				
-				
-				
-				
-				
-				
-				<a class="nav-link" href="/users" ><span>Users</span></a>
-			</li>
-            
-            
-            
-            
-            
-            
-            <li class="nav-item mr-3 mb-lg-0">
-                <a class="nav-link" href="/zh/"><span>中文博客</span></a>
-            </li>
+            <li class="nav-item dropdown sw-projects-item">
+                <button type="button" class="nav-link dropdown-toggle sw-projects-toggle active" id="projects-menu-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Projects</button>
+                <div class="dropdown-menu sw-projects-menu" aria-labelledby="projects-menu-toggle">
+                    
 
+
+<div class="sw-projects-content">
+  <a class="dropdown-item sw-projects-intro" href="/get-started/">
+    <span><strong>Get started in minutes</strong><span>Try the Showcase or install SkyWalking</span></span>
+    <span aria-hidden="true">→</span>
+  </a>
+  <div class="sw-projects-groups">
+    
+    
+    
+      
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+      
+    
+    
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+    
+    
+    <div class="sw-projects-group">
+      <p class="sw-projects-label">Platform</p>
+    
+      <div class="sw-projects-group-links">
+        <div class="sw-projects-columns">
+        
+        <div class="sw-projects-column">
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link active" href="/docs/#SkyWalking">
+          <img src="/images/project/skywalking.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking</strong><span class="sw-project-description">Core observability server</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#BanyanDB">
+          <img src="/images/project/banyan-db.svg" width="28" height="28" alt="">
+          <span><strong>BanyanDB</strong><span class="sw-project-description">Observability database</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#HorizonUI">
+          <img src="/images/project/skywalking.svg" width="28" height="28" alt="">
+          <span><strong>Horizon UI</strong><span class="sw-project-description">Next-generation UI</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#AISessionizer">
+          <img src="/images/project/skywalking.svg" width="28" height="28" alt="">
+          <span><strong>AI Sessionizer</strong><span class="sw-project-description">AI agent observability</span></span>
+        </a>
+        
+        
+        </div>
+        
+        </div>
+        
+        <a class="dropdown-item sw-projects-more" href="/docs/#SkyWalkingServers">All platform projects <span aria-hidden="true">→</span></a>
+        
+      </div>
+    </div>
+    
+    
+    
+      
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+      
+    
+      
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+      
+    
+    
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+    
+    
+    <div class="sw-projects-group sw-projects-group-wide">
+      <p class="sw-projects-label">Agents &amp; collection</p>
+    
+      <div class="sw-projects-group-links">
+        <div class="sw-projects-columns">
+        
+        <div class="sw-projects-column">
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#JavaAgent">
+          <img src="/images/project/java-agent.svg" width="28" height="28" alt="">
+          <span><strong>Java Agent</strong><span class="sw-project-description">Java tracing and profiling</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#GoAgent">
+          <img src="/images/project/skywalking-go.svg" width="28" height="28" alt="">
+          <span><strong>Go Agent</strong><span class="sw-project-description">Go tracing and metrics</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#PythonAgent">
+          <img src="/images/project/python-agent.svg" width="28" height="28" alt="">
+          <span><strong>Python Agent</strong><span class="sw-project-description">Python tracing and profiling</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#NodeJSAgent">
+          <img src="/images/project/nodejs-agent.svg" width="28" height="28" alt="">
+          <span><strong>NodeJS Agent</strong><span class="sw-project-description">Node.js distributed tracing</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#PHPAgent">
+          <img src="/images/project/php-agent.svg" width="28" height="28" alt="">
+          <span><strong>PHP Agent</strong><span class="sw-project-description">PHP distributed tracing</span></span>
+        </a>
+        
+        
+        </div>
+        
+        <div class="sw-projects-column">
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#OpenTelemetryOTLP">
+          <img src="/images/project/otlp.svg" width="28" height="28" alt="">
+          <span><strong>OpenTelemetry (OTLP)</strong><span class="sw-project-description">OTLP traces, metrics, and logs</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#SkyWalkingRover">
+          <img src="/images/project/skywalking.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking Rover</strong><span class="sw-project-description">eBPF metrics and profiling</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#SkyWalkingSatellite">
+          <img src="/images/project/skywalking-satellite.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking Satellite</strong><span class="sw-project-description">Lightweight telemetry collector</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#KubernetesEventExporter">
+          <img src="/images/project/kubernetes.svg" width="28" height="28" alt="">
+          <span><strong>Kubernetes Event Exporter</strong><span class="sw-project-description">Kubernetes event collection</span></span>
+        </a>
+        
+        
+        </div>
+        
+        </div>
+        
+        <a class="dropdown-item sw-projects-more" href="/docs/#Agents">View all agents &amp; collectors <span aria-hidden="true">→</span></a>
+        
+      </div>
+    </div>
+    
+    
+    
+      
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+      
+    
+    
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+    
+    
+    <div class="sw-projects-group">
+      <p class="sw-projects-label">Operations &amp; tools</p>
+    
+      <div class="sw-projects-group-links">
+        <div class="sw-projects-columns">
+        
+        <div class="sw-projects-column">
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#SkyWalkingCLI">
+          <img src="/images/project/skywalking-cli.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking CLI</strong><span class="sw-project-description">Command-line operations</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#SkyWalkingMCP">
+          <img src="/images/project/skywalking.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking MCP</strong><span class="sw-project-description">Observability for AI assistants</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#KubernetesHelm">
+          <img src="/images/project/helm.svg" width="28" height="28" alt="">
+          <span><strong>Kubernetes Helm</strong><span class="sw-project-description">Deploy SkyWalking with Helm</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#SkyWalkingCloudonKubernetes">
+          <img src="/images/project/kubernetes.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking Cloud on Kubernetes</strong><span class="sw-project-description">Kubernetes operator</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#SkyWalkingEyes">
+          <img src="/images/project/skywalking-eyes.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking Eyes</strong><span class="sw-project-description">License checks and fixes</span></span>
+        </a>
+        
+        
+        </div>
+        
+        </div>
+        
+        <a class="dropdown-item sw-projects-more" href="/docs/#Operation">All operations projects <span aria-hidden="true">→</span></a>
+        
+      </div>
+    </div>
+    
+  </div>
+  <div class="sw-projects-footer">
+    <a class="dropdown-item sw-projects-all" href="/docs/">All projects <span aria-hidden="true">→</span></a>
+    <a class="dropdown-item sw-projects-downloads" href="/downloads/">Downloads <span aria-hidden="true">→</span></a>
+  </div>
+</div>
+
+                </div>
+            </li>
+            
+            
+            
+            
+            <li class="nav-item"><a class="nav-link" href="/blog">Blogs</a></li>
+            
+            
+            
+            
+            
+            <li class="nav-item" data-nav-promote="events" hidden><a class="nav-link" href="/events/">Release Posts</a></li>
+            
+            <li class="nav-item" data-nav-promote="events/calendar" hidden><a class="nav-link" href="/events/calendar/">Event Calendar</a></li>
+            
+            <li class="nav-item" data-nav-promote="users" hidden><a class="nav-link" href="/users">Users</a></li>
+            
+            <li class="nav-item" data-nav-promote="team" hidden><a class="nav-link" href="/team">Team</a></li>
+            
+            <li class="nav-item" data-nav-promote="zh" hidden><a class="nav-link" href="/zh/">中文博客</a></li>
+            
+            
+            <li class="nav-item dropdown" data-nav-more>
+                <button type="button" class="nav-link dropdown-toggle sw-more-toggle" id="more-menu-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">More</button>
+                <div class="dropdown-menu sw-more-menu" aria-labelledby="more-menu-toggle">
+                    
+                    <a class="dropdown-item" data-nav-overflow="events" href="/events/">Release Posts</a>
+                    
+                    <a class="dropdown-item" data-nav-overflow="events/calendar" href="/events/calendar/">Event Calendar</a>
+                    
+                    <a class="dropdown-item" data-nav-overflow="users" href="/users">Users</a>
+                    
+                    <a class="dropdown-item" data-nav-overflow="team" href="/team">Team</a>
+                    
+                    <a class="dropdown-item" data-nav-overflow="zh" href="/zh/">中文博客</a>
+                    
+                </div>
+            </li>
+            
+            
+            
+            
+            
+            
             
 			
         </ul>
     </div>
 
-    <div class="navbar-nav d-none d-lg-block search-input-box">
-        
-<div id="docsearch"></div>
+    <div class="sw-navbar-actions">
+        <button type="button" class="sw-kapa-search" aria-label="Search SkyWalking documentation and ask AI" aria-haspopup="dialog" title="Search and ask AI">
+  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="7.5"/><path d="m16 16 5 5"/></svg>
+  <span>Search</span>
+</button>
 
-
-            
-        
+        <div class="navbar-nav d-none d-lg-block search-input-box">
             
         
             
@@ -270,7 +1257,24 @@ SkyWalking supports two types of traces: SkyWalking native traces and Zipkin-com
             </span>
             
         
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+            <a class="sw-nav-cta" href="/get-started/">Get started</a>
+            
+        
+            
+        
+        </div>
     </div>
+  </div>
 </nav>
 
     </header>
@@ -306,6 +1310,22 @@ SkyWalking supports two types of traces: SkyWalking native traces and Zipkin-com
                     <option selected value="latest">
                     
                       latest
+                    
+                    </option>
+                  
+                    
+                    
+                    <option ZgotmplZ value="v11.1.0">
+                    
+                      v11.1.0
+                    
+                    </option>
+                  
+                    
+                    
+                    <option ZgotmplZ value="v11.0.0">
+                    
+                      v11.0.0
                     
                     </option>
                   
@@ -354,38 +1374,6 @@ SkyWalking supports two types of traces: SkyWalking native traces and Zipkin-com
                     <option ZgotmplZ value="v10.0.0">
                     
                       v10.0.0
-                    
-                    </option>
-                  
-                    
-                    
-                    <option ZgotmplZ value="v9.7.0">
-                    
-                      v9.7.0
-                    
-                    </option>
-                  
-                    
-                    
-                    <option ZgotmplZ value="v9.6.0">
-                    
-                      v9.6.0
-                    
-                    </option>
-                  
-                    
-                    
-                    <option ZgotmplZ value="v9.5.0">
-                    
-                      v9.5.0
-                    
-                    </option>
-                  
-                    
-                    
-                    <option ZgotmplZ value="v9.4.0">
-                    
-                      v9.4.0
                     
                     </option>
                   
@@ -830,6 +1818,48 @@ SkyWalking supports two types of traces: SkyWalking native traces and Zipkin-com
         
 
             
+            <a href="#">Mobile Monitoring<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/backend-ios-monitoring">iOS</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/backend-wechat-mini-program-monitoring">WeChat Mini Program</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/backend-alipay-mini-program-monitoring">Alipay Mini Program</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
             <a href="#">Gateway Monitoring<i class="iconfont icon-arrow-right pull-right"></i></a>
             
 
@@ -1020,6 +2050,32 @@ SkyWalking supports two types of traces: SkyWalking native traces and Zipkin-com
         
 
             
+            <a href="#">Workflow Scheduler<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/backend-airflow-monitoring">Airflow</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
             <a href="#">Data Processing Engine<i class="iconfont icon-arrow-right pull-right"></i></a>
             
 
@@ -1063,7 +2119,23 @@ SkyWalking supports two types of traces: SkyWalking native traces and Zipkin-com
 
     <li>
         
-            <a href="/docs/main/latest/en/setup/backend/backend-envoy-ai-gateway-monitoring">Envoy AI Gateway</a>
+            <a href="/docs/main/latest/en/setup/backend/ai-evaluation">AI Evaluation</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/ai-agent-conversation">AI Agent Conversations</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/backend-envoy-ai-gateway-monitoring">Agent Router (Envoy AI Gateway)</a>
         
     </li>
 
@@ -1374,6 +2446,14 @@ SkyWalking supports two types of traces: SkyWalking native traces and Zipkin-com
 
     <li>
         
+            <a href="/docs/main/latest/en/banyandb/tail-sampling">Trace Tail Sampling</a>
+        
+    </li>
+
+    
+
+    <li>
+        
             <a href="/docs/main/latest/en/banyandb/dashboards-banyandb">BanyanDB self observability dashboard</a>
         
     </li>
@@ -1440,6 +2520,14 @@ SkyWalking supports two types of traces: SkyWalking native traces and Zipkin-com
 
     <li>
         
+            <a href="/docs/main/latest/en/setup/backend/server-clusters">Server Clusters</a>
+        
+    </li>
+
+    
+
+    <li>
+        
             <a href="/docs/main/latest/en/setup/backend/zipkin-trace">Zipkin Trace</a>
         
     </li>
@@ -1448,7 +2536,125 @@ SkyWalking supports two types of traces: SkyWalking native traces and Zipkin-com
 
     <li>
         
-            <a href="/docs/main/latest/en/setup/backend/otlp-trace">OpenTelemetry Trace</a>
+
+            
+            <a href="#">OpenTelemetry Trace<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/otlp-trace">Setup</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/trace-analyzer">Analysis</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
+            <a href="#">Best Practices<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+
+            
+            <a href="#">Gateway<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/otlp-trace-practices/gateway-overview">Overview</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/otlp-trace-practices/gateway-envoy">Envoy</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/otlp-trace-practices/gateway-nginx">nginx</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/otlp-trace-practices/gateway-without-instrumentation">Gateways Without Instrumentation</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/otlp-trace-practices/gateway-canary">Canary Releases</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/otlp-trace-practices/message-queue">Message Queue</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/otlp-trace-practices/database-and-cache">Database and Cache</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+</ul>
+
         
     </li>
 
@@ -1507,6 +2713,22 @@ SkyWalking supports two types of traces: SkyWalking native traces and Zipkin-com
     <li>
         
             <a href="/docs/main/latest/en/setup/backend/backend-meter">Meter Analysis</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/dashboards-php-runtime">PHP runtime metrics (PHM)</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/dashboards-nodejs-runtime">Node.js runtime metrics</a>
         
     </li>
 
@@ -2079,72 +3301,6 @@ SkyWalking supports two types of traces: SkyWalking native traces and Zipkin-com
 
     
 
-    <li>
-        
-
-            
-            <a href="#">Status APIs<i class="iconfont icon-arrow-right pull-right"></i></a>
-            
-
-            
-<ul class="sidebar-submenu">
-    
-
-    <li>
-        
-            <a href="/docs/main/latest/en/status/status_apis">Introduction</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/latest/en/debugging/config_dump">Dump Effective Initial Configurations</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/latest/en/debugging/query-tracing">Tracing Query Execution</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/latest/en/status/query_ttl_setup">Get Effective TTL Configurations</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/latest/en/status/query_cluster_nodes">Get Node List in the Cluster</a>
-        
-    </li>
-
-    
-
-    <li>
-        
-            <a href="/docs/main/latest/en/status/query_alarm_runtime_status">Get Alarm Runtime Status</a>
-        
-    </li>
-
-    
-
-</ul>
-
-        
-    </li>
-
-    
-
 </ul>
 
         
@@ -2201,6 +3357,22 @@ SkyWalking supports two types of traces: SkyWalking native traces and Zipkin-com
 
     <li>
         
+            <a href="/docs/main/latest/en/concepts-and-designs/tal">Analysis OpenTelemetry Traces</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/concepts-and-designs/runtime-rule-hot-update">Runtime Rule Hot-Update</a>
+        
+    </li>
+
+    
+
+    <li>
+        
             <a href="/docs/main/latest/en/concepts-and-designs/profiling">Profiling</a>
         
     </li>
@@ -2241,6 +3413,145 @@ SkyWalking supports two types of traces: SkyWalking native traces and Zipkin-com
     <li>
         
             <a href="/docs/main/latest/en/operation/dynamic-code-generation-debugging">Dynamic Code Generation and Debugging</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+    
+    <li>
+        
+            
+            <a href="#">Admin API<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/admin-api/readme">Introduction</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/admin-api/runtime-rule">Runtime Rule Hot-Update API</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
+            <a href="#">DSL Debug API<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/admin-api/dsl-debugging">Overview</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/admin-api/dsl-debugging-mal">MAL</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/admin-api/dsl-debugging-oal">OAL</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/admin-api/dsl-debugging-lal">LAL</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
+            <a href="#">Status API<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/admin-api/status">Overview</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/debugging/config_dump">Dump Effective Initial Configurations</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/debugging/query-tracing">Tracing Query Execution</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/admin-api/inspect">Inspect API</a>
+        
+    </li>
+
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/setup/backend/admin-api/ui-management">UI Management API</a>
         
     </li>
 
@@ -2543,11 +3854,45 @@ SkyWalking supports two types of traces: SkyWalking native traces and Zipkin-com
         
 
             
+            <a href="#">11.x Releases<i class="iconfont icon-arrow-right pull-right"></i></a>
+            
+
+            
+<ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/changes/changes-11.0.0">11.0.0</a>
+        
+    </li>
+
+    
+
+</ul>
+
+        
+    </li>
+
+    
+
+    <li>
+        
+
+            
             <a href="#">10.x Releases<i class="iconfont icon-arrow-right pull-right"></i></a>
             
 
             
 <ul class="sidebar-submenu">
+    
+
+    <li>
+        
+            <a href="/docs/main/latest/en/changes/changes-10.4.0">10.4.0</a>
+        
+    </li>
+
     
 
     <li>
@@ -2852,8 +4197,22 @@ SkyWalking supports two types of traces: SkyWalking native traces and Zipkin-com
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: b272da3</div>
+                  <div class="commit-id">Commit Id: d34eff2</div>
                 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2918,7 +4277,9 @@ SkyWalking supports two types of traces: SkyWalking native traces and Zipkin-com
 <p>TraceQL (<a href="https://grafana.com/docs/tempo/latest/traceql/">Trace Query Language</a>) is Grafana Tempo&rsquo;s query language for traces.
 TraceQL Service exposes Tempo Querying HTTP APIs including TraceQL expression system and OpenTelemetry Protocol (OTLP) trace format.
 Third-party systems or visualization platforms that already support Tempo and TraceQL (such as Grafana), could obtain traces through TraceQL Service.</p>
-<p>SkyWalking supports two types of traces: SkyWalking native traces and Zipkin-compatible traces. The TraceQL Service converts both trace formats to OpenTelemetry Protocol (OTLP) format to provide compatibility with Grafana Tempo and TraceQL queries.</p>
+<p>SkyWalking supports three types of traces: SkyWalking native traces, Zipkin-compatible traces, and natively stored OTLP traces. The TraceQL Service converts the first two formats to <a href="https://github.com/grafana/tempo/blob/main/pkg/tempopb/tempo.proto">Tempo&rsquo;s format</a>
+to provide compatibility with Grafana Tempo and TraceQL queries. Since the trace detail part of Tempo&rsquo;s format (<code>Trace</code> message) reuses <a href="https://opentelemetry.io/docs/reference/specification/protocol/">OTLP Trace</a> definitions,
+the conversion descriptions below refer to OTLP field names (e.g., span kind, status code). Natively stored OTLP traces need no conversion, see <a href="#otlp-native-trace">OTLP Native Trace</a>.</p>
 <blockquote>
 <p><strong>Note</strong>: SkyWalking native trace support in TraceQL is based on the <a href="https://skywalking.apache.org/docs/main/next/en/api/query-protocol/#trace-v2">Query Traces V2 API</a> (<code>queryTraces</code> / <code>hasQueryTracesV2Support</code>).
 Currently, only <strong>BanyanDB</strong> storage implements this API. Other storage backends (e.g. Elasticsearch, MySQL, PostgreSQL) do not support it.
@@ -2935,31 +4296,40 @@ If not mentioned, it will not be supported by default.</p>
 <ul>
 <li><input checked="" disabled="" type="checkbox"> <code>.service.name</code> - Service name (unscoped)</li>
 <li><input checked="" disabled="" type="checkbox"> <code>resource.service.name</code> - Service name (scoped)</li>
-<li><input checked="" disabled="" type="checkbox"> <code>span.&lt;tags&gt;</code> - Any span tags with scope (e.g., <code>span.http.method</code>, <code>span.http.status_code</code>, etc.)</li>
+<li><input checked="" disabled="" type="checkbox"> <code>span.&lt;key&gt;</code>, <code>resource.&lt;key&gt;</code> - Attribute equality in that scope (e.g., <code>span.http.method</code>, <code>span.http.status_code</code>). The <code>/otlp</code> datasource matches the scope; the Zipkin and SkyWalking tag indexes have no scopes, so there the key matches in any scope</li>
+<li><input checked="" disabled="" type="checkbox"> <code>.&lt;key&gt;</code> - Unscoped attribute, either scope</li>
 </ul>
 </li>
-<li><input checked="" disabled="" type="checkbox"> <strong>Intrinsic Fields</strong>: Built-in trace fields
+<li><input checked="" disabled="" type="checkbox"> <strong>Intrinsic Fields</strong>: Built-in trace fields, plain or with Tempo&rsquo;s <code>span:</code> prefix (<code>span:kind</code>)
 <ul>
-<li><input checked="" disabled="" type="checkbox"> <code>duration</code> - Trace duration with comparison operators (supports units: us/µs, ms, s, m, h. Default unit: microseconds. Minimum: microseconds, Maximum: hours)</li>
+<li><input checked="" disabled="" type="checkbox"> <code>duration</code> - Span duration with comparison operators (supports units: us/µs, ms, s, m, h. Default unit: microseconds. Minimum: microseconds, Maximum: hours)</li>
 <li><input checked="" disabled="" type="checkbox"> <code>name</code> - Span name</li>
-<li><input checked="" disabled="" type="checkbox"> <code>status</code> - Span status</li>
-<li><input disabled="" type="checkbox"> <code>kind</code> - Span kind</li>
+<li><input checked="" disabled="" type="checkbox"> <code>status</code> - Span status: <code>error</code>, <code>ok</code>, <code>unset</code>; the Zipkin datasource filters <code>error</code> only, the SkyWalking datasource <code>error</code> and <code>ok</code></li>
+<li><input checked="" disabled="" type="checkbox"> <code>kind</code> - Span kind: <code>unspecified</code>, <code>internal</code>, <code>server</code>, <code>client</code>, <code>producer</code>, <code>consumer</code>; OTLP datasource only</li>
 </ul>
 </li>
 <li><input checked="" disabled="" type="checkbox"> <strong>Comparison Operators</strong>:
 <ul>
 <li><input checked="" disabled="" type="checkbox"> <code>=</code> - Equals</li>
-<li><input checked="" disabled="" type="checkbox"> <code>&gt;</code> - Greater than (for duration)</li>
+<li><input checked="" disabled="" type="checkbox"> <code>&gt;</code> - Greater than (for duration); evaluated at microsecond precision, the smallest unit accepted, so <code>duration &gt; 100ms</code> selects spans of at least 100.001 ms</li>
 <li><input checked="" disabled="" type="checkbox"> <code>&gt;=</code> - Greater than or equal (for duration)</li>
 <li><input checked="" disabled="" type="checkbox"> <code>&lt;</code> - Less than (for duration)</li>
 <li><input checked="" disabled="" type="checkbox"> <code>&lt;=</code> - Less than or equal (for duration)</li>
+<li><input disabled="" type="checkbox"> <code>!=</code> - Not equals</li>
 </ul>
 </li>
+<li><input disabled="" type="checkbox"> <strong>Negation</strong> (<code>!</code>) and <strong>attribute existence</strong> (<code>{ span.foo }</code> without a comparison)</li>
+<li><input disabled="" type="checkbox"> <strong>OR inside a spanset</strong> (<code>{ a || b }</code>), which Grafana&rsquo;s query builder emits for a multi-select value</li>
 <li><input disabled="" type="checkbox"> <strong>Spanset Logical Operations</strong>: AND/OR between spansets (e.g., <code>{...} AND {...}</code>)</li>
 <li><input disabled="" type="checkbox"> <strong>Pipeline Operations</strong>: <code>|</code> operator for aggregations</li>
 <li><input disabled="" type="checkbox"> <strong>Aggregate Functions</strong>: count(), avg(), max(), min(), sum()</li>
 <li><input disabled="" type="checkbox"> <strong>Regular Expression</strong>: <code>=~</code> and <code>!~</code> operators</li>
 </ul>
+<p>An expression that uses anything unsupported, a syntax error, an attribute written without a scope or a leading dot
+(<code>http.method</code> instead of <code>.http.method</code> or <code>span.http.method</code>), or a value a datasource cannot filter (<code>kind</code> on the
+Zipkin and SkyWalking datasources, <code>resource.instance</code> or <code>name</code> without a service on the SkyWalking datasource) is
+refused with <code>400</code> and a message naming the construct. It is never answered with the predicate dropped, because a
+full page of traces under a filter that excludes them reads as data.</p>
 <p>Here are some typical TraceQL expressions used in SkyWalking:</p>
 <pre tabindex="0"><code class="language-traceql" data-lang="traceql"># Query traces by service name
 {resource.service.name=&#34;frontend&#34;}
@@ -2977,7 +4347,7 @@ If not mentioned, it will not be supported by default.</p>
 </code></pre><pre tabindex="0"><code class="language-traceql" data-lang="traceql"># Query traces by span name
 {name=&#34;GET /api&#34;}
 </code></pre><pre tabindex="0"><code class="language-traceql" data-lang="traceql"># Query traces by status
-{status=&#34;STATUS_CODE_OK&#34;}
+{status=ok}                 # error, ok or unset; the Zipkin datasource filters error only
 </code></pre><p><strong>Duration Units</strong>:</p>
 <ul>
 <li><code>us</code> or <code>µs</code> - Microseconds (default unit, minimum precision)</li>
@@ -3069,17 +4439,17 @@ If not mentioned, it will not be supported by default.</p>
   <tbody>
       <tr>
           <td>q</td>
-          <td>TraceQL query to filter</td>
+          <td>TraceQL filter. With one, the <code>resource</code> and <code>span</code> names come from the spans of the newest 50 matching traces, so only keys those spans carry are offered</td>
           <td>yes</td>
       </tr>
       <tr>
           <td>scope</td>
-          <td>Scope to filter tags</td>
+          <td>Scope to filter tags: <code>resource</code>, <code>span</code>, <code>intrinsic</code>; <code>event</code>, <code>link</code> and <code>instrumentation</code> are accepted and empty</td>
           <td>yes</td>
       </tr>
       <tr>
           <td>limit</td>
-          <td>Maximum number of tags</td>
+          <td>Maximum number of tags per scope</td>
           <td>yes</td>
       </tr>
       <tr>
@@ -3170,12 +4540,12 @@ If not mentioned, it will not be supported by default.</p>
   <tbody>
       <tr>
           <td>tagName</td>
-          <td>Name of the tag</td>
+          <td><code>resource.&lt;key&gt;</code>, <code>span.&lt;key&gt;</code>, Tempo&rsquo;s unscoped <code>.&lt;key&gt;</code>, or an intrinsic such as <code>status</code> or <code>span:status</code></td>
           <td>no</td>
       </tr>
       <tr>
           <td>q</td>
-          <td>TraceQL filter query</td>
+          <td>TraceQL filter. A filter that names only a service is answered from the per-service catalogs (<code>name</code>, <code>resource.remote.service</code>, <code>resource.instance</code>); any narrower filter is answered from the spans of the newest 50 matching traces. <code>status</code> and <code>kind</code> always list their full enum</td>
           <td>yes</td>
       </tr>
       <tr>
@@ -3229,7 +4599,7 @@ If not mentioned, it will not be supported by default.</p>
       </tr>
       <tr>
           <td>tags</td>
-          <td>Deprecated tag query format</td>
+          <td>Tempo&rsquo;s deprecated logfmt form, <code>key=value</code> pairs separated by spaces, used when <code>q</code> is absent: <code>service.name</code> and <code>span.name</code> (or <code>name</code>) select the service and the span, every other key is an attribute equality. A pair that is not <code>key=value</code> is refused with 400</td>
           <td>yes</td>
       </tr>
       <tr>
@@ -3259,11 +4629,14 @@ If not mentioned, it will not be supported by default.</p>
       </tr>
       <tr>
           <td>spss</td>
-          <td>Spans per span set</td>
-          <td>not supported</td>
+          <td>Spans listed per span set. Default: 3</td>
+          <td>yes</td>
       </tr>
   </tbody>
 </table>
+<p>Every datasource lists only the spans that matched the query in each <code>spanSets</code> entry, re-evaluated in memory against
+the same conditions the storage applied, and caps the list at <code>spss</code>; <code>matched</code> counts every matching span. Each trace
+also carries <code>serviceStats</code>, the span and error counts per service over the whole trace.</p>
 <p><strong>Example</strong>:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>GET /zipkin/api/search?q={resource.service.name=&#34;frontend&#34;}&amp;start=1640000000&amp;end=1640100000&amp;limit=10
 </span></span></code></pre></div><p><strong>Response</strong>:</p>
@@ -3418,7 +4791,7 @@ If not mentioned, it will not be supported by default.</p>
 </ul>
 <p><strong>Example</strong>:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>GET /zipkin/api/traces/abc123def456
-</span></span></code></pre></div><p><strong>Response (JSON)</strong>:
+</span></span></code></pre></div><p><strong>Response (JSON)</strong>:YY
 See Query Trace by ID (v2) below for response format.</p>
 <h3 id="query-trace-by-id-v2">Query Trace by ID (v2)</h3>
 <p>Query a specific trace by its trace ID with OpenTelemetry format.</p>
@@ -3689,7 +5062,13 @@ See Query Trace by ID (v2) below for response format.</p>
 </span></span></code></pre></div><p><strong>Response (Protobuf)</strong>:
 When <code>Accept: application/protobuf</code> header is set, the response will be in OpenTelemetry Protobuf format.</p>
 <h2 id="zipkin-trace-conversion">Zipkin Trace Conversion</h2>
-<p>When using the Zipkin backend, the following conversions are applied:</p>
+<p>When using the Zipkin backend, the following conversions are applied.</p>
+<p>TraceQL filters map onto the Zipkin query: <code>resource.service.name</code> and <code>resource.remote.service</code> onto the local and
+remote service, <code>name</code> onto the span name, <code>duration</code> onto the span duration, <code>status = error</code> onto the <code>error</code> tag,
+and <code>span.&lt;key&gt;</code> (including <code>span.http.status_code</code>) onto tag equality. Zipkin spans have no filterable kind and no
+<code>ok</code> status, so the <code>intrinsic</code> scope of <code>/api/v2/search/tags</code> lists <code>name</code>, <code>status</code> and <code>duration</code>, and <code>status</code>
+has the single value <code>error</code>. A <code>q</code> narrower than a service name makes the tag endpoints sample the newest 50 matching
+traces and answer from their matching spans.</p>
 <h3 id="span-kind-mapping">Span Kind Mapping</h3>
 <p>Zipkin span kinds are mapped to OTLP span kinds:</p>
 <table>
@@ -3720,12 +5099,12 @@ When <code>Accept: application/protobuf</code> header is set, the response will 
           <td>(absent)</td>
           <td><code>SPAN_KIND_UNSPECIFIED</code></td>
       </tr>
-      <tr>
-          <td>(other)</td>
-          <td><code>SPAN_KIND_INTERNAL</code></td>
-      </tr>
   </tbody>
 </table>
+<p>Zipkin has no <code>INTERNAL</code> kind, so those four values and &ldquo;absent&rdquo; are the complete set. An OTLP <code>SPAN_KIND_INTERNAL</code> span that
+was stored through the OTLP receiver&rsquo;s Zipkin conversion has no Zipkin kind and reads back as <code>SPAN_KIND_UNSPECIFIED</code>;
+the receiver keeps a <code>span.kind=internal</code> tag on it, which is searchable as an ordinary tag but is not used for the
+<code>kind</code> intrinsic. Natively stored OTLP spans keep their original kind, see <a href="#otlp-native-trace">OTLP Native Trace</a>.</p>
 <h3 id="status-mapping">Status Mapping</h3>
 <p>Zipkin tags are used to derive the OTLP span status in the following priority order:</p>
 <ol>
@@ -3781,7 +5160,15 @@ When <code>Accept: application/protobuf</code> header is set, the response will 
 <pre tabindex="0"><code>name: &#34;zipkin-tracer&#34;
 version: &#34;0.1.0&#34;
 </code></pre><h2 id="skywalking-native-trace-conversion">SkyWalking Native Trace Conversion</h2>
-<p>When using the SkyWalking native backend, the following conversions are applied:</p>
+<p>When using the SkyWalking native backend, the following conversions are applied.</p>
+<p>TraceQL filters map onto the trace query: <code>resource.service.name</code> onto the service, <code>resource.instance</code> onto the
+instance, <code>name</code> onto the endpoint, <code>duration</code> onto the span duration, <code>status = error</code> and <code>status = ok</code> onto the
+trace state, and <code>span.&lt;key&gt;</code> (including <code>span.http.status_code</code>) onto tag equality. The span type is not a query
+condition, so the <code>intrinsic</code> scope of <code>/api/v2/search/tags</code> lists <code>name</code>, <code>status</code> and <code>duration</code>; <code>kind</code>,
+<code>status = unset</code> and <code>resource.remote.service</code> are refused with 400, and <code>resource.instance</code> and <code>name</code> need
+<code>resource.service.name</code> because instance and endpoint ids are scoped by service. A <code>q</code> narrower
+than a service name makes the tag endpoints sample the newest 50 matching traces and answer from their matching
+spans; the <code>span</code> names offered are cut down to the <code>searchableTracesTags</code>, the only tags the trace query can filter.</p>
 <h3 id="trace-id-encoding">Trace ID Encoding</h3>
 <p>SkyWalking native trace IDs are arbitrary strings that may contain characters outside the hexadecimal alphabet
 (for example, <code>2a2e04e8d1114b14925c04a6321ca26c.38.17739924187687539</code> includes <code>.</code> separators).
@@ -3870,9 +5257,128 @@ Each <code>SpanAttachedEvent</code> produces one OTLP <code>Span.Event</code> wi
 <p>All spans within a SkyWalking native trace carry the instrumentation scope:</p>
 <pre tabindex="0"><code>name: &#34;skywalking-tracer&#34;
 version: &#34;0.1.0&#34;
-</code></pre><h2 id="configuration">Configuration</h2>
+</code></pre><h2 id="otlp-native-trace">OTLP Native Trace</h2>
+<p>The <code>/otlp</code> datasource serves the spans that <code>receiver-otel</code> stored natively (<code>otlpTraceStorage: otlp</code>, see
+<a href="../../setup/backend/otlp-trace#native-otlp-mode">OpenTelemetry Trace Format</a>). Nothing is converted: a trace is
+returned as the <code>ResourceSpans</code> the exporters sent, regrouped into one entry per resource and one <code>ScopeSpans</code> per
+instrumentation scope, with the spans of each scope ordered by start time. Attribute types, events, links, status
+messages and the instrumentation scope are exactly what the SDK exported.</p>
+<p>The datasource is available on every storage. <code>coldStage=true</code> on <code>/api/search</code> and <code>/api/v2/traces/{traceId}</code>
+reads the BanyanDB cold stage instead of the hot and warm stages and needs <code>start</code> and <code>end</code>.</p>
+<h3 id="traceql-field-mapping">TraceQL Field Mapping</h3>
+<table>
+  <thead>
+      <tr>
+          <th>TraceQL field</th>
+          <th>Stored column / index</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>resource.service.name</code></td>
+          <td><code>service_name</code>, the service name resolved from the resource attributes</td>
+      </tr>
+      <tr>
+          <td><code>resource.service.instance.id</code></td>
+          <td><code>service_instance</code></td>
+      </tr>
+      <tr>
+          <td><code>resource.remote.service</code></td>
+          <td><code>peer_service</code>, the <code>peer.service</code> span attribute</td>
+      </tr>
+      <tr>
+          <td><code>span.otel.scope.name</code></td>
+          <td><code>scope_name</code>, the instrumentation scope name</td>
+      </tr>
+      <tr>
+          <td><code>span.peer.service</code></td>
+          <td><code>peer_service</code></td>
+      </tr>
+      <tr>
+          <td><code>span.service.instance.id</code></td>
+          <td><code>service_instance</code></td>
+      </tr>
+      <tr>
+          <td><code>span.http.status_code</code></td>
+          <td>The <code>http.status_code</code> attribute, as an ordinary tag condition</td>
+      </tr>
+      <tr>
+          <td><code>resource.&lt;key&gt;</code></td>
+          <td>The <code>resource.&lt;key&gt;=&lt;value&gt;</code> entry of the tag index, every resource attribute is indexed</td>
+      </tr>
+      <tr>
+          <td><code>span.&lt;key&gt;</code></td>
+          <td>The <code>span.&lt;key&gt;=&lt;value&gt;</code> entry of the tag index, every span attribute is indexed</td>
+      </tr>
+      <tr>
+          <td><code>.&lt;key&gt;</code></td>
+          <td>Either entry, as TraceQL defines an unscoped attribute</td>
+      </tr>
+      <tr>
+          <td><code>name</code>, <code>span:name</code></td>
+          <td><code>name</code>, the span name after the core module&rsquo;s endpoint naming rules (grouping and length limit), as SkyWalking endpoint names are stored</td>
+      </tr>
+      <tr>
+          <td><code>kind</code>, <code>span:kind</code></td>
+          <td><code>kind</code>. Accepted values: <code>unspecified</code>, <code>internal</code>, <code>server</code>, <code>client</code>, <code>producer</code>, <code>consumer</code></td>
+      </tr>
+      <tr>
+          <td><code>status</code>, <code>span:status</code></td>
+          <td><code>status_code</code>. Accepted values: <code>error</code>, <code>ok</code>, <code>unset</code></td>
+      </tr>
+      <tr>
+          <td><code>duration</code>, <code>span:duration</code></td>
+          <td><code>duration</code>, in nanoseconds; TraceQL durations such as <code>100ms</code> are converted</td>
+      </tr>
+  </tbody>
+</table>
+<p>Tempo&rsquo;s other scoped intrinsics, <code>trace:*</code>, <code>event:*</code>, <code>link:*</code> and <code>instrumentation:*</code>, have no column to filter on
+and are rejected with 400 rather than ignored.</p>
+<h3 id="search-results">Search Results</h3>
+<p>As on every datasource, a span set holds only the spans that matched, capped at <code>spss</code>, and <code>serviceStats</code> counts the
+spans and errors per service. Every returned trace has at least one matching span: when the storage matched a trace
+but no single span of it satisfies every condition of the query, the trace is left out rather than listed with spans
+the query excluded. The listed attributes are <code>service.name</code>, <code>span.kind</code> and the keys configured by
+<code>otlpTracesListResultTags</code>. A key keeps its OTLP type only when every listed span of the whole response carries it
+with the same type; a key that a span lacks, or that mixes types across spans, is rendered as a string on every span,
+because Grafana types the column from the first span and rejects a value of another type on the next, and its spans
+table is one column set over every trace.</p>
+<h3 id="tag-names-and-values">Tag Names and Values</h3>
+<p><code>/api/v2/search/tags</code> returns <code>service.name</code>, <code>service.instance.id</code> and <code>remote.service</code> under the <code>resource</code> scope,
+<code>otel.scope.name</code> under the <code>span</code> scope, and <code>name</code>, <code>status</code>, <code>kind</code>, <code>duration</code> and their <code>span:</code> spellings under
+<code>intrinsic</code>. A key configured by <code>receiver-otel.default.otlpTraceSearchableTags</code> is written there with its
+scope, <code>resource.&lt;key&gt;</code> or <code>span.&lt;key&gt;</code>, and listed under that scope without the prefix, so a key picked from the
+list builds a query that matches. <code>scope</code> narrows the answer to
+one scope (<code>event</code>, <code>link</code> and <code>instrumentation</code> are accepted and empty), <code>limit</code> caps the number of names per scope,
+and the v1 <code>/api/search/tags</code> lists the same names without scopes. <code>service.name</code> values come from the service catalog, <code>name</code>
+values from the span-name catalog of the service given in <code>q</code>, <code>remote.service</code> values from the peer catalog, and the
+other <code>resource.</code> and <code>span.</code> keys from the tag autocomplete index of that scope, both scopes for an unscoped <code>.key</code>;
+<code>limit</code> caps every value list. The three catalogs list every name the
+storage retains and ignore <code>start</code> and <code>end</code>: a catalog row is written once, when its name is first seen, so a time
+window would hide every name older than it; the autocomplete index and the sample below honor the window. The service
+catalog keeps each name with the <code>service.layer</code> its resource carried when that is a registered layer, <code>UNDEFINED</code>
+otherwise, so a <code>q</code> whose only condition is the layer, <code>{ resource.service.layer = &quot;OTLP_GENERAL&quot; }</code>, is answered from
+it in full with the services stored with that layer, which leaves out the services of another layer, such as service
+mesh sidecars under <code>OTLP_MESH</code>, and those that set none; <code>UNDEFINED</code> lists the services that set no registered
+layer. The stored span carries the same value as its <code>service.layer</code> resource attribute, <code>UNDEFINED</code> in place of
+an unregistered or absent one, so a search on the layer finds the traces of the services the catalog lists under it.
+The unscoped <code>{ .service.layer = &quot;OTLP_GENERAL&quot; }</code> also matches a span attribute of that name, so it is
+answered from the sample below. Without a layer condition every service is listed. A
+<code>q</code> narrower than a service name, for
+instance <code>{ resource.service.name = &quot;frontend&quot; &amp;&amp; kind = client }</code>, switches both endpoints to a sample: the newest 50
+matching traces are read and the names or values are taken from the spans in them that match the filter, which is
+how Grafana&rsquo;s dependent dropdowns narrow down. Every attribute is indexed, so every key such a sample offers is
+filterable. <code>status</code> and <code>kind</code> are exempt: their dropdowns always list the full enum, so <code>error</code> stays selectable
+when the newest traces happen to have none.</p>
+<h3 id="trace-by-id">Trace by ID</h3>
+<p><code>/api/v2/traces/{traceId}</code> takes the 32-character lowercase hex trace id, the <code>traceID</code> returned by <code>/api/search</code>,
+and returns <code>application/protobuf</code> or <code>application/json</code> according to the <code>Accept</code> header. Trace, span and parent
+span ids are hex in the JSON form. <code>start</code> and <code>end</code> are optional; when given, Elasticsearch and the JDBC storages
+read only the spans that started in that range, and BanyanDB the day segments the range touches, since its trace
+model resolves a trace id per segment. Pass the search window with Grafana&rsquo;s time shift rather than a narrow one.</p>
+<h2 id="configuration">Configuration</h2>
 <h3 id="enabling-backends">Enabling Backends</h3>
-<p>TraceQL Service supports two backends that can be independently enabled or disabled:</p>
+<p>TraceQL Service supports three backends that can be independently enabled or disabled:</p>
 <table>
   <thead>
       <tr>
@@ -3894,6 +5400,12 @@ version: &#34;0.1.0&#34;
           <td><code>SW_TRACEQL_ENABLE_DATASOURCE_SKYWALKING</code></td>
           <td><code>false</code></td>
           <td>Enable SkyWalking native backend</td>
+      </tr>
+      <tr>
+          <td><code>enableDatasourceOTLP</code></td>
+          <td><code>SW_TRACEQL_ENABLE_DATASOURCE_OTLP</code></td>
+          <td><code>false</code></td>
+          <td>Enable the OTLP backend, serving spans stored natively by <code>receiver-otel</code> with <code>otlpTraceStorage: otlp</code></td>
       </tr>
   </tbody>
 </table>
@@ -3921,11 +5433,18 @@ version: &#34;0.1.0&#34;
           <td><code>/skywalking</code></td>
           <td>Context path for SkyWalking backend</td>
       </tr>
+      <tr>
+          <td><code>restContextPathOTLP</code></td>
+          <td><code>SW_TRACEQL_REST_CONTEXT_PATH_OTLP</code></td>
+          <td><code>/otlp</code></td>
+          <td>Context path for OTLP backend</td>
+      </tr>
   </tbody>
 </table>
 <h3 id="traces-list-result-tags">Traces List Result Tags</h3>
 <p>The tags included in the search result spans can be configured. Only listed tags are returned in <code>Search Traces</code> responses.
-<code>service.name</code> and <code>span.kind</code> are always included regardless of this setting.</p>
+<code>service.name</code>, <code>span.kind</code> and <code>status</code> (<code>error</code>, <code>ok</code> or <code>unset</code>, so a trace list can show failures without opening
+each trace) are always included regardless of this setting.</p>
 <table>
   <thead>
       <tr>
@@ -3944,6 +5463,11 @@ version: &#34;0.1.0&#34;
           <td><code>skywalkingTracesListResultTags</code></td>
           <td><code>SW_TRACEQL_SKYWALKING_TRACES_LIST_RESULT_TAGS</code></td>
           <td><code>http.method,http.status_code,rpc.status_code,db.type,db.instance,mq.queue,mq.topic,mq.broker</code></td>
+      </tr>
+      <tr>
+          <td><code>otlpTracesListResultTags</code></td>
+          <td><code>SW_TRACEQL_OTLP_TRACES_LIST_RESULT_TAGS</code></td>
+          <td><code>http.request.method,http.response.status_code</code></td>
       </tr>
   </tbody>
 </table>
@@ -3998,32 +5522,24 @@ version: &#34;0.1.0&#34;
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#0550ae">restPort</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_TRACEQL_REST_PORT:3200}<span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#0550ae">enableDatasourceZipkin</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_TRACEQL_ENABLE_DATASOURCE_ZIPKIN:true}<span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#0550ae">enableDatasourceSkywalking</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_TRACEQL_ENABLE_DATASOURCE_SKYWALKING:true}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#0550ae">enableDatasourceOTLP</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_TRACEQL_ENABLE_DATASOURCE_OTLP:true}<span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#0550ae">restContextPathZipkin</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_TRACEQL_REST_CONTEXT_PATH_ZIPKIN:/zipkin}<span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#0550ae">restContextPathSkywalking</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_TRACEQL_REST_CONTEXT_PATH_SKYWALKING:/skywalking}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#0550ae">restContextPathOTLP</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_TRACEQL_REST_CONTEXT_PATH_OTLP:/otlp}<span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#0550ae">restIdleTimeOut</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_TRACEQL_REST_IDLE_TIMEOUT:30000}<span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#0550ae">restAcceptQueueSize</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_TRACEQL_REST_QUEUE_SIZE:0}<span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#0550ae">lookback</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_TRACEQL_LOOKBACK:86400000}<span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#0550ae">zipkinTracesListResultTags</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_TRACEQL_ZIPKIN_TRACES_LIST_RESULT_TAGS:http.method,error}<span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#0550ae">skywalkingTracesListResultTags</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_TRACEQL_SKYWALKING_TRACES_LIST_RESULT_TAGS:http.method,http.status_code,rpc.status_code,db.type,db.instance,mq.queue,mq.topic,mq.broker}<span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#0550ae">otlpTracesListResultTags</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>${SW_TRACEQL_OTLP_TRACES_LIST_RESULT_TAGS:http.request.method,http.response.status_code}<span style="color:#fff">
 </span></span></span></code></pre></div><h2 id="integration-with-grafana">Integration with Grafana</h2>
-<h3 id="add-tempo-data-source">Add Tempo Data Source</h3>
-<ol>
-<li>In Grafana, go to Configuration → Data Sources</li>
-<li>Add a new Tempo data source</li>
-<li>Set the URL to: <code>http://&lt;oap-host&gt;:&lt;port&gt;/zipkin</code> (for Zipkin-compatible traces) or <code>http://&lt;oap-host&gt;:&lt;port&gt;/skywalking</code> (for SkyWalking native traces)</li>
-<li><strong>Important</strong>: Disable the &ldquo;Streaming&rdquo; option as it is not currently supported</li>
-<li>Save and test the connection</li>
-</ol>
-<h3 id="query-traces">Query Traces</h3>
-<ul>
-<li>Use TraceQL queries in Grafana Explore</li>
-<li>View trace details with OTLP visualization</li>
-<li>Search traces by service, span, duration, status and tags</li>
-</ul>
+<p><em><strong>Notice:</strong></em> The feature requires version <code>Grafana 12 or later</code>.
+For more details, refer to <a href="../../setup/backend/ui-grafana">Use Grafana As The UI</a>.</p>
 <h2 id="limitations">Limitations</h2>
 <ul>
 <li>Pipeline operations (<code>|</code> operator) are not supported</li>
 <li>Aggregate functions (count, avg, max, min, sum) are not supported</li>
+<li>TraceQL metrics, <code>/api/metrics/query_range</code> and <code>/api/metrics/query</code>, are not supported by any datasource; both answer <code>501 Not Implemented</code> with an error body</li>
 <li>Regular expression matching (<code>=~</code>, <code>!~</code>) is not implemented</li>
 <li>Spanset logical operations (AND, OR between spansets) are not supported</li>
 <li>Event and link scopes are not supported</li>
@@ -4106,6 +5622,14 @@ version: &#34;0.1.0&#34;
             <li><a href="#instrumentation-scope-1">Instrumentation Scope</a></li>
           </ul>
         </li>
+        <li><a href="#otlp-native-trace">OTLP Native Trace</a>
+          <ul>
+            <li><a href="#traceql-field-mapping">TraceQL Field Mapping</a></li>
+            <li><a href="#search-results">Search Results</a></li>
+            <li><a href="#tag-names-and-values">Tag Names and Values</a></li>
+            <li><a href="#trace-by-id">Trace by ID</a></li>
+          </ul>
+        </li>
         <li><a href="#configuration">Configuration</a>
           <ul>
             <li><a href="#enabling-backends">Enabling Backends</a></li>
@@ -4114,12 +5638,7 @@ version: &#34;0.1.0&#34;
             <li><a href="#other-settings">Other Settings</a></li>
           </ul>
         </li>
-        <li><a href="#integration-with-grafana">Integration with Grafana</a>
-          <ul>
-            <li><a href="#add-tempo-data-source">Add Tempo Data Source</a></li>
-            <li><a href="#query-traces">Query Traces</a></li>
-          </ul>
-        </li>
+        <li><a href="#integration-with-grafana">Integration with Grafana</a></li>
         <li><a href="#limitations">Limitations</a></li>
         <li><a href="#see-also">See Also</a></li>
       </ul>
@@ -4217,6 +5736,9 @@ version: &#34;0.1.0&#34;
         
         
     </div>
+    <p class="footer-contribute">
+      <a id="contribute" href="https://github.com/apache/skywalking-website" target="_blank" rel="noopener">Help improve this website <span aria-hidden="true">↗</span></a>
+    </p>
     <div class="">
 
         <small class="text-color">&copy; 2017 - 2026 The Apache Software Foundation All Rights Reserved</small>
@@ -13931,6 +15453,1466 @@ version: &#34;0.1.0&#34;
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
 <div id="popup">
     <div class="mask">
@@ -13938,85 +16920,187 @@ version: &#34;0.1.0&#34;
     </div>
 </div>
 
-    <div class="sidebar-mask"></div>
-<div class="sidebar">
-    <nav class="nav-links">
+    
+
+
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+<div class="sidebar-mask" aria-hidden="true"></div>
+<div class="sidebar" id="site-navigation-drawer" role="dialog" aria-modal="true" aria-label="Navigation" aria-hidden="true" tabindex="-1">
+  <div class="sidebar-header">
+    <span>Menu</span>
+    <button type="button" class="sidebar-close" aria-label="Close navigation">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+    </button>
+  </div>
+  <nav class="nav-links" aria-label="Site pages">
+    <ul class="sidebar-primary">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/">Home</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link active" href="/docs" aria-current="page">Projects</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/blog">Blogs</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/events/">Release Posts</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/events/calendar/">Event Calendar</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/users">Users</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/team">Team</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/zh/">中文博客</a></li>
+      
+      
+    </ul>
+    <ul class="sidebar-secondary">
+      <li><a class="nav-link" href="/downloads/">Downloads</a></li>
+      
+      <li><a class="nav-link" href="/get-started/">Get started</a></li>
+      
+    </ul>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <details class="sidebar-resources">
+      <summary><span>Apache</span><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 4 4 4-4 4"/></svg></summary>
+      <ul class="sidebar-resource-links">
         
-        <div class="nav-item"><a href="/docs/" class="nav-link router-link-active">Documentation</a></div>
-        <div class="nav-item"><a href="/events/" class="nav-link">Events</a></div>
-        <div class="nav-item"><a href="/blog/" class="nav-link">Blog</a></div>
-        <div class="nav-item"><a href="/downloads/" class="nav-link">Downloads</a></div>
-        <div class="nav-item"><a href="/team/" class="nav-link">Team</a></div>
-        <div class="nav-item"><a href="/users/" class="nav-link">Users</a></div>
-        <div class="nav-item"><a href="/zh/" class="nav-link">中文博客</a></div>
-        <div class="nav-item">
-            <div class="dropdown-wrapper open">
-                <a class="dropdown-title">
-                    <span>Links</span>
-                    <span class="arrow down"></span>
-                </a>
-                <ul class="nav-dropdown">
-                    <li class="dropdown-item">
-                        <a href="http://www.apache.org/" target="_blank"
-                           rel="noopener noreferrer" class="nav-link external">
-                            Apache Software Foundation
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="https://github.com/apache/skywalking/issues"
-                           target="_blank" rel="noopener noreferrer"
-                           class="nav-link external">
-                            GitHub Issue Tracker
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="https://lists.apache.org/list.html?dev@skywalking.apache.org" target="_blank"
-                           rel="noopener noreferrer" class="nav-link external">
-                            Dev Mailing List
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="http://www.apache.org/licenses/" target="_blank"
-                           rel="noopener noreferrer" class="nav-link external">
-                            License
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="http://www.apache.org/events/current-event"
-                           target="_blank" rel="noopener noreferrer"
-                           class="nav-link external">
-                            Apache Events
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="http://www.apache.org/security/" target="_blank"
-                           rel="noopener noreferrer" class="nav-link external">
-                            Security
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="http://www.apache.org/foundation/sponsorship.html"
-                           target="_blank" rel="noopener noreferrer"
-                           class="nav-link external">
-                            Sponsorship and Donate
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="http://www.apache.org/foundation/thanks.html"
-                           target="_blank" rel="noopener noreferrer"
-                           class="nav-link external">
-                            Thanks
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+        <li><a class="nav-link" href="http://www.apache.org/" target="_blank" rel="noopener noreferrer"><span>Apache Software Foundation</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="https://github.com/apache/skywalking/issues" target="_blank" rel="noopener noreferrer"><span>GitHub Issue Tracker</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="https://github.com/apache/skywalking/discussions" target="_blank" rel="noopener noreferrer"><span>Discussion</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="https://lists.apache.org/list.html?dev@skywalking.apache.org" target="_blank" rel="noopener noreferrer"><span>Dev Mailing List</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="https://cwiki.apache.org/confluence/display/SKYWALKING/Home" target="_blank" rel="noopener noreferrer"><span>WIKI</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="http://www.apache.org/licenses/" target="_blank" rel="noopener noreferrer"><span>License</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="http://www.apache.org/events/current-event" target="_blank" rel="noopener noreferrer"><span>Apache Events</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="http://www.apache.org/security/" target="_blank" rel="noopener noreferrer"><span>Security</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="http://www.apache.org/foundation/sponsorship.html" target="_blank" rel="noopener noreferrer"><span>Sponsor and Donate</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="http://www.apache.org/foundation/thanks.html" target="_blank" rel="noopener noreferrer"><span>Thanks</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="https://apache.org/foundation/policies/privacy.html" target="_blank" rel="noopener noreferrer"><span>Privacy</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+      </ul>
+    </details>
+    
+    
+  </nav>
 </div>
 
     <script src="/js/bootstrap.bundle.min.js"></script>
 
-<script src="/js/docsearch-3.9.0.js"></script>
 
 
 
@@ -14026,7 +17110,8 @@ version: &#34;0.1.0&#34;
 
 
 
-<script src="/js/main.min.9be14eed0a0e24711261c334305209aa2e5ae3fb624f6a1731e064d5ffb11f3d.js" integrity="sha256-m&#43;FO7QoOJHESYcM0MFIJqi5a4/tiT2oXMeBk1f&#43;xHz0=" crossorigin="anonymous"></script>
+
+<script src="/js/main.min.a351a9c3ee226044b9050a859fb2f5a6019a548cfe22e3ca281fb08443c28976.js" integrity="sha256-o1Gpw&#43;4iYES5BQqFn7L1pgGaVIz&#43;IuPKKB&#43;whEPCiXY=" crossorigin="anonymous"></script>
 
 
 <script src="/js/highlight.min.js"></script>
@@ -14059,14 +17144,16 @@ data-project-name="SkyWalking"
 data-project-color="#2B74B8"
 data-button-text="Ask AI"
 data-search-mode-enabled="true"
+data-search-mode-default="false"
+data-modal-override-open-selector-search=".sw-kapa-search"
 data-modal-open-on-command-k="true"
+data-modal-command-k-search-mode-default="true"
+data-modal-z-index="10000"
 data-modal-disclaimer="The AI supports multiple languages, but it may not be accessible in China, a proxy is required."
 data-project-logo="/images/widget-logo.jpg"
 data-modal-example-questions="What is Apache SkyWalking?,How to deploy SkyWalking?,How to inject agents non-intrusively?,How to setup trace sampling?"
-data-button-position-top=""
 data-button-position-right="20px"
 data-button-position-bottom="200px"
-data-button-position-left=""
 data-consent-required="true"  
 data-user-analytics-cookie-enabled="true"  
 data-consent-screen-title="Help us improve our AI assistant"  
@@ -14074,8 +17161,28 @@ data-consent-screen-disclaimer="By clicking 'Allow tracking', you consent to ano
 data-consent-screen-accept-button-text="Allow tracking"  
 data-consent-screen-reject-button-text="No, thanks"
 ></script>
+<script>
+  (function () {
+    var SEL = 'details.topic-filter';
 
+    function closeAll(except) {
+      document.querySelectorAll(SEL).forEach(function (d) {
+        if (d !== except && d.open) { d.open = false; }
+      });
+    }
 
+    
+    
+    document.addEventListener('click', function (e) {
+      var target = e.target instanceof Element ? e.target.closest(SEL) : null;
+      closeAll(target);
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' || e.key === 'Esc') { closeAll(null); }
+    });
+  })();
+</script>
 
 
     <script>

@@ -5,8 +5,81 @@
     <description>Apache SkyWalking 中文博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Mon, 06 Jul 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 03 Nov 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://skywalking.apache.org/zh/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>SkyWalking 中的 OpenTelemetry 链路：原生存储、指标与拓扑</title>
+      <link>https://skywalking.apache.org/zh/2026-11-03-otlp-traces-in-skywalking/</link>
+      <pubDate>Tue, 03 Nov 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/zh/2026-11-03-otlp-traces-in-skywalking/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">万凯</dc:creator>
+      <category>Tracing</category>
+      <category>OpenTelemetry</category>
+      <description>SkyWalking 现在可以原生存储 OTLP 链路，并通过新的链路分析语言生成服务指标、调用拓扑，以及数据库、缓存和消息队列仪表盘。本文用一条命令将 OpenTelemetry Astronomy Shop 接入 SkyWalking，并介绍如何配置自己的应用。</description>
+    </item>
+    <item>
+      <title>采集云端会话，本地评估：用 Apache SkyWalking AI Sessionizer 分析 Amazon Bedrock AgentCore 上的 AI Agent</title>
+      <link>https://skywalking.apache.org/zh/2026-10-29-ai-sessionizer-agentcore-pull-judge/</link>
+      <pubDate>Thu, 29 Oct 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/zh/2026-10-29-ai-sessionizer-agentcore-pull-judge/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">吴晟</dc:creator>
+      <category>AI</category>
+      <category>Engineering</category>
+      <category>Community</category>
+      <description>设计一个真实调用 Bedrock 的发布助手，部署到 AgentCore 并用 asz 采集；通过 remote pull 在本地查看，再按设计目标运行 judge、导出 HTML 报告，逐项检查完成条件、已做工作和缺口。</description>
+    </item>
+    <item>
+      <title>LLM 回答得好不好？SkyWalking 用 LLM-as-Judge 评估线上回答</title>
+      <link>https://skywalking.apache.org/zh/2026-10-15-llm-as-judge/</link>
+      <pubDate>Thu, 15 Oct 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/zh/2026-10-15-llm-as-judge/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">peachisai</dc:creator>
+      <category>AI</category>
+      <category>Metrics</category>
+      <category>Tracing</category>
+      <description>SkyWalking 11.1.0 即将支持 LLM-as-Judge：异步评估 GenAI Span 中的输入和输出消息，生成评估记录并关联原始 Trace，SCORE 任务还会产生质量指标。</description>
+    </item>
+    <item>
+      <title>不止于回放：看清 Claude Code 的用量与文件变更</title>
+      <link>https://skywalking.apache.org/zh/2026-09-12-ai-sessionizer-workspace-changes/</link>
+      <pubDate>Sat, 12 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/zh/2026-09-12-ai-sessionizer-workspace-changes/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">吴晟</dc:creator>
+      <category>AI</category>
+      <category>Engineering</category>
+      <category>Community</category>
+      <description>汇总多次会话、多台机器上的 Claude Code 用量，结合对话、工具调用和文件差异，看清智能体做了什么、修改了什么，以及消耗了哪些资源。</description>
+    </item>
+    <item>
+      <title>Horizon UI 1.0 正式发布：SkyWalking 新一代控制台接棒 Booster</title>
+      <link>https://skywalking.apache.org/zh/2026-09-10-horizon-ui-1-0-ga/</link>
+      <pubDate>Thu, 10 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/zh/2026-09-10-horizon-ui-1-0-ga/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">吴晟</dc:creator>
+      <category>Release</category>
+      <category>Community</category>
+      <description>Horizon UI 1.0 正式发布，社区投票决定由 Horizon 接替 Booster，承担 SkyWalking 今后的 UI 开发与维护。本文介绍新控制台、迁移要点，以及 AI 智能体可观测性的最新进展。</description>
+    </item>
+    <item>
+      <title>BanyanDB 0.11.0：新特性与升级指南</title>
+      <link>https://skywalking.apache.org/zh/banyandb-0-11-0-vectorized-queries-by-default-explained/</link>
+      <pubDate>Mon, 07 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/zh/banyandb-0-11-0-vectorized-queries-by-default-explained/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">BanyanDB 团队</dc:creator>
+      <category>Release</category>
+      <category>Storage</category>
+      <description>BanyanDB 0.11.0：默认启用向量化查询、可插拔 Trace 后采样、Schema 屏障，以及不可忽略的升级顺序。</description>
+    </item>
+    <item>
+      <title>SkyWalking 11 与 BanyanDB 0.11：在存储引擎内部实现 Trace 尾部采样</title>
+      <link>https://skywalking.apache.org/zh/2026-09-07-banyandb-trace-tail-sampling/</link>
+      <pubDate>Mon, 07 Sep 2026 00:00:00 +0000</pubDate>
+      <guid>https://skywalking.apache.org/zh/2026-09-07-banyandb-trace-tail-sampling/</guid>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">万凯</dc:creator>
+      <category>Tracing</category>
+      <category>Storage</category>
+      <description>SkyWalking 11.0.0 与 BanyanDB 0.11.0 新增 Trace 尾部采样：采样在 BanyanDB 数据节点的 compaction 过程中进行，每条 Trace 都在落盘之后被整体判定，被丢弃的 Trace 会回收已经写入的空间。</description>
+    </item>
     <item>
       <title>认识 Horizon UI · AI Assistant：用日常语言查询你的可观测性数据</title>
       <link>https://skywalking.apache.org/zh/2026-07-06-horizon-ui-ai-assistant/</link>
@@ -16,7 +89,7 @@
       <category>Release</category>
       <category>AI</category>
       <category>Cloud Native</category>
-      <description>Horizon UI 新增的 AI Assistant 可以用和 UI 相同的图表、拓扑和表格回答关于 live system 的问题；它只读、继承权限，并运行在你自己接入的高性价比模型上。</description>
+      <description>Horizon UI 新增的 AI Assistant 可以用和 UI 相同的图表、拓扑和表格回答运行中系统的问题；它只读、按权限返回结果，并运行在你自己接入的高性价比模型上。</description>
     </item>
     <item>
       <title>认识 Horizon UI · 13/17：平台与集群自检</title>
@@ -137,77 +210,6 @@
       <category>Cloud Native</category>
       <category>Engineering</category>
       <description>Horizon UI 系列第五篇：用一个 WebGL 场景把整个部署放到同一张 3D 地图里，把各个 Layer 的服务渲染成立方体，并同时展示实时流量、告警和调用关系。</description>
-    </item>
-    <item>
-      <title>认识 Horizon UI · 6/17：Trace 探索器</title>
-      <link>https://skywalking.apache.org/zh/2026-06-22-horizon-ui-trace-explorer/</link>
-      <pubDate>Mon, 22 Jun 2026 00:00:00 +0000</pubDate>
-      <guid>https://skywalking.apache.org/zh/2026-06-22-horizon-ui-trace-explorer/</guid>
-      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">吴晟</dc:creator>
-      <category>Tracing</category>
-      <category>Cloud Native</category>
-      <description>Horizon UI 系列第六篇：位于 Layer 内的分布式 Trace 探索器：先配置条件再查询，在时延分布图上框选异常 Trace，并用瀑布图、调用树和统计表阅读同一条 Trace。</description>
-    </item>
-    <item>
-      <title>认识 Horizon UI · 1/17：SkyWalking 新一代可观测性控制台</title>
-      <link>https://skywalking.apache.org/zh/2026-06-21-skywalking-horizon-ui-introduction/</link>
-      <pubDate>Sun, 21 Jun 2026 00:00:00 +0000</pubDate>
-      <guid>https://skywalking.apache.org/zh/2026-06-21-skywalking-horizon-ui-introduction/</guid>
-      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">吴晟</dc:creator>
-      <category>Release</category>
-      <category>Cloud Native</category>
-      <description>介绍 Apache SkyWalking Horizon UI：它沿用现有 OAP 后端协议，重新设计前端控制台，让观测、运维、治理和定制回到同一个入口。</description>
-    </item>
-    <item>
-      <title>认识 Horizon UI · 2/17：动态仪表盘、MQE 与指标格式化</title>
-      <link>https://skywalking.apache.org/zh/2026-06-21-horizon-ui-dashboards-and-mqe/</link>
-      <pubDate>Sun, 21 Jun 2026 00:00:00 +0000</pubDate>
-      <guid>https://skywalking.apache.org/zh/2026-06-21-horizon-ui-dashboards-and-mqe/</guid>
-      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">吴晟</dc:creator>
-      <category>Metrics</category>
-      <category>Cloud Native</category>
-      <description>Horizon UI 系列第二篇：仪表盘如何由 MQE 表达式驱动，如何按当前服务、实例或 endpoint 自动取舍组件并跳过无关查询，以及如何把编码值、耗时和大数值格式化成适合排查时阅读的样子。</description>
-    </item>
-    <item>
-      <title>认识 Horizon UI · 3/17：拓扑与服务依赖</title>
-      <link>https://skywalking.apache.org/zh/2026-06-21-horizon-ui-topology-and-dependency/</link>
-      <pubDate>Sun, 21 Jun 2026 00:00:00 +0000</pubDate>
-      <guid>https://skywalking.apache.org/zh/2026-06-21-horizon-ui-topology-and-dependency/</guid>
-      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">吴晟</dc:creator>
-      <category>Cloud Native</category>
-      <category>Tracing</category>
-      <description>Horizon UI 系列第三篇：由模板驱动的拓扑引擎、拓扑降噪、从服务调用下钻到实例、endpoint 依赖图，以及跨 Layer 的 Smartscape 视图。</description>
-    </item>
-    <item>
-      <title>认识 Horizon UI · 4/17：Deployment 标签页与 BanyanDB 自观测</title>
-      <link>https://skywalking.apache.org/zh/2026-06-21-horizon-ui-deployment-and-banyandb/</link>
-      <pubDate>Sun, 21 Jun 2026 00:00:00 +0000</pubDate>
-      <guid>https://skywalking.apache.org/zh/2026-06-21-horizon-ui-deployment-and-banyandb/</guid>
-      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">吴晟</dc:creator>
-      <category>Cloud Native</category>
-      <category>Storage</category>
-      <description>Horizon UI 系列第四篇：Deployment 标签页如何把拓扑视角转向单个集群服务内部，并以 BanyanDB 为例说明 SkyWalking 如何观测自己的存储引擎。</description>
-    </item>
-    <item>
-      <title>用 SkyWalking 监控微信和支付宝小程序</title>
-      <link>https://skywalking.apache.org/zh/2026-04-30-mini-program-monitoring-with-skywalking/</link>
-      <pubDate>Thu, 30 Apr 2026 00:00:00 +0000</pubDate>
-      <guid>https://skywalking.apache.org/zh/2026-04-30-mini-program-monitoring-with-skywalking/</guid>
-      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">吴晟</dc:creator>
-      <category>Agents</category>
-      <category>Community</category>
-      <category>Tracing</category>
-      <description>SkyAPM/mini-program-monitor 与 SkyWalking OAP 配合，把微信和支付宝小程序纳入 SkyWalking 的端用户体验监控。本文聚焦数据通路、双平台抽象与 OAP 端集成。</description>
-    </item>
-    <item>
-      <title>使用 TraceQL 查询 SkyWalking 和 Zipkin 链路追踪数据并在 Grafana 中可视化</title>
-      <link>https://skywalking.apache.org/zh/2026-04-08-traceql/</link>
-      <pubDate>Wed, 08 Apr 2026 00:00:00 +0000</pubDate>
-      <guid>https://skywalking.apache.org/zh/2026-04-08-traceql/</guid>
-      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">万凯</dc:creator>
-      <category>Tracing</category>
-      <category>Metrics</category>
-      <description>SkyWalking 10.4 引入了 TraceQL 支持，实现了 Grafana Tempo 的 HTTP 查询 API，使 Grafana 可以直接查询和可视化 SkyWalking 中存储的链路追踪数据。</description>
     </item>
   </channel>
 </rss>

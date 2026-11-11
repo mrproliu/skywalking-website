@@ -21,41 +21,39 @@
 <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#5bbad5">
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
-<title>DSL Build-Time Pre-Compilation (OAL/MAL/LAL/Hierarchy) | Apache SkyWalking</title><meta property="og:url" content="https://skywalking.apache.org/docs/skywalking-graalvm-distro/latest/internals/dsl-immigration/">
+<title>DSL Build-Time Pre-Compilation (OAL/MAL/LAL/TAL/Hierarchy) | Apache SkyWalking</title><meta property="og:url" content="https://skywalking.apache.org/docs/skywalking-graalvm-distro/latest/internals/dsl-immigration/">
   <meta property="og:site_name" content="Apache SkyWalking">
-  <meta property="og:title" content="DSL Build-Time Pre-Compilation (OAL/MAL/LAL/Hierarchy)">
-  <meta property="og:description" content="DSL Build-Time Pre-Compilation (OAL/MAL/LAL/Hierarchy) Context SkyWalking OAP uses four DSL compilers that generate Java bytecode at startup via Javassist:
-DSL Purpose Compiled Interface Generated Classes OAL Metrics aggregation rules Metrics, Builder, Dispatcher classes ~620 metrics &#43; ~620 builders &#43; ~45 dispatchers MAL Meter expression rules MalExpression ~1250 expression classes LAL Log analysis rules LalExpression ~10 expression classes (6 unique) Hierarchy Service hierarchy matching BiFunction&lt;Service, Service, Boolean&gt; ~4 rule classes All four share the same pipeline (since upstream PR #13723):">
+  <meta property="og:title" content="DSL Build-Time Pre-Compilation (OAL/MAL/LAL/TAL/Hierarchy)">
+  <meta property="og:description" content="DSL Build-Time Pre-Compilation (OAL/MAL/LAL/TAL/Hierarchy) Context SkyWalking OAP uses five DSL compilers that generate Java bytecode at startup via Javassist:
+DSL Purpose Compiled Interface Generated Classes OAL Metrics aggregation rules Metrics, Builder, Dispatcher classes ~620 metrics &#43; ~620 builders &#43; ~45 dispatchers MAL Meter expression rules MalExpression ~1250 expression classes LAL Log analysis rules LalExpression ~10 expression classes (6 unique) TAL Trace (OTLP span) analysis rules TalExpression 2 expression classes Hierarchy Service hierarchy matching BiFunction&lt;Service, Service, Boolean&gt; ~4 rule classes All five share the same pipeline (since upstream PR #13723; TAL since 11.1):">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="article">
     <meta property="article:section" content="docs">
 
-  <meta itemprop="name" content="DSL Build-Time Pre-Compilation (OAL/MAL/LAL/Hierarchy)">
-  <meta itemprop="description" content="DSL Build-Time Pre-Compilation (OAL/MAL/LAL/Hierarchy) Context SkyWalking OAP uses four DSL compilers that generate Java bytecode at startup via Javassist:
-DSL Purpose Compiled Interface Generated Classes OAL Metrics aggregation rules Metrics, Builder, Dispatcher classes ~620 metrics &#43; ~620 builders &#43; ~45 dispatchers MAL Meter expression rules MalExpression ~1250 expression classes LAL Log analysis rules LalExpression ~10 expression classes (6 unique) Hierarchy Service hierarchy matching BiFunction&lt;Service, Service, Boolean&gt; ~4 rule classes All four share the same pipeline (since upstream PR #13723):">
-  <meta itemprop="wordCount" content="1080">
+  <meta itemprop="name" content="DSL Build-Time Pre-Compilation (OAL/MAL/LAL/TAL/Hierarchy)">
+  <meta itemprop="description" content="DSL Build-Time Pre-Compilation (OAL/MAL/LAL/TAL/Hierarchy) Context SkyWalking OAP uses five DSL compilers that generate Java bytecode at startup via Javassist:
+DSL Purpose Compiled Interface Generated Classes OAL Metrics aggregation rules Metrics, Builder, Dispatcher classes ~620 metrics &#43; ~620 builders &#43; ~45 dispatchers MAL Meter expression rules MalExpression ~1250 expression classes LAL Log analysis rules LalExpression ~10 expression classes (6 unique) TAL Trace (OTLP span) analysis rules TalExpression 2 expression classes Hierarchy Service hierarchy matching BiFunction&lt;Service, Service, Boolean&gt; ~4 rule classes All five share the same pipeline (since upstream PR #13723; TAL since 11.1):">
+  <meta itemprop="wordCount" content="2112">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="DSL Build-Time Pre-Compilation (OAL/MAL/LAL/Hierarchy)">
-  <meta name="twitter:description" content="DSL Build-Time Pre-Compilation (OAL/MAL/LAL/Hierarchy) Context SkyWalking OAP uses four DSL compilers that generate Java bytecode at startup via Javassist:
-DSL Purpose Compiled Interface Generated Classes OAL Metrics aggregation rules Metrics, Builder, Dispatcher classes ~620 metrics &#43; ~620 builders &#43; ~45 dispatchers MAL Meter expression rules MalExpression ~1250 expression classes LAL Log analysis rules LalExpression ~10 expression classes (6 unique) Hierarchy Service hierarchy matching BiFunction&lt;Service, Service, Boolean&gt; ~4 rule classes All four share the same pipeline (since upstream PR #13723):">
+  <meta name="twitter:title" content="DSL Build-Time Pre-Compilation (OAL/MAL/LAL/TAL/Hierarchy)">
+  <meta name="twitter:description" content="DSL Build-Time Pre-Compilation (OAL/MAL/LAL/TAL/Hierarchy) Context SkyWalking OAP uses five DSL compilers that generate Java bytecode at startup via Javassist:
+DSL Purpose Compiled Interface Generated Classes OAL Metrics aggregation rules Metrics, Builder, Dispatcher classes ~620 metrics &#43; ~620 builders &#43; ~45 dispatchers MAL Meter expression rules MalExpression ~1250 expression classes LAL Log analysis rules LalExpression ~10 expression classes (6 unique) TAL Trace (OTLP span) analysis rules TalExpression 2 expression classes Hierarchy Service hierarchy matching BiFunction&lt;Service, Service, Boolean&gt; ~4 rule classes All five share the same pipeline (since upstream PR #13723; TAL since 11.1):">
 
 
 
-<link rel="preload" href="/scss/main.min.75b3855349f4480c60036369f115ecf9ae08f3fff28f5b2de980d22a7fac93ef.css" as="style">
-<link href="/scss/main.min.75b3855349f4480c60036369f115ecf9ae08f3fff28f5b2de980d22a7fac93ef.css" rel="stylesheet" integrity="">
+<link rel="preload" href="/scss/main.min.b350fb8c42fee31880305a4433cf2325b5cefc4e06a4d17342698fbbcf354d7b.css" as="style">
+<link href="/scss/main.min.b350fb8c42fee31880305a4433cf2325b5cefc4e06a4d17342698fbbcf354d7b.css" rel="stylesheet" integrity="">
 
 
 
-<link rel="stylesheet" href="/css/docSearch.css" />
 <link rel="stylesheet" href="/css/highlight-github.css" />
-
 
 <script src="/js/jquery-3.6.0.min.js"></script>
 
 <link rel="canonical" href="https://skywalking.apache.org/docs/skywalking-graalvm-distro/latest/internals/dsl-immigration/">
-<meta name="description" content="DSL Build-Time Pre-Compilation (OAL/MAL/LAL/Hierarchy) Context SkyWalking OAP uses four DSL compilers that generate Java bytecode at startup via Javassist: DSL…">
+<meta name="description" content="DSL Build-Time Pre-Compilation (OAL/MAL/LAL/TAL/Hierarchy) Context SkyWalking OAP uses five DSL compilers that generate Java bytecode at startup via Javassist:…">
 
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@id":"https://skywalking.apache.org/#organization","@type":"Organization","logo":"https://skywalking.apache.org/images/skywalking_400x400.png","name":"Apache SkyWalking","parentOrganization":{"@type":"Organization","name":"The Apache Software Foundation","url":"https://www.apache.org/"},"sameAs":["https://github.com/apache/skywalking","https://twitter.com/asfskywalking","https://projects.apache.org/project.html?skywalking"],"url":"https://skywalking.apache.org/"},{"@type":"TechArticle","headline":"DSL Build-Time Pre-Compilation (OAL/MAL/LAL/Hierarchy)","inLanguage":"en","mainEntityOfPage":{"@id":"https://skywalking.apache.org/docs/skywalking-graalvm-distro/latest/internals/dsl-immigration/","@type":"WebPage"},"publisher":{"@id":"https://skywalking.apache.org/#organization"},"url":"https://skywalking.apache.org/docs/skywalking-graalvm-distro/latest/internals/dsl-immigration/"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://skywalking.apache.org/","name":"Apache SkyWalking","position":1},{"@type":"ListItem","item":"https://skywalking.apache.org/docs/","name":"Documentation","position":2},{"@type":"ListItem","item":"https://skywalking.apache.org/docs/skywalking-graalvm-distro/latest/internals/dsl-immigration/","name":"DSL Build-Time Pre-Compilation (OAL/MAL/LAL/Hierarchy)","position":3}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@id":"https://skywalking.apache.org/#organization","@type":"Organization","logo":"https://skywalking.apache.org/images/skywalking_400x400.png","name":"Apache SkyWalking","parentOrganization":{"@type":"Organization","name":"The Apache Software Foundation","url":"https://www.apache.org/"},"sameAs":["https://github.com/apache/skywalking","https://twitter.com/asfskywalking","https://projects.apache.org/project.html?skywalking"],"url":"https://skywalking.apache.org/"},{"@type":"TechArticle","headline":"DSL Build-Time Pre-Compilation (OAL/MAL/LAL/TAL/Hierarchy)","inLanguage":"en","mainEntityOfPage":{"@id":"https://skywalking.apache.org/docs/skywalking-graalvm-distro/latest/internals/dsl-immigration/","@type":"WebPage"},"publisher":{"@id":"https://skywalking.apache.org/#organization"},"url":"https://skywalking.apache.org/docs/skywalking-graalvm-distro/latest/internals/dsl-immigration/"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://skywalking.apache.org/","name":"Apache SkyWalking","position":1},{"@type":"ListItem","item":"https://skywalking.apache.org/docs/","name":"Documentation","position":2},{"@type":"ListItem","item":"https://skywalking.apache.org/docs/skywalking-graalvm-distro/latest/internals/dsl-immigration/","name":"DSL Build-Time Pre-Compilation (OAL/MAL/LAL/TAL/Hierarchy)","position":3}]}]}</script>
 
 
 <link rel="alternate" type="application/rss+xml" href="https://skywalking.apache.org/feed.xml" title="Apache SkyWalking">
@@ -66,16 +64,88 @@ DSL Purpose Compiled Interface Generated Classes OAL Metrics aggregation rules M
   <body class="td-page  project-doc">
     <header>
       
-<nav class="js-navbar-scroll navbar navbar-expand  flex-column flex-md-row td-navbar">
-    <div class="sidebar-button">
-      <i class="iconfont icon-menu"></i>
-    </div>
+
+
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    
+  
+
+  
+  
+
+  
+  
+
+
+
+
+  
+    
+    
+    
+    
+    
+    
+  
+
+  
+    
+    
+    
+    
+    
+    
+  
+
+  
+    
+    
+    
+    
+    
+    
+  
+
+  
+    
+    
+    
+    
+    
+    
+  
+
+  
+    
+    
+    
+    
+    
+    
+  
+
+<nav class="js-navbar-scroll navbar navbar-expand td-navbar" aria-label="Main navigation">
+  <div class="sw-navbar-inner">
+    <button type="button" class="sidebar-button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-navigation-drawer">
+      <i class="iconfont icon-menu" aria-hidden="true"></i>
+    </button>
     <a class="navbar-brand" href="/">
         <span class="navbar-logo"><img width="130" src="/images/logo.svg" alt="SkyWalking"></span> 
     </a>
     <div class="td-navbar-nav-scroll navbar-nav-wrapper" id="navigation">
         <ul class="navbar-nav mt-lg-0">
-             
+            
             
             <li class="nav-item mr-3 mb-lg-0">
 				
@@ -84,90 +154,1007 @@ DSL Purpose Compiled Interface Generated Classes OAL Metrics aggregation rules M
 				
 				
 				
-				<a class="nav-link active" href="/docs" ><span class="active">Documentation</span></a>
+				
+				
+                
+                <a class="nav-link" href="/" ><span>Home</span></a>
 			</li>
             
             
             
-            <li class="nav-item mr-3 mb-lg-0">
-				
-				
-				
-				
-				
-				
-				<a class="nav-link" href="/events" ><span>Events</span></a>
-			</li>
-            
-            
-            
-            <li class="nav-item mr-3 mb-lg-0">
-				
-				
-				
-				
-				
-				
-				<a class="nav-link" href="/blog" ><span>Blogs</span></a>
-			</li>
-            
-            
-            
-            <li class="nav-item mr-3 mb-lg-0">
-				
-				
-				
-				
-				
-				
-				<a class="nav-link" href="/downloads" ><span>Downloads</span></a>
-			</li>
-            
-            
-            
-            <li class="nav-item mr-3 mb-lg-0">
-				
-				
-				
-				
-				
-				
-				<a class="nav-link" href="/team" ><span>Team</span></a>
-			</li>
-            
-            
-            
-            <li class="nav-item mr-3 mb-lg-0">
-				
-				
-				
-				
-				
-				
-				<a class="nav-link" href="/users" ><span>Users</span></a>
-			</li>
-            
-            
-            
-            
-            
-            
-            <li class="nav-item mr-3 mb-lg-0">
-                <a class="nav-link" href="/zh/"><span>中文博客</span></a>
-            </li>
+            <li class="nav-item dropdown sw-projects-item">
+                <button type="button" class="nav-link dropdown-toggle sw-projects-toggle active" id="projects-menu-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Projects</button>
+                <div class="dropdown-menu sw-projects-menu" aria-labelledby="projects-menu-toggle">
+                    
 
+
+<div class="sw-projects-content">
+  <a class="dropdown-item sw-projects-intro" href="/get-started/">
+    <span><strong>Get started in minutes</strong><span>Try the Showcase or install SkyWalking</span></span>
+    <span aria-hidden="true">→</span>
+  </a>
+  <div class="sw-projects-groups">
+    
+    
+    
+      
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+      
+    
+    
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+    
+    
+    <div class="sw-projects-group">
+      <p class="sw-projects-label">Platform</p>
+    
+      <div class="sw-projects-group-links">
+        <div class="sw-projects-columns">
+        
+        <div class="sw-projects-column">
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#SkyWalking">
+          <img src="/images/project/skywalking.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking</strong><span class="sw-project-description">Core observability server</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#BanyanDB">
+          <img src="/images/project/banyan-db.svg" width="28" height="28" alt="">
+          <span><strong>BanyanDB</strong><span class="sw-project-description">Observability database</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#HorizonUI">
+          <img src="/images/project/skywalking.svg" width="28" height="28" alt="">
+          <span><strong>Horizon UI</strong><span class="sw-project-description">Next-generation UI</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#AISessionizer">
+          <img src="/images/project/skywalking.svg" width="28" height="28" alt="">
+          <span><strong>AI Sessionizer</strong><span class="sw-project-description">AI agent observability</span></span>
+        </a>
+        
+        
+        </div>
+        
+        </div>
+        
+        <a class="dropdown-item sw-projects-more" href="/docs/#SkyWalkingServers">All platform projects <span aria-hidden="true">→</span></a>
+        
+      </div>
+    </div>
+    
+    
+    
+      
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+      
+    
+      
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+      
+    
+    
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+    
+    
+    <div class="sw-projects-group sw-projects-group-wide">
+      <p class="sw-projects-label">Agents &amp; collection</p>
+    
+      <div class="sw-projects-group-links">
+        <div class="sw-projects-columns">
+        
+        <div class="sw-projects-column">
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#JavaAgent">
+          <img src="/images/project/java-agent.svg" width="28" height="28" alt="">
+          <span><strong>Java Agent</strong><span class="sw-project-description">Java tracing and profiling</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#GoAgent">
+          <img src="/images/project/skywalking-go.svg" width="28" height="28" alt="">
+          <span><strong>Go Agent</strong><span class="sw-project-description">Go tracing and metrics</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#PythonAgent">
+          <img src="/images/project/python-agent.svg" width="28" height="28" alt="">
+          <span><strong>Python Agent</strong><span class="sw-project-description">Python tracing and profiling</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#NodeJSAgent">
+          <img src="/images/project/nodejs-agent.svg" width="28" height="28" alt="">
+          <span><strong>NodeJS Agent</strong><span class="sw-project-description">Node.js distributed tracing</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#PHPAgent">
+          <img src="/images/project/php-agent.svg" width="28" height="28" alt="">
+          <span><strong>PHP Agent</strong><span class="sw-project-description">PHP distributed tracing</span></span>
+        </a>
+        
+        
+        </div>
+        
+        <div class="sw-projects-column">
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#OpenTelemetryOTLP">
+          <img src="/images/project/otlp.svg" width="28" height="28" alt="">
+          <span><strong>OpenTelemetry (OTLP)</strong><span class="sw-project-description">OTLP traces, metrics, and logs</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#SkyWalkingRover">
+          <img src="/images/project/skywalking.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking Rover</strong><span class="sw-project-description">eBPF metrics and profiling</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#SkyWalkingSatellite">
+          <img src="/images/project/skywalking-satellite.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking Satellite</strong><span class="sw-project-description">Lightweight telemetry collector</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#KubernetesEventExporter">
+          <img src="/images/project/kubernetes.svg" width="28" height="28" alt="">
+          <span><strong>Kubernetes Event Exporter</strong><span class="sw-project-description">Kubernetes event collection</span></span>
+        </a>
+        
+        
+        </div>
+        
+        </div>
+        
+        <a class="dropdown-item sw-projects-more" href="/docs/#Agents">View all agents &amp; collectors <span aria-hidden="true">→</span></a>
+        
+      </div>
+    </div>
+    
+    
+    
+      
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+      
+    
+    
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+    
+    
+    <div class="sw-projects-group">
+      <p class="sw-projects-label">Operations &amp; tools</p>
+    
+      <div class="sw-projects-group-links">
+        <div class="sw-projects-columns">
+        
+        <div class="sw-projects-column">
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#SkyWalkingCLI">
+          <img src="/images/project/skywalking-cli.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking CLI</strong><span class="sw-project-description">Command-line operations</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#SkyWalkingMCP">
+          <img src="/images/project/skywalking.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking MCP</strong><span class="sw-project-description">Observability for AI assistants</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#KubernetesHelm">
+          <img src="/images/project/helm.svg" width="28" height="28" alt="">
+          <span><strong>Kubernetes Helm</strong><span class="sw-project-description">Deploy SkyWalking with Helm</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#SkyWalkingCloudonKubernetes">
+          <img src="/images/project/kubernetes.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking Cloud on Kubernetes</strong><span class="sw-project-description">Kubernetes operator</span></span>
+        </a>
+        
+        
+        
+        
+        
+        <a class="dropdown-item sw-project-link" href="/docs/#SkyWalkingEyes">
+          <img src="/images/project/skywalking-eyes.svg" width="28" height="28" alt="">
+          <span><strong>SkyWalking Eyes</strong><span class="sw-project-description">License checks and fixes</span></span>
+        </a>
+        
+        
+        </div>
+        
+        </div>
+        
+        <a class="dropdown-item sw-projects-more" href="/docs/#Operation">All operations projects <span aria-hidden="true">→</span></a>
+        
+      </div>
+    </div>
+    
+  </div>
+  <div class="sw-projects-footer">
+    <a class="dropdown-item sw-projects-all" href="/docs/">All projects <span aria-hidden="true">→</span></a>
+    <a class="dropdown-item sw-projects-downloads" href="/downloads/">Downloads <span aria-hidden="true">→</span></a>
+  </div>
+</div>
+
+                </div>
+            </li>
+            
+            
+            
+            
+            <li class="nav-item"><a class="nav-link" href="/blog">Blogs</a></li>
+            
+            
+            
+            
+            
+            <li class="nav-item" data-nav-promote="events" hidden><a class="nav-link" href="/events/">Release Posts</a></li>
+            
+            <li class="nav-item" data-nav-promote="events/calendar" hidden><a class="nav-link" href="/events/calendar/">Event Calendar</a></li>
+            
+            <li class="nav-item" data-nav-promote="users" hidden><a class="nav-link" href="/users">Users</a></li>
+            
+            <li class="nav-item" data-nav-promote="team" hidden><a class="nav-link" href="/team">Team</a></li>
+            
+            <li class="nav-item" data-nav-promote="zh" hidden><a class="nav-link" href="/zh/">中文博客</a></li>
+            
+            
+            <li class="nav-item dropdown" data-nav-more>
+                <button type="button" class="nav-link dropdown-toggle sw-more-toggle" id="more-menu-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">More</button>
+                <div class="dropdown-menu sw-more-menu" aria-labelledby="more-menu-toggle">
+                    
+                    <a class="dropdown-item" data-nav-overflow="events" href="/events/">Release Posts</a>
+                    
+                    <a class="dropdown-item" data-nav-overflow="events/calendar" href="/events/calendar/">Event Calendar</a>
+                    
+                    <a class="dropdown-item" data-nav-overflow="users" href="/users">Users</a>
+                    
+                    <a class="dropdown-item" data-nav-overflow="team" href="/team">Team</a>
+                    
+                    <a class="dropdown-item" data-nav-overflow="zh" href="/zh/">中文博客</a>
+                    
+                </div>
+            </li>
+            
+            
+            
+            
+            
+            
             
 			
         </ul>
     </div>
 
-    <div class="navbar-nav d-none d-lg-block search-input-box">
-        
-<div id="docsearch"></div>
+    <div class="sw-navbar-actions">
+        <button type="button" class="sw-kapa-search" aria-label="Search SkyWalking documentation and ask AI" aria-haspopup="dialog" title="Search and ask AI">
+  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="7.5"/><path d="m16 16 5 5"/></svg>
+  <span>Search</span>
+</button>
 
-
-            
-        
+        <div class="navbar-nav d-none d-lg-block search-input-box">
             
         
             
@@ -270,7 +1257,24 @@ DSL Purpose Compiled Interface Generated Classes OAL Metrics aggregation rules M
             </span>
             
         
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+            <a class="sw-nav-cta" href="/get-started/">Get started</a>
+            
+        
+            
+        
+        </div>
     </div>
+  </div>
 </nav>
 
     </header>
@@ -279,8 +1283,6 @@ DSL Purpose Compiled Interface Generated Classes OAL Metrics aggregation rules M
       <div class="td-main">
         <div class="row flex-xl-nowrap">
           <div class="col-12 col-md-3 col-xl-2 d-print-none scroll-bar td-sidebar">
-
-
 
 
 
@@ -323,17 +1325,25 @@ DSL Purpose Compiled Interface Generated Classes OAL Metrics aggregation rules M
                   
                     
                     
-                    <option ZgotmplZ value="0.3.0">
+                    <option ZgotmplZ value="v0.5.0">
                     
-                      0.3.0
+                      0.5.0 (SkyWalking 11.1.0)
                     
                     </option>
                   
                     
                     
-                    <option ZgotmplZ value="v0.2.1 (10.3.0-dev-64a1795)">
+                    <option ZgotmplZ value="v0.4.0">
                     
-                      v0.2.1 (10.3.0-dev-64a1795)
+                      0.4.0 (SkyWalking 11.0.0)
+                    
+                    </option>
+                  
+                    
+                    
+                    <option ZgotmplZ value="v0.3.0">
+                    
+                      0.3.0 (SkyWalking 10.4.0)
                     
                     </option>
                   
@@ -486,8 +1496,24 @@ DSL Purpose Compiled Interface Generated Classes OAL Metrics aggregation rules M
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: 1ab407e</div>
+                  <div class="commit-id">Commit Id: 8ca2b7e</div>
                 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -536,9 +1562,9 @@ DSL Purpose Compiled Interface Generated Classes OAL Metrics aggregation rules M
               <i class="iconfont icon-menu-doc doc-menu-button"></i>
               
 <div class="td-content">
-	<h1 id="dsl-build-time-pre-compilation-oalmallalhierarchy">DSL Build-Time Pre-Compilation (OAL/MAL/LAL/Hierarchy)</h1>
+	<h1 id="dsl-build-time-pre-compilation-oalmallaltalhierarchy">DSL Build-Time Pre-Compilation (OAL/MAL/LAL/TAL/Hierarchy)</h1>
 <h2 id="context">Context</h2>
-<p>SkyWalking OAP uses four DSL compilers that generate Java bytecode at startup via Javassist:</p>
+<p>SkyWalking OAP uses five DSL compilers that generate Java bytecode at startup via Javassist:</p>
 <table>
   <thead>
       <tr>
@@ -568,6 +1594,12 @@ DSL Purpose Compiled Interface Generated Classes OAL Metrics aggregation rules M
           <td>~10 expression classes (6 unique)</td>
       </tr>
       <tr>
+          <td><strong>TAL</strong></td>
+          <td>Trace (OTLP span) analysis rules</td>
+          <td><code>TalExpression</code></td>
+          <td>2 expression classes</td>
+      </tr>
+      <tr>
           <td><strong>Hierarchy</strong></td>
           <td>Service hierarchy matching</td>
           <td><code>BiFunction&lt;Service, Service, Boolean&gt;</code></td>
@@ -575,9 +1607,9 @@ DSL Purpose Compiled Interface Generated Classes OAL Metrics aggregation rules M
       </tr>
   </tbody>
 </table>
-<p>All four share the same pipeline (since upstream PR #13723):</p>
+<p>All five share the same pipeline (since upstream PR #13723; TAL since 11.1):</p>
 <pre tabindex="0"><code>DSL text → ANTLR4 parse → Immutable AST → Javassist bytecode → .class
-</code></pre><p>GraalVM native image cannot run Javassist at runtime. <strong>Solution</strong>: run all four compilers at build time via their exposed APIs (<code>setClassOutputDir()</code>, <code>setClassNameHint()</code>), capture <code>.class</code> files into the precompiler output JAR. At runtime, load pre-compiled classes instead of compiling.</p>
+</code></pre><p>GraalVM native image cannot run Javassist at runtime. <strong>Solution</strong>: run all five compilers at build time via their exposed APIs (<code>setClassOutputDir()</code>, <code>setClassNameHint()</code>), capture <code>.class</code> files into the precompiler output JAR. At runtime, load pre-compiled classes instead of compiling.</p>
 <hr>
 <h2 id="build-time-compilation">Build-Time Compilation</h2>
 <p><strong>Module</strong>: <code>build-tools/precompiler</code></p>
@@ -751,6 +1783,52 @@ DSL Purpose Compiled Interface Generated Classes OAL Metrics aggregation rules M
   </tbody>
 </table>
 <p>Generated class package: <code>org.apache.skywalking.oap.log.analyzer.v2.compiler.rt.*</code></p>
+<h3 id="tal">TAL</h3>
+<p>Uses one <code>TALClassGenerator</code> per rule with <code>setClassOutputDir()</code>, <code>setSourceRef()</code> and <code>setClassNameHint()</code>,
+mirroring upstream <code>SpanFilterListener.Factory.compile</code> + <code>TalDSL.of</code>:</p>
+<pre tabindex="0"><code>For each tal/*.yaml file (TALConfigs.load stamps sourcePath, line and the file&#39;s metricPrefix):
+  For each rule:
+    a. input type  = the TALSourceTypeProvider claiming rule.inputType (`otlp` -&gt; OTLP Span)
+       output type = the TALOutputBuilder named by rule.outputType (`SlowSQL` -&gt; DatabaseSlowStatementBuilder)
+       Layer.valueOf(rule.layer)
+    b. TalExpression expr = generator.compile(dsl)       // .class + .java written to classOutputDir
+    c. TALMetricShapes.claim(sourceRef + &#34;#&#34; + rule, generator.getMetricDeclarations())
+    d. generator.createMetrics(meterSystem)              // the build-time MeterSystem MAL uses
+</code></pre><table>
+  <thead>
+      <tr>
+          <th>File</th>
+          <th>Rules</th>
+          <th>Metrics</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>otlp-general.yaml</code></td>
+          <td>2 (<code>otlp-general</code>, <code>otlp-slow-sql</code>)</td>
+          <td>28 <code>otlp_*</code></td>
+      </tr>
+  </tbody>
+</table>
+<p>Every file is loaded before any rule compiles, as upstream&rsquo;s <code>loadStaticRules</code> does, so a layer one file declares
+under <code>layerDefinitions</code> serves the rules of every file. A rule that does not compile, or that names an unknown
+layer, input type or output type, fails the build with upstream&rsquo;s boot-time message. Upstream&rsquo;s TAL compiler emits
+no debug probes, so TAL rules are not live-debuggable.</p>
+<p>Nothing in the pass is specific to the shipped file: input providers and output builders come from the SPIs
+(recorded in <code>tal-io-classes.txt</code> for reflection, with the input types and any builder a rule names by class), every declaration shape is carried (<code>buckets</code>, <code>ranks</code>,
+<code>labelLimit</code>), the input types join the protobuf reflection roots as LAL&rsquo;s do, and <code>tal.json</code> is keyed by each file&rsquo;s
+own name (every file, as upstream takes any file <code>talFiles</code> names by its stem; two files sharing a stem fail the
+build). The manifest is written with <code>Properties#store</code>&rsquo;s escapes in UTF-8 and read back the same way, so any rule or
+file name round-trips, and records every input a class was compiled from (coordinates, name, DSL digest, input and
+output type, metric prefix): two rules can share a line in flow-style YAML, and the runtime <code>TalDSL</code> loads only the
+class compiled from exactly the inputs it is given. The files are installed in upstream&rsquo;s order (by stem through the
+<code>HashMap</code> <code>RuleSetMerger.merge</code> returns), which decides which rule runs first on a span. <code>TALPrecompileTest</code> compiles operator-style fixtures (every metric function, labeled metrics with a label
+limit, percentile buckets and ranks, alias and FQCN input/output types, a <code>.yml</code> file, a rules-less file declaring a
+layer another file uses) and the build failures; <code>TALDocScriptsTest</code> extracts the scripts of upstream&rsquo;s
+<code>tal.md</code> and of the practice pages (<code>otlp-trace-practices/gateway-{overview,canary,nginx}.md</code>, <code>database-and-cache.md</code>,
+<code>message-queue.md</code>), splices or substitutes each practice into a copy of the shipped file where the page says, compiles them through the same pass and runs the classes the manifest names against spans each practice is
+about.</p>
+<p>Generated class package: <code>org.apache.skywalking.oap.trace.analyzer.v2.compiler.rt.*</code></p>
 <h3 id="hierarchy">Hierarchy</h3>
 <p>Uses <code>HierarchyRuleClassGenerator</code> with <code>setClassOutputDir()</code> and <code>setClassNameHint()</code>.</p>
 <pre tabindex="0"><code>1. Load hierarchy-definition.yml
@@ -761,6 +1839,23 @@ DSL Purpose Compiled Interface Generated Classes OAL Metrics aggregation rules M
 </code></pre><p>4 rule types: <code>name</code>, <code>short-name</code>, <code>lower-short-name-remove-namespace</code>, <code>lower-short-name-with-fqdn</code>.</p>
 <p>Generated class package: <code>org.apache.skywalking.oap.server.core.config.v2.compiler.hierarchy.rule.rt.*</code></p>
 <hr>
+<h2 id="dsl-live-debugger-swip-13">DSL Live Debugger (SWIP-13)</h2>
+<p>Upstream&rsquo;s debugger is a codegen-time decision: when <code>DSLDebugCodegenSwitch.isInjectionEnabled()</code>
+is true, the OAL, MAL and LAL generators emit a <code>GateHolder</code> field per rule (per metric for OAL
+dispatchers), a <code>debugHolder()</code> accessor and <code>if (holder.isGateOn())</code> probe call sites. The
+upstream OAP flips the switch in <code>DSLDebuggingModuleProvider.prepare()</code>; this distro flips it in
+the precompiler (<code>DSLDebugCodegenSwitch.enableInjection()</code> before every generator pass) and sets
+<code>setContent(...)</code> on the MAL/LAL generators, so the pre-compiled classes carry the same probes
+and rule text. Nothing is compiled at runtime: the wired-in upstream <code>dsl-debugging</code> module only
+adds and removes recorders on the holders. Registration works unchanged — MAL holders are
+published by upstream&rsquo;s receivers through <code>MalStaticBindingHook</code>, LAL holders by
+<code>LogFilterListener</code> through <code>LalStaticBindingHook</code> (the log <code>DSL</code> replacement stamps the same
+<code>ruleName</code>/<code>inputClass</code>/<code>outputClass</code> metadata upstream does), and OAL holders are found on the
+loaded dispatchers via <code>DebugHolderProvider</code>. Idle cost is one volatile read per probe site.</p>
+<p>Two details the distro supplies for the module: <code>OALEngineLoaderService.getLoadedDefines()</code> on
+the replacement loader, and the raw <code>oal/*.oal</code> scripts at their classpath paths in the
+precompiler jar, which <code>GET /runtime/oal/files/{name}</code> reads (the file name must be
+path-escaped, <code>oal%2Fcore.oal</code>, as swctl and Horizon send it).</p>
 <h2 id="runtime-loading-via-same-fqcn-replacements">Runtime Loading via Same-FQCN Replacements</h2>
 <p>At runtime (native image or JVM distro), same-FQCN replacement classes load pre-compiled classes instead of running Javassist.</p>
 <h3 id="oal-oalengineloaderservice">OAL: <code>OALEngineLoaderService</code></h3>
@@ -787,11 +1882,15 @@ DSL Purpose Compiled Interface Generated Classes OAL Metrics aggregation rules M
 <h3 id="lal-dsl-v2">LAL: <code>DSL</code> (v2)</h3>
 <p><strong>Upstream</strong>: <code>analyzer/log-analyzer/.../v2/dsl/DSL.java</code>
 <strong>Replacement</strong>: <code>oap-libs-for-graalvm/log-analyzer-for-graalvm/</code></p>
-<p><code>of(moduleManager, config, dsl, extraLogType, ruleName, yamlSource)</code> computes the deterministic class name and loads via <code>Class.forName()</code>.</p>
-<h3 id="hierarchy-compiledhierarchyruleprovider">Hierarchy: <code>CompiledHierarchyRuleProvider</code></h3>
-<p><strong>Upstream</strong>: <code>analyzer/hierarchy/.../v2/compiler/CompiledHierarchyRuleProvider.java</code>
+<p><code>of(moduleManager, config, dsl, inputType, outputType, ruleName, sourceRef)</code> looks the rule up by its <code>DslSourceRef</code> coordinates (<code>lal/&lt;file&gt;.yaml:&lt;line&gt;</code>) in <code>META-INF/lal-v2-rules.txt</code> and loads via <code>Class.forName()</code>. The manifest also carries the effective input type the compiler resolved, which upstream <code>LogFilterListener</code> uses to route Envoy HTTP vs TCP access logs to the right rule.</p>
+<h3 id="tal-taldsl--talconfigs">TAL: <code>TalDSL</code> + <code>TALConfigs</code></h3>
+<p><strong>Upstream</strong>: <code>analyzer/trace-analyzer/.../v2/dsl/TalDSL.java</code>, <code>.../v2/provider/TALConfigs.java</code>
+<strong>Replacement</strong>: <code>oap-libs-for-graalvm/trace-analyzer-for-graalvm/</code></p>
+<p><code>TALConfigs.load</code> reads <code>META-INF/config-data/tal.json</code> (keyed by file name, with extension) and re-stamps sourceName/sourcePath/metricPrefix and inline layers as upstream does, so the upstream <code>SpanFilterListener.Factory</code> builds the same <code>DslSourceRef</code>. <code>TalDSL.of(...)</code> looks the rule up by those coordinates (<code>tal/&lt;file&gt;.yaml:&lt;line&gt;</code>, never by name alone) in <code>META-INF/tal-v2-rules.txt</code>, fails if the rule name or the input type differs from the one the class was compiled for, instantiates the class, then claims and creates the metric declarations recorded in the manifest (<code>meterSystem.create</code> + <code>limitLabels</code>), exactly the calls upstream&rsquo;s <code>createMetrics</code> makes. <code>TALRecordedTraceComparisonTest</code> runs the shipped rules over upstream&rsquo;s recorded OTel Demo trace through a fresh compile and through the pre-compiled classes and requires identical metrics, traffic, alias rows and slow-statement records.</p>
+<h3 id="hierarchy-hierarchydefinitionservice">Hierarchy: <code>HierarchyDefinitionService</code></h3>
+<p><strong>Upstream</strong>: <code>server-core/.../core/config/HierarchyDefinitionService.java</code>
 <strong>Replacement</strong>: <code>oap-libs-for-graalvm/server-core-for-graalvm/</code></p>
-<p><code>buildRules(ruleExpressions)</code> loads pre-compiled <code>BiFunction</code> classes by rule name.</p>
+<p>Skips the upstream <code>HierarchyRuleProvider</code> SPI and loads pre-compiled <code>BiFunction</code> classes by rule name from <code>META-INF/hierarchy-v2-rules.txt</code>.</p>
 <hr>
 <h2 id="classpath-scanning-replacements">Classpath Scanning Replacements</h2>
 <p>Guava <code>ClassPath.from()</code> is used in several places. All replaced with manifest-based loading:</p>
@@ -817,13 +1916,13 @@ DSL Purpose Compiled Interface Generated Classes OAL Metrics aggregation rules M
       <tr>
           <td><code>MeterSystem</code></td>
           <td><code>META-INF/annotation-scan/MeterFunction.txt</code></td>
-          <td>16 meter function classes</td>
+          <td>18 meter function classes</td>
       </tr>
   </tbody>
 </table>
 <hr>
 <h2 id="metersystem-javassist-unchanged">MeterSystem Javassist (Unchanged)</h2>
-<p><code>MeterSystem.create()</code> generates one dynamic meter subclass per metric rule (~1188 classes) via Javassist. This is separate from MAL DSL compilation and is handled the same as before: run at build time, export <code>.class</code> files, load from manifests at runtime.</p>
+<p><code>MeterSystem.create()</code> generates one dynamic meter subclass per metric rule (~1530 for MAL, 28 for TAL) via Javassist. This is separate from MAL DSL compilation and is handled the same as before: run at build time, export <code>.class</code> files, load from manifests at runtime.</p>
 <hr>
 <h2 id="manifest-files">Manifest Files</h2>
 <p>All manifests are in <code>META-INF/</code> within the precompiler output JAR:</p>
@@ -872,9 +1971,39 @@ DSL Purpose Compiled Interface Generated Classes OAL Metrics aggregation rules M
           <td>Reflection config for LAL expression classes</td>
       </tr>
       <tr>
+          <td><code>lal-v2-rules.txt</code></td>
+          <td>Properties (<code>rule.N.source/line/name/class/inputType</code>)</td>
+          <td>Runtime LAL lookup by source coordinates + effective input type</td>
+      </tr>
+      <tr>
+          <td><code>tal-v2-classes.txt</code></td>
+          <td>FQCN per line</td>
+          <td>Reflection config for TAL expression classes</td>
+      </tr>
+      <tr>
+          <td><code>tal-v2-rules.txt</code></td>
+          <td>Escaped UTF-8 properties (<code>rule.N.source/line/name/class/inputType/outputType/metricPrefix/dslSha256</code>, <code>rule.N.metric.M.fullName/function/scopeType/declaredName/buckets/ranks/labelLimit</code>)</td>
+          <td>Runtime TAL lookup by the inputs each class was compiled from + the metrics each rule creates</td>
+      </tr>
+      <tr>
+          <td><code>tal-meter-classes.txt</code></td>
+          <td><code>name=FQCN</code></td>
+          <td>Meter classes generated for TAL metrics</td>
+      </tr>
+      <tr>
+          <td><code>tal-io-classes.txt</code></td>
+          <td>FQCN per line</td>
+          <td>TAL input types, <code>TALSourceTypeProvider</code> / <code>TALOutputBuilder</code> implementations and class-named builders, for reflection</td>
+      </tr>
+      <tr>
           <td><code>hierarchy-v2-classes.txt</code></td>
           <td>FQCN per line</td>
           <td>Reflection config for hierarchy rule classes</td>
+      </tr>
+      <tr>
+          <td><code>hierarchy-v2-rules.txt</code></td>
+          <td><code>ruleName=FQCN</code></td>
+          <td>Runtime hierarchy rule lookup</td>
       </tr>
       <tr>
           <td><code>mal-meter-classes.txt</code></td>
@@ -891,6 +2020,16 @@ DSL Purpose Compiled Interface Generated Classes OAL Metrics aggregation rules M
           <td>JSON</td>
           <td>Serialized rule configs for runtime loaders</td>
       </tr>
+      <tr>
+          <td><code>rule-source/**</code></td>
+          <td>raw MAL/LAL YAML + <code>index.txt</code></td>
+          <td>Read-only <code>/runtime/rule</code> catalog served by <code>BundledRuleCatalogHandler</code></td>
+      </tr>
+      <tr>
+          <td><code>oal/*.oal</code> (jar root)</td>
+          <td>raw OAL scripts</td>
+          <td><code>GET /runtime/oal/files/{name}</code> (upstream dsl-debugging handler)</td>
+      </tr>
   </tbody>
 </table>
 <hr>
@@ -898,11 +2037,14 @@ DSL Purpose Compiled Interface Generated Classes OAL Metrics aggregation rules M
 <p>The precompiler auto-generates <code>reflect-config.json</code> from manifests:</p>
 <ul>
 <li>OAL metrics/dispatchers: constructor-only access</li>
-<li>MAL/LAL/Hierarchy expression classes: constructor-only access</li>
+<li>MAL/LAL/TAL/Hierarchy expression classes and MAL/TAL meter classes: constructor-only access</li>
+<li>TAL <code>PairingFact</code> and <code>SpanMetadata</code>: full access (<code>PairingFact</code> crosses OAP nodes as stream data and <code>RemoteHandleWorker</code> rebuilds it with <code>newInstance()</code>; both are what a rule&rsquo;s <code>pairing</code> / <code>meta</code> hand to <code>toJson()</code>, which serializes objects through Gson&rsquo;s reflective adapters)</li>
+<li>The protobuf runtime classes Gson walks when <code>toJson()</code> is given a protobuf input (<code>ByteString</code> and its subclasses, <code>AbstractMessage(Lite)</code>, <code>GeneratedMessage</code>, <code>UnknownFieldSet</code>, the primitive and lazy lists, <code>MapField</code>), so <code>toJson(span)</code> returns natively what it returns on the JVM</li>
 <li>Annotation-scanned classes: full method/field access</li>
 <li>Armeria HTTP handlers, GraphQL resolvers/types: full access</li>
+<li>LAL input types (Envoy <code>HTTPAccessLogEntry</code> / <code>TCPAccessLogEntry</code>) and every message, Builder and enum type reachable through their proto descriptors: full access. Upstream JSON-prints these entries with protobuf&rsquo;s <code>JsonFormat</code> (the <code>EnvoyAccessLog</code> content and the DSL debug captures), whose accessor table finds the generated getters by reflection. <code>LalInputTypeReflectionTest</code> walks the descriptors and fails on any gap.</li>
 </ul>
-<p>MAL v2 expressions use <code>LambdaMetafactory</code> for closure wiring. Since the pre-compiled classes are on the native-image build classpath, the static analysis resolves these lambdas automatically.</p>
+<p>MAL v2 closures (tag/forEach/decorate functions) are compiled into companion classes next to the expression class, so no runtime lambda wiring is needed; the static analysis sees them as ordinary classes.</p>
 <hr>
 <h2 id="same-fqcn-replacement-summary">Same-FQCN Replacement Summary</h2>
 <table>
@@ -937,12 +2079,7 @@ DSL Purpose Compiled Interface Generated Classes OAL Metrics aggregation rules M
       <tr>
           <td><code>HierarchyDefinitionService</code></td>
           <td><code>server-core-for-graalvm</code></td>
-          <td>Java-backed hierarchy rules</td>
-      </tr>
-      <tr>
-          <td><code>CompiledHierarchyRuleProvider</code></td>
-          <td><code>server-core-for-graalvm</code></td>
-          <td>Load pre-compiled hierarchy rule classes</td>
+          <td>Load pre-compiled hierarchy rule classes by name</td>
       </tr>
       <tr>
           <td><code>DSL</code> (MAL v2)</td>
@@ -960,14 +2097,19 @@ DSL Purpose Compiled Interface Generated Classes OAL Metrics aggregation rules M
           <td>Load rule configs from JSON manifests</td>
       </tr>
       <tr>
-          <td><code>MeterConfigs</code></td>
-          <td><code>agent-analyzer-for-graalvm</code></td>
-          <td>Load meter configs from JSON manifests</td>
-      </tr>
-      <tr>
           <td><code>LALConfigs</code></td>
           <td><code>log-analyzer-for-graalvm</code></td>
           <td>Load LAL configs from JSON manifests</td>
+      </tr>
+      <tr>
+          <td><code>TalDSL</code></td>
+          <td><code>trace-analyzer-for-graalvm</code></td>
+          <td>Load pre-compiled TalExpression classes + create their metrics from the manifest</td>
+      </tr>
+      <tr>
+          <td><code>TALConfigs</code></td>
+          <td><code>trace-analyzer-for-graalvm</code></td>
+          <td>Load TAL configs from JSON manifests</td>
       </tr>
   </tbody>
 </table>
@@ -1019,7 +2161,7 @@ DSL Purpose Compiled Interface Generated Classes OAL Metrics aggregation rules M
 <div class="td-toc-label">On this page</div>
 <nav id="TableOfContents">
   <ul>
-    <li><a href="#dsl-build-time-pre-compilation-oalmallalhierarchy">DSL Build-Time Pre-Compilation (OAL/MAL/LAL/Hierarchy)</a>
+    <li><a href="#dsl-build-time-pre-compilation-oalmallaltalhierarchy">DSL Build-Time Pre-Compilation (OAL/MAL/LAL/TAL/Hierarchy)</a>
       <ul>
         <li><a href="#context">Context</a></li>
         <li><a href="#build-time-compilation">Build-Time Compilation</a>
@@ -1027,15 +2169,18 @@ DSL Purpose Compiled Interface Generated Classes OAL Metrics aggregation rules M
             <li><a href="#oal">OAL</a></li>
             <li><a href="#mal">MAL</a></li>
             <li><a href="#lal">LAL</a></li>
+            <li><a href="#tal">TAL</a></li>
             <li><a href="#hierarchy">Hierarchy</a></li>
           </ul>
         </li>
+        <li><a href="#dsl-live-debugger-swip-13">DSL Live Debugger (SWIP-13)</a></li>
         <li><a href="#runtime-loading-via-same-fqcn-replacements">Runtime Loading via Same-FQCN Replacements</a>
           <ul>
             <li><a href="#oal-oalengineloaderservice">OAL: <code>OALEngineLoaderService</code></a></li>
             <li><a href="#mal-dsl-v2">MAL: <code>DSL</code> (v2)</a></li>
             <li><a href="#lal-dsl-v2">LAL: <code>DSL</code> (v2)</a></li>
-            <li><a href="#hierarchy-compiledhierarchyruleprovider">Hierarchy: <code>CompiledHierarchyRuleProvider</code></a></li>
+            <li><a href="#tal-taldsl--talconfigs">TAL: <code>TalDSL</code> + <code>TALConfigs</code></a></li>
+            <li><a href="#hierarchy-hierarchydefinitionservice">Hierarchy: <code>HierarchyDefinitionService</code></a></li>
           </ul>
         </li>
         <li><a href="#classpath-scanning-replacements">Classpath Scanning Replacements</a></li>
@@ -1139,6 +2284,9 @@ DSL Purpose Compiled Interface Generated Classes OAL Metrics aggregation rules M
         
         
     </div>
+    <p class="footer-contribute">
+      <a id="contribute" href="https://github.com/apache/skywalking-website" target="_blank" rel="noopener">Help improve this website <span aria-hidden="true">↗</span></a>
+    </p>
     <div class="">
 
         <small class="text-color">&copy; 2017 - 2026 The Apache Software Foundation All Rights Reserved</small>
@@ -10853,6 +12001,1466 @@ DSL Purpose Compiled Interface Generated Classes OAL Metrics aggregation rules M
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
 <div id="popup">
     <div class="mask">
@@ -10860,85 +13468,187 @@ DSL Purpose Compiled Interface Generated Classes OAL Metrics aggregation rules M
     </div>
 </div>
 
-    <div class="sidebar-mask"></div>
-<div class="sidebar">
-    <nav class="nav-links">
+    
+
+
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+<div class="sidebar-mask" aria-hidden="true"></div>
+<div class="sidebar" id="site-navigation-drawer" role="dialog" aria-modal="true" aria-label="Navigation" aria-hidden="true" tabindex="-1">
+  <div class="sidebar-header">
+    <span>Menu</span>
+    <button type="button" class="sidebar-close" aria-label="Close navigation">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+    </button>
+  </div>
+  <nav class="nav-links" aria-label="Site pages">
+    <ul class="sidebar-primary">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/">Home</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link active" href="/docs" aria-current="page">Projects</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/blog">Blogs</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/events/">Release Posts</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/events/calendar/">Event Calendar</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/users">Users</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/team">Team</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <li><a class="nav-link" href="/zh/">中文博客</a></li>
+      
+      
+    </ul>
+    <ul class="sidebar-secondary">
+      <li><a class="nav-link" href="/downloads/">Downloads</a></li>
+      
+      <li><a class="nav-link" href="/get-started/">Get started</a></li>
+      
+    </ul>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <details class="sidebar-resources">
+      <summary><span>Apache</span><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 4 4 4-4 4"/></svg></summary>
+      <ul class="sidebar-resource-links">
         
-        <div class="nav-item"><a href="/docs/" class="nav-link router-link-active">Documentation</a></div>
-        <div class="nav-item"><a href="/events/" class="nav-link">Events</a></div>
-        <div class="nav-item"><a href="/blog/" class="nav-link">Blog</a></div>
-        <div class="nav-item"><a href="/downloads/" class="nav-link">Downloads</a></div>
-        <div class="nav-item"><a href="/team/" class="nav-link">Team</a></div>
-        <div class="nav-item"><a href="/users/" class="nav-link">Users</a></div>
-        <div class="nav-item"><a href="/zh/" class="nav-link">中文博客</a></div>
-        <div class="nav-item">
-            <div class="dropdown-wrapper open">
-                <a class="dropdown-title">
-                    <span>Links</span>
-                    <span class="arrow down"></span>
-                </a>
-                <ul class="nav-dropdown">
-                    <li class="dropdown-item">
-                        <a href="http://www.apache.org/" target="_blank"
-                           rel="noopener noreferrer" class="nav-link external">
-                            Apache Software Foundation
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="https://github.com/apache/skywalking/issues"
-                           target="_blank" rel="noopener noreferrer"
-                           class="nav-link external">
-                            GitHub Issue Tracker
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="https://lists.apache.org/list.html?dev@skywalking.apache.org" target="_blank"
-                           rel="noopener noreferrer" class="nav-link external">
-                            Dev Mailing List
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="http://www.apache.org/licenses/" target="_blank"
-                           rel="noopener noreferrer" class="nav-link external">
-                            License
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="http://www.apache.org/events/current-event"
-                           target="_blank" rel="noopener noreferrer"
-                           class="nav-link external">
-                            Apache Events
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="http://www.apache.org/security/" target="_blank"
-                           rel="noopener noreferrer" class="nav-link external">
-                            Security
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="http://www.apache.org/foundation/sponsorship.html"
-                           target="_blank" rel="noopener noreferrer"
-                           class="nav-link external">
-                            Sponsorship and Donate
-                        </a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="http://www.apache.org/foundation/thanks.html"
-                           target="_blank" rel="noopener noreferrer"
-                           class="nav-link external">
-                            Thanks
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+        <li><a class="nav-link" href="http://www.apache.org/" target="_blank" rel="noopener noreferrer"><span>Apache Software Foundation</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="https://github.com/apache/skywalking/issues" target="_blank" rel="noopener noreferrer"><span>GitHub Issue Tracker</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="https://github.com/apache/skywalking/discussions" target="_blank" rel="noopener noreferrer"><span>Discussion</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="https://lists.apache.org/list.html?dev@skywalking.apache.org" target="_blank" rel="noopener noreferrer"><span>Dev Mailing List</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="https://cwiki.apache.org/confluence/display/SKYWALKING/Home" target="_blank" rel="noopener noreferrer"><span>WIKI</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="http://www.apache.org/licenses/" target="_blank" rel="noopener noreferrer"><span>License</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="http://www.apache.org/events/current-event" target="_blank" rel="noopener noreferrer"><span>Apache Events</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="http://www.apache.org/security/" target="_blank" rel="noopener noreferrer"><span>Security</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="http://www.apache.org/foundation/sponsorship.html" target="_blank" rel="noopener noreferrer"><span>Sponsor and Donate</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="http://www.apache.org/foundation/thanks.html" target="_blank" rel="noopener noreferrer"><span>Thanks</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+        <li><a class="nav-link" href="https://apache.org/foundation/policies/privacy.html" target="_blank" rel="noopener noreferrer"><span>Privacy</span><span class="sidebar-external" aria-hidden="true">↗</span></a></li>
+        
+      </ul>
+    </details>
+    
+    
+  </nav>
 </div>
 
     <script src="/js/bootstrap.bundle.min.js"></script>
 
-<script src="/js/docsearch-3.9.0.js"></script>
 
 
 
@@ -10948,7 +13658,8 @@ DSL Purpose Compiled Interface Generated Classes OAL Metrics aggregation rules M
 
 
 
-<script src="/js/main.min.9be14eed0a0e24711261c334305209aa2e5ae3fb624f6a1731e064d5ffb11f3d.js" integrity="sha256-m&#43;FO7QoOJHESYcM0MFIJqi5a4/tiT2oXMeBk1f&#43;xHz0=" crossorigin="anonymous"></script>
+
+<script src="/js/main.min.a351a9c3ee226044b9050a859fb2f5a6019a548cfe22e3ca281fb08443c28976.js" integrity="sha256-o1Gpw&#43;4iYES5BQqFn7L1pgGaVIz&#43;IuPKKB&#43;whEPCiXY=" crossorigin="anonymous"></script>
 
 
 <script src="/js/highlight.min.js"></script>
@@ -10981,14 +13692,16 @@ data-project-name="SkyWalking"
 data-project-color="#2B74B8"
 data-button-text="Ask AI"
 data-search-mode-enabled="true"
+data-search-mode-default="false"
+data-modal-override-open-selector-search=".sw-kapa-search"
 data-modal-open-on-command-k="true"
+data-modal-command-k-search-mode-default="true"
+data-modal-z-index="10000"
 data-modal-disclaimer="The AI supports multiple languages, but it may not be accessible in China, a proxy is required."
 data-project-logo="/images/widget-logo.jpg"
 data-modal-example-questions="What is Apache SkyWalking?,How to deploy SkyWalking?,How to inject agents non-intrusively?,How to setup trace sampling?"
-data-button-position-top=""
 data-button-position-right="20px"
 data-button-position-bottom="200px"
-data-button-position-left=""
 data-consent-required="true"  
 data-user-analytics-cookie-enabled="true"  
 data-consent-screen-title="Help us improve our AI assistant"  
@@ -10996,8 +13709,28 @@ data-consent-screen-disclaimer="By clicking 'Allow tracking', you consent to ano
 data-consent-screen-accept-button-text="Allow tracking"  
 data-consent-screen-reject-button-text="No, thanks"
 ></script>
+<script>
+  (function () {
+    var SEL = 'details.topic-filter';
 
+    function closeAll(except) {
+      document.querySelectorAll(SEL).forEach(function (d) {
+        if (d !== except && d.open) { d.open = false; }
+      });
+    }
 
+    
+    
+    document.addEventListener('click', function (e) {
+      var target = e.target instanceof Element ? e.target.closest(SEL) : null;
+      closeAll(target);
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' || e.key === 'Esc') { closeAll(null); }
+    });
+  })();
+</script>
 
 
     <script>

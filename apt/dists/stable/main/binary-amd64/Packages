@@ -1,0 +1,113 @@
+Package: asz-claude-code
+Architecture: amd64
+Version: 0.4.0
+Priority: optional
+Section: devel
+Maintainer: Apache SkyWalking <dev@skywalking.apache.org>
+Installed-Size: 3684
+Filename: pool/asz-claude-code_0.4.0_amd64.deb
+Size: 1619042
+MD5sum: 947727e1e084683265fb7770d2b369aa
+SHA1: 8af41a3112797cf7b62695df454ec135a2fc6cd8
+SHA256: 25c54a013f9484790af81f47cc47b79220b62e713d8d1ace34823c594057652f
+SHA512: 0cbbf983d65a09026881c1e660e79730f8d9861dfbee86cb4cb708e29687ef8d9dc5401cb47729e4fa5ae9513c0f1045eca4638474dc01aeb4a1c1433e478ac1
+Homepage: https://skywalking.apache.org/
+Description: Claude Code plugin that records which files each tool call changed
+ The binary the hooks of the asz-changes plugin run. The plugin itself is
+ installed into Claude Code with the claude plugin commands.
+
+Package: asz
+Architecture: amd64
+Version: 0.4.0
+Priority: optional
+Section: devel
+Maintainer: Apache SkyWalking <dev@skywalking.apache.org>
+Installed-Size: 16240
+Filename: pool/asz_0.4.0_amd64.deb
+Size: 6573864
+MD5sum: 2652a7bf1a0e3aca45aeef7d377fb5da
+SHA1: e6920a080a5cf33bf611d860b1b88e38f64923bc
+SHA256: c061b645949838ca1842e31626356f6b10c09c3df111c59b0e7ff019e7b741c5
+SHA512: 4e1d4cedc5fd2b4538e77c92fba1805b429d9db2b80b7e070e91b65d27bd15f7de52ba42685a73ff6cd2dd6f5b66251d7640a6acb6a57b2921f0e48ab6135d56
+Homepage: https://skywalking.apache.org/
+Description: Conversation-level observability for long-lived AI agents
+ Apache SkyWalking AI Sessionizer assembles fragmented agent telemetry,
+ such as transcripts, subagent streams and workflow journals, into one
+ durable conversation structure.
+
+Package: asz-changes
+Architecture: amd64
+Version: 0.5.0
+Priority: optional
+Section: devel
+Maintainer: Apache SkyWalking <dev@skywalking.apache.org>
+Installed-Size: 3684
+Filename: pool/asz-changes_0.5.0_amd64.deb
+Size: 1620054
+MD5sum: ee803c9c30ad676deb48a7440035da57
+SHA1: e10a0351e4d34d2548e482d6c240df7f07093ff6
+SHA256: c3249287bc672cebe7f2ceecb320784cffac5a7b0df6b7950f30215817a7765d
+SHA512: 8d69f1ac39ce8903e150fcc13c4c34885fc3d15ee18436242b91c6e57bb6b9489d3b97864634d14badc8b27c657d48523bfbe3ea20bad3289ee5c4089ac8d449
+Homepage: https://skywalking.apache.org/
+Description: Records which files each tool call changed
+ The program an agent runtime's integration runs around a tool call, to
+ record what it changed on disk. Claude Code runs it from the hooks of the
+ asz-changes plugin; a LangChain application runs it from the asz shim.
+
+Package: asz
+Architecture: amd64
+Version: 0.5.0
+Priority: optional
+Section: devel
+Maintainer: Apache SkyWalking <dev@skywalking.apache.org>
+Installed-Size: 16480
+Filename: pool/asz_0.5.0_amd64.deb
+Size: 6666402
+MD5sum: 5111f27402efdca2e0a513a6d2af694a
+SHA1: ad5b1a778136a9d406f7fef7ac7279e14d2c5235
+SHA256: aa29cafb60f7ffaf1f3e39dccad4600cef4f8ba6c5a8875352441821e6107dec
+SHA512: 4b43ad4a4cd6ea8585a0b04e64c269b0289f82e407b12e178bd6f7a421790082087b00e59612f1035d3b253099cf3a45a20b193b349f971749eece2610c4955b
+Homepage: https://skywalking.apache.org/
+Description: Conversation-level observability for long-lived AI agents
+ Apache SkyWalking AI Sessionizer assembles fragmented agent telemetry,
+ such as transcripts, subagent streams and workflow journals, into one
+ durable conversation structure.
+
+Package: asz-changes
+Architecture: amd64
+Version: 0.6.0
+Priority: optional
+Section: devel
+Maintainer: Apache SkyWalking <dev@skywalking.apache.org>
+Installed-Size: 3736
+Filename: pool/asz-changes_0.6.0_amd64.deb
+Size: 1641564
+MD5sum: e526c94ea18a177eecfc60dac06507b1
+SHA1: ae1e94e1174e5f799b116348bf13edeea293d102
+SHA256: 3434afb077e05b85c2bc4bd6f601ac883e30eafe81f5becf17c12f389f0d5ca0
+SHA512: 4a5640d17e5d16f9be001de778b0094cbde9c90d2407e22eeaa8994cf46262b6fd19d94b13b45df90a41f0bd05820f8f5aff161e2a10e9cdb6110e83874459bc
+Homepage: https://skywalking.apache.org/
+Description: Records which files each tool call changed
+ The program an agent runtime's integration runs around a tool call, to
+ record what it changed on disk. Claude Code runs it from the hooks of the
+ asz-changes plugin; a LangChain application runs it from the asz shim.
+
+Package: asz
+Architecture: amd64
+Version: 0.6.0
+Priority: optional
+Section: devel
+Maintainer: Apache SkyWalking <dev@skywalking.apache.org>
+Installed-Size: 17316
+Filename: pool/asz_0.6.0_amd64.deb
+Size: 7017448
+MD5sum: 62e7f66f87546eece3e84e42d9de09c7
+SHA1: 9a7c958ee576f6b106ff2f408843a28cc86b9afc
+SHA256: c34926a93c59101a2b38a95e23bbee0273da71c5d97e57db922d4db5dad99476
+SHA512: c57de883088a730879098e5b9f222adf78e6c8072e054e839503d995c375c3a8a188d92da1838a916c2f179d62c39aee696902eaf0d38b5c2f528c72ca74bd51
+Homepage: https://skywalking.apache.org/
+Description: Conversation-level observability for long-lived AI agents
+ Apache SkyWalking AI Sessionizer assembles fragmented agent telemetry,
+ such as transcripts, subagent streams and workflow journals, into one
+ durable conversation structure.
+
