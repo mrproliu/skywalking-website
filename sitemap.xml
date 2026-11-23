@@ -7642,10 +7642,6 @@
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://skywalking.apache.org/docs/skywalking-graalvm-distro/next/internals/config-init-immigration/</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.5</priority>
-  </url><url>
     <loc>https://skywalking.apache.org/docs/skywalking-graalvm-distro/v0.3.0/internals/config-init-immigration/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
@@ -7655,6 +7651,10 @@
     <priority>0.5</priority>
   </url><url>
     <loc>https://skywalking.apache.org/docs/skywalking-graalvm-distro/v0.5.0/internals/config-init-immigration/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://skywalking.apache.org/docs/skywalking-graalvm-distro/next/internals/config-init-immigration/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url><url>

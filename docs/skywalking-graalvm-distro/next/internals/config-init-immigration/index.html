@@ -21,23 +21,23 @@
 <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#5bbad5">
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
-<title>Config Initialization — Eliminate Reflection in Config Loading | Apache SkyWalking</title><meta property="og:url" content="https://skywalking.apache.org/docs/skywalking-graalvm-distro/next/internals/config-init-immigration/">
+<title>Config Initialization — Generated Config Loading | Apache SkyWalking</title><meta property="og:url" content="https://skywalking.apache.org/docs/skywalking-graalvm-distro/next/internals/config-init-immigration/">
   <meta property="og:site_name" content="Apache SkyWalking">
-  <meta property="og:title" content="Config Initialization — Eliminate Reflection in Config Loading">
-  <meta property="og:description" content="Config Initialization — Eliminate Reflection in Config Loading Context YamlConfigLoaderUtils.copyProperties() uses Field.setAccessible(true) &#43; field.set() to populate ModuleConfig objects from YAML properties. This reflection pattern is problematic for GraalVM native image — every config field would require reflect-config.json entries, and setAccessible() is restricted.
-Since the image ships a known module/provider set (the accepted providers, see distro-policy.md), we can generate hardcoded field-setting code at build time that eliminates field reflection in config loading. Upstream’s ModuleDefine.prepare still creates each config object through its no-arg constructor reflectively; the precompiler registers those constructors from module-config-classes.txt.">
+  <meta property="og:title" content="Config Initialization — Generated Config Loading">
+  <meta property="og:description" content="Config Initialization — Generated Config Loading Context YamlConfigLoaderUtils.copyProperties() uses Field.setAccessible(true) &#43; field.set() to populate ModuleConfig objects from YAML properties. This reflection pattern is problematic for GraalVM native image — every config field would require reflect-config.json entries, and setAccessible() is restricted.
+Since the image ships a known module/provider set (the accepted providers, see distro-policy.md), we generate the field-setting code at build time: a field its class has a setter for is set through it; a field no setter writes (none declared, or a final or static field) is written through Field.set, as upstream writes every field, and the precompiler registers those fields from module-config-field-set.txt. Upstream’s ModuleDefine.prepare still creates each config object through its no-arg constructor reflectively; the precompiler registers those constructors from module-config-classes.txt.">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="article">
     <meta property="article:section" content="docs">
 
-  <meta itemprop="name" content="Config Initialization — Eliminate Reflection in Config Loading">
-  <meta itemprop="description" content="Config Initialization — Eliminate Reflection in Config Loading Context YamlConfigLoaderUtils.copyProperties() uses Field.setAccessible(true) &#43; field.set() to populate ModuleConfig objects from YAML properties. This reflection pattern is problematic for GraalVM native image — every config field would require reflect-config.json entries, and setAccessible() is restricted.
-Since the image ships a known module/provider set (the accepted providers, see distro-policy.md), we can generate hardcoded field-setting code at build time that eliminates field reflection in config loading. Upstream’s ModuleDefine.prepare still creates each config object through its no-arg constructor reflectively; the precompiler registers those constructors from module-config-classes.txt.">
-  <meta itemprop="wordCount" content="1170">
+  <meta itemprop="name" content="Config Initialization — Generated Config Loading">
+  <meta itemprop="description" content="Config Initialization — Generated Config Loading Context YamlConfigLoaderUtils.copyProperties() uses Field.setAccessible(true) &#43; field.set() to populate ModuleConfig objects from YAML properties. This reflection pattern is problematic for GraalVM native image — every config field would require reflect-config.json entries, and setAccessible() is restricted.
+Since the image ships a known module/provider set (the accepted providers, see distro-policy.md), we generate the field-setting code at build time: a field its class has a setter for is set through it; a field no setter writes (none declared, or a final or static field) is written through Field.set, as upstream writes every field, and the precompiler registers those fields from module-config-field-set.txt. Upstream’s ModuleDefine.prepare still creates each config object through its no-arg constructor reflectively; the precompiler registers those constructors from module-config-classes.txt.">
+  <meta itemprop="wordCount" content="1428">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Config Initialization — Eliminate Reflection in Config Loading">
-  <meta name="twitter:description" content="Config Initialization — Eliminate Reflection in Config Loading Context YamlConfigLoaderUtils.copyProperties() uses Field.setAccessible(true) &#43; field.set() to populate ModuleConfig objects from YAML properties. This reflection pattern is problematic for GraalVM native image — every config field would require reflect-config.json entries, and setAccessible() is restricted.
-Since the image ships a known module/provider set (the accepted providers, see distro-policy.md), we can generate hardcoded field-setting code at build time that eliminates field reflection in config loading. Upstream’s ModuleDefine.prepare still creates each config object through its no-arg constructor reflectively; the precompiler registers those constructors from module-config-classes.txt.">
+  <meta name="twitter:title" content="Config Initialization — Generated Config Loading">
+  <meta name="twitter:description" content="Config Initialization — Generated Config Loading Context YamlConfigLoaderUtils.copyProperties() uses Field.setAccessible(true) &#43; field.set() to populate ModuleConfig objects from YAML properties. This reflection pattern is problematic for GraalVM native image — every config field would require reflect-config.json entries, and setAccessible() is restricted.
+Since the image ships a known module/provider set (the accepted providers, see distro-policy.md), we generate the field-setting code at build time: a field its class has a setter for is set through it; a field no setter writes (none declared, or a final or static field) is written through Field.set, as upstream writes every field, and the precompiler registers those fields from module-config-field-set.txt. Upstream’s ModuleDefine.prepare still creates each config object through its no-arg constructor reflectively; the precompiler registers those constructors from module-config-classes.txt.">
 
 
 
@@ -51,9 +51,9 @@ Since the image ships a known module/provider set (the accepted providers, see d
 <script src="/js/jquery-3.6.0.min.js"></script>
 
 <link rel="canonical" href="https://skywalking.apache.org/docs/skywalking-graalvm-distro/next/internals/config-init-immigration/">
-<meta name="description" content="Config Initialization — Eliminate Reflection in Config Loading Context YamlConfigLoaderUtils.copyProperties() uses Field.setAccessible(true) &#43; field.set() to…">
+<meta name="description" content="Config Initialization — Generated Config Loading Context YamlConfigLoaderUtils.copyProperties() uses Field.setAccessible(true) &#43; field.set() to populate…">
 
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@id":"https://skywalking.apache.org/#organization","@type":"Organization","logo":"https://skywalking.apache.org/images/skywalking_400x400.png","name":"Apache SkyWalking","parentOrganization":{"@type":"Organization","name":"The Apache Software Foundation","url":"https://www.apache.org/"},"sameAs":["https://github.com/apache/skywalking","https://twitter.com/asfskywalking","https://projects.apache.org/project.html?skywalking"],"url":"https://skywalking.apache.org/"},{"@type":"TechArticle","headline":"Config Initialization — Eliminate Reflection in Config Loading","inLanguage":"en","mainEntityOfPage":{"@id":"https://skywalking.apache.org/docs/skywalking-graalvm-distro/next/internals/config-init-immigration/","@type":"WebPage"},"publisher":{"@id":"https://skywalking.apache.org/#organization"},"url":"https://skywalking.apache.org/docs/skywalking-graalvm-distro/next/internals/config-init-immigration/"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://skywalking.apache.org/","name":"Apache SkyWalking","position":1},{"@type":"ListItem","item":"https://skywalking.apache.org/docs/","name":"Documentation","position":2},{"@type":"ListItem","item":"https://skywalking.apache.org/docs/skywalking-graalvm-distro/next/internals/config-init-immigration/","name":"Config Initialization — Eliminate Reflection in Config Loading","position":3}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@id":"https://skywalking.apache.org/#organization","@type":"Organization","logo":"https://skywalking.apache.org/images/skywalking_400x400.png","name":"Apache SkyWalking","parentOrganization":{"@type":"Organization","name":"The Apache Software Foundation","url":"https://www.apache.org/"},"sameAs":["https://github.com/apache/skywalking","https://twitter.com/asfskywalking","https://projects.apache.org/project.html?skywalking"],"url":"https://skywalking.apache.org/"},{"@type":"TechArticle","headline":"Config Initialization — Generated Config Loading","inLanguage":"en","mainEntityOfPage":{"@id":"https://skywalking.apache.org/docs/skywalking-graalvm-distro/next/internals/config-init-immigration/","@type":"WebPage"},"publisher":{"@id":"https://skywalking.apache.org/#organization"},"url":"https://skywalking.apache.org/docs/skywalking-graalvm-distro/next/internals/config-init-immigration/"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://skywalking.apache.org/","name":"Apache SkyWalking","position":1},{"@type":"ListItem","item":"https://skywalking.apache.org/docs/","name":"Documentation","position":2},{"@type":"ListItem","item":"https://skywalking.apache.org/docs/skywalking-graalvm-distro/next/internals/config-init-immigration/","name":"Config Initialization — Generated Config Loading","position":3}]}]}</script>
 
 
 <link rel="alternate" type="application/rss+xml" href="https://skywalking.apache.org/feed.xml" title="Apache SkyWalking">
@@ -1503,7 +1503,7 @@ Since the image ships a known module/provider set (the accepted providers, see d
   })()
 </script>
 
-                  <div class="commit-id">Commit Id: f78c20f</div>
+                  <div class="commit-id">Commit Id: c96a8a3</div>
                 
 
 
@@ -1570,17 +1570,18 @@ Since the image ships a known module/provider set (the accepted providers, see d
               <i class="iconfont icon-menu-doc doc-menu-button"></i>
               
 <div class="td-content">
-	<h1 id="config-initialization--eliminate-reflection-in-config-loading">Config Initialization — Eliminate Reflection in Config Loading</h1>
+	<h1 id="config-initialization--generated-config-loading">Config Initialization — Generated Config Loading</h1>
 <h2 id="context">Context</h2>
 <p><code>YamlConfigLoaderUtils.copyProperties()</code> uses <code>Field.setAccessible(true)</code> +
 <code>field.set()</code> to populate <code>ModuleConfig</code> objects from YAML properties. This
 reflection pattern is problematic for GraalVM native image — every config field
 would require <code>reflect-config.json</code> entries, and <code>setAccessible()</code> is restricted.</p>
 <p>Since the image ships a known module/provider set (the accepted providers, see
-distro-policy.md), we can generate hardcoded field-setting code at build time that
-eliminates field reflection in config loading. Upstream&rsquo;s <code>ModuleDefine.prepare</code> still
-creates each config object through its no-arg constructor reflectively; the precompiler
-registers those constructors from <code>module-config-classes.txt</code>.</p>
+distro-policy.md), we generate the field-setting code at build time: a field its class has a setter for is set
+through it; a field no setter writes (none declared, or a final or static field) is written through <code>Field.set</code>, as
+upstream writes every field, and the precompiler registers those fields from <code>module-config-field-set.txt</code>. Upstream&rsquo;s
+<code>ModuleDefine.prepare</code> still creates each config object through its no-arg constructor
+reflectively; the precompiler registers those constructors from <code>module-config-classes.txt</code>.</p>
 <hr>
 <h2 id="problem">Problem</h2>
 <p>In <code>ModuleDefine.prepare()</code> and in <code>BanyanDBConfigLoader</code>,
@@ -1599,9 +1600,11 @@ reflection, and sets them:</p>
 <h2 id="solution-same-fqcn-replacement-of-yamlconfigloaderutils">Solution: Same-FQCN Replacement of YamlConfigLoaderUtils</h2>
 <p>Generate a replacement <code>YamlConfigLoaderUtils.java</code> with the same FQCN
 (<code>org.apache.skywalking.oap.server.library.util.YamlConfigLoaderUtils</code>) that
-dispatches by config object type and sets fields directly — no
-<code>Field.setAccessible()</code>, no <code>getDeclaredField()</code> scan.</p>
-<p>This is one of 23 same-FQCN replacement classes in the distro (see distro-policy.md for full list).</p>
+dispatches by config object type and sets each field through its class&rsquo;s setter where it has one, the value checked
+and converted as upstream&rsquo;s <code>Field.set</code> does (<code>ConfigFieldValues</code>) — no <code>Field.setAccessible()</code>, no
+<code>getDeclaredField()</code> scan for them. Any other field goes through <code>Field.set</code> itself (<code>ConfigFieldValues.setByField</code>),
+as upstream.</p>
+<p>This is one of the distro&rsquo;s same-FQCN replacement classes (see distro-policy.md for the full list).</p>
 <h3 id="field-access-strategy-per-field">Field Access Strategy (per field)</h3>
 <table>
   <thead>
@@ -1613,14 +1616,14 @@ dispatches by config object type and sets fields directly — no
   </thead>
   <tbody>
       <tr>
-          <td><strong>Lombok setter</strong></td>
-          <td>All non-final fields (class-level <code>@Setter</code> added via <code>-for-graalvm</code> modules)</td>
-          <td><code>cfg.setRole((String) value)</code></td>
+          <td><strong>Setter</strong></td>
+          <td>A field its class has <code>set&lt;Name&gt;(&lt;field type&gt;)</code> for (upstream&rsquo;s own <code>@Setter</code> or <code>@Data</code>)</td>
+          <td><code>cfg.setTargets(ConfigFieldValues.referenceValue(value, String.class, &quot;...BanyanDBStorageConfig$Global.targets&quot;))</code></td>
       </tr>
       <tr>
-          <td><strong>Getter + clear + addAll</strong></td>
-          <td>Final collection field</td>
-          <td><code>cfg.getDownsampling().clear(); cfg.getDownsampling().addAll((List) value)</code></td>
+          <td><strong><code>Field.set</code></strong></td>
+          <td>A field no setter writes: none declared (a config class upstream gives only <code>@Getter</code>), or a final or static field. Written as upstream writes it, reflectively (registered in <code>reflect-config.json</code> from <code>module-config-field-set.txt</code>, a final instance field as writable; a static final one refused with <code>IllegalAccessException</code>, as upstream)</td>
+          <td><code>ConfigFieldValues.setByField(cfg, &quot;checkIntervalSeconds&quot;, value)</code></td>
       </tr>
       <tr>
           <td><strong>Error</strong></td>
@@ -1629,15 +1632,24 @@ dispatches by config object type and sets fields directly — no
       </tr>
   </tbody>
 </table>
-<p>All config classes that previously lacked <code>@Setter</code> now have it added via
-same-FQCN replacement classes in the <code>-for-graalvm</code> modules. No VarHandle, no
-reflection fallback. The generator fails at build time if any non-final field
-lacks a setter.</p>
+<p>The values convert as upstream&rsquo;s <code>Field.set</code> converts them (<code>ConfigFieldValues.intValue(value, field)</code> and its kind): a primitive field
+takes its wrapper or a value of a primitive type that widens to it (an <code>int</code> field a <code>Short</code>, <code>Byte</code> or <code>Character</code>
+too; a <code>long</code> field an <code>Integer</code>; a <code>double</code> field any primitive number), never a narrowing one (an <code>int</code> field refuses a
+<code>Long</code> or a <code>Double</code>: <code>1.5</code> is not truncated); a reference field takes an instance of its type or null. A refused value
+throws <code>Field.set</code>&rsquo;s <code>IllegalArgumentException</code> (&ldquo;Can not set int field &hellip; to java.lang.Double&rdquo;). A final field gets
+<code>Field.set</code> itself, as upstream: a value of another type stops the boot (<code>envoy-metric.default.listenerMetricsAdapter: bad</code>), the field&rsquo;s own list given back keeps its elements, and the null a key of the properties&rsquo; defaults reads is
+assigned. A key naming a static field goes through <code>Field.set</code> too, so a constant (<code>alarm.default.DEFAULT_HTTP_TIMEOUT_SECONDS</code>)
+stops the boot with <code>IllegalAccessException</code>, as upstream&rsquo;s does. The precompiler registers every field the loader
+writes through <code>Field.set</code> from the list the config-generator writes (<code>module-config-field-set.txt</code>), a final instance
+field with <code>allowWrite</code>.</p>
+<p>The generator decides each field from the upstream class: a public, non-static <code>set&lt;Name&gt;(&lt;field type&gt;)</code> declared on
+the field&rsquo;s class or a subclass of it, neither a bridge javac generated nor a setter of a type variable, means a setter
+call; anything else <code>Field.set</code>. No config class is copied to add setters, and there is no VarHandle.</p>
 <h3 id="generated-code-structure">Generated Code Structure</h3>
 <div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#cf222e">package</span><span style="color:#fff"> </span><span style="color:#24292e">org.apache.skywalking.oap.server.library.util</span><span style="color:#1f2328">;</span><span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#cf222e">public</span><span style="color:#fff"> </span><span style="color:#cf222e">class</span> <span style="color:#1f2328">YamlConfigLoaderUtils</span><span style="color:#fff"> </span><span style="color:#1f2328">{</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#57606a">// No VarHandle, no reflection. Pure setter-based.</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#57606a">// No VarHandle: setters, and Field.set for a field no setter writes.</span><span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#57606a">// Type-dispatch: check instanceof, delegate to type-specific method</span><span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#cf222e">public</span><span style="color:#fff"> </span><span style="color:#cf222e">static</span><span style="color:#fff"> </span><span style="color:#cf222e">void</span><span style="color:#fff"> </span><span style="color:#6639ba">copyProperties</span><span style="color:#1f2328">(</span>Object<span style="color:#fff"> </span>dest<span style="color:#1f2328">,</span><span style="color:#fff"> </span>Properties<span style="color:#fff"> </span>src<span style="color:#1f2328">,</span><span style="color:#fff">
@@ -1654,19 +1666,22 @@ lacks a setter.</p>
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#1f2328">}</span><span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#1f2328">}</span><span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#57606a">// Per-type: switch on property name, set via Lombok setter</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#57606a">// Per-type: switch on property name, set via the setter, a field no setter writes via Field.set</span><span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#cf222e">private</span><span style="color:#fff"> </span><span style="color:#cf222e">static</span><span style="color:#fff"> </span><span style="color:#cf222e">void</span><span style="color:#fff"> </span><span style="color:#6639ba">copyToCoreModuleConfig</span><span style="color:#1f2328">(</span><span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span>CoreModuleConfig<span style="color:#fff"> </span>cfg<span style="color:#1f2328">,</span><span style="color:#fff"> </span>Properties<span style="color:#fff"> </span>src<span style="color:#1f2328">,</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span>String<span style="color:#fff"> </span>moduleName<span style="color:#1f2328">,</span><span style="color:#fff"> </span>String<span style="color:#fff"> </span>providerName<span style="color:#1f2328">)</span><span style="color:#fff"> </span><span style="color:#1f2328">{</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span>String<span style="color:#fff"> </span>moduleName<span style="color:#1f2328">,</span><span style="color:#fff"> </span>String<span style="color:#fff"> </span>providerName<span style="color:#1f2328">)</span><span style="color:#fff"> </span><span style="color:#cf222e">throws</span><span style="color:#fff"> </span>IllegalAccessException<span style="color:#fff"> </span><span style="color:#1f2328">{</span><span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#57606a">// iterate properties</span><span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#cf222e">switch</span><span style="color:#fff"> </span><span style="color:#1f2328">(</span>key<span style="color:#1f2328">)</span><span style="color:#fff"> </span><span style="color:#1f2328">{</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span><span style="color:#cf222e">case</span><span style="color:#fff"> </span><span style="color:#0a3069">&#34;role&#34;</span><span style="color:#1f2328">:</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">                </span>cfg<span style="color:#1f2328">.</span><span style="color:#1f2328">setRole</span><span style="color:#1f2328">((</span>String<span style="color:#1f2328">)</span><span style="color:#fff"> </span>value<span style="color:#1f2328">);</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span><span style="color:#cf222e">case</span><span style="color:#fff"> </span><span style="color:#0a3069">&#34;role&#34;</span><span style="color:#1f2328">:</span><span style="color:#fff"> </span><span style="color:#57606a">// upstream gives CoreModuleConfig no setter for it</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">                </span>ConfigFieldValues<span style="color:#1f2328">.</span><span style="color:#1f2328">setByField</span><span style="color:#1f2328">(</span>cfg<span style="color:#1f2328">,</span><span style="color:#fff"> </span><span style="color:#0a3069">&#34;role&#34;</span><span style="color:#1f2328">,</span><span style="color:#fff"> </span>value<span style="color:#1f2328">);</span><span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">                </span><span style="color:#cf222e">break</span><span style="color:#1f2328">;</span><span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span><span style="color:#cf222e">case</span><span style="color:#fff"> </span><span style="color:#0a3069">&#34;persistentPeriod&#34;</span><span style="color:#1f2328">:</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">                </span>cfg<span style="color:#1f2328">.</span><span style="color:#1f2328">setPersistentPeriod</span><span style="color:#1f2328">((</span><span style="color:#cf222e">int</span><span style="color:#1f2328">)</span><span style="color:#fff"> </span>value<span style="color:#1f2328">);</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">                </span>cfg<span style="color:#1f2328">.</span><span style="color:#1f2328">setPersistentPeriod</span><span style="color:#1f2328">(</span>ConfigFieldValues<span style="color:#1f2328">.</span><span style="color:#1f2328">intValue</span><span style="color:#1f2328">(</span>value<span style="color:#1f2328">,</span><span style="color:#fff"> </span><span style="color:#0a3069">&#34;...CoreModuleConfig.persistentPeriod&#34;</span><span style="color:#1f2328">));</span><span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">                </span><span style="color:#cf222e">break</span><span style="color:#1f2328">;</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span><span style="color:#57606a">// ... all fields via setters ...</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span><span style="color:#cf222e">case</span><span style="color:#fff"> </span><span style="color:#0a3069">&#34;downsampling&#34;</span><span style="color:#1f2328">:</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">                </span>ConfigFieldValues<span style="color:#1f2328">.</span><span style="color:#1f2328">setByField</span><span style="color:#1f2328">(</span>cfg<span style="color:#1f2328">,</span><span style="color:#fff"> </span><span style="color:#0a3069">&#34;downsampling&#34;</span><span style="color:#1f2328">,</span><span style="color:#fff"> </span>value<span style="color:#1f2328">);</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">                </span><span style="color:#cf222e">break</span><span style="color:#1f2328">;</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span><span style="color:#57606a">// ... all fields ...</span><span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span><span style="color:#cf222e">default</span><span style="color:#1f2328">:</span><span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">                </span>log<span style="color:#1f2328">.</span><span style="color:#1f2328">warn</span><span style="color:#1f2328">(</span><span style="color:#0a3069">&#34;{} setting is not supported in {} provider of {} module&#34;</span><span style="color:#1f2328">,</span><span style="color:#fff">
 </span></span></span><span style="display:flex;"><span><span style="color:#fff">                    </span>key<span style="color:#1f2328">,</span><span style="color:#fff"> </span>providerName<span style="color:#1f2328">,</span><span style="color:#fff"> </span>moduleName<span style="color:#1f2328">);</span><span style="color:#fff">
@@ -1681,32 +1696,38 @@ lacks a setter.</p>
 <p><strong>Main class</strong>: <code>ConfigInitializerGenerator.java</code></p>
 <h3 id="input">Input</h3>
 <ul>
-<li>Classpath with all SkyWalking module JARs (same dependencies as <code>oap-graalvm-server</code>)</li>
-<li>Provider class list — the <code>ModuleProvider</code> SPI entries on the classpath that <code>AcceptedModules</code> (build-common) accepts</li>
-<li>Extra config class list — BanyanDB nested configs used by <code>BanyanDBConfigLoader</code></li>
+<li>Classpath: upstream&rsquo;s <code>server-starter</code> (every upstream provider) and the admin-server family, the raw upstream
+classes, not the <code>-for-graalvm</code> replacements</li>
+<li>Provider class list — the <code>ModuleProvider</code> SPI entries on the classpath that <code>AcceptedModules</code> (build-common) accepts.
+A provider that does not load, or an accepted one missing from the classpath, fails the generator;
+<code>ApplicationYmlModulesTest</code> requires <code>AcceptedModules</code> to equal the ACCEPTED providers of
+<code>provider-inventory.properties</code></li>
 </ul>
 <h3 id="process">Process</h3>
 <ol>
-<li>For each provider, call <code>newConfigCreator().type()</code> to discover the config class</li>
+<li>For each provider, call <code>newConfigCreator().type()</code> to discover the config class (none for a null creator or type,
+as <code>ModuleDefine.prepare</code> copies nothing then)</li>
+<li>Add the nested classes of each config class (the BanyanDB group classes <code>BanyanDBConfigLoader</code> copies into)</li>
 <li>For each config class, use Java reflection to scan all declared fields
-(walking up to <code>ModuleConfig</code> superclass)</li>
-<li>For each field, check if a setter method exists (<code>set</code> + capitalize(name))</li>
-<li><strong>Fail if any non-final field lacks a setter</strong> (all config classes must have <code>@Setter</code>)</li>
-<li>Generate <code>YamlConfigLoaderUtils.java</code> with type-dispatch + switch-based field assignment</li>
+(walking up to <code>ModuleConfig</code> superclass), and whether the class has a setter for each</li>
+<li>Generate <code>YamlConfigLoaderUtils.java</code> with type-dispatch (a subclass before its superclass) + switch-based field
+assignment</li>
 </ol>
-<p>The generator depends on <code>-for-graalvm</code> modules (not upstream JARs) so it sees
-config classes with <code>@Setter</code> added. Original upstream JARs are forced to
-<code>provided</code> scope to prevent classpath shadowing.</p>
+<p>The generated class is compiled in <code>oap-graalvm-server</code> against the same upstream classes, so every setter it calls
+exists. <code>GeneratedConfigLoaderIsCurrentTest</code> requires the committed class to be what the generator writes.</p>
 <h3 id="output">Output</h3>
 <ul>
 <li><code>oap-graalvm-server/src/main/java/org/apache/skywalking/oap/server/library/util/YamlConfigLoaderUtils.java</code>
 (same-FQCN replacement)</li>
 <li><code>build-tools/precompiler/src/main/resources/META-INF/module-config-classes.txt</code> — the config classes, from which the
 precompiler generates their reflection metadata (<code>ModuleDefine.prepare</code> instantiates them reflectively)</li>
+<li><code>module-config-field-set.txt</code> next to it — every field the loader writes through <code>Field.set</code> (no setter writes it:
+none declared, final or static; on a config class or a superclass up to <code>ModuleConfig</code>; <code>declaringClass#field</code>, then
+<code>static</code> / <code>final</code>), which the
+precompiler registers in <code>reflect-config.json</code>, a final instance field writable (<code>allowWrite</code>)</li>
 </ul>
 <h3 id="running-the-generator">Running the generator</h3>
-<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#953800">JAVA_HOME</span><span style="color:#0550ae">=</span>/Users/wusheng/.sdkman/candidates/java/25-graal <span style="color:#0a3069">\
-</span></span></span><span style="display:flex;"><span>  mvn -pl build-tools/config-generator exec:java <span style="color:#0a3069">\
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>./mvnw -pl build-tools/config-generator exec:java <span style="color:#0a3069">\
 </span></span></span><span style="display:flex;"><span>  -Dexec.args<span style="color:#0550ae">=</span><span style="color:#0a3069">&#34;oap-graalvm-server/src/main/java/org/apache/skywalking/oap/server/library/util/YamlConfigLoaderUtils.java build-tools/precompiler/src/main/resources/META-INF/module-config-classes.txt&#34;</span>
 </span></span></code></pre></div><hr>
 <h2 id="config-classes-inventory">Config Classes Inventory</h2>
@@ -1714,108 +1735,8 @@ precompiler generates their reflection metadata (<code>ModuleDefine.prepare</cod
 <code>provider-inventory.properties</code> and <code>ApplicationYmlModulesTest</code>). Providers whose <code>newConfigCreator()</code> returns null
 need no coverage.</p>
 <h3 id="provider-config-classes">Provider Config Classes</h3>
-<table>
-  <thead>
-      <tr>
-          <th>Provider</th>
-          <th>Config Class</th>
-          <th>Fields</th>
-          <th>Setter Status</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td>CoreModuleProvider</td>
-          <td><code>CoreModuleConfig</code></td>
-          <td>~40</td>
-          <td><code>@Getter</code> class-level, <code>@Setter</code> on ~12 fields, rest need VarHandle</td>
-      </tr>
-      <tr>
-          <td>BanyanDBStorageProvider</td>
-          <td><code>BanyanDBStorageConfig</code></td>
-          <td>~5</td>
-          <td><code>@Getter @Setter</code></td>
-      </tr>
-      <tr>
-          <td>ClusterModuleStandaloneProvider</td>
-          <td>(empty config)</td>
-          <td>0</td>
-          <td>—</td>
-      </tr>
-      <tr>
-          <td>ClusterModuleKubernetesProvider</td>
-          <td><code>ClusterModuleKubernetesConfig</code></td>
-          <td>3</td>
-          <td><code>@Setter</code></td>
-      </tr>
-      <tr>
-          <td>ConfigmapConfigurationProvider</td>
-          <td><code>ConfigmapConfigurationSettings</code></td>
-          <td>3</td>
-          <td><code>@Setter</code></td>
-      </tr>
-      <tr>
-          <td>PrometheusTelemetryProvider</td>
-          <td><code>PrometheusConfig</code></td>
-          <td>5</td>
-          <td><code>@Setter</code></td>
-      </tr>
-      <tr>
-          <td>AnalyzerModuleProvider</td>
-          <td><code>AnalyzerModuleConfig</code></td>
-          <td>~10</td>
-          <td><code>@Getter @Setter</code></td>
-      </tr>
-      <tr>
-          <td>LogAnalyzerModuleProvider</td>
-          <td><code>LogAnalyzerModuleConfig</code></td>
-          <td>2</td>
-          <td><code>@Setter</code></td>
-      </tr>
-      <tr>
-          <td>SharingServerModuleProvider</td>
-          <td><code>SharingServerConfig</code></td>
-          <td>~15</td>
-          <td>Needs check</td>
-      </tr>
-      <tr>
-          <td>EnvoyMetricReceiverProvider</td>
-          <td><code>EnvoyMetricReceiverConfig</code></td>
-          <td>~15</td>
-          <td>Needs check</td>
-      </tr>
-      <tr>
-          <td>KafkaFetcherProvider</td>
-          <td><code>KafkaFetcherConfig</code></td>
-          <td>~20</td>
-          <td><code>@Data</code> (all setters)</td>
-      </tr>
-      <tr>
-          <td>ZipkinReceiverProvider</td>
-          <td><code>ZipkinReceiverConfig</code></td>
-          <td>~20</td>
-          <td>Needs check</td>
-      </tr>
-      <tr>
-          <td>GraphQLQueryProvider</td>
-          <td><code>GraphQLQueryConfig</code></td>
-          <td>4</td>
-          <td><code>@Setter</code></td>
-      </tr>
-      <tr>
-          <td>HealthCheckerProvider</td>
-          <td><code>HealthCheckerConfig</code></td>
-          <td>1</td>
-          <td><code>@Setter</code></td>
-      </tr>
-      <tr>
-          <td>+ others</td>
-          <td>(simple configs)</td>
-          <td>0-5</td>
-          <td>Various</td>
-      </tr>
-  </tbody>
-</table>
+<p>The full list is <code>module-config-classes.txt</code>. A field its class has no setter for is written through <code>Field.set</code>
+(<code>module-config-field-set.txt</code> lists them); the others through upstream&rsquo;s own <code>@Setter</code> (or <code>@Data</code>).</p>
 <h3 id="banyandb-config-loading-banyandbconfigloader">BanyanDB Config Loading (BanyanDBConfigLoader)</h3>
 <p><code>BanyanDBConfigLoader</code> (in <code>storage-banyandb-plugin</code>) loads config from <code>bydb.yml</code>
 and <code>bydb-topn.yml</code> independently of the standard YAML config loading path. It
@@ -1935,13 +1856,9 @@ inherited fields (<code>shardNum</code>, <code>segmentInterval</code>, <code>ttl
 <code>enableWarmStage</code>, <code>enableColdStage</code>, <code>defaultQueryStages</code>,
 <code>additionalLifecycleStages</code>). <code>Trace</code> doesn&rsquo;t have its own <code>@Getter @Setter</code> but
 inherits all setters from <code>GroupResource</code>.</p>
-<p><strong><code>instanceof</code> ordering</strong>: Inner classes (<code>Global</code>, <code>RecordsNormal</code>, <code>Trace</code>, etc.)
-are static inner classes that do NOT extend <code>BanyanDBStorageConfig</code>, so the
-<code>instanceof BanyanDBStorageConfig</code> check matches only the top-level config. Inner
-class checks come after and work independently.</p>
-<p>Two extra inner classes (<code>RecordsTrace</code>, <code>RecordsZipkinTrace</code>) are included in
-EXTRA_CONFIG_CLASSES for completeness, even though <code>BanyanDBConfigLoader</code> doesn&rsquo;t
-currently call <code>copyProperties()</code> on them.</p>
+<p><strong><code>instanceof</code> ordering</strong>: the dispatch checks a subclass before its superclass (deeper classes first, then by name),
+so <code>RecordsNormal</code> reaches its own branch before <code>GroupResource</code>&rsquo;s. Every nested class of a config class gets a branch,
+including those <code>BanyanDBConfigLoader</code> does not copy into (<code>RecordsTrace</code>, <code>RecordsZipkinTrace</code>, <code>TopN</code>, &hellip;).</p>
 <hr>
 <h2 id="same-fqcn-replacements-config-initialization">Same-FQCN Replacements (Config Initialization)</h2>
 <table>
@@ -1958,82 +1875,21 @@ currently call <code>copyProperties()</code> on them.</p>
           <td><code>YamlConfigLoaderUtils</code></td>
           <td><code>server-library/library-util/.../util/YamlConfigLoaderUtils.java</code></td>
           <td><code>oap-graalvm-server/</code> (not in library-util-for-graalvm due to 30+ cross-module imports)</td>
-          <td>Complete rewrite. Uses type-dispatch with Lombok <code>@Setter</code> methods instead of <code>Field.setAccessible()</code> + <code>field.set()</code>.</td>
-      </tr>
-      <tr>
-          <td><code>CoreModuleConfig</code></td>
-          <td><code>server-core/.../core/CoreModuleConfig.java</code></td>
-          <td><code>oap-libs-for-graalvm/server-core-for-graalvm/</code></td>
-          <td>Added <code>@Setter</code> at class level. Upstream only has <code>@Getter</code>.</td>
-      </tr>
-      <tr>
-          <td><code>AnalyzerModuleConfig</code></td>
-          <td><code>analyzer/agent-analyzer/.../provider/AnalyzerModuleConfig.java</code></td>
-          <td><code>oap-libs-for-graalvm/agent-analyzer-for-graalvm/</code></td>
-          <td>Added <code>@Setter</code> at class level.</td>
-      </tr>
-      <tr>
-          <td><code>LogAnalyzerModuleConfig</code></td>
-          <td><code>analyzer/log-analyzer/.../provider/LogAnalyzerModuleConfig.java</code></td>
-          <td><code>oap-libs-for-graalvm/log-analyzer-for-graalvm/</code></td>
-          <td>Added <code>@Setter</code> at class level.</td>
-      </tr>
-      <tr>
-          <td><code>EnvoyMetricReceiverConfig</code></td>
-          <td><code>server-receiver-plugin/envoy-metrics-receiver-plugin/.../EnvoyMetricReceiverConfig.java</code></td>
-          <td><code>oap-libs-for-graalvm/envoy-metrics-receiver-for-graalvm/</code></td>
-          <td>Added <code>@Setter</code> at class level.</td>
-      </tr>
-      <tr>
-          <td><code>OtelMetricReceiverConfig</code></td>
-          <td><code>server-receiver-plugin/otel-receiver-plugin/.../OtelMetricReceiverConfig.java</code></td>
-          <td><code>oap-libs-for-graalvm/otel-receiver-for-graalvm/</code></td>
-          <td>Added <code>@Setter</code> at class level.</td>
-      </tr>
-      <tr>
-          <td><code>EBPFReceiverModuleConfig</code></td>
-          <td><code>server-receiver-plugin/skywalking-ebpf-receiver-plugin/.../EBPFReceiverModuleConfig.java</code></td>
-          <td><code>oap-libs-for-graalvm/ebpf-receiver-for-graalvm/</code></td>
-          <td>Added <code>@Setter</code> at class level.</td>
-      </tr>
-      <tr>
-          <td><code>AWSFirehoseReceiverModuleConfig</code></td>
-          <td><code>server-receiver-plugin/aws-firehose-receiver/.../AWSFirehoseReceiverModuleConfig.java</code></td>
-          <td><code>oap-libs-for-graalvm/aws-firehose-receiver-for-graalvm/</code></td>
-          <td>Added <code>@Setter</code> at class level.</td>
-      </tr>
-      <tr>
-          <td><code>CiliumFetcherConfig</code></td>
-          <td><code>server-fetcher-plugin/cilium-fetcher-plugin/.../CiliumFetcherConfig.java</code></td>
-          <td><code>oap-libs-for-graalvm/cilium-fetcher-for-graalvm/</code></td>
-          <td>Added <code>@Setter</code> at class level.</td>
-      </tr>
-      <tr>
-          <td><code>StatusQueryConfig</code></td>
-          <td><code>server-query-plugin/status-query-plugin/.../StatusQueryConfig.java</code></td>
-          <td><code>oap-libs-for-graalvm/status-query-for-graalvm/</code></td>
-          <td>Added <code>@Setter</code> at class level.</td>
-      </tr>
-      <tr>
-          <td><code>HealthCheckerConfig</code></td>
-          <td><code>server-health-checker/.../HealthCheckerConfig.java</code></td>
-          <td><code>oap-libs-for-graalvm/health-checker-for-graalvm/</code></td>
-          <td>Added <code>@Setter</code> at class level.</td>
+          <td>Complete rewrite. Type-dispatch with setter calls, and <code>Field.set</code> for a field no setter writes, instead of a reflective walk over every field.</td>
       </tr>
   </tbody>
 </table>
-<p>Config replacements (except <code>YamlConfigLoaderUtils</code>) are repackaged into their respective <code>-for-graalvm</code> modules via <code>maven-shade-plugin</code>. <code>YamlConfigLoaderUtils</code> lives in <code>oap-graalvm-server</code> because it imports types from 30+ modules; the original <code>.class</code> is excluded from <code>library-util-for-graalvm</code> via shade filter.</p>
+<p>No config class is replaced. <code>YamlConfigLoaderUtils</code> lives in <code>oap-graalvm-server</code> because it imports types from 30+ modules; the original <code>.class</code> is excluded from <code>library-util-for-graalvm</code> via shade filter.</p>
 <h2 id="same-fqcn-packaging">Same-FQCN Packaging</h2>
 <p>The original <code>YamlConfigLoaderUtils.class</code> is excluded from the <code>library-util-for-graalvm</code> shaded JAR. The replacement in <code>oap-graalvm-server.jar</code> is the only copy on the classpath.</p>
 <hr>
 <h2 id="verification">Verification</h2>
 <div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#57606a"># Run generator</span>
-</span></span><span style="display:flex;"><span><span style="color:#953800">JAVA_HOME</span><span style="color:#0550ae">=</span>/Users/wusheng/.sdkman/candidates/java/25-graal <span style="color:#0a3069">\
-</span></span></span><span style="display:flex;"><span>  mvn -pl build-tools/config-generator exec:java <span style="color:#0a3069">\
+</span></span><span style="display:flex;"><span>./mvnw -pl build-tools/config-generator exec:java <span style="color:#0a3069">\
 </span></span></span><span style="display:flex;"><span>  -Dexec.args<span style="color:#0550ae">=</span><span style="color:#0a3069">&#34;oap-graalvm-server/src/main/java/org/apache/skywalking/oap/server/library/util/YamlConfigLoaderUtils.java build-tools/precompiler/src/main/resources/META-INF/module-config-classes.txt&#34;</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#57606a"># Full build (compile + test + package)</span>
-</span></span><span style="display:flex;"><span><span style="color:#953800">JAVA_HOME</span><span style="color:#0550ae">=</span>/Users/wusheng/.sdkman/candidates/java/25-graal make build-distro
+</span></span><span style="display:flex;"><span>make build-distro
 </span></span></code></pre></div>
 </div>
 
@@ -2066,7 +1922,7 @@ currently call <code>copyProperties()</code> on them.</p>
 <div class="td-toc-label">On this page</div>
 <nav id="TableOfContents">
   <ul>
-    <li><a href="#config-initialization--eliminate-reflection-in-config-loading">Config Initialization — Eliminate Reflection in Config Loading</a>
+    <li><a href="#config-initialization--generated-config-loading">Config Initialization — Generated Config Loading</a>
       <ul>
         <li><a href="#context">Context</a></li>
         <li><a href="#problem">Problem</a></li>
